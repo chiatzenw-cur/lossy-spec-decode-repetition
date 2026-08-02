@@ -45,8 +45,41 @@ Two arms, differing **only** in the acceptance rule inside the verify kernel:
 | mean l̄ (accepted draft tokens/round) | 2.250 | **3.415** |
 | hit token cap | 0/10 | **3/10** |
 | never reached `final` channel | 0/10 | **3/10** |
+| correct answers | **9/10** | **6/10** |
 | geometric mean length inflation | — | **1.44×** |
 | paired mean log length ratio | — | **0.362** (sd 0.739, t(9)=1.55) |
+
+
+## Accuracy — the clearest result
+
+AIME answers are integers, so runs can be graded directly against the reference.
+
+| case | ref | strict answer | lossy answer |
+|---|---:|---|---|
+| case_001 | 204 | 204 correct | 204 correct |
+| case_002 | 113 | 113 correct | **none — hit cap** |
+| case_003 | 371 | 371 correct | **none — hit cap** |
+| case_004 | 385 | 1 wrong | 1 wrong |
+| case_005 | 110 | 110 correct | 110 correct |
+| case_006 | 104 | 104 correct | **none — hit cap** |
+| case_007 | 721 | 721 correct | 721 correct |
+| case_008 | 25 | 25 correct | 25 correct |
+| case_009 | 809 | 809 correct | 809 correct |
+| case_010 | 116 | 116 correct | 116 correct |
+
+**Accuracy: strict 9/10 -> lossy 6/10.**
+
+Two things make this the cleanest signal in the dataset:
+
+- The three lost answers are **exactly** the three runs that hit the token cap.
+  Lenience never produced a *wrong* answer; it produced *no* answer, by burning
+  the whole budget inside the `analysis` channel. Failure mode and accuracy loss
+  are the same event.
+- `case_004` is wrong under **both** rules (answers 1, reference 385). That is a
+  model capability failure, not a verification effect, and it is a useful
+  built-in control: the lossy rule does not simply degrade everything.
+
+Unlike the length statistic, this does not depend on a marginal t-test.
 
 ## The actual failure
 
