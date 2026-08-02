@@ -1,0 +1,14 @@
+This paper presented a straightforward extension of the work done at [1, 2] for ternary networks through a multimodal quantising prior. It is generally well-written, with extensive preliminaries and clear equations. The visualizations also serve as a nice way to convey the behaviour of the proposed approach. The idea is interesting and well executed so I propose for acceptance. I only have a couple of minor questions: 
+- For the KL-divergence approximation you report a maximum difference of 1 nat per weight that seems a bit high; did you experiment with the `naive` Monte Carlo approximation of the bound (e.g. as done at Bayes By Backprop) during optimization? If yes, was there a big difference in performance?
+- Was pre-training necessary to obtain the current results for MNIST? As far as I know, [1] and [2] did not need pre-training for the MNIST results (but did employ pre-training for CIFAR 10).
+- How necessary was each one of the constraints during optimization (and what did they prevent)? 
+- Did you ever observe posterior means that do not settle at one of the prior modes but rather stay in between? Or did you ever had issues of the variance growing large enough, so that q(w) captures multiple modes of the prior (maybe the constraints prevent this)? How sensitive is the quantisation scheme?
+
+Other minor comments / typos:
+(1) 7th line of section 2.1 page 2, ‘a unstructured data’ -> ‘unstructured data’
+(2) 5th line on page 3, remove ‘compare Eq. (1)’ (or rephrase it appropriately).
+(3) Section 2.2, ’Kullback-Leibler divergence between the true and the approximate posterior’; between implies symmetry (and the KL isn’t symmetric) so I suggest to change it to e.g. ‘from the true to the approximate posterior’ to avoid confusion. Same for the first line of Section 3.3.
+(4) Footnote 2, the distribution of the noise depends on the random variable so I would suggest to change it to a general \epsilon \sim p(\epsilon).
+(5) Equation 4 is confusing.
+
+7: Good paper, accept

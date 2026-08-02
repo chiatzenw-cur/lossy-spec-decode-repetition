@@ -1,0 +1,14 @@
+The authors present that regularization methods mostly help to improve the agents' performance in terms of final scores. Specifically, they show that direct regularizations on model parameters, such as the standard case of L2 or L1 regularization, generally improve the agent performance. They also show that these regularizations, in their study, is more proper than entropy regularization. The authors also show that, in the presence of such regularizations, the learning algorithms become less sensitive to the hyperparameters. 
+
+Few comments:
+1) The paper is well written and easy to follow. I appreciate it. I found the writing of the paper has a bit of repetition. The authors might find it slightly more proper to remove some of the repetitions (e.g. section 4.2)
+2) I would suggest rephrasing the last two sentences of the second paragraph in related work: "Also, these techniques consider ...". Regularizing the output also regularizes the parameters, I think the authors' point was "directly regularize" the parameters. 
+3) In the "Entropy Regularization" part of section 3, I guess the Hs has not been defined. 
+4) Repeated "the" in the last paragraph of section 4.1 (despite it already incorporates the the maximization of)
+5) The authors used the term "not converge" multiple times. While it is hard from the plots to see whether the series converges or not, I have a strong feeling that by this term the authors mean the algorithm does not converge to a resealable solution rather than being divergent up to a bandwidth. Maybe clarifying would be helpful.
+6) In section 5, the authors study the sensitivity to the hyperparameters. In this section, I had a hard time to understand the role of term 3
+"BN and dropout hurts on-policy algorithms but can bring improvement only for the off-policy SAC algorithm." Does it mean that deploying BN, results in a more sensitive algorithm? or it means that the performance degrades (which is a different topic than section 5 is supposed to serve)?
+7) In section 7, the authors put out a hypothesis "
+However, there is still generalization between samples: the agents are only trained on the limited" but the provided empirical study might not fully be considered to be designed to test this hypothesis. In order to test this hypothesis, the author might be interested in training the models with bigger sample sizes, more training iteration, different function classes, and more fitting in order to test this hypothesis.
+
+3: Weak Reject

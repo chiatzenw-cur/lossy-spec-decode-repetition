@@ -1,0 +1,52 @@
+{
+  "source": "data/long_context/longbench_chat/test_cases.json",
+  "total_samples": 50,
+  "selected_samples": 0,
+  "min_tokens": 9000,
+  "max_tokens": 11000,
+  "target_tokens": 10000,
+  "tokenizer": "o200k_harmony",
+  "harmony_encoding": "HARMONY_GPT_OSS",
+  "reasoning_effort": "high",
+  "conversation_start_date": "2026-08-01",
+  "observed_min_tokens": 6743,
+  "observed_median_tokens": 28244.5,
+  "observed_max_tokens": 79578,
+  "nearest_to_target": [
+    {
+      "source_id": 10,
+      "source_position": 9,
+      "input_tokens": 11447,
+      "distance_from_target": 1447,
+      "query": "### train_simple_WN18RR.py\n\nimport openke\nfrom openke.module.model import SimplE\nfrom openke.module.loss import SoftplusLoss\nfrom openke.module.strategy import NegativeSampling\nfrom openke.data import TrainDataLoader, TestDataLoader\n\n# dataloader for training\n# dataloader for test\n# define the model\n\nComplete the code for defining the train_dataloader, test_dataloader, and the model. the path of the dataset is ./benchmarks/WN18RR/ and the model is SimplE. The dimension of the embedding is 1200. For training, use nbatches of 100, threads of 8, normal sampling mode with 27 negative entities and 0 negative relations, use bern and filter."
+    },
+    {
+      "source_id": 14,
+      "source_position": 13,
+      "input_tokens": 12332,
+      "distance_from_target": 2332,
+      "query": "HT250牌号的抗拉强度应该是多少"
+    },
+    {
+      "source_id": 4,
+      "source_position": 3,
+      "input_tokens": 6743,
+      "distance_from_target": 3257,
+      "query": "Which datasets in LongBench were constructed or labeled from scratch by the authors?"
+    },
+    {
+      "source_id": 22,
+      "source_position": 21,
+      "input_tokens": 13899,
+      "distance_from_target": 3899,
+      "query": "What was Singapore's response to the UN's accusations regarding the death penalty?"
+    },
+    {
+      "source_id": 7,
+      "source_position": 6,
+      "input_tokens": 14162,
+      "distance_from_target": 4162,
+      "query": "Among all the variants in China, what stories did Juwen Zhang publish or translate?"
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.
+Knowledge cutoff: 2024-06
+Current date: 2026-08-01
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>user<|message|>Document is as follows. 1 INTRODUCTION
+Variational autoencoders (VAE) are a class of expressive probabilistic deep learning models useful for generative modeling, representation learning, and probabilistic regression. Originally proposed in Kingma & Welling (2013) and Rezende et al. (2014), VAEs consist of a probabilistic model as well as an approximate method for maximum likelihood estimation. In the generative case, the model is defined as
+p(x) = ∫ pθ(x|z) p(z) dz, (1)
+where z is a latent variable, typically a high dimensional vector; the corresponding prior distribution p(z) is fixed and typically defined as a standard multivariate Normal distributionN (0, I). To achieve an expressive marginal distribution p(x), we define pθ(x|z) through a neural network, making the model (1) a deep probabilistic model.
+Maximum likelihood estimation of the parameters θ in (1) is intractable, but Kingma & Welling (2013) and Rezende et al. (2014) propose to instead maximize the evidence lower-bound (ELBO),
+log p(x) ≥ Ez∼qω(z|x) [ log
+pθ(x|z) p(z) qω(z|x)
+] (2)
+=: LE . (3)
+Here, qω(z|x) is an auxiliary inference network, parametrized by ω. Simultaneous optimization of (2) over both θ and ω performs approximate maximum likelihood estimation in the model p(x) of (1) and forms the standard VAE estimation method.
+1The implementation is available at https://github.com/Microsoft/ jackknife-variational-inference
+In practice LE is estimated using Monte Carlo: we draw K samples zi ∼ qω(z|x), then use the unbiased estimator L̂E of LE ,
+L̂E = 1
+K K∑ i=1 log pθ(x|zi) p(zi) qω(zi|x) . (4)
+The VAE approach is empirically very successful but are there fundamental limitations? One limitation is the quality of the model pθ(x|z): this model needs to be expressive enough to model the true distribution over x. Another limitation is that LE is only a lower-bound to the true likelihood. Is this bound tight? It can be shown, Kingma & Welling (2013), that when q(z|x) = p(z|x) we have LE = log p(x), hence (2) becomes exact. Therefore, we should attempt to choose an expressive class of distributions q(z|x) and indeed recent work has extensively investigated richer variational families. We discuss these methods in Section 7 but now review the importance weighted autoencoder (IWAE) method we build upon. 2 BURDA’S IMPORTANCE-WEIGHTED AUTOENCODER (IWAE) BOUND
+The importance weighted autoencoder (IWAE) method Burda et al. (2015) seemingly deviates from (2) in that they propose the IWAE objective, defined for an integer K ≥ 1,
+log p(x) ≥ Ez1,...,zK∼qω(z|x)
+[ log 1
+K K∑ i=1 pθ(x|zi) p(z) qω(zi|x)
+] (5)
+=: LK . (6)
+We denote with L̂K the empirical version which takes one sample z1, . . . , zK ∼ qω(z|x) and evaluates the inner expression in (6). We can see that L1 = LE , and indeed Burda et al. (2015) further show that LE = L1 ≤ L2 ≤ · · · ≤ log p(x), (7) and limK→∞ LK = log p(x). These results are a strong motivation for the use of LK to estimate θ and the IWAE method can often significantly improve over LE . The bounds LK seem quite different from LE , but recently Cremer et al. (2017) and Naesseth et al. (2017) showed that an exact correspondence exists: any LK can be converted into the standard form LE by defining a modified distribution qIW(z|x) through an importance sampling construction.
+We now analyze the IWAE bound L̂K in more detail. Independently of our work Rainforth et al. (2017a) has analysed nested Monte Carlo objectives, including the IWAE bound as special case. Their analysis includes results equivalent to our Proposition 1 and 2. 3 ANALYSIS OF THE IWAE BOUND
+We now analyze the statistical properties of the IWAE estimator of the log-marginal likelihood. Basic consistency results have been shown in Burda et al. (2015); here we provide more precise results and add novel asymptotic results regarding the bias and variance of the IWAE method. Our results are given as expansions in the order K of the IWAE estimator but do involve moments µi which are unknown to us. The jackknife method in the following sections will effectively circumvent the problem of not knowing these moments.
+Proposition 1 (Expectation of L̂K). Let P be a distribution supported on the positive real line and let P have finite moments of all order. Let K ≥ 1 be an integer. Let w1, w2, . . . , wK ∼ P independently. Then we have asymptotically, for K →∞,
+E[L̂K ] = E [ log 1
+K K∑ i=1 wi
+] = logE[w]− 1
+K µ2 2µ2 + 1 K2 ( µ3 3µ3 − 3µ 2 2 4µ4 ) − 1 K3 ( µ4 4µ4 − 3µ 2 2 4µ4 − 10µ3µ2 5µ5 ) + o(K−3), (8)
+where µi := EP [(w − EP [w])i] is the i’th central moment of P and µ := EP [w] is the mean.
+Proof. See Appendix A, page 12.
+The above result directly gives the bias of the IWAE method as follows.
+Corollary 1 (Bias of L̂K). If we see L̂K as an estimator of log p(x), then for K →∞ the bias of L̂K is
+B[L̂K ] = E[L̂K ]− logE[w] (9)
+= − 1 K µ2 2µ2 + 1 K2 ( µ3 3µ3 − 3µ 2 2 4µ4 ) − 1 K3 ( µ4 4µ4 − 3µ 2 2 4µ4 − 10µ3µ2 5µ5 ) + o(K−3). (10)
+Proof. The bias (10) follows directly by subtracting the true value log p(x) = logE[w] from the right hand side of (8).
+The above result shows that the bias is reduced at a rate ofO(1/K). This is not surprising because the IWAE estimator is a smooth function applied to a sample mean. The coefficient of the leadingO(1/K) bias term uses the ratio µ2/µ2, the variance divided by the squared mean of the P distribution. The quantity √ µ2/µ2 is known as the coefficient of variation and is a common measure of dispersion of a distribution. Hence, for large K the bias of L̂K is small when the coefficient of variation is small; this makes sense because in case the dispersion is small the logarithm function behaves like a linear function and few bias results. The second-order and higher-order terms takes into account higher order properties of P .
+The bias is the key quantity we aim to reduce, but every estimator is also measured on its variance. We now quantify the variance of the IWAE estimator.
+Proposition 2 (Variance of L̂K). For K →∞, the variance of L̂K is given as follows.
+V[L̂K ] = 1
+K µ2 µ2 − 1 K2 ( µ3 µ3 − 5µ 2 2 2µ4 ) + o(K−2). (11)
+Proof. See Appendix A, page 13.
+Both the bias B[L̂K ] and the variance V[L̂K ] vanish for K →∞ at a rate of O(1/K) with similar coefficients. This leads to the following result which was already proven in Burda et al. (2015).
+Corollary 2 (Consistency of L̂K ). For K →∞ the estimator L̂K is consistent, that is, for all > 0
+lim K→∞
+P (|L̂K − log p(x)| ≥ ) = 0. (12)
+Proof. See Appendix A, page 13.
+How good are the asymptotic results? This is hard to say in general because it depends on the particular distribution P (w) of the weights. In Figure 1 we show both a simple and challenging case to demonstrate the accuracy of the asymptotics.
+The above results are reassuring evidence for the IWAE method, however, they cannot be directly applied in practice because we do not know the moments µi. One approach is to estimate the moments from data, and this is in fact what the delta method variational inference (DVI) method does, Teh et al. (2007), (see Appendix B, page 14); however, estimating moments accurately is difficult. We avoid the difficulty of estimating moments by use of the jackknife, a classic debiasing method. We now review this method. 4 A BRIEF REVIEW OF THE JACKKNIFE
+We now provide a brief review of the jackknife and generalized jackknife methodology. Our presentation deviates from standard textbook introductions, Miller (1974), in that we also review higher-order variants.
+The jackknife methodology is a classic resampling technique originating with Quenouille (1949; 1956) in the 1950s. It is a generally applicable technique for estimating the bias B[T̂ ] = E[T̂ ]− T and the variance V[T̂ ] of an estimator T̂ . Our focus is on estimating and correcting for bias.
+The basic intuition is as follows: in many cases it is possible to write the expectation of a consistent estimator T̂n evaluated on n samples as an asymptotic expansion in the sample size n, that is, for large n→∞ we have
+E[T̂n] = T + a1 n + a2 n2 + . . . . (13)
+In particular, this is possible in case the estimator is consistent and a smooth function of linear statistics. If an expansion (13) is possible, then we can take a linear combination of two estimators T̂n and T̂n−1 to cancel the first order term,
+E[nT̂n − (n− 1)T̂n−1] = n ( T +
+a1 n + a2 n2
+) − (n− 1) ( T +
+a1 n− 1 + a2 (n− 1)2
+) +O(n−2)
+= T + a2 n − a2 n− 1 +O(n−2) (14) = T − a2 n(n− 1) +O(n−2) (15)
+= T +O(n−2). (16)
+Therefore, the jackknife bias-corrected estimator T̂J := nT̂n − (n− 1)T̂n−1 achieves a reduced bias of O(n−2). For T̂n−1 any estimator which preserves the expectation (13) can be used. In practice
+we use the original sample of size n to create n subsets of size n− 1 by removing each individual sample once. Then, the empirical average of n estimates T̂ \in−1, i = 1, . . . , n is used in place of T̂n−1. In Sharot (1976) this construction was proved optimal in terms of maximally reducing the variance of T̂J for any given sample size n.
+In principle, the above bias reduction (16) can be repeated to further reduce the bias to O(n−3) and beyond. The possibility of this was already hinted at in Quenouille (1956) by means of an example.2 A fully general and satisfactory solution to higher-order bias removal was only achieved by the generalized jackknife of Schucany et al. (1971), considering estimators T̂G of order m, each having the form,
+T̂ (m) G = m∑ j=0 c(n,m, j) T̂n−j . (17)
+The form of the coefficients c(n,m, j) in (17) are defined by the ratio of determinants of certain Vandermonde matrices, see Schucany et al. (1971). In a little known result, an analytic solution for c(n,m, j) is given by Sharot (1976). We call this form the Sharot coefficients, (Sharot, 1976, Equation (2.5) with r = 1), defined for m < n and 0 ≤ j ≤ m,
+c(n,m, j) = (−1)j (n− j) m
+(m− j)! j! . (18)
+The generalized jackknife estimator T̂ (m)G achieves a bias of order O(m −(j+1)), see Schucany et al. (1971). For example, the classic jackknife is recovered because c(n, 1, 0) = n and c(n, 1, 1) = −(n− 1). As an example of the second-order generalized jackknife we have
+c(n, 2, 0) = n2 2 , c(n, 2, 1) = −(n− 1)2, c(n, 2, 2) = (n− 2) 2 2 . (19)
+The variance of generalized jackknife estimators is more difficult to characterize and may in general decrease or increase compared to T̂n. Typically we have V[T̂ (m+1)G ] > V[T̂ (m) G ] with asymptotic rates being the same.
+The generalized jackknife is not the only method for debiasing estimators systematically. One classic method is the delta method for bias correction Small (2010). Two general methods for debiasing are the iterated bootstrap for bias correction (Hall, 2016, page 29) and the debiasing lemma McLeish (2010); Strathmann et al. (2015); Rhee & Glynn (2015). Remarkably, the debiasing lemma exactly debiases a large class of estimators.
+The delta method bias correction has been applied to variational inference by Teh et al. (2007); we provide novel theoretical results for the method in Appendix B, page 14. 5 JACKKNIFE VARIATIONAL INFERENCE (JVI)
+We now propose to apply the generalized jackknife for bias correction to variational inference by debiasing the IWAE estimator. The resulting estimator of the log-marginal likelihood will have significantly reduced bias, however, in contrast to the ELBO and IWAE, it is no longer a lower bound on the true log-marginal likelihood. Moreover, it can have increased variance compared to both IWAE and ELBO estimators. We will empirically demonstrate that the variance is comparable to the IWAE estimate and that the bias reduction is very effective in improving our estimates.
+Definition 1 (Jackknife Variational Inference (JVI)). Let K ≥ 1 and m < K. The jackknife variational inference estimator of the evidence of order m with K samples is
+L̂J,mK := m∑ j=0 c(K,m, j) L̄K−j , (20)
+where L̄K−j is the empirical average of one or more IWAE estimates obtained from a subsample of size K − j, and c(K,m, j) are the Sharot coefficients defined in (18). In this paper we use all
+2Which was subtly wrong and did not reduce the bias to O(n−2) as claimed, see Schucany et al. (1971).
+possible ( K K−j ) subsets, that is,
+L̄K−j := 1( K K−j ) ( KK−j)∑ i=1 L̂K−j(Z(K−j)i ), (21)
+where Z(K−j)i is the i’th subset of size K − j among all ( K K−j ) subsets from the original samples Z = (z1, z2, . . . , zK). We further define LJ,mK = EZ [L̂ J,m K ].
+From the above definition we can see that JVI strictly generalizes the IWAE bound and therefore also includes the standard ELBO objective: we have the IWAE case for L̂J,0K = L̂K , and the ELBO case for L̂J,01 = L̂E .
+5.1 ANALYSIS OF L̂J,mK
+The proposed family of JVI estimators has less bias than the IWAE estimator. The following result is a consequence of the existing theory on the generalized jackknife bias correction.
+Proposition 3 (Bias of L̂J,mK ). For any K ≥ 1 and m < K we have that the bias of the JVI estimate satisfies
+B[L̂J,mK ] = E[L̂ J,m K − log p(x)] = L J,m K − log p(x) = O(K −(m+1)). (22)
+Proof. The JVI estimator L̂J,mK is the application of the higher-order jackknife to the IWAE estimator which has an asymptotic expansion of the bias (10) in terms of orders of 1/K. The stated result is then a special case of (Schucany et al., 1971, Theorem 4.2).
+We show an illustration of higher-order bias removal in Appendix C, page 15. It is more difficult to characterize the variance of L̂J,mK . Empirically we observe that V[L̂ J,m K ] < V[L̂ J,m′ K ] form < m ′, but we have been unable to derive a formal result to this end. Note that the variance is over the sampling distribution of q(z|x), so we can always reduce the variance by averaging multiple estimates L̂J,mK , whereas we cannot reduce bias this way. Therefore, reducing bias while increasing variance is a sensible tradeoff in our application.
+5.2 EFFICIENT COMPUTATION OF L̂J,mK
+We now discuss how to efficiently compute (20). For typical applications, for example in variational autoencoders, we will use small values of K, say K < 100. However, even with K = 50 and m = 2 there are already 1276 IWAE estimates to compute in (20–21). Therefore efficient computation is important to consider. One property that helps us is that all these IWAE estimates are related because they are based on subsets of the same weights. The other property that is helpful is that computation of the K weights is typically orders of magnitude more expensive than elementary summation operations required for computation of (21).
+We now give a general algorithm for computing the JVI estimator L̂J,mK , then give details for efficient implementation on modern GPUs and state complexity results.
+Algorithm 1 computes log-weights and implements equations (20–21) in a numerically robust manner.3
+Proposition 4 (Complexity of Algorithm 1). Given K ≥ 1 and m ≤ K/2 the complexity of Algorithm 1 is
+O ( Kem ( K
+m
+)m) . (23)
+Proof. See Appendix C, page 15.
+3As usual, the log-sum-exp operation needs to be numerically robustly implemented. 101 102 103
+The above algorithm is suitable for CPU implementation; to utilize modern GPU hardware efficiently we can instead represent the second part of the algorithm using matrix operations. We provide further details in Appendix C, page 16. Figure 2 demonstrates experimental runtime evaluation on the MNIST test set for different JVI estimators. We show all JVI estimators with less than 5,000 total summation terms. The result demonstrates that runtime is largely independent of the order of the JVI correction and only depends linearly on K. 5.3 VARIATIONS OF THE JVI ESTIMATOR
+Variations of the JVI estimator with improved runtime exist. Such reduction in runtime are possible if we consider evaluating only a fraction of all possible subsets in (21). When tractable, our choice of evaluating all subsets is generally preferable in terms of variance of the resulting estimator. However, to show that we can even reduce bias to order O(K−K) at cost O(K) we consider the estimator
+L̂XK := K−1∑ j=0 c(K,K − 1, j) L̂K−j(Z1:(K−j)) (24)
+= c(K,K − 1,K − 1) log(exp(vK)) (25) + c(K,K − 1,K − 2) log ( 1
+2 (exp(vK−1) + exp(vK))
+) (26)
++ · · ·+ c(K,K − 1, 0) log
+( 1
+K K∑ i=1 exp(vi)
+) . (27)
+The sum (25–27) can be computed in time O(K) by keeping a running partial sum ∑k i=1 exp(vi) for k ≤ K and by incrementally updating this sum4, meaning that (24) can be computed in O(K) 4To do this in a numerically stable manner, we need to use streaming log-sumexp computations, see for example http://www.nowozin.net/sebastian/blog/ streaming-log-sum-exp-computation.html
+overall. As a generalized jackknife estimate L̂XK has bias O(K−K). We do not recommend its use in practice because its variance is large, however, developing estimators between the two extremes of taking one set and taking all sets of subsets of a certain size seems a good way to achieve high-order bias reduction while controlling variance. 6 EXPERIMENTS
+We now empirically validate our key claims regarding the JVI method: 1. JVI produces better estimates of the marginal likelihood by reducing bias, even for small K; and 2. Higher-order bias reduction is more effective than lower-order bias reduction;
+To this end we will use variational autoencoders trained on MNIST. Our setup is purposely identical to the setup of Tomczak & Welling (2016), where we use the dynamically binarized MNIST data set of Salakhutdinov & Murray (2008). Our numbers are therefore directly comparable to the numbers reported in the above works. Our implementation is available at https://github. com/Microsoft/jackknife-variational-inference.
+We first evaluate the accuracy of evidence estimates given a fixed model. This setting is useful for assessing model performance and for model comparison. 6.1 JVI AS EVALUATION METHOD
+We train a regular VAE on the dynamically binarized MNIST dataset using either the ELBO, IWAE, or JVI-1 objective functions. We use the same two-layer neural network architecture with 300 hidden units per layer as in (Tomczak & Welling, 2016). We train on the first 50,000 training images, using 10,000 images for validation. We train with SGD for 5,000 epochs and take as the final model the model with the maximum validation objective, evaluated after every training epoch. Hyperparameters are the batch size in {1024, 4096} and the SGD step size in {0.1, 0.05, 0.01, 0.005, 0.001}. The final model achieving the best validation score is evaluated once on the MNIST test set. All our models are implemented using Chainer (Tokui et al., 2015) and run on a NVidia Titan X.
+For three separate models, trained using the ordinary ELBO, IWAE, and JVI-1 objectives, we then estimate the marginal log-likelihood (evidence) on the MNIST test set. For evaluation we use JVI estimators up to order five in order to demonstrate higher-order bias reduction. Among all possible JVI estimators up to order five we evaluate only those JVI estimators whose total sum of IWAE estimates has less than 5,000 terms. For example, we do not evaluate L̂J,332 because it contains( 32 0 ) + ( 32 1 ) + ( 32 2 ) + ( 32 3 ) = 5489 terms.5
+Figure 3 shows the evidence estimates for three models. We make the following observations, applying to all plots: 1. Noting the logarithmic x-axis we can see that higher-order JVI estimates are more than one order of magnitude more accurate than IWAE estimates. 2. The quality of the evidence estimates empirically improves monotonically with the order of the JVI estimator; 3. In absolute terms the improvements in evidence estimates is larges for small values of K, which is what is typically used in practice; 4. The higher-order JVI estimators remove low-order bias but significant higher-order bias remains even for K = 64, showing that on real VAE log-weights the contribution of higher-order bias to the evidence error is large; 5. The standard error of each test set marginal likelihood (shown as error bars, best visible in a zoomed version of the plot) is comparable across all JVI estimates; this empirically shows that higher-order bias reduction does not lead to high variance. 6.2 JVI AS A TRAINING OBJECTIVE
+We now report preliminary results on learning models using the JVI objectives. The setting is the same as in Section 6.1 and we report the average performance of five independent runs.
+Table 1 reports the results. We make the following observations: 1. When training on the IWAE and JVI-1 objectives, the respective score by the ELBO objective is impoverished and this effect makes
+5We do this because we discovered numerical issues for large sums of varying size and found all summations of less than a few thousand terms not to have this problem but we are looking into a way to compute more summation terms in a fast and robust manner.
+sense in light of the work of Cremer et al. (2017). Interestingly the effect is stronger for JVI-1. 2. The model trained using the JVI-1 objective falls slightly behind the IWAE model, which is surprising because the evidence is clearly better approximated as demonstrated in Section 6.1. We are not sure what causes this issue, but have two hypotheses: First, in line with recent findings (Rainforth et al., 2017b) a tighter log-evidence approximation could lead to poor encoder models. In such case it is worth exploring two separate learning objectives for the encoder and decoder; for example, using an ELBO for training the encoder, and an IWAE or JVI-1 objective for training the decoder. Second, because JVI estimators are no longer bounds it could be the case that during optimization of the learning objective a decoder is systematically learned in order to amplify positive bias in the log-evidence. 8 CONCLUSION
+In summary we proposed to leverage classic higher-order bias removal schemes for evidence estimation. Our approach is simple to implement, computationally efficient, and clearly improves over existing evidence approximations based on variational inference. More generally our jackknife variational inference debiasing formula can also be used to debias log-evidence estimates coming from annealed importance sampling.
+However, one surprising finding from our work is that using our debiased estimates for training VAE models did not improve over the IWAE training objective and this is surprising because apriori a better evidence estimate should allow for improved model learning.
+One possible extension to our work is to study the use of other resampling methods for bias reduction; promising candidates are the iterated bootstrap, the Bayesian bootstrap, and the debiasing lemma. These methods could offer further improvements on bias reduction or reduced variance, however, the key challenge is to overcome computational requirements of these methods or, alternatively, to derive key quantities analytically.6 Application of the debiasing lemma in particular requires the careful construction of a truncation distribution and often produces estimators of high variance.
+While variance reduction plays a key role in certain areas of machine learning, our hope is that our work shows that bias reduction techniques are also widely applicable. APPENDIX A: PROOFS FOR THE IWAE ANALYSIS
+ EXPECTATION AND BIAS OF L̂K
+Proof. (Of Proposition 1, page 2) To show (8) we apply the delta method for moments (Small, 2010, Section 4.3). First, we define the random variable YK := 1K ∑K i=1 wi corresponding to the sample mean of w1, . . . , wK . Because of linearity of expectation we have E[YK ] = E[w]. We expand the logarithm function log YK = log(E[w] + (YK − E[w])) around E[w] to obtain
+log(E[w] + (YK − E[w])) = logE[w]− ∞∑ j=1 (−1)j j E[w]j (YK − E[w])j . (28)
+Note that only YK is random in (28), all other quantities are constant. Therefore, by taking the expectation on the left and right side of (28) we obtain
+E[log YK ] = logE[w]− ∞∑ j=1 (−1)j j E[w]j E[(YK − E[w])j ]. (29)
+The right hand side of (29) is expressed in terms of the central moments for i ≥ 2, γi := E[(YK − E[YK ])i] of YK , whereas we are interested in an expression using the central moments i ≥ 2, µi := E[(w − E[w])i] of P . With γ = µ = E[w] we denote the shared first non-central moment. Because YK is a sample mean we can use existing results that relate γi to µi. In particular (Angelova, 2012, Theorem 1) gives the relations
+γ = µ (30)
+γ2 = µ2 K
+(31)
+γ3 = µ3 K2
+(32)
+γ4 = 3
+K2 µ22 +
+1 K3 ( µ4 − 3µ22 ) (33)
+γ5 = 10
+K3 µ3µ2 +
+1
+K4 (µ5 − 10µ3µ2) . (34)
+Expanding (29) to order five and using the relations (30) to (34) gives
+E[log YK ] = logE[w]− 1 2µ2 µ2 K + 1 3µ3 µ3 K2 − 1 4µ4
+( 3
+K2 µ22 +
+1 K3 ( µ4 − 3µ22 )) + 1
+5µ5
+( 10
+K3 µ3µ2 +
+1
+K4 (µ5 − 10µ3µ2)
+) + o(K−3). (35)
+Regrouping the terms by order of K produces the result (8). VARIANCE OF L̂K
+Proof. (Of Proposition 2, page 3) We use the definition of the variance and the series expansion of the logarithm function, obtaining
+V[log YK ] = E[(log YK − E[log YK ])2] (36)
+= E (logµ− ∞∑ i=1 (−1)i iµi (YK − µ)i − logµ+ ∞∑ i=1 (−1)i iµi E[(YK − µ)i] )2 = E
+( ∞∑ i=1 (−1)i iµi ( E[(YK − µ)i]− (YK − µ)i ))2 . (37) By expanding (37) to third order and expanding all products we obtain a moment expansion of YK as follows.
+V[log YK ] ≈ γ2 µ2 − 1 µ3 (γ3 − γ1γ2) + 2 3µ4 (γ4 − γ1γ3) + 1 4µ4 (γ4 − γ22) (38)
+− 1 3µ5 (γ5 − γ2γ3) + 1 9µ6 (γ6 − γ23). (39)
+By substituting the sample moments γi of YK with the central moments µi of the original distribution P and simplifying we obtain
+V[log YK ] = 1
+K µ2 µ2 − 1 K2 ( µ3 µ3 − 5µ 2 2 2µ4 ) + o(K−2). (40) CONSISTENCY OF L̂K
+Proof. We have
+P (|L̂K − log p(x)| ≥ ) = P (|L̂K − E[L̂K ] + E[L̂K ]− log p(x)| ≥ ) (41) ≤ P (|L̂K − E[L̂K ]|+ |E[L̂K ]− log p(x)| ≥ ) (42)
+≤ P (|L̂K − E[L̂K ]| ≥ 2 ) + P (|E[L̂K ]− log p(x)| ≥ 2 ). (43)
+The second term in (43) does not involve a random variable therefore is either zero or one. For large enough K it will always be zero due to (10).
+For the first term in (43) we apply Chebyshev’s inequality. We set τ = 2 √ V[L̂K ] and have
+P (|L̂K − E[L̂K ]| ≥ 2 ) = P (|L̂K − E[L̂K ]| ≥ τ
+√ V[L̂K ]) (44)
+≤ 1 τ2
+(45)
+= 4 V[L̂K ] 2
+(46)
+= O(1/K). (47)
+Thus, for K →∞ and any > 0 we have that (43) has a limit of zero. This establishes convergence in probability and hence consistency. APPENDIX B: ANALYSIS OF DELTA-METHOD VARIATIONAL INFERENCE (DVI)
+Definition 2 (Delta method Variational Inference (DVI), (Teh et al., 2007)).
+LDK := Ez1,...,zK∼qω(z|x)
+[ log 1
+K K∑ i=1 wi + ŵ2 2Kŵ
+] , (48)
+where
+wi = p(x|zi) p(zi) qω(zi|w) , i = 1, . . . ,K, (49)
+ŵ2 := 1
+K − 1 K∑ i=1 (wi − ŵ)2, (50)
+ŵ := 1
+K K∑ i=1 wi, (51)
+so that ŵ2 corresponds to the sample variance and ŵ corresponds to the sample mean.
+The practical Monte Carlo estimator of (48) is defined as follows. zi ∼ qω(z|x), i = 1, . . . ,K, (52)
+L̂DK := log 1
+K K∑ i=1 wi + ŵ2 2Kŵ . (53) ANALYSIS OF DELTA METHOD VARIATIONAL INFERENCE
+Proposition 5 (Bias of L̂DK). We evaluate the bias of L̂DK in (53) as follows.
+B[L̂DK ] = − 1
+K2 ( µ3 µ3 − 3µ 2 2 2µ4 ) + o(K−2). (54)
+Proof. Consider the function f(x, y) = xy2 and its second order Taylor expansion around (x, y) = (µ2, µ),
+f(µ2 + (µ̂2 − µ2), µ+ (µ̂− µ)) ≈ µ2 µ2 + 1 µ2 (µ̂2 − µ2)− 2µ2 µ3 (µ̂− µ) (55)
+− 2 µ3 (µ̂2 − µ2)(µ̂− µ) + 6µ2 2µ4 (µ̂− µ)2. (56)
+Taking expectations on both sides cancels all linear terms and yields E [ µ̂2 µ̂2 ] ≈ µ2 µ2 − 2 µ3 E[(µ̂2 − µ2)(µ̂− µ)] + 3µ2 µ4 E[(µ̂− µ)2]. (57)
+By classic results we have that the expected variance of the sample mean around the true mean is related to the variance by E[(µ̂−µ)2] = µ2/K. Furthermore, Zhang (2007) showed a beautiful result about the covariance of sample mean and sample variance for arbitrary random variables, namely that
+Cov[µ̂2, µ̂] = E[(µ̂2 − µ2)(µ̂− µ)] = µ3/K. (58) Using both results in (57) produces
+E [ µ̂2 µ̂2 ] = µ2 µ2 − 1 K ( 2µ3 µ3 − 3µ 2 2 µ4 ) + o(K−1). (59)
+We can now decompose the expectation of L̂DK as follows.
+E[L̂DK ] = E
+[ log 1
+K K∑ i=1 wi
+] + E [ µ̂2
+2Kµ̂2
+] (60)
+= logE[w]− µ2 2Kµ2 + 1 2K ( µ2 µ2 − 1 K ( 2µ3 µ3 − 3µ 2 2 µ4 ) + o(K−1) ) (61)
+= logE[w]− 1 K2 ( µ3 µ3 − 3µ 2 2 2µ4 ) + o(K−2). (62)
+Notably, in (62) the 1/K term is cancelled exactly by the delta method correction, even though we used an empirical ratio estimator µ̂2/µ̂2. Subtracting the true mean log p(x) = logE[w] from (62) yields the bias (54) and completes the proof. EXPERIMENTAL COMPARISON OF DVI AND JVI
+We perform the experiment shown in Figure 1 including the DVI estimator. The result is shown in Figure 4 and confirms that DVI reduces bias but that for the challenging case JVI is superior in terms of bias reduction. APPENDIX C: MORE JVI DETAILS
+ COMPLEXITY PROOF
+Proof. The first for loop of the algorithm has complexity O(K). The second part of the algorithm considers all subsets of size K, K − 1, . . . , K −m. In total these are S(K,m) = ∑m j=0 ( K K−j ) =∑m
+j=0 ( K j ) sets. Justin Melvin derived a bound on this partial binomial sum7, as
+S(K,m) ≤ em ( K
+m
+)m . (63)
+For each of the S(K,m) sets we have to perform at most K operations to compute the log-sum-exp operation, which yields the stated complexity bound. HIGHER-ORDER BIAS REMOVAL DEMONSTRATION
+We illustrate the behaviour of the higher-order JVI estimators on the same P = Gamma(0.1, 1) example we used previously. Figure 5 demonstrates the increasing order of bias removal, O(K−(m+1)) for the L̂J,mK estimators.
+7See https://mathoverflow.net/questions/17202/sum-of-the-first-k-binomial-coefficients-for-fixed-n.
+GPU IMPLEMENTATION OF JVI
+To this end let K ≥ 1 and m < K be fixed and assume the log-weights vi are concatenated in one column vector of K elements. We then construct a matrix B of size (|S|,K), where S is the set of all subsets that will be considered,
+S = m⋃ j=0 EnumerateSubsets({1, . . . ,K},K − j). (64)
+There are |S| rows in B and each row in B corresponds to a subset S ∈ S of samples so that we can use S to index the rows in B. We set
+BS,i = 1
+|S| Ii∈S , (65)
+where Ipred is one if the predicate is true and zero otherwise. We furthermore construct a vector A with |S| elements. We set
+AS = c(K,m,K − |S|)/ ( K
+K − |S|
+) = (−1)K−|S| |S|! |S| m
+K! (m−K + |S|)! . (66)
+Using these definitions we can express the estimator as A> log(B exp(v)), with the log and exp operations being elementwise. However, this is not numerically robust. Instead we can compute the estimator in the log domain as logsumexp2(IS×1v> + logB)A, where logsumexp2 denotes a log-sum-exp operation along the second axis. This can be easily implemented in modern neural network frameworks and we plan to make our implementation available. Instruction: Please generate the Related Work section for this paper, and you have to cite these papers:
+1.  Title: Perturbative black box variational inference , Authors: Robert Bamler Cheng Zhang... , 2017
+2.  Title: Nice: Non-linear independent components estimation , Authors: Laurent Dinh David Krueger... , 2014
+3.  Title: Adversarial message passing for graphical models , Authors: Theofanis Karaletsos , 2016
+4.  Title: Improving variational inference with inverse autoregressive flow , Authors: Diederik P Kingma Tim Salimans... , 2016
+5.  Title: Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks , Authors: Lars Mescheder Sebastian Nowozin... , 2017
+6.  Title: Masked autoregressive flow for density estimation , Authors: George Papamakarios Iain Murray... , 2017
+7.  Title: On the opportunities and pitfalls of nesting monte carlo estimators , Authors: Tom Rainforth Robert Cornish... , 2017
+8.  Title: Tighter variational bounds are not necessarily better , Authors: Tom Rainforth Tuan Anh Le... , 2017
+9.  Title: Markov chain monte carlo and variational inference: Bridging the gap , Authors: Tim Salimans Diederik Kingma... , 2015
+10.  Title: A collapsed variational bayesian inference algorithm for latent dirichlet allocation , Authors: Yee W Teh David Newman... , 2007
+11.  Title: Deep and hierarchical implicit models , Authors: Dustin Tran Rajesh Ranganath... , 2017
+ The suggested output length is around 295 words. Output: <|end|><|start|>assistant
