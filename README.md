@@ -108,6 +108,59 @@ is a useful control: the lossy rule does not simply degrade everything.
 The length statistic is weaker than it looks (paired mean log ratio 0.362, but
 t(9)=1.55, and three ratios are censored at the cap). Don't lean on it.
 
+## Self-correction markers
+
+`scripts/analyze_markers.py` counts hesitation and rework language across both
+arms, normalised per 1000 generated tokens — raw counts would just re-measure the
+length difference.
+
+Markers per 1000 generated tokens, summed over 10 cases (strict: 85,580 tok, lossy: 154,655 tok).
+
+| marker | strict /1k | lossy /1k | ratio |
+|---|---:|---:|---:|
+| wait | 2.89 | 3.66 | 1.27x |
+| hmm | 0.06 | 0.10 | 1.66x |
+| actually | 1.66 | 2.80 | 1.69x |
+| oops | 0.00 | 0.03 | - |
+| mistake | 0.02 | 0.14 | 5.81x |
+| should be | 0.11 | 0.07 | 0.68x |
+| recompute | 0.07 | 0.10 | 1.48x |
+| recheck | 0.30 | 0.11 | 0.36x |
+| redo | 0.00 | 0.00 | - |
+| let's compute | 1.44 | 2.14 | 1.49x |
+
+| group | strict /1k | lossy /1k | ratio |
+|---|---:|---:|---:|
+| **hesitation** | 4.60 | 6.59 | **1.43x** |
+| **error-flag** | 0.13 | 0.21 | **1.61x** |
+| **rework** | 1.81 | 2.35 | **1.30x** |
+
+Per-case totals across all markers, per 1k tokens:
+
+| case | strict | lossy | ratio |
+|---|---:|---:|---:|
+| case_001 | 2.9 | 3.2 | 1.08x |
+| case_002 | 11.5 | 13.0 | 1.12x |
+| case_003 | 6.2 | 7.8 | 1.27x |
+| case_004 | 5.0 | 4.1 | 0.82x |
+| case_005 | 7.6 | 9.6 | 1.26x |
+| case_006 | 5.0 | 9.6 | 1.92x |
+| case_007 | 4.9 | 9.1 | 1.88x |
+| case_008 | 5.1 | 3.6 | 0.70x |
+| case_009 | 6.8 | 6.1 | 0.89x |
+| case_010 | 4.8 | 3.7 | 0.78x |
+
+lossy higher in 6/10 cases.
+
+The aggregate direction matches the hypothesis: hesitation up 1.43x, explicit
+error-flagging up 1.61x, rework up 1.30x, and "mistake/wrong/miscalc" up 5.8x off
+a small base.
+
+But it is only **6/10 per case**, and the two largest movers are case_006 (1.92x)
+and case_007 (1.88x). Four cases go the other way. So this is corroborating
+evidence for the mechanism where it occurs, not a detector — it does not
+cleanly separate the arms, and it would not have flagged case_003.
+
 ## Hypothesis
 
 The degeneration is not the model losing coherence. Its reasoning stays valid; the
