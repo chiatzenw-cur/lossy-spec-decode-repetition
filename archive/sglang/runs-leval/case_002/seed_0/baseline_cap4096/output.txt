@@ -1,0 +1,131 @@
+<|channel|>analysis<|message|>We need to generate the Related Work section for this paper. We must cite the listed papers (13? Actually 14). They are numbered 1-14. We need to incorporate them appropriately. The paper deals with certified robustness for L1 norm using Laplace noise, randomized smoothing, etc. The related work should mention existing methods for robustness certification, Lipschitz bounds, interval bound propagation, abstract interpretation, MILP, etc. Should also mention ensemble methods, Feynman-Kac, etc. Should mention historical context: earlier works on Lipschitz function approximation, piecewise linear verification, maximum resilience, Parseval networks, output range analysis, Lipschitz enforcement, interval bound propagation, differentiable abstract interpretation, fast robustness certification, MILP, Lipschitz-margin training, EnResNet, fast computation of certified robustness, efficient neural network robustness certification.
+
+We should note that the paper builds on randomized smoothing for L1, and its novelty is the Laplace noise and tight bounds. So we need to refer to earlier works on randomized smoothing (Cohen et al. 2019 for Gaussian; Lecuyer et al. 2019 for L1). But also earlier works on Lipschitz, verification, etc. We need to cite the above papers in the related work section. We need to mention each of them at least once. We need to fit around 339 words.
+
+We need to produce a 339-word section titled "Related Work" (or "Related Work" heading). Use citations with [1], [2], etc. The citations refer to the list. So we need to match each to the correct number. We should ensure we cite all 14. The paper is about certified robustness. So we can structure:
+
+- Section starting with an overview of formal verification for neural nets: piecewise linear verification, maximum resilience, etc. [2], [3].
+
+- Lipschitz-based methods: output range analysis, Lipschitz margin training, etc. [5], [11].
+
+- Regularization by Lipschitz continuity: [6].
+
+- Parseval networks: [4].
+
+- Interval bound propagation: [7].
+
+- Differentiable abstract interpretation: [8].
+
+- Fast and effective robustness certification: [9].
+
+- MILP: [10].
+
+- Ensemble methods: EnResNet: [12].
+
+- Fast computation of certified robustness for ReLU: [13].
+
+- Efficient neural network robustness certification: [14].
+
+- Lipschitz function approximation: [1].
+
+We also need to mention earlier works on randomized smoothing: Cohen et al. 2019 (Gaussian), Lecuyer et al. 2019 (L1). But they're not in the list. But we can still mention them, but maybe not required. But we can mention them too.
+
+We need to produce around 339 words. Let's draft.
+
+We need to count words. Let's approximate 339 words. We need to craft a section that uses all citations, but we can also mention some concepts like "max resilience," "Parseval networks," etc. Use citations like [1], [2], etc.
+
+We must ensure we have included citations 1-14. Use citations in square brackets.
+
+We need to check the word count. Let's draft and then count. We'll aim for ~340 words.
+
+We'll write:
+
+"Related Work
+
+Certified robustness for deep neural networks has attracted significant attention due to the vulnerability of modern models to adversarial perturbations. Early verification approaches focused on exact analysis of piecewise linear networks, e.g., [2] introduced a unified view of piecewise linear neural‐network verification, while [3] studied the maximum resilience of artificial neural networks under bounded perturbations. These methods rely on exhaustive search or integer programming, which become infeasible for large‐scale models.
+
+A complementary line of research seeks scalable certificates by enforcing Lipschitz continuity. [1] proposed sorting out Lipschitz function approximation, providing theoretical guarantees on the approximation error. Building on this, [5] performed output‑range analysis for deep neural networks, and [11] introduced Lipschitz‑margin training, a scalable certification framework that bounds the network’s Lipschitz constant. Regularising the network via Lipschitz constraints has also been explored in [6], where the authors derived explicit regularisers that guarantee a global Lipschitz bound. Parseval networks [4] enforce a tight spectral norm constraint, thereby improving robustness to adversarial examples. Interval bound propagation (IBP) [7] offers a fast over‑approximation technique that propagates bounds through ReLU networks; its effectiveness was further examined in [8] through differentiable abstract interpretation. Recent work [9] combined IBP with training to achieve provably robust models at scale.
+
+Exact optimisation techniques have also been applied to robustness verification. The mixed‑integer programming (MIP) formulation in [10] can certify robustness by solving a global optimisation problem, albeit at high computational cost. Ensemble methods such as EnResNet [12] leverage the Feynman‑Kac formula to construct robust ensembles. For ReLU networks, fast computation of certified robustness was proposed in [13], while [14] extended efficient certification to general activation functions.
+
+Our contribution builds on the randomized smoothing framework (Cohen et al. 2019; Lecuyer et al. 2019), extending it to the ℓ₁ norm with Laplace noise. By deriving a tight ℓ₁ robustness certificate for binary classification and demonstrating empirical gains on CIFAR‑10 and ImageNet, we address a gap left by the existing literature."
+
+Now let's count words. Use a word count tool mentally. Let's count each word:
+
+"Related(1) Work(2)
+
+Certified3 robustness4 for5 deep6 neural7 networks8 has9 attracted10 significant11 attention12 due13 to14 the15 vulnerability16 of17 modern18 models19 to20 adversarial21 perturbations.22 Early23 verification24 approaches25 focused26 on27 exact28 analysis29 of30 piecewise31 linear32 networks,33 e.g.,34 [2]35 introduced36 a37 unified38 view39 of40 piecewise41 linear42 neural‑network43 verification,44 while45 [3]46 studied47 the48 maximum49 resilience50 of51 artificial52 neural53 networks54 under55 bounded56 perturbations.57 These58 methods59 rely60 on61 exhaustive62 search63 or64 integer65 programming,66 which67 become68 infeasible69 for70 large‑scale71 models.
+
+A72 complementary73 line74 of75 research76 seeks77 scalable78 certificates79 by80 enforcing81 Lipschitz82 continuity.83 [1]84 proposed85 sorting86 out87 Lipschitz88 function89 approximation,90 providing91 theoretical92 guarantees93 on94 the95 approximation96 error.97 Building98 on99 this,100 [5]101 performed102 output‑range103 analysis104 for105 deep106 neural107 networks,108 and109 [11]110 introduced111 Lipschitz‑margin112 training,113 a114 scalable115 certification116 framework117 that118 bounds119 the120 network’s121 Lipschitz122 constant.123 Regularising124 the125 network126 via127 Lipschitz128 constraints129 has130 also131 been132 explored133 in134 [6],135 where136 the137 authors138 derived139 explicit140 regularisers141 that142 guarantee143 a144 global145 Lipschitz146 bound.147 Parseval148 networks149 [4]150 enforce151 a152 tight153 spectral154 norm155 constraint,156 thereby157 improving158 robustness159 to160 adversarial161 examples.162 Interval163 bound164 propagation165 (IBP)166 [7]167 offers168 a169 fast170 over‑approximation171 technique172 that173 propagates174 bounds175 through176 ReLU177 networks;178 its179 effectiveness180 was181 further182 examined183 in184 [8]185 through186 differentiable187 abstract188 interpretation.189 Recent190 work191 [9]192 combined193 IBP194 with195 training196 to197 achieve198 provably199 robust200 models201 at202 scale.
+
+Exact203 optimisation204 techniques205 have206 also207 been208 applied209 to210 robustness211 verification.212 The213 mixed‑integer214 programming215 (MIP)216 formulation217 in218 [10]219 can220 certify221 robustness222 by223 solving224 a225 global226 optimisation227 problem,228 albeit229 at230 high231 computational232 cost.233 Ensemble234 methods235 such236 as237 EnResNet238 [12]239 leverage240 the241 Feynman‑Kac242 formula243 to244 construct245 robust246 ensembles.247 For248 ReLU249 networks,250 fast251 computation252 of253 certified254 robustness255 was256 proposed257 in258 [13],259 while260 [14]261 extended262 efficient263 certification264 to265 general266 activation267 functions.
+
+Our268 contribution269 builds270 on271 the272 randomized273 smoothing274 framework275 (Cohen276 et al.277 2019;278 Lecuyer279 et al.280 2019),281 extending282 it283 to284 the285 ℓ₁286 norm287 with288 Laplace289 noise.290 By291 deriving292 a293 tight294 ℓ₁295 robustness296 certificate297 for298 binary299 classification300 and301 demonstrating302 empirical303 gains304 on305 CIFAR‑1060 and307 ImageNet,308 we309 address310 a311 gap312 left313 by314 the315 existing316 literature317."
+
+Total words: 317. We need about 339 words. We need ~22 more words. Add a sentence or two. We can mention the contributions of the paper: "We also provide a rigorous analysis of the asymmetry of the ℓ₁ ball, derive a new Neyman–Pearson lemma for mixed random variables, and empirically validate the proposed method on large‑scale datasets." That adds maybe 35 words. Let's adjust.
+
+Add at the end: "In addition, we provide a rigorous analysis of the asymmetry of the ℓ₁ ball, derive a new Neyman–Pearson lemma for mixed random variables, and empirically validate the proposed method on large‑scale datasets." That adds 40 words. Let's add that.
+
+Now count again.
+
+Add words: "In(318) addition,319 we320 provide321 a322 rigorous323 analysis324 of325 the326 asymmetry327 of328 the329 ℓ₁330 ball,331 derive332 a333 new334 Neyman–Pearson335 lemma336 for337 mixed338 random339 variables,340 and341 empirically342 validate343 the344 proposed345 method346 on347 large‑scale348 datasets349."
+
+Now total 349 words. We need 339. We have 10 extra words. Remove some. Maybe remove "rigorous" (1), "new" (1), "empirically" (1). That brings down to 346. Remove "addition" (1). That brings to 345. Remove "large‑scale" (1). That gives 344. Remove "method" (1). That gives 343. Remove "for" (1). That gives 342. Remove "the" before ℓ₁ (1). That gives 341. Remove "the" before "proposed" maybe? That gives 340. Remove "for" before "large" maybe? But we already removed large. Let's adjust. We need 339. Remove one more word: "and" before "empirically" maybe? Let's count again.
+
+We'll rewrite the added sentence precisely: "In addition, we provide a analysis of the asymmetry of the ℓ₁ ball, derive a Neyman–Pearson lemma for mixed random variables, and validate the proposed approach on datasets." Let's count.
+
+"In(1) addition,(2) we(3) provide(4) a(5) analysis(6) of(7) the(8) asymmetry(9) of(10) the(11) ℓ₁(12) ball,(13) derive(14) a(15) Neyman–Pearson(16) lemma(17) for(18) mixed(19) random(20) variables,(21) and(22) validate(23) the(24) proposed(25) approach(26) on(27) datasets(28)."
+
+28 words. Add to 317 gives 345. We still need 339, so 6 words too many. We can shorten further: "In addition, we provide analysis of the ℓ₁ ball’s asymmetry, derive a Neyman–Pearson lemma for mixed random variables, and validate the approach on datasets." Count:
+
+"In(1) addition,(2) we(3) provide(4) analysis(5) of(6) the(7) ℓ₁(8) ball’s(9) asymmetry,(10) derive(11) a(12) Neyman–Pearson(13) lemma(14) for(15) mixed(16) random(17) variables,(18) and(19) validate(20) the(21) approach(22) on(23) datasets(24)."
+
+24 words. Add to 317 = 341. Still 2 over. Remove "the" before "approach". That gives 33 words? Let's recount: remove "the" before "approach" -> "validate approach". Count again:
+
+"In(1) addition,(2) we(3) provide(4) analysis(5) of(6) the(7) ℓ₁(8) ball’s(9) asymmetry,(10) derive(11) a(12) Neyman–Pearson(13) lemma(14) for(15) mixed(16) random(17) variables,(18) and(19) validate(20) approach(21) on(22) datasets(23)."
+
+23 words. Add to 317 = 340. Still 1 over. Remove "addition," maybe? Let's remove "addition," after "In". That becomes "In we provide analysis ...". But grammar. We could say "Additionally, we provide analysis of the ℓ₁ ball’s asymmetry, derive a Neyman–Pearson lemma for mixed random variables, and validate approach on datasets." Count:
+
+"Additionally,(1) we(2) provide(3) analysis(4) of(5) the(6) ℓ₁(7) ball’s(8) asymmetry,(9) derive(10) a(11) Neyman–Pearson(12) lemma(13) for(14) mixed(15) random(16) variables,(17) and(18) validate(19) approach(20) on(21) datasets(22)."
+
+22 words. Add to 317 = 339. Perfect.
+
+Let's incorporate that sentence into the Related Work section. That yields 339 words. We need to ensure we cited all 14 papers. Let's check citations:
+
+- In early verification: [2] and [3] yes.
+
+- Lipschitz function approximation: [1] used.
+
+- Output range analysis: [5] used.
+
+- Lipschitz-margin training: [11] used.
+
+- Regulariser: [6] used.
+
+- Parseval networks: [4] used.
+
+- Interval bound propagation: [7] used.
+
+- Differentiable abstract interpretation: [8] used.
+
+- Fast and effective robustness certification: [9] used.
+
+- Mixed integer programming: [10] used.
+
+- EnResNet: [12] used.
+
+- Fast computation of certified robustness for ReLU: [13] used.
+
+- Efficient neural network robustness certification: [14] used.
+
+Thus all 14 are cited. Good.
+
+Now produce final output: the Related Work section with the text, including citations in brackets. We must ensure formatting: maybe "Related Work" heading. Provide the content. Let's produce the final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Related Work**
+
+Certified robustness for deep neural networks has attracted significant attention due to the vulnerability of modern models to adversarial perturbations. Early verification approaches focused on exact analysis of piecewise‑linear networks, e.g., [2] introduced a unified view of piecewise‑linear neural‑network verification, while [3] studied the maximum resilience of artificial neural networks under bounded perturbations. These methods rely on exhaustive search or integer programming, which become infeasible for large‑scale models.
+
+A complementary line of research seeks scalable certificates by enforcing Lipschitz continuity. [1] proposed sorting out Lipschitz function approximation, providing theoretical guarantees on the approximation error. Building on this, [5] performed output‑range analysis for deep neural networks, and [11] introduced Lipschitz‑margin training, a scalable certification framework that bounds the network’s Lipschitz constant. Regularising the network via Lipschitz constraints has also been explored in [6], where the authors derived explicit regularisers that guarantee a global Lipschitz bound. Parseval networks [4] enforce a tight spectral‑norm constraint, thereby improving robustness to adversarial examples. Interval bound propagation (IBP) [7] offers a fast over‑approximation technique that propagates bounds through ReLU networks; its effectiveness was further examined in [8] through differentiable abstract interpretation. Recent work [9] combined IBP with training to achieve provably robust models at scale.
+
+Exact optimisation techniques have also been applied to robustness verification. The mixed‑integer programming (MIP) formulation in [10] can certify robustness by solving a global optimisation problem, albeit at high computational cost. Ensemble methods such as EnResNet [12] leverage the Feynman‑Kac formula to construct robust ensembles. For ReLU networks, fast computation of certified robustness was proposed in [13], while [14] extended efficient certification to general activation functions.
+
+Our contribution builds on the randomized smoothing framework (Cohen et al. 2019; Lecuyer et al. 2019), extending it to the ℓ₁ norm with Laplace noise. By deriving a tight ℓ₁ robustness certificate for binary classification and demonstrating empirical gains on CIFAR‑10 and ImageNet, we address a gap left by the existing literature. Additionally, we provide analysis of the ℓ₁ ball’s asymmetry, derive a Neyman–Pearson lemma for mixed random variables, and validate the approach on datasets.

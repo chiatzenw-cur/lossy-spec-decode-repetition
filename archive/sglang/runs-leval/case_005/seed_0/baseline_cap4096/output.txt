@@ -1,0 +1,429 @@
+<|channel|>analysis<|message|>We need to generate the Related Work section for this paper, citing the given papers. The papers:
+
+1. "Perturbative black box variational inference" by Robert Bamler Cheng Zhang... 2017
+2. "Nice: Non-linear independent components estimation" by Laurent Dinh David Krueger... 2014
+3. "Adversarial message passing for graphical models" by Theofanis Karaletsos, 2016
+4. "Improving variational inference with inverse autoregressive flow" by Diederik P Kingma Tim Salimans... 2016
+5. "Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks" by Lars Mescheder Sebastian Nowozin... 2017
+6. "Masked autoregressive flow for density estimation" by George Papamakarios Iain Murray... 2017
+7. "On the opportunities and pitfalls of nesting monte carlo estimators" by Tom Rainforth Robert Cornish... 2017
+8. "Tighter variational bounds are not necessarily better" by Tom Rainforth Tuan Anh Le... 2017
+9. "Markov chain monte carlo and variational inference: Bridging the gap" by Tim Salimans Diederik Kingma... 2015
+10. "A collapsed variational bayesian inference algorithm for latent dirichlet allocation" by Yee W Teh David Newman... 2007
+11. "Deep and hierarchical implicit models" by Dustin Tran Rajesh Ranganath... 2017
+
+We need to produce a Related Work section of around 295 words. We need to cite these papers. We need to integrate them into the context of this paper, which is about Jackknife Variational Inference (JVI) and bias reduction for variational inference, with emphasis on IWAE, JVI, delta method, etc. The Related Work section should discuss prior work on variational inference, improved bounds, flows, adversarial methods, etc. Also mention the works on nested Monte Carlo estimators, the critique that tighter bounds aren't necessarily better, bridging MCMC and VI, collapsed inference, and implicit models. Also mention the perturbative black box VI, NICE, adversarial message passing, inverse autoregressive flow, adversarial variational Bayes, masked autoregressive flow, nested Monte Carlo, etc.
+
+We need to ensure we cite the references properly. We presumably have a BibTeX-like numbering or inline citations. In the document, the references are numbered as [1], [2], etc. But we need to cite each with the given numbers? The question: "Please generate the Related Work section for this paper, and you have to cite these papers: ... The suggested output length is around 295 words. Output:"
+
+Thus we need to produce a section titled "RELATED WORK" (or "Related Work") that references these citations appropriately. We need to incorporate them into the narrative. We need to produce about 295 words. Let's target around 280-310 words.
+
+We need to ensure we mention each paper at least once. Let's see. We have 11 papers. We need to cite them. Possibly we can group them by theme.
+
+We can mention:
+
+- Variational inference fundamentals: Kingma & Welling 2013, etc. But that is already in introduction. But we can mention improvements.
+
+- "Perturbative black box variational inference" [1] introduced a perturbative approach to VI.
+
+- "Nice: Non-linear independent components estimation" [2] introduced NICE flows for density estimation.
+
+- "Adversarial message passing for graphical models" [3] uses adversarial learning for message passing.
+
+- "Improving variational inference with inverse autoregressive flow" [4] introduced IAF flows.
+
+- "Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks" [5] unified VAEs and GANs.
+
+- "Masked autoregressive flow for density estimation" [6] introduced MAF flows.
+
+- "On the opportunities and pitfalls of nesting monte carlo estimators" [7] studied nested MC, including IWAE.
+
+- "Tighter variational bounds are not necessarily better" [8] argued that tighter bounds can harm training.
+
+- "Markov chain monte carlo and variational inference: Bridging the gap" [9] bridged MCMC and VI.
+
+- "A collapsed variational bayesian inference algorithm for latent dirichlet allocation" [10] introduced collapsed VI.
+
+- "Deep and hierarchical implicit models" [11] introduced implicit generative models.
+
+We can tie each to either bias, MCMC, flows, adversarial, etc.
+
+We need to ensure the word count: 295 words. Let's write a 295-word paragraph.
+
+We should also mention that the paper builds on the IWAE and uses jackknife for bias reduction. We can mention that prior work on higher-order bias removal is limited in ML.
+
+Let's draft:
+
+"Related Work" section: 295 words.
+
+Let's write.
+
+We need to incorporate citations: e.g., [1], [2], etc. But we need to decide the numbering. In the manuscript, the references are (1) Kingma & Welling 2013, etc. But we can use [1] referencing the list we just gave. But we must consider that the numbering may conflict. But our output is just the text; the citing format may be arbitrary. The instruction: "and you have to cite these papers: ..." It didn't specify the numbering scheme. We can use superscript numbers or parentheses. We can use citations like [1], [2], etc.
+
+The output should contain the related work section. We need to mention each of the 11 papers. Let's do that.
+
+We need about 295 words. Let's write about 290 words.
+
+Ok, let's write.
+
+We'll start with a heading "RELATED WORK" or "Related Work".
+
+Then talk about the general context, improvements to VI, flows, adversarial, nested MC, etc.
+
+We need to mention that our work addresses bias, not just variance. We mention that previous work on tighter bounds [8] warns that no guarantee that tighter bound yields better training. Our work uses jackknife.
+
+We need to mention that [7] studied nested MC and identified pitfalls; our work builds on that.
+
+We need to mention that [1] used perturbative approach to black-box VI; [2] introduced NICE flows; [4] introduced IAF; [6] introduced MAF; [5] unified VAE and GAN; [3] used adversarial message passing; [9] bridged MCMC and VI; [10] collapsed VI for LDA; [11] introduced implicit models.
+
+We can mention that [9] used MCMC to improve VI.
+
+Ok, let's write.
+
+Word count: Let's aim for 295 words.
+
+We'll count quickly.
+
+I'll write and then count.
+
+----
+
+"RELATED WORK
+
+Variational inference has seen a surge of recent developments that enhance expressivity, training stability, and inference accuracy. Perturbative black‑box variational inference [1] introduced a stochastic perturbation framework that improves gradient estimates for arbitrary likelihoods. Flow‑based density estimators such as NICE [2] and inverse autoregressive flow (IAF) [4] have been employed to construct richer variational posteriors, while masked autoregressive flow (MAF) [6] provides a scalable alternative for density estimation. Adversarial message passing [3] and adversarial variational Bayes [5] blend GAN‑style objectives with variational learning, offering alternatives to standard ELBO training. 
+
+The importance‑weighted autoencoder (IWAE) [7] and related nested Monte‑Carlo estimators have been thoroughly analysed, revealing both their asymptotic tightness and practical pitfalls [7]. Recent work has cautioned that tighter variational bounds do not always translate to improved learning, as demonstrated in “Tighter variational bounds are not necessarily better” [8]. Our jackknife‑based debiasing approach complements these studies by explicitly targeting bias reduction in the IWAE estimator, rather than merely tightening the bound. 
+
+Bridging Markov chain Monte‑Carlo and variational inference has also attracted attention; Salimans & Kingma [9] proposed hybrid MCMC–VI schemes that can alleviate mode‑collapse and improve posterior exploration. Collapsed variational Bayesian inference [10] offers efficient updates for discrete latent models, while deep and hierarchical implicit models [11] provide a framework for learning implicit likelihoods that bypass explicit density evaluation. 
+
+Together, these contributions highlight the rich landscape of techniques that extend or challenge conventional variational inference, motivating our exploration of higher‑order bias removal via the jackknife."
+
+----
+
+Now count words. Let's count. 
+
+"RELATED" (1)
+"WORK" (2)
+
+"Variational" (3)
+"inference" (4)
+"has" (5)
+"seen" (6)
+"a" (7)
+"surge" (8)
+"of" (9)
+"recent" (10)
+"developments" (11)
+"that" (12)
+"enhance" (13)
+"expressivity," (14)
+"training" (15)
+"stability," (16)
+"and" (17)
+"inference" (18)
+"accuracy." (19)
+"Perturbative" (20)
+"black‑box" (21)
+"variational" (22)
+"inference" (23)
+"[1]" (24)
+"introduced" (25)
+"a" (26)
+"stochastic" (27)
+"perturbation" (28)
+"framework" (29)
+"that" (30)
+"improves" (31)
+"gradient" (32)
+" estimates" (33)
+"for" (34)
+"arbitrary" (35)
+"likelihoods." (36)
+"Flow‑based" (37)
+"density" (38)
+"estimators" (39)
+"such" (40)
+"as" (41)
+"NICE" (42)
+"[2]" (43)
+"and" (44)
+"inverse" (45)
+"autoregressive" (46)
+"flow" (47)
+"(IAF)" (48)
+"[4]" (49)
+"have" (50)
+"been" (51)
+"employed" (52)
+"to" (53)
+"construct" (54)
+"richer" (55)
+"variational" (56)
+"posteriors," (57)
+"while" (58)
+"masked" (59)
+"autoregressive" (60)
+"flow" (61)
+"(MAF)" (62)
+"[6]" (63)
+"provides" (64)
+"a" (65)
+"scalable" (66)
+"alternative" (67)
+"for" (68)
+"density" (69)
+"estimation." (70)
+"Adversarial" (71)
+"message" (72)
+"passing" (73)
+"[3]" (74)
+"and" (75)
+"adversarial" (76)
+"variational" (77)
+"Bayes" (78)
+"[5]" (79)
+"blend" (80)
+"GAN‑style" (81)
+"objectives" (82)
+"with" (83)
+"variational" (84)
+"learning," (85)
+"offering" (86)
+"alternatives" (87)
+"to" (88)
+"standard" (89)
+"ELBO" (90)
+"training." (91)
+
+"The" (92)
+"importance‑weighted" (93)
+"autoencoder" (94)
+"(IWAE)" (95)
+"[7]" (96)
+"and" (97)
+"related" (98)
+"nested" (99)
+"Monte‑Carlo" (100)
+"estimators" (101)
+"have" (102)
+"been" (103)
+"thoroughly" (104)
+"analysed," (105)
+"revealing" (106)
+"both" (107)
+"their" (108)
+"asymptotic" (109)
+"tightness" (110)
+"and" (111)
+"practical" (112)
+"pitfalls" (113)
+"[7]." (114)
+"Recent" (115)
+"work" (116)
+"has" (117)
+"cautioned" (118)
+"that" (119)
+"tighter" (120)
+"variational" (121)
+"bounds" (122)
+"do" (123)
+"not" (124)
+"always" (125)
+"translate" (126)
+"to" (127)
+"improved" (128)
+"learning," (129)
+"as" (130)
+"demonstrated" (131)
+"in" (132)
+"“Tighter" (133)
+"variational" (134)
+"bounds" (135)
+"are" (136)
+"not" (137)
+"necessarily" (138)
+"better”" (139)
+"[8]." (140)
+"Our" (141)
+"jackknife‑based" (142)
+"debiasing" (143)
+"approach" (144)
+"complements" (145)
+"these" (146)
+"studies" (147)
+"by" (148)
+"explicitly" (149)
+"targeting" (150)
+"bias" (151)
+"reduction" (152)
+"in" (153)
+"the" (154)
+"IWAE" (155)
+"estimator," (156)
+"rather" (157)
+"than" (158)
+"merely" (159)
+"tightening" (160)
+"the" (161)
+"bound." (162)
+
+"Bridging" (163)
+"Markov" (164)
+"chain" (165)
+"Monte" (166)
+"Carlo" (167)
+"and" (168)
+"variational" (169)
+"inference" (170)
+"has" (171)
+"also" (172)
+"attracted" (173)
+"attention;" (174)
+"Salimans" (175)
+"&" (176)
+"Kingma" (177)
+"[9]" (178)
+"proposed" (179)
+"hybrid" (180)
+"MCMC–VI" (181)
+"schemes" (182)
+"that" (183)
+"can" (184)
+"alleviate" (185)
+"mode‑collapse" (186)
+"and" (187)
+"improve" (188)
+"posterior" (189)
+"exploration." (190)
+"Collapsed" (191)
+"variational" (192)
+"Bayesian" (193)
+"inference" (194)
+"[10]" (195)
+"offers" (196)
+"efficient" (197)
+"updates" (198)
+"for" (199)
+"discrete" (200)
+"latent" (201)
+"models," (202)
+"while" (203)
+"deep" (204)
+"and" (205)
+"hierarchical" (206)
+"implicit" (207)
+"models" (208)
+"[11]" (209)
+"provide" (210)
+"a" (211)
+"framework" (212)
+"for" (213)
+"learning" (214)
+"implicit" (215)
+"likelihoods" (216)
+"that" (217)
+"bypass" (218)
+"explicit" (219)
+"density" (220)
+"evaluation." (221)
+
+"Together," (222)
+"these" (223)
+"contributions" (224)
+"highlight" (225)
+"the" (226)
+"rich" (227)
+"landscape" (228)
+"of" (229)
+"techniques" (230)
+"that" (231)
+"extend" (232)
+"or" (233)
+"challenge" (234)
+"conventional" (235)
+"variational" (236)
+"inference," (237)
+"motivating" (238)
+"our" (239)
+"exploration" (240)
+"of" (241)
+"higher‑order" (242)
+"bias" (243)
+"removal" (244)
+"via" (245)
+"the" (246)
+"jackknife." (247)
+
+We have 247 words, 48 words short of 295. We need about 48 more words.
+
+We can expand by adding a few sentences. We could discuss the relevance of other works. Let's add a paragraph about "NICE" flows and "IAF" flows used to reduce bias of variational posteriors, mention "Masked autoregressive flow" for density estimation, talk about "Adversarial message passing" as alternative training objective, mention "Adversarial variational Bayes".
+
+Also mention that "Deep and hierarchical implicit models" provide alternative inference for implicit distributions.
+
+Also mention "Perturbative black-box variational inference" as a direct approach to reduce bias.
+
+Let's add a paragraph of about ~50 words.
+
+Add:
+
+"Beyond expressive posteriors, several works have sought to reduce estimator bias directly. Perturbative black‑box variational inference [1] applies stochastic perturbations to the ELBO gradient, mitigating bias without altering the bound. Similarly, NICE [2] and IAF [4] introduce normalizing flows that reshape the variational family, allowing the IWAE objective to capture more accurate posterior samples. Adversarial message passing [3] and adversarial variational Bayes [5] replace the ELBO with a discriminator‑based objective, thereby sidestepping the bias inherent in fixed‑form KL terms. These complementary strategies underline the multifaceted nature of bias in variational learning, motivating a principled debiasing framework such as the jackknife."
+
+Add that paragraph. Now count words again.
+
+Add the new paragraph:
+
+"Beyond" (1)
+"expressive" (2)
+"posteriors," (3)
+"several" (4)
+"works" (5)
+"have" (6)
+"sought" (7)
+"to" (8)
+"reduce" (9)
+"estimator" (10)
+"bias" (11)
+"directly." (12)
+"Perturbative" (13)
+"black‑box" (14)
+"variational" (15)
+"inference" (16)
+"[1]" (17)
+"applies" (18)
+"stochastic" (19)
+"perturbations" (20)
+"to" (21)
+"the" (22)
+"ELBO" (23)
+"gradient," (24)
+"mitigating" (25)
+"bias" (26)
+"without" (27)
+"altering" (28)
+"the" (29)
+"bound." (30)
+"Similarly," (31)
+"NICE" (32)
+"[2]" (33)
+"and" (34)
+"IAF" (35)
+"[4]" (36)
+"introduce" (37)
+"normalizing" (38)
+"flows" (39)
+"that" (40)
+"reshape" (41)
+"the" (42)
+"variational" (43)
+"family," (44)
+"allowing" (45)
+"the" (46)
+"IWAE" (47)
+"objective" (48)
+"to" (49)
+"capture" (50)
+"more" (51)
+"accurate" (52)
+"posterior" (53)
+"samples." (54)
+"Adversarial"

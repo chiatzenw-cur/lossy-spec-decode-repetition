@@ -1,0 +1,213 @@
+<|channel|>analysis<|message|>The user wants us to generate the Related Work section for this paper, citing the given 14 papers. The output length should be around 339 words. We need to incorporate citations. The paper is about robustness certificates for the L1 norm, using Laplace smoothing, randomized smoothing, etc. The Related Work should mention prior work on Lipschitz function approximation, piecewise linear neural network verification, resilience, Parseval networks, output range analysis, Lipschitz regularization, interval bound propagation, abstract interpretation, etc. Also mention works on verifying neural networks, certification algorithms, randomized smoothing, etc. Also mention that the new work addresses asymmetry of L1 norm and uses Laplace.
+
+We need to cite each paper appropriately. The citations should be in square brackets with numbers? We can incorporate the citation placeholders. The user gave titles and authors, we can use the citation numbers 1-14 according to the list order. The output length is about 339 words.
+
+We need to produce a Related Work section that references these papers. Let's produce a cohesive narrative.
+
+We need to keep it around 339 words. Let's aim for 340 words maybe. We'll count approximate words. Let's draft:
+
+"Related Work
+
+Robustness certification for neural networks has attracted significant attention. Lipschitz-based methods [1][6] provide guarantees by bounding the Lipschitz constant of the network, while Parseval networks [4] impose spectral constraints to enhance robustness. Piecewise linear verification [2] and output range analysis [5] exploit the ReLU structure to compute exact bounds. Mixed integer programming [10] and interval bound propagation [7] offer scalable verification but often suffer from conservatism. Differentiable abstract interpretation [8] and its fast variant [9] allow gradient-based training of verifiably robust models. Lipschitz-margin training [11] further scales certification to large architectures. Recent ensemble approaches such as EnResNet [12] leverage stochasticity to improve robustness.
+
+Randomized smoothing, introduced by Cohen et al. [15], transforms a base classifier into a smoothed predictor that admits provable robustness guarantees. Subsequent works have expanded this framework to various norms and noise distributions. The Laplace-based smoothing proposed in this paper addresses the L1 norm, which remains underexplored compared to the L2 and Linf settings. Prior L1 certification efforts [16] rely on conservative bounds due to the asymmetry of the L1 ball; our analysis tightens these guarantees by employing an isotropic Laplace distribution and a novel mixed-variable Neyman‑Pearson lemma. This approach aligns with recent advances in efficient robustness certification for ReLU networks [13][14], offering a scalable alternative for high-dimensional data.
+
+The contributions of our work connect to the broader line of research on provable robustness. While earlier methods focused on deterministic verification of specific network architectures, our framework provides a general, distribution-agnostic certificate that is tighter in the binary case and provides state-of-the-art empirical performance on CIFAR‑10 and ImageNet. By integrating concepts from Lipschitz regularization, interval bounds, and abstract interpretation, we bridge the gap between theoretical guarantees and practical deployment."
+
+But we need to incorporate citations for each paper. Let's align numbers:
+
+We have 14 papers.
+
+1: Sorting out Lipschitz function approximation [1].
+2: Unified view of piecewise linear neural network verification [2].
+3: Maximum resilience of artificial neural networks [3].
+4: Parseval networks: Improving robustness to adversarial examples [4].
+5: Output range analysis for deep neural networks [5].
+6: Regularisation of neural networks by enforcing Lipschitz continuity [6].
+7: On the effectiveness of interval bound propagation for training verifiably robust models [7].
+8: Differentiable abstract interpretation for provably robust neural networks [8].
+9: Fast and effective robustness certification [9].
+10: Evaluating robustness of neural networks with mixed integer programming [10].
+11: Lipschitz-margin training: Scalable certification of perturbation invariance for deep neural networks [11].
+12: EnResNet: ResNet ensemble via the Feynman-Kac [12].
+13: Towards fast computation of certified robustness for ReLU networks [13].
+14: Efficient neural network robustness certification with general activation functions [14].
+
+We need to refer to each somewhere.
+
+We need to mention "Cohen et al." but we don't have a citation number for it. We can just mention "Cohen et al. [15]" but we don't have that. The user didn't provide a number for Cohen. So we can just refer to it generically or keep the citation but it will be outside the list. The user didn't ask to cite it. We might avoid referencing it or we can add a placeholder [15] but might not be necessary. We can mention "randomized smoothing" without citing. But better to cite [3] for "maximum resilience" or maybe [6] for Lipschitz regularization.
+
+We need to include all 14 citations. So we need to mention each. Let's craft a paragraph that includes all 14 references.
+
+We need to keep the length ~339 words. Let's count approximate words.
+
+We can produce approximate. Let's write.
+
+Start:
+
+"Related Work"
+
+Then paragraph.
+
+Let's produce about 340 words. Let's try to count.
+
+"Related Work
+
+Provable robustness for neural networks has evolved along several complementary lines. Lipschitz-based approaches [1][6] bound the sensitivity of a network by constraining its spectral norm or by enforcing Lipschitz continuity, while Parseval networks [4] impose spectral constraints tied to the Parseval identity to improve robustness. Piecewise linear verification frameworks [2] and output range analysis [5] exploit the ReLU structure to produce exact bounds, whereas mixed integer programming techniques [10] offer a general but computationally expensive alternative. Interval bound propagation [7] and its fast variant [9] enable scalable training of verifiably robust models, and differentiable abstract interpretation [8] further bridges the gap between formal verification and gradient‐based learning. Lipschitz‑margin training [11] scales Lipschitz‑based certification to large architectures, and ensemble methods such as EnResNet [12] leverage stochasticity to enhance robustness. Recent work on efficient certification for ReLU networks [13] and general activation functions [14] reduces the computational burden of verifying high‑dimensional models.
+
+Randomized smoothing has emerged as a powerful framework to convert a base classifier into a smoothed predictor that admits provable robustness guarantees under norm‐bounded perturbations. While most prior work has focused on L₂ or ℓ∞ norms, the asymmetric nature of the ℓ₁ ball has limited the effectiveness of existing certificates. Our Laplace‑based smoothing framework addresses this gap by deriving tight ℓ₁ robustness guarantees through a novel mixed‑variable Neyman–Pearson lemma and by exploiting the isotropic Laplace distribution as a conjugate to the ℓ₁ norm. This approach yields tighter bounds in the binary setting and improves empirical certified accuracy on CIFAR‑10 and ImageNet relative to Gaussian‐based smoothing. By integrating concepts from Lipschitz regularization, interval bounds, and abstract interpretation, our method offers a scalable, distribution‑agnostic certificate that bridges the theoretical guarantees of deterministic verification with the practical deployment of large‑scale deep networks."
+
+Now count words:
+
+"Related(1) Work(2)
+
+Provable(3) robustness(4) for(5) neural(6) networks(7) has(8) evolved(9) along(10) several(11) complementary(12) lines.(13) Lipschitz-based(14) approaches(15) [1][6](16) bound(17) the(18) sensitivity(19) of(20) a(21) network(22) by(23) constraining(24) its(25) spectral(26) norm(27) or(28) by(29) enforcing(30) Lipschitz(31) continuity,(32) while(33) Parseval(34) networks(35) [4](36) impose(37) spectral(38) constraints(39) tied(40) to(41) the(42) Parseval(43) identity(44) to(45) improve(46) robustness.(47) Piecewise(48) linear(49) verification(50) frameworks(51) [2](52) and(53) output(54) range(55) analysis(56) [5](57) exploit(58) the(59) ReLU(60) structure(61) to(62) produce(63) exact(64) bounds,(65) whereas(66) mixed(67) integer(68) programming(69) techniques(70) [10](71) offer(72) a(73) general(74) but(75) computationally(76) expensive(77) alternative.(78) Interval(79) bound(80) propagation(81) [7](82) and(83) its(84) fast(85) variant(86) [9](87) enable(88) scalable(89) training(90) of(91) verifiably(92) robust(93) models,(94) and(95) differentiable(96) abstract(97) interpretation(98) [8](99) further(100) bridges(101) the(102) gap(103) between(104) formal(105) verification(106) and(107) gradient‑based(108) learning.(109) Lipschitz‑margin(110) training(111) [11](112) scales(113) Lipschitz‑based(114) certification(115) to(116) large(117) architectures,(118) and(119) ensemble(120) methods(121) such(122) as(123) EnResNet(124) [12](125) leverage(126) stochasticity(127) to(128) enhance(129) robustness.(130) Recent(131) work(132) on(133) efficient(134) certification(135) for(136) ReLU(137) networks(138) [13](139) and(140) general(141) activation(142) functions(143) [14](144) reduces(145) the(146) computational(147) burden(148) of(149) verifying(150) high‑dimensional(151) models.(152)
+
+Randomized(153) smoothing(154) has(155) emerged(156) as(157) a(158) powerful(159) framework(160) to(161) convert(162) a(163) base(164) classifier(165) into(166) a(167) smoothed(168) predictor(169) that(170) admits(171) provable(172) robustness(173) guarantees(174) under(175) norm‑bounded(176) perturbations.(177) While(178) most(179) prior(180) work(181) has(182) focused(183) on(184) L₂(185) or(186) ℓ∞(187) norms,(188) the(189) asymmetric(190) nature(191) of(192) the(193) ℓ₁(194) ball(195) has(196) limited(197) the(198) effectiveness(199) of(200) existing(201) certificates.(202) Our(203) Laplace‑based(204) smoothing(205) framework(206) addresses(207) this(208) gap(209) by(210) deriving(211) tight(212) ℓ₁(213) robustness(214) guarantees(215) through(216) a(217) novel(218) mixed‑variable(219) Neyman–Pearson(220) lemma(221) and(222) by(223) exploiting(224) the(225) isotropic(226) Laplace(227) distribution(228) as(229) a(230) conjugate(231) to(232) the(233) ℓ₁(234) norm.(235) This(236) approach(237) yields(238) tighter(239) bounds(240) in(241) the(242) binary(243) setting(244) and(245) improves(246) empirical(247) certified(248) accuracy(249) on(250) CIFAR‑10(251) and(252) ImageNet(253) relative(254) to(255) Gaussian‑based(256) smoothing.(257) By(258) integrating(259) concepts(260) from(261) Lipschitz(262) regularization,(263) interval(264) bounds,(265) and(266) abstract(267) interpretation,(268) our(269) method(270) offers(271) a(272) scalable,(273) distribution‑agnostic(274) certificate(275) that(276) bridges(277) the(278) theoretical(279) guarantees(280) of(281) deterministic(282) verification(283) with(284) the(285) practical(286) deployment(287) of(288) large‑scale(289) deep(290) networks.(291)
+
+Total words: 291. We need 339 words. So we need about 48 more words. Let's expand or add a paragraph.
+
+Add more content about the contributions or other related works.
+
+Add a paragraph: "In addition to these deterministic verification methods, stochastic smoothing techniques have been explored to provide probabilistic robustness guarantees. The Laplace smoothing we propose is complementary to earlier Gaussian-based methods [Cohen et al.] and leverages the heavy‑tailed nature of the Laplace distribution to better accommodate ℓ₁ perturbations. Our analysis also builds on the theoretical foundations of differential privacy, illustrating how the Laplace mechanism can be interpreted as a noise addition that simultaneously yields a robustness certificate. Moreover, the mixed‑variable Neyman–Pearson lemma we introduce extends classical statistical decision theory to the mixed discrete‑continuous setting, enabling tighter bounds that are not achievable by deterministic interval propagation alone."
+
+We need to include citations. We can cite [1] again for Lipschitz, [6] for Lipschitz continuity, maybe [3] for maximum resilience. But we already used [3] not yet. We should incorporate [3] somewhere. And maybe [2] again? But it's okay. We must ensure each of the 14 citations appears at least once. We have used all 14? Let's check:
+
+1: [1] used.
+2: [2] used.
+3: [3] not used. We need to cite [3].
+4: [4] used.
+5: [5] used.
+6: [6] used.
+7: [7] used.
+8: [8] used.
+9: [9] used.
+10: [10] used.
+11: [11] used.
+12: [12] used.
+13: [13] used.
+14: [14] used.
+
+We didn't use [3] "Maximum resilience of artificial neural networks". We need to insert a citation for [3]. We can mention "Cheng et al. [3] studied the theoretical limits of resilience for neural networks" or similar. That will add some more words.
+
+Also we need to add the paragraph we drafted. Let's count new words.
+
+Paragraph:
+
+"In addition to these deterministic verification methods, stochastic smoothing techniques have been explored to provide probabilistic robustness guarantees. The Laplace smoothing we propose is complementary to earlier Gaussian-based methods [Cohen et al.] and leverages the heavy‑tailed nature of the Laplace distribution to better accommodate ℓ₁ perturbations. Our analysis also builds on the theoretical foundations of differential privacy, illustrating how the Laplace mechanism can be interpreted as a noise addition that simultaneously yields a robustness certificate. Moreover, the mixed‑variable Neyman–Pearson lemma we introduce extends classical statistical decision theory to the mixed discrete‑continuous setting, enabling tighter bounds that are not achievable by deterministic interval propagation alone."
+
+Let's count words:
+
+In(1) addition(2) to(3) these(4) deterministic(5) verification(6) methods,(7) stochastic(8) smoothing(9) techniques(10) have(11) been(12) explored(13) to(14) provide(15) probabilistic(16) robustness(17) guarantees.(18) The(19) Laplace(20) smoothing(21) we(22) propose(23) is(24) complementary(25) to(26) earlier(27) Gaussian‑based(28) methods(29) [Cohen(30) et(31) al.](32) and(33) leverages(34) the(35) heavy‑tailed(36) nature(37) of(38) the(39) Laplace(40) distribution(41) to(42) better(43) accommodate(44) ℓ₁(45) perturbations.(46) Our(47) analysis(48) also(49) builds(50) on(51) the(52) theoretical(53) foundations(54) of(55) differential(56) privacy,(57) illustrating(58) how(59) the(60) Laplace(61) mechanism(62) can(63) be(64) interpreted(65) as(66) a(67) noise(68) addition(69) that(70) simultaneously(71) yields(72) a(73) robustness(74) certificate.(75) Moreover,(76) the(77) mixed‑variable(78) Neyman–Pearson(79) lemma(80) we(81) introduce(82) extends(83) classical(84) statistical(85) decision(86) theory(87) to(88) the(89) mixed(90) discrete‑continuous(91) setting,(92) enabling(93) tighter(94) bounds(95) that(96) are(97) not(98) achievable(99) by(100) deterministic(101) interval(102) propagation(103) alone.(104)
+
+104 words. Add to 291 gives 395 words. We need around 339 words, so we need to reduce about 56 words. We can trim a bit. We can shorten the paragraph slightly.
+
+We also need to include [3] somewhere. We can add a sentence referencing it. We can insert e.g., "Cheng et al. [3] investigated the fundamental limits of resilience for neural networks, highlighting the importance of certifiable robustness." That adds some words.
+
+But we need to reduce overall words.
+
+Let's attempt to rewrite the Related Work section with around 339 words.
+
+We can keep the first paragraph maybe same. Count again.
+
+First paragraph has 291 words. Let's shorten it by about 55 words. We can remove some words or shorten sentences.
+
+Alternatively, we can keep the first paragraph but reduce some descriptive words. Let's try to rewrite first paragraph to about 230 words. Then second paragraph of 104 words plus maybe 3 words to insert [3] = 107 words. 230+107 = 337 words. That matches target.
+
+Let's attempt to rewrite first paragraph.
+
+Rewrite:
+
+"Provable robustness for neural networks has been pursued through several complementary approaches. Lipschitz‑based methods [1][6] constrain a network’s spectral norm or enforce Lipschitz continuity, while Parseval networks [4] impose spectral constraints tied to the Parseval identity. Piecewise‑linear verification [2] and output‑range analysis [5] exploit ReLU structures to produce exact bounds; mixed‑integer programming [10] offers a general but expensive alternative. Interval bound propagation [7] and its fast variant [9] enable scalable training of verifiably robust models, and differentiable abstract interpretation [8] bridges formal verification and gradient‑based learning. Lipschitz‑margin training [11] scales Lipschitz‑based certification to large architectures, and ensembles such as EnResNet [12] leverage stochasticity to boost robustness. Recent work on efficient certification for ReLU networks [13] and general activation functions [14] reduces the computational burden of verifying high‑dimensional models."
+
+Let's count words.
+
+Provable(1) robustness(2) for(3) neural(4) networks(5) has(6) been(7) pursued(8) through(9) several(10) complementary(11) approaches.(12) Lipschitz‑based(13) methods(14) [1][6](15) constrain(16) a(17) network’s(18) spectral(19) norm(20) or(21) enforce(22) Lipschitz(23) continuity,(24) while(25) Parseval(26) networks(27) [4](28) impose(29) spectral(30) constraints(31) tied(32) to(33) the(34) Parseval(35) identity.(36) Piecewise‑linear(37) verification(38) [2](39) and(40) output‑range(41) analysis(42) [5](43) exploit(44) ReLU(45) structures(46) to(47) produce(48) exact(49) bounds;(50) mixed‑integer(51) programming(52) [10](53) offers(54) a(55) general(56) but(57) expensive(58) alternative.(59) Interval(60) bound(61) propagation(62) [7](63) and(64) its(65) fast(66) variant(67) [9](68) enable(69) scalable(70) training(71) of(72) verifiably(73) robust(74) models,(75) and(76) differentiable(77) abstract(78) interpretation(79) [8](80) bridges(81) formal(82) verification(83) and(84) gradient‑based(85) learning.(86) Lipschitz‑margin(87) training(88) [11](89) scales(90) Lipschitz‑based(91) certification(92) to(93) large(94) architectures,(95) and(96) ensembles(97) such(98) as(99) EnResNet(100) [12](101) leverage(102) stochasticity(103) to(104) boost(105) robustness.(106) Recent(107) work(108) on(109) efficient(110) certification(111) for(112) ReLU(113) networks(114) [13](115) and(116) general(117) activation(118) functions(119) [14](120) reduces(121) the(122) computational(123) burden(124) of(125) verifying(126) high‑dimensional(127) models.(128)
+
+128 words. Good, we need around 339 words total, so we need about 211 words remaining.
+
+Now second paragraph: Let's rewrite second paragraph to maybe 180 words. Then we might need to add a short third paragraph about [3] and [Cohen]. Let's craft.
+
+Second paragraph: "Randomized smoothing provides a probabilistic framework that transforms a base classifier into a smoothed predictor with provable guarantees against ℓ₂ or ℓ∞ perturbations. However, the asymmetric ℓ₁ ball has hindered tight certification. Our Laplace‑based smoothing addresses this by deriving a tight ℓ₁ robustness certificate through a mixed‑variable Neyman–Pearson lemma and the isotropic Laplace distribution, which is a natural conjugate to the ℓ₁ norm. This method yields tighter bounds in binary classification and achieves state‑of‑the‑art certified accuracy on CIFAR‑10 and ImageNet, outperforming Gaussian‑based smoothing that adapts ℓ₂ certificates to ℓ₁. The approach also demonstrates the advantage of Laplace noise over Gaussian noise when the same variance is used, as reflected in larger rectified optimal parameter spaces."
+
+Let's count words.
+
+Randomized(1) smoothing(2) provides(3) a(4) probabilistic(5) framework(6) that(7) transforms(8) a(9) base(10) classifier(11) into(12) a(13) smoothed(14) predictor(15) with(16) provable(17) guarantees(18) against(19) ℓ₂(20) or(21) ℓ∞(22) perturbations.(23) However,(24) the(25) asymmetric(26) ℓ₁(27) ball(28) has(29) hindered(30) tight(31) certification.(32) Our(33) Laplace‑based(34) smoothing(35) addresses(36) this(37) by(38) deriving(39) a(40) tight(41) ℓ₁(42) robustness(43) certificate(44) through(45) a(46) mixed‑variable(47) Neyman–Pearson(48) lemma(49) and(50) the(51) isotropic(52) Laplace(53) distribution,(54) which(55) is(56) a(57) natural(58) conjugate(59) to(60) the(61) ℓ₁(62) norm.(63) This(64) method(65) yields(66) tighter(67) bounds(68) in(69) binary(70) classification(71) and(72) achieves(73) state‑of‑the‑art(74) certified(75) accuracy(76) on(77) CIFAR‑10(78) and(79) ImageNet,(80) outperforming(81) Gaussian‑based(82) smoothing(83) that(84) adapts(85) ℓ₂(86) certificates(87) to(88) ℓ₁.(89) The(90) approach(91) also(92) demonstrates(93) the(94) advantage(95) of(96) Laplace(97) noise(98) over(99) Gaussian(100) noise(101) when(102) the(103) same(104) variance(105) is(106) used,(107) as(108) reflected(109) in(110) larger(111) rectified(112) optimal(113) parameter(114) spaces.(115)
+
+115 words. So far 128+115 = 243 words. We need ~96 more words. We also need to include citation [3] and maybe add a short paragraph about [Cohen] or just mention [Cohen et al.] but it's okay. We can add a third paragraph: "Cheng et al. [3] studied the maximum resilience of artificial neural networks, providing theoretical bounds that complement our empirical results. Additionally, the Laplace smoothing framework draws on the Laplace mechanism from differential privacy, illustrating how noise addition simultaneously yields a robustness certificate, a connection that has been underexplored in prior work." Let's count words.
+
+Cheng(1) et(2) al.(3) [3](4) studied(5) the(6) maximum(7) resilience(8) of(9) artificial(10) neural(11) networks,(12) providing(13) theoretical(14) bounds(15) that(16) complement(17) our(18) empirical(19) results.(20) Additionally,(21) the(22) Laplace(23) smoothing(24) framework(25) draws(26) on(27) the(28) Laplace(29) mechanism(30) from(31) differential(32) privacy,(33) illustrating(34) how(35) noise(36) addition(37) simultaneously(38) yields(39) a(40) robustness(41) certificate,(42) a(43) connection(44) that(45) has(46) been(47) underexplored(48) in(49) prior(50) work.(51)
+
+51 words. That brings total to 243+51 = 294 words. We still need ~45 words to reach 339. We can add a concluding sentence or two, about future work or contributions. Let's add something like:
+
+"Future research may extend our mixed‑variable Neyman–Pearson framework to other norms and explore tighter bounds for multi‑class settings, potentially integrating with abstract interpretation techniques for even more efficient certification."
+
+Count words:
+
+Future(1) research(2) may(3) extend(4) our(5) mixed‑variable(6) Neyman–Pearson(7) framework(8) to(9) other(10) norms(11) and(12) explore(13) tighter(14) bounds(15) for(16) multi‑class(17) settings,(18) potentially(19) integrating(20) with(21) abstract(22) interpretation(23) techniques(24) for(25) even(26) more(27) efficient(28) certification.(29)
+
+29 words. Add to 294 => 323 words. We need 16 more words. Let's append: "Such a direction would unify robust training and formal verification across a broad spectrum of deep learning models."
+
+Count words:
+
+Such(1) a(2) direction(3) would(4) unify(5) robust(6) training(7) and(8) formal(9) verification(10) across(11) a(12) broad(13) spectrum(14) of(15) deep(16) learning(17) models.(18)
+
+18 words. Add to 323 => 341 words. Slightly over target 339. We can remove two words: maybe remove "broad" or "deep". Let's remove "broad" and "deep". Remove words 13 and 15? Let's re-evaluate.
+
+We want 339 words. We currently have 341. Remove two words. We can remove "broad" and "deep". Let's recompute the last sentence: "Such a direction would unify robust training and formal verification across a spectrum of learning models." Count words:
+
+Such(1) a(2) direction(3) would(4) unify(5) robust(6) training(7) and(8) formal(9) verification(10) across(11) a(12) spectrum(13) of(14) learning(15) models.(16)
+
+Now 16 words. We had 18, removed 2, now 16. So new total 323+16 = 339 words. Good.
+
+Now we need to confirm we included all 14 citations: [1] to [14]. Let's check:
+
+Paragraph 1: uses [1][6][4][2][5][10][7][9][8][11][12][13][14]. That's all 1-14 except maybe [3]. We added [3] in paragraph 3. Good.
+
+Now we need to ensure we used all citations: [1] yes. [2] yes. [3] yes. [4] yes. [5] yes. [6] yes. [7] yes. [8] yes. [9] yes. [10] yes. [11] yes. [12] yes. [13] yes. [14] yes.
+
+We also referenced [Cohen et al.] but not a numbered citation. It's okay. The user didn't ask for that.
+
+Now we need to ensure the output is a Related Work section. We should present it as a paragraph or multiple paragraphs. We can format with headings. We need to output plain text. The user said "Output:". They just want the section.
+
+We should output the section text.
+
+We must ensure the word count is around 339 words. We counted 339 words. Good.
+
+Now check that the paragraph includes the citations in the proper bracket style. We used [1] etc. The user didn't provide a format, but we used bracket numbers. That is fine.
+
+Let's double-check word count again with the final version to ensure no stray changes. I'll rewrite the final section as:
+
+"Provable robustness for neural networks has been pursued through several complementary approaches. Lipschitz‑based methods [1][6] constrain a network’s spectral norm or enforce Lipschitz continuity, while Parseval networks [4] impose spectral constraints tied to the Parseval identity. Piecewise‑linear verification [2] and output‑range analysis [5] exploit ReLU structures to produce exact bounds; mixed‑integer programming [10] offers a general but expensive alternative. Interval bound propagation [7] and its fast variant [9] enable scalable training of verifiably robust models, and differentiable abstract interpretation [8] bridges formal verification and gradient‑based learning. Lipschitz‑margin training [11] scales Lipschitz‑based certification to large architectures, and ensembles such as EnResNet [12] leverage stochasticity to boost robustness. Recent work on efficient certification for ReLU networks [13] and general activation functions [14] reduces the computational burden of verifying high‑dimensional models.
+
+Randomized smoothing provides a probabilistic framework that transforms a base classifier into a smoothed predictor with provable guarantees against ℓ₂ or ℓ∞ perturbations. However, the asymmetric ℓ₁ ball has hindered tight certification. Our Laplace‑based smoothing addresses this by deriving a tight ℓ₁ robustness certificate through a mixed‑variable Neyman–Pearson lemma and the isotropic Laplace distribution, which is a natural conjugate to the ℓ₁ norm. This method yields tighter bounds in binary classification and achieves state‑of‑the‑art certified accuracy on CIFAR‑10 and ImageNet, outperforming Gaussian‑based smoothing that adapts ℓ₂ certificates to ℓ₁. The approach also demonstrates the advantage of Laplace noise over Gaussian noise when the same variance is used, as reflected in larger rectified optimal parameter spaces.
+
+Cheng et al. [3] studied the maximum resilience of artificial neural networks, providing theoretical bounds that complement our empirical results. Additionally, the Laplace smoothing framework draws on the Laplace mechanism from differential privacy, illustrating how noise addition simultaneously yields a robustness certificate, a connection that has been underexplored in prior work.
+
+Future research may extend our mixed‑variable Neyman–Pearson framework to other norms and explore tighter bounds for multi‑class settings, potentially integrating with abstract interpretation techniques for even more efficient certification. Such a direction would unify robust training and formal verification across a spectrum of learning models."
+
+Word count: Let's recount just to be safe.
+
+Provable(1) robustness(2) for(3) neural(4) networks(5) has(6) been(7) pursued(8) through(9) several(10) complementary(11) approaches.(12) Lipschitz‑based(13) methods(14) [1][6](15) constrain(16) a(17) network’s(18) spectral(19) norm(20) or(21) enforce(22) Lipschitz(23) continuity,(24) while(25) Parseval(26) networks(27) [4](28) impose(29) spectral(30) constraints(31) tied(32) to(33) the(34) Parseval(35) identity.(36) Piecewise‑linear(37) verification(38) [2](39) and(40) output‑range(41) analysis(42) [5](43) exploit(44) ReLU(45) structures(46) to(47) produce(48) exact(49) bounds;(50) mixed‑integer(51) programming(52) [10](53) offers(54) a(55) general(56) but(57) expensive(58) alternative.(59) Interval(60) bound(61) propagation(62) [7](63) and(64) its(65) fast(66) variant(67) [9](68) enable(69) scalable(70) training(71) of(72) verifiably(73) robust(74) models,(75) and(76) differentiable(77) abstract(78) interpretation(79) [8](80) bridges(81) formal(82) verification(83) and(84) gradient‑based(85) learning.(86) Lipschitz‑margin(87) training(88) [11](89) scales(90) Lipschitz‑based(91) certification(92) to(93) large(94) architectures,(95) and(96) ensembles(97) such(98) as(99) EnResNet(100) [12](101) leverage(102) stochasticity(103) to(104) boost(105) robustness.(106) Recent(107) work(108) on(109) efficient(110) certification(111) for(112) ReLU(113) networks(114) [13](115) and(116) general(117) activation(118) functions(119) [14](120) reduces(121) the(122) computational(123) burden(124) of(125) verifying(126) high‑dimensional(127) models.(128)
+
+Randomized(129) smoothing(130) provides(131) a(132) probabilistic(133) framework(134) that(135) transforms(136) a(137) base(138) classifier(139) into(140) a(141) smoothed(142) predictor(143) with(144) provable(145) guarantees(146) against(147) ℓ₂(148) or(149) ℓ∞(150) perturbations.(151) However,(152) the(153) asymmetric(154) ℓ₁(155) ball(156) has(157) hindered(158) tight(159) certification.(160) Our(161) Laplace‑based(162) smoothing(163) addresses(164) this(165) by(166) deriving(167) a(168) tight(169) ℓ₁(170) robustness(171) certificate(172) through(173) a(174) mixed‑variable(175) Neyman–Pearson(176) lemma(177) and(178) the(179) isotropic(180) Laplace(181) distribution,(182) which(183) is(184) a(185) natural(186) conjugate(187) to(188) the(189) ℓ₁(190) norm.(191) This(192) method(193) yields(194) tighter(195) bounds(196) in(197) binary(198) classification(199) and(200) achieves(201) state‑of‑the‑art(202) certified(203) accuracy(204) on(205) CIFAR‑10(206) and(207) ImageNet,(208) outperforming(209) Gaussian‑based(210) smoothing(211) that(212) adapts(213) ℓ₂(214) certificates(215) to(216) ℓ₁.(217) The(218) approach(219) also(220) demonstrates(221) the(222) advantage(223) of(224) Laplace(225) noise(226) over(227) Gaussian(228) noise(229) when(230) the(231) same(232) variance(233) is(234) used,(235) as(236) reflected(237) in(238) larger(239) rectified(240) optimal(241) parameter(242) spaces.(243)
+
+Cheng(244) et(245) al.(246) [3](247) studied(248) the(249) maximum(250) resilience(251) of(252) artificial(253) neural(254) networks,(255) providing(256) theoretical(257) bounds(258) that(259) complement(260) our(261) empirical(262) results.(263) Additionally,(264) the(265) Laplace(266) smoothing(267) framework(268) draws(269) on(270) the(271) Laplace(272) mechanism(273) from(274) differential(275) privacy,(276) illustrating(277) how(278) noise(279) addition(280) simultaneously(281) yields(282) a(283) robustness(284) certificate,(285) a(286) connection(287) that(288) has(289) been(290) underexplored(291) in(292) prior(293) work.(294)
+
+Future(295) research(296) may(297) extend(298) our(299) mixed‑variable(300) Neyman–Pearson(301) framework(302) to(303) other(304) norms(305) and(306) explore(307) tighter(308) bounds(309) for(310) multi‑class(311) settings,(312) potentially(313) integrating(314) with(315) abstract(316) interpretation(317) techniques(318) for(319) even(320) more(321) efficient(322) certification.(323) Such(324) a(325) direction(326) would(327) unify(328) robust(329) training(330) and(331) formal(332) verification(333) across(334) a(335) spectrum(336) of(337) learning(338) models.(339)
+
+339 words. Good.
+
+We used all citations. The style is fine.
+
+We need to ensure that [Cohen et al.] is okay. The user didn't ask to cite them but it's fine.
+
+Edge: they might want to refer to "Cohen et al. (2019)" but we used that phrase. It's not a numbered citation but okay.
+
+Now we output the section. Let's output exactly that text.<|end|><|start|>assistant<|channel|>final<|message|>Provable robustness for neural networks has been pursued through several complementary approaches. Lipschitz‑based methods [1][6] constrain a network’s spectral norm or enforce Lipschitz continuity, while Parseval networks [4] impose spectral constraints tied to the Parseval identity. Piecewise‑linear verification [2] and output‑range analysis [5] exploit ReLU structures to produce exact bounds; mixed‑integer programming [10] offers a general but expensive alternative. Interval bound propagation [7] and its fast variant [9] enable scalable training of verifiably robust models, and differentiable abstract interpretation [8] bridges formal verification and gradient‑based learning. Lipschitz‑margin training [11] scales Lipschitz‑based certification to large architectures, and ensembles such as EnResNet [12] leverage stochasticity to boost robustness. Recent work on efficient certification for ReLU networks [13] and general activation functions [14] reduces the computational burden of verifying high‑dimensional models.
+
+Randomized smoothing provides a probabilistic framework that transforms a base classifier into a smoothed predictor with provable guarantees against ℓ₂ or ℓ∞ perturbations. However, the asymmetric ℓ₁ ball has hindered tight certification. Our Laplace‑based smoothing addresses this by deriving a tight ℓ₁ robustness certificate through a mixed‑variable Neyman–Pearson lemma and the isotropic Laplace distribution, which is a natural conjugate to the ℓ₁ norm. This method yields tighter bounds in binary classification and achieves state‑of‑the‑art certified accuracy on CIFAR‑10 and ImageNet, outperforming Gaussian‑based smoothing that adapts ℓ₂ certificates to ℓ₁. The approach also demonstrates the advantage of Laplace noise over Gaussian noise when the same variance is used, as reflected in larger rectified optimal parameter spaces.
+
+Cheng et al. [3] studied the maximum resilience of artificial neural networks, providing theoretical bounds that complement our empirical results. Additionally, the Laplace smoothing framework draws on the Laplace mechanism from differential privacy, illustrating how noise addition simultaneously yields a robustness certificate, a connection that has been underexplored in prior work.
+
+Future research may extend our mixed‑variable Neyman–Pearson framework to other norms and explore tighter bounds for multi‑class settings, potentially integrating with abstract interpretation techniques for even more efficient certification. Such a direction would unify robust training and formal verification across a spectrum of learning models.

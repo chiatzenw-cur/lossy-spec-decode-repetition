@@ -1,0 +1,613 @@
+<|channel|>analysis<|message|>We need to create a Related Work section citing the given papers 1-7. The paper's content is about Variational Network Quantization (VNQ), a Bayesian network compression method that simultaneously prunes and quantizes weights via a multi-modal quantizing prior.
+
+We need to produce a Related Work section around 308 words, citing the specified papers. The citations should be in the format typical for academic papers; maybe using numeric references [1], [2], etc. But the instruction only says "cite these papers" with the given titles, authors, and year. We can use numeric references or author-year. The output should be a continuous text of ~308 words. Should mention each of the 7 references at least once. Also mention other works in the field, like other pruning, quantization, Bayesian inference, etc. But we should focus on these 7.
+
+We need to incorporate the context of the related works: Uncertainty in deep learning (Gal 2016) about Bayesian deep learning and uncertainty. Bayesian compression for deep learning (Louizos et al. 2017). Variational dropout sparsifies deep neural networks (Molchanov et al. 2017). Structured Bayesian pruning via log-normal multiplicative noise (Neklyudov et al. 2017). Soft weight-sharing for neural network compression (Ullrich et al. 2017). Trained ternary quantization (Zhu et al. 2016). And the reference to Molchanov 2017's KL divergence approximation.
+
+We can also mention relevant literature: pruned networks, quantization, etc.
+
+The section should be coherent, mention how VNQ relates to these works, differences and contributions.
+
+We should produce about 308 words. Let's target ~310 words.
+
+We need to format citations. We can use bracketed references: [1], [2], etc. Let's assign numbers:
+
+1. Yarin Gal, 2016: Uncertainty in deep learning.
+
+2. Louizos et al., 2017: Bayesian compression for deep learning.
+
+3. Molchanov et al., 2017: Variational dropout sparsifies deep neural networks.
+
+4. Neklyudov et al., 2017: Structured Bayesian pruning via log-normal multiplicative noise.
+
+5. Ullrich et al., 2017: Soft weight-sharing for neural network compression.
+
+6. Zhu et al., 2016: Trained ternary quantization.
+
+7. Molchanov 2017 again: the KL divergence approximation (but we already cited Molchanov 2017 earlier). But the instruction includes a 7th reference that is "2017) presented an approximation..." but it's essentially the same as Molchanov 2017. So we might treat it as a separate reference or combine. But we can treat it as a distinct citation: maybe [7] is the same Molchanov 2017 but referencing the KL divergence approximation. But we can reuse the same reference number or use a separate one. However, to keep consistent, we can use [7] for the KL approximation. But we can also simply refer to Molchanov et al. 2017 again. Since they are same authors, we can use [3] again. But instructions say "cite these papers: 1..7" so we need to cite all 7 individually. So we need to give each a separate reference number. But Molchanov 2017 appears twice. But we can still treat them as separate references: [3] for the Variational Dropout sparsification paper, [7] for the KL divergence approximation from Molchanov 2017. But that might be confusing. But it's fine.
+
+We need to reference each at least once. We can mention the 7th as "Molchanov et al. [7] derived an analytic approximation of the KL divergence for a zero-centered log-uniform prior, which we extend..." etc.
+
+Now we can produce the section.
+
+We'll start with a paragraph summarizing the broader context: network compression, pruning, quantization, Bayesian methods.
+
+Then discuss each of the references.
+
+Word count: We'll aim for about 310 words.
+
+We need to ensure we mention the contributions: VNQ is a Bayesian compression method that extends the ideas of sparse variational dropout, but adds multi-modal quantizing prior, etc.
+
+Let's draft:
+
+---
+
+Related Work
+
+Network compression has been approached through architectural redesign, pruning, and quantization. Pruning methods often rely on weight magnitude or second‑order sensitivity; however, Bayesian methods have recently shown that a probabilistic treatment of weights yields natural sparsity and uncertainty estimates. Gal [1] introduced variational inference for deep networks, highlighting the benefits of Bayesian uncertainty in prediction. Louizos et al. [2] proposed a Bayesian compression framework that learns a sparsity‑inducing prior over weights, achieving significant model size reductions. Building on this, Molchanov et al. [3] demonstrated that variational dropout can be interpreted as evidence lower bound maximization, leading to a simple, scalable pruning criterion based on learned dropout rates. Neklyudov et al. [4] extended this idea to structured pruning by using log‑normal multiplicative noise, enabling removal of entire neurons or filters. Ullrich et al. [5] introduced soft weight‑sharing, a Bayesian approach that encourages weight values to cluster around a small set of shared parameters, effectively compressing the model.
+
+For few‑bit quantization, Zhu et al. [6] presented a trained ternary quantization method that jointly optimizes network weights and ternary scaling factors, achieving high compression with minimal accuracy loss. Our Variational Network Quantization (VNQ) combines the Bayesian sparsity framework with an explicit multi‑modal quantizing prior, directly steering low‑variance weights toward the target quantization values. To compute the KL divergence term under this prior, we exploit the analytic approximation derived by Molchanov et al. [7] for a zero‑centered log‑uniform prior, extending it to a mixture of shifted priors that model multiple quantization levels. This integration allows VNQ to simultaneously prune and quantize in a single training objective, without the need for post‑hoc fine‑tuning.
+
+---
+
+We need to ensure we have around 308 words. Let's count.
+
+Paragraph 1: "Network compression has been approached through architectural redesign, pruning, and quantization. Pruning methods often rely on weight magnitude or second‑order sensitivity; however, Bayesian methods have recently shown that a probabilistic treatment of weights yields natural sparsity and uncertainty estimates. Gal [1] introduced variational inference for deep networks, highlighting the benefits of Bayesian uncertainty in prediction. Louizos et al. [2] proposed a Bayesian compression framework that learns a sparsity‑inducing prior over weights, achieving significant model size reductions. Building on this, Molchanov et al. [3] demonstrated that variational dropout can be interpreted as evidence lower bound maximization, leading to a simple, scalable pruning criterion based on learned dropout rates. Neklyudov et al. [4] extended this idea to structured pruning by using log‑normal multiplicative noise, enabling removal of entire neurons or filters. Ullrich et al. [5] introduced soft weight‑sharing, a Bayesian approach that encourages weight values to cluster around a small set of shared parameters, effectively compressing the model."
+
+Paragraph 2: "For few‑bit quantization, Zhu et al. [6] presented a trained ternary quantization method that jointly optimizes network weights and ternary scaling factors, achieving high compression with minimal accuracy loss. Our Variational Network Quantization (VNQ) combines the Bayesian sparsity framework with an explicit multi‑modal quantizing prior, directly steering low‑variance weights toward the target quantization values. To compute the KL divergence term under this prior, we exploit the analytic approximation derived by Molchanov et al. [7] for a zero‑centered log‑uniform prior, extending it to a mixture of shifted priors that model multiple quantization levels. This integration allows VNQ to simultaneously prune and quantize in a single training objective, without the need for post‑hoc fine‑tuning."
+
+Now let's count words. Use approximate count: I'll count manually.
+
+Paragraph 1: 
+1 Network
+2 compression
+3 has
+4 been
+5 approached
+6 through
+7 architectural
+8 redesign,
+9 pruning,
+10 and
+11 quantization.
+12 Pruning
+13 methods
+14 often
+15 rely
+16 on
+17 weight
+18 magnitude
+19 or
+20 second‑order
+21 sensitivity;
+22 however,
+23 Bayesian
+24 methods
+25 have
+26 recently
+27 shown
+28 that
+29 a
+30 probabilistic
+31 treatment
+32 of
+33 weights
+34 yields
+35 natural
+36 sparsity
+37 and
+38 uncertainty
+39 estimates.
+40 Gal
+41 [1]
+42 introduced
+43 variational
+44 inference
+45 for
+46 deep
+47 networks,
+48 highlighting
+49 the
+50 benefits
+51 of
+52 Bayesian
+53 uncertainty
+54 in
+55 prediction.
+56 Louizos
+57 et
+58 al.
+59 [2]
+60 proposed
+61 a
+62 Bayesian
+63 compression
+64 framework
+65 that
+66 learns
+67 a
+68 sparsity‑inducing
+69 prior
+70 over
+71 weights,
+72 achieving
+73 significant
+74 model
+75 size
+76 reductions.
+77 Building
+78 on
+79 this,
+80 Molchanov
+81 et
+82 al.
+83 [3]
+84 demonstrated
+85 that
+86 variational
+87 dropout
+88 can
+89 be
+90 interpreted
+91 as
+92 evidence
+93 lower
+94 bound
+95 maximization,
+96 leading
+97 to
+98 a
+99 simple,
+100 scalable
+101 pruning
+102 criterion
+103 based
+104 on
+105 learned
+106 dropout
+107 rates.
+108 Neklyudov
+109 et
+110 al.
+111 [4]
+112 extended
+113 this
+114 idea
+115 to
+116 structured
+117 pruning
+118 by
+119 using
+120 log‑normal
+121 multiplicative
+122 noise,
+123 enabling
+124 removal
+125 of
+126 entire
+127 neurons
+128 or
+129 filters.
+130 Ullrich
+131 et
+132 al.
+133 [5]
+134 introduced
+135 soft
+136 weight‑sharing,
+137 a
+138 Bayesian
+139 approach
+140 that
+141 encourages
+142 weight
+143 values
+144 to
+145 cluster
+146 around
+147 a
+148 small
+149 set
+150 of
+151 shared
+152 parameters,
+153 effectively
+154 compressing
+155 the
+156 model.
+
+Count: 155 words.
+
+Paragraph 2:
+1 For
+2 few‑bit
+3 quantization,
+4 Zhu
+5 et
+6 al.
+7 [6]
+8 presented
+9 a
+10 trained
+11 ternary
+12 quantization
+13 method
+14 that
+15 jointly
+16 optimizes
+17 network
+18 weights
+19 and
+20 ternary
+21 scaling
+22 factors,
+23 achieving
+24 high
+25 compression
+26 with
+27 minimal
+28 accuracy
+29 loss.
+30 Our
+31 Variational
+32 Network
+33 Quantization
+34 (VNQ)
+35 combines
+36 the
+37 Bayesian
+38 sparsity
+39 framework
+40 with
+41 an
+42 explicit
+43 multi‑modal
+44 quantizing
+45 prior,
+46 directly
+47 steering
+48 low‑variance
+49 weights
+50 toward
+51 the
+52 target
+53 quantization
+54 values.
+55 To
+56 compute
+57 the
+58 KL
+59 divergence
+60 term
+61 under
+62 this
+63 prior,
+64 we
+65 exploit
+66 the
+67 analytic
+68 approximation
+69 derived
+70 by
+71 Molchanov
+72 et
+73 al.
+74 [7]
+75 for
+76 a
+77 zero‑centered
+78 log‑uniform
+79 prior,
+80 extending
+81 it
+82 to
+83 a
+84 mixture
+85 of
+86 shifted
+87 priors
+88 that
+89 model
+90 multiple
+91 quantization
+92 levels.
+93 This
+94 integration
+95 allows
+96 VNQ
+97 to
+98 simultaneously
+99 prune
+100 and
+101 quantize
+102 in
+103 a
+104 single
+105 training
+106 objective,
+107 without
+108 the
+109 need
+110 for
+111 post‑hoc
+112 fine‑tuning.
+
+Count: 112 words.
+
+Total words: 155+112 = 267 words. We need about 308 words. So we need about 40 more words. We'll add a paragraph or add more detail. Let's add a paragraph discussing the limitations of prior methods and how VNQ addresses them. Also mention that VNQ also allows learning codebook values, etc. We'll add about 40-50 words.
+
+Add new paragraph: "While previous Bayesian pruning methods focus solely on sparsity, and most quantization schemes treat pruning as a separate step, VNQ unifies both objectives within a single variational framework. Moreover, unlike hard‑quantization approaches that require iterative fine‑tuning, VNQ yields a deterministic, fully quantized network after training. Finally, by incorporating posterior uncertainty into the quantization step, VNQ provides principled uncertainty estimates for downstream decision‑making."
+
+Count words: Let's count.
+
+1 While
+2 previous
+3 Bayesian
+4 pruning
+5 methods
+6 focus
+7 solely
+8 on
+9 sparsity,
+10 and
+11 most
+12 quantization
+13 schemes
+14 treat
+15 pruning
+16 as
+17 a
+18 separate
+19 step,
+20 VNQ
+21 unifies
+22 both
+23 objectives
+24 within
+25 a
+26 single
+27 variational
+28 framework.
+29 Moreover,
+30 unlike
+31 hard‑quantization
+32 approaches
+33 that
+34 require
+35 iterative
+36 fine‑tuning,
+37 VNQ
+38 yields
+39 a
+40 deterministic,
+41 fully
+42 quantized
+43 network
+44 after
+45 training.
+46 Finally,
+47 by
+48 incorporating
+49 posterior
+50 uncertainty
+51 into
+52 the
+53 quantization
+54 step,
+55 VNQ
+56 provides
+57 principled
+58 uncertainty
+59 estimates
+60 for
+61 downstream
+62 decision‑making.
+
+Count: 62 words. Adding 62 to 267 gives 329 words. Slightly above 308. We need about 308, so reduce by about 21 words. We can remove some words. Let's shorten. Remove "Moreover, unlike hard‑quantization approaches that require iterative fine‑tuning," -> maybe keep but shorten.
+
+Let's rewrite:
+
+"While previous Bayesian pruning methods focus solely on sparsity and most quantization schemes treat pruning as a separate step, VNQ unifies both objectives within a single variational framework. Unlike hard‑quantization approaches that require post‑hoc fine‑tuning, VNQ directly yields a deterministic, fully quantized network. By incorporating posterior uncertainty into the quantization step, VNQ also offers principled uncertainty estimates for downstream decision‑making."
+
+Now count.
+
+1 While
+2 previous
+3 Bayesian
+4 pruning
+5 methods
+6 focus
+7 solely
+8 on
+9 sparsity
+10 and
+11 most
+12 quantization
+13 schemes
+14 treat
+15 pruning
+16 as
+17 a
+18 separate
+19 step,
+20 VNQ
+21 unifies
+22 both
+23 objectives
+24 within
+25 a
+26 single
+27 variational
+28 framework.
+29 Unlike
+30 hard‑quantization
+31 approaches
+32 that
+33 require
+34 post‑hoc
+35 fine‑tuning,
+36 VNQ
+37 directly
+38 yields
+39 a
+40 deterministic,
+41 fully
+42 quantized
+43 network.
+44 By
+45 incorporating
+46 posterior
+47 uncertainty
+48 into
+49 the
+50 quantization
+51 step,
+52 VNQ
+53 also
+54 offers
+55 principled
+56 uncertainty
+57 estimates
+58 for
+59 downstream
+60 decision‑making.
+
+Count: 60 words. Adding 60 to 267 = 327. Still 19 words over 308. We need reduce 19 words.
+
+We can cut some words: remove "principled" maybe. Also remove "single" maybe.
+
+Rewrite:
+
+"While previous Bayesian pruning methods focus solely on sparsity and most quantization schemes treat pruning as a separate step, VNQ unifies both objectives within a variational framework. Unlike hard‑quantization approaches that require post‑hoc fine‑tuning, VNQ directly yields a deterministic, fully quantized network. By incorporating posterior uncertainty into the quantization step, VNQ also offers uncertainty estimates for downstream decision‑making."
+
+Count again:
+
+1 While
+2 previous
+3 Bayesian
+4 pruning
+5 methods
+6 focus
+7 solely
+8 on
+9 sparsity
+10 and
+11 most
+12 quantization
+13 schemes
+14 treat
+15 pruning
+16 as
+17 a
+18 separate
+19 step,
+20 VNQ
+21 unifies
+22 both
+23 objectives
+24 within
+25 a
+26 variational
+27 framework.
+28 Unlike
+29 hard‑quantization
+30 approaches
+31 that
+32 require
+33 post‑hoc
+34 fine‑tuning,
+35 VNQ
+36 directly
+37 yields
+38 a
+39 deterministic,
+40 fully
+41 quantized
+42 network.
+43 By
+44 incorporating
+45 posterior
+46 uncertainty
+47 into
+48 the
+49 quantization
+50 step,
+51 VNQ
+52 also
+53 offers
+54 uncertainty
+55 estimates
+56 for
+57 downstream
+58 decision‑making.
+
+Count: 58 words. Add 58 to 267 = 325. Still 17 over 308. Remove more words. Let's reduce "post‑hoc" maybe, "deterministic". Remove "deterministic" maybe.
+
+Rewrite:
+
+"While previous Bayesian pruning methods focus solely on sparsity and most quantization schemes treat pruning as a separate step, VNQ unifies both objectives within a variational framework. Unlike hard‑quantization approaches that require fine‑tuning, VNQ directly yields a fully quantized network. By incorporating posterior uncertainty into the quantization step, VNQ also offers uncertainty estimates for downstream decision‑making."
+
+Count:
+
+1 While
+2 previous
+3 Bayesian
+4 pruning
+5 methods
+6 focus
+7 solely
+8 on
+9 sparsity
+10 and
+11 most
+12 quantization
+13 schemes
+14 treat
+15 pruning
+16 as
+17 a
+18 separate
+19 step,
+20 VNQ
+21 unifies
+22 both
+23 objectives
+24 within
+25 a
+26 variational
+27 framework.
+28 Unlike
+29 hard‑quantization
+30 approaches
+31 that
+32 require
+33 fine‑tuning,
+34 VNQ
+35 directly
+36 yields
+37 a
+38 fully
+39 quantized
+40 network.
+41 By
+42 incorporating
+43 posterior
+44 uncertainty
+45 into
+46 the
+47 quantization
+48 step,
+49 VNQ
+50 also
+51 offers
+52 uncertainty
+53 estimates
+54 for
+55 downstream
+56 decision‑making.
+
+Count: 56 words. Add 56 to 267 = 323. Still 15 over 308. Remove more. Remove "variational". And maybe "both" etc.
+
+Rewrite:
+
+"While previous Bayesian pruning methods focus solely on sparsity and most quantization schemes treat pruning as a separate step, VNQ unifies these objectives. Unlike hard‑quantization approaches that require fine‑tuning, VNQ directly yields a fully quantized network. By incorporating posterior uncertainty into the quantization step, VNQ also offers uncertainty estimates for downstream decision‑making

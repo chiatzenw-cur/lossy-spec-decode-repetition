@@ -1,0 +1,105 @@
+<|channel|>analysis<|message|>We need to generate a Related Work section for the paper. We have to cite the given papers (1-9). The output length should be around 243 words. Because the system says "The suggested output length is around 243 words." So we need to produce about 243 words. The content: related work section of the paper. We should discuss regularization, RL, policy optimization, etc., and mention the cited papers.
+
+We must cite the papers 1-9. The citations should be included. We need to format the citations. Usually in academic writing, citations are in brackets with numbers or author-year. The format of the references is given in the references list, but we have to produce the citations inline. We can use numeric citations [1], [2], etc. The references are numbered 1-9. We'll need to refer to them properly.
+
+The Related Work section should cover prior works on regularization in RL, actor-critic methods, KL-regularized RL, continuous control, DDPG, TD-regularized actor-critic, TRPO, GAE, PPO, etc. Should mention some works that use entropy regularization, weight decay, dropout, BN, etc. Also mention that RL community rarely uses standard regularization. Provide context.
+
+We need to keep the length around 243 words. So we need to produce about 240-250 words. Let's aim for 240-250 words. We need to incorporate citations to each of 9 papers. We should reference each at least once.
+
+Let's write a 240-250 word section. We'll start with an introductory sentence, mention the RL regularization is underexplored. Then mention the work of Cheng & Verma 1905 (paper 1), Fujimoto et al. 2018 (paper 2), Galashov et al. 2019 (paper 3), Lillicrap et al. 2016 (paper 4), Lillicrap et al. 2015 (paper 5), Parisi et al. 2019 (paper 6), Schulman et al. 2015 (paper 7), Schulman et al. 2016 (paper 8), Schulman et al. 2017 (paper 9). We could talk about how those works contributed to RL, actor-critic, regularization, continuous control, etc.
+
+We should mention that prior works on actor-critic methods focused on addressing function approximation error (paper 2), KL regularization (paper 3), and TD-regularized actor-critic methods (paper 6), but rarely looked at conventional regularization like L2, dropout. We also mention continuous control algorithms like DDPG (paper 4,5) and the importance of regularization for stability. Then mention policy optimization methods like TRPO (paper 7), GAE (paper 8), PPO (paper 9). Also mention that these algorithms incorporate entropy regularization but not weight decay. Then highlight the novelty of our work: systematic study of conventional regularization on policy optimization.
+
+We need to keep it around 240-250 words. Let's try to write about 245 words.
+
+We need to mention each paper with its number. We should use citations like [1] etc. The order is not necessarily sequential; but we can mention them in the order we think. It might be easier to mention them in the order given.
+
+Let's draft.
+
+Word count: Let's approximate. We'll write about 240 words. Then we can adjust.
+
+Draft:
+
+"Regularization has long been a cornerstone of supervised learning, yet its role in deep reinforcement learning (RL) remains underexplored. Early investigations into variance reduction for RL [1] highlighted the benefit of control regularization, while subsequent work on actor‑critic methods focused on mitigating function‑approximation errors [2] and on KL‑regularized objectives that expose information asymmetry [3]. In continuous‑control domains, DDPG and related off‑policy algorithms [4][5] demonstrated the need for stability tricks, but rarely incorporated explicit weight‑decay or dropout. The advent of policy‑gradient families has shifted attention toward policy‑space regularizers: TRPO introduced a trust‑region constraint [7], GAE improved variance‑bias trade‑offs [8], and PPO replaced the hard constraint with a clipped surrogate [9]. Entropy regularization, widely adopted in these algorithms, has been shown to encourage exploration, yet the broader spectrum of conventional regularizers—L2, L1, dropout, batch normalization—is largely absent from the RL literature. TD‑regularized actor‑critic methods [6] and recent analyses of KL‑regularized approaches [3] suggest that regularization can also aid stability and sample efficiency. Our work builds on these foundations by systematically evaluating a suite of traditional regularization techniques across the most popular policy‑optimization algorithms, thereby filling a notable gap in the RL community."
+
+Now count words: Let's count manually:
+
+Regularization(1) has2 long3 a4 cornerstone5 of6 supervised7 learning,8 yet9 its10 role11 in12 deep13 reinforcement14 learning15 (RL)16 remains17 underexplored.18 Early19 investigations20 into21 variance22 reduction23 for24 RL25 [1]26 highlighted27 the28 benefit29 of30 control31 regularization,32 while33 subsequent34 work35 on36 actor‑critic37 methods38 focused39 on40 mitigating41 function‑approximation42 errors43 [2]44 and45 on46 KL‑regularized47 objectives48 that49 expose50 information51 asymmetry52 [3].53 In54 continuous‑control55 domains,56 DDPG57 and58 related59 off‑policy60 algorithms61 [4][5]62 demonstrated63 the64 need65 for66 stability67 tricks,68 but69 rarely70 incorporated71 explicit72 weight‑decay73 or74 dropout.75 The76 advent77 of78 policy‑gradient79 families80 has81 shifted82 attention83 toward84 policy‑space85 regularizers:86 TRPO87 introduced88 a89 trust‑region90 constraint91 [7],92 GAE93 improved94 variance‑bias95 trade‑offs96 [8],97 and98 PPO99 replaced100 the101 hard102 constraint103 with104 a105 clipped106 surrogate107 [9].108 Entropy109 regularization,110 widely111 adopted112 in113 these114 algorithms,115 has116 been117 shown118 to119 encourage120 exploration,121 yet122 the123 broader124 spectrum125 of126 conventional127 regularizers—L2,128 L1,129 dropout,130 batch131 normalization132—is133 largely134 absent135 from136 the137 RL138 literature.139 TD‑regularized140 actor‑critic141 methods142 [6]143 and144 recent145 analyses146 of147 KL‑regularized148 approaches149 [3]150 suggest151 that152 regularization153 can154 also155 aid156 stability157 and158 sample159 efficiency.160 Our161 work162 builds163 on164 these165 foundations166 by167 systematically168 evaluating169 a170 suite171 of172 traditional173 regularization174 techniques175 across176 the177 most178 popular179 policy‑optimization180 algorithms,181 thereby182 filling183 a184 notable185 gap186 in187 the188 RL189 community190.
+
+Word count: 190 words? Wait we counted 190 words. We need about 243 words. So we need to expand the section.
+
+We need about 240-250 words. Currently 190 words. We need to add about 53-60 words. Let's expand.
+
+We can add some more discussion: mention that some works used dropout or batch norm? But we can mention that prior works have used dropout in supervised learning but rarely in RL. Also mention research on regularization in RL like "Control regularization" and "TD-regularized actor-critic" and "KL-regularized RL" and "function approximation error" etc. Also mention that the use of weight decay has been considered in some RL contexts but not widely. We can mention that the RL community uses entropy regularization to encourage exploration, but weight decay is rarely used. We can also mention that some works have studied regularization in policy gradient methods but mainly focused on algorithmic aspects like trust region, clipping, GAE. We can also mention that the choice of regularization can impact stability, sample efficiency and generalization.
+
+Let's add about 60 words.
+
+Add:
+
+"While the RL literature has introduced various stability-enhancing tricks—such as target networks, experience replay, and clipping—explicit regularization of network parameters has largely been overlooked. Recent studies on TD‑regularization [6] and KL‑regularized RL [3] demonstrate that penalizing certain aspects of the policy or value functions can improve robustness, yet they do not explore classic L2 or dropout penalties. Moreover, continuous‑control benchmarks (DDPG, SAC) often rely on entropy terms but ignore weight decay or batch‑norm, potentially limiting performance on harder tasks. By systematically evaluating these conventional regularizers across on‑policy and off‑policy algorithms, we bridge this gap and provide actionable guidelines for practitioners."
+
+Let's count words added: 
+
+While1 the2 RL3 literature4 has5 introduced6 various7 stability‑enhancing8 tricks—such9 as10 target11 networks,12 experience13 replay,14 and15 clipping—explicit16 regularization17 of18 network19 parameters20 has21 largely22 been23 overlooked.24 Recent25 studies26 on27 TD‑regularization28 [6]29 and30 KL‑regularized31 RL32 [3]33 demonstrate34 that35 penalizing36 certain37 aspects38 of39 the40 policy41 or42 value43 functions44 can45 improve46 robustness,47 yet48 they49 do50 not51 explore52 classic53 L254 or55 dropout56 penalties.57 Moreover,58 continuous‑control59 benchmarks60 (DDPG,61 SAC)62 often63 rely64 on65 entropy66 terms67 but68 ignore69 weight70 decay71 or72 batch‑norm,73 potentially74 limiting75 performance76 on77 harder78 tasks.79 By80 systematically81 evaluating82 these83 conventional84 regularizers85 across86 on‑policy87 and88 off‑policy89 algorithms,90 we91 bridge92 this93 gap94 and95 provide96 actionable97 guidelines98 for99 practitioners100.
+
+Added 100 words. Combined with previous 190 words gives 290 words. That's slightly above target of ~243. We need to cut about 47 words.
+
+We can trim some sentences or reduce the added text to about 50 words. Let's try to reduce the added portion to about 50-60 words. We can remove some details.
+
+Let's rewrite the added part: "While RL research has introduced stability tricks such as target networks, experience replay, and clipping, explicit regularization of network weights has been largely overlooked. Recent TD‑regularization [6] and KL‑regularized RL [3] show that penalizing policy/value components can improve robustness, yet they do not explore classic L2 or dropout penalties. By systematically evaluating these conventional regularizers across on‑policy and off‑policy algorithms, we bridge this gap and provide actionable guidelines for practitioners."
+
+Count words:
+
+While1 RL2 research3 has4 introduced5 stability6 tricks7 such8 as9 target10 networks,11 experience12 replay,13 and14 clipping,15 explicit16 regularization17 of18 network19 weights20 has21 been22 largely23 overlooked.24 Recent25 TD‑regularization26 [6]27 and28 KL‑regularized29 RL30 [3]31 show32 that33 penalizing34 policy/value35 components36 can37 improve38 robustness,39 yet40 they41 do42 not43 explore44 classic45 L246 or47 dropout48 penalties.49 By50 systematically51 evaluating52 these53 conventional54 regularizers55 across56 on‑policy57 and58 off‑policy59 algorithms,60 we61 bridge62 this63 gap64 and65 provide66 actionable67 guidelines68 for69 practitioners70.
+
+70 words. Combined with 190 gives 260 words. Still above target. Need about 243 words. So we need to cut about 17 words. We can cut some words from the added part or original part.
+
+We can remove some words like "and" or "explicit" or "classic". Let's reduce the added part to ~53 words.
+
+We can try:
+
+"While RL research introduced stability tricks such as target networks, replay, and clipping, explicit regularization of weights has been largely overlooked. TD‑regularization [6] and KL‑regularized RL [3] show penalizing policy/value components can improve robustness, yet they avoid classic L2 or dropout. Systematically evaluating these regularizers across on‑policy and off‑policy algorithms bridges this gap and offers actionable guidelines."
+
+Count words:
+
+While1 RL2 research3 introduced4 stability5 tricks6 such7 as8 target9 networks,10 replay,11 and12 clipping,13 explicit14 regularization15 of16 weights17 has18 been19 largely20 overlooked.21 TD‑regularization22 [6]23 and24 KL‑regularized25 RL26 [3]27 show28 penalizing29 policy/value30 components31 can32 improve33 robustness,34 yet35 they36 avoid37 classic38 L239 or40 dropout.41 Systematically42 evaluating43 these44 regularizers45 across46 on‑policy47 and48 off‑policy49 algorithms50 bridges51 this52 gap53 and54 offers55 actionable56 guidelines57.
+
+57 words. Combined with 190 gives 247 words. Slightly above 243 but okay. We can cut a few more words: maybe remove "classic" or "actionable". Let's adjust:
+
+"While RL research introduced stability tricks such as target networks, replay, and clipping, explicit regularization of weights has been largely overlooked. TD‑regularization [6] and KL‑regularized RL [3] show penalizing policy/value components can improve robustness, yet they avoid L2 or dropout. Systematically evaluating these regularizers across on‑policy and off‑policy algorithms bridges this gap and offers guidelines."
+
+Count words:
+
+While1 RL2 research3 introduced4 stability5 tricks6 such7 as8 target9 networks,10 replay,11 and12 clipping,13 explicit14 regularization15 of16 weights17 has18 been19 largely20 overlooked.21 TD‑regularization22 [6]23 and24 KL‑regularized25 RL26 [3]27 show28 penalizing29 policy/value30 components31 can32 improve33 robustness,34 yet35 they36 avoid37 L238 or39 dropout.40 Systematically41 evaluating42 these43 regularizers44 across45 on‑policy46 and47 off‑policy48 algorithms49 bridges50 this51 gap52 and53 offers54 guidelines55.
+
+55 words. Combined with 190 gives 245 words. Still 2 words over target. Let's remove "explicit" maybe. "explicit" is 1 word. Also "largely". Remove "largely". Let's do:
+
+"While RL research introduced stability tricks such as target networks, replay, and clipping, regularization of weights has been overlooked. TD‑regularization [6] and KL‑regularized RL [3] show penalizing policy/value components can improve robustness, yet they avoid L2 or dropout. Systematically evaluating these regularizers across on‑policy and off‑policy algorithms bridges this gap and offers guidelines."
+
+Count again:
+
+While1 RL2 research3 introduced4 stability5 tricks6 such7 as8 target9 networks,10 replay,11 and12 clipping,13 regularization14 of15 weights16 has17 been18 overlooked.19 TD‑regularization20 [6]21 and22 KL‑regularized23 RL24 [3]25 show26 penalizing27 policy/value28 components29 can30 improve31 robustness,32 yet33 they34 avoid35 L236 or37 dropout.38 Systematically39 evaluating40 these41 regularizers42 across43 on‑policy44 and45 off‑policy46 algorithms47 bridges48 this49 gap50 and51 offers52 guidelines53.
+
+53 words. Combined with 190 gives 243 words exactly. Perfect. So the final output is 243 words.
+
+Now we need to ensure we used all citations [1]-[9]. We used [1] (control regularization), [2] (function approximation error), [3] (KL regularization), [4] (DDPG), [5] (DDPG 2015), [6] (TD-regularized actor-critic), [7] (TRPO), [8] (GAE), [9] (PPO). We referenced [4] and [5] in the earlier part. We referenced [7], [8], [9] in the earlier part. We referenced [1], [2], [3], [6] in the added part. Good.
+
+Make sure all citations appear in the text. Let's scan:
+
+- "control regularization" [1] appears.
+- "function‑approximation errors" [2] appears.
+- "KL‑regularized objectives" [3] appears.
+- "DDPG and related off‑policy algorithms" [4][5] appears.
+- "TRPO" [7] appears.
+- "GAE" [8] appears.
+- "PPO" [9] appears.
+- "TD‑regularization [6]" appears.
+- "KL‑regularized RL [3]" appears again.
+
+Everything referenced. Good.
+
+Now produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Related Work**
+
+Regularization has long been a cornerstone of supervised learning, yet its role in deep reinforcement learning (RL) remains underexplored. Early investigations into variance reduction for RL [1] highlighted the benefit of control regularization, while subsequent work on actor‑critic methods focused on mitigating function‑approximation errors [2] and on KL‑regularized objectives that expose information asymmetry [3]. In continuous‑control domains, DDPG and related off‑policy algorithms [4][5] demonstrated the need for stability tricks, but rarely incorporated explicit weight‑decay or dropout. The advent of policy‑gradient families has shifted attention toward policy‑space regularizers: TRPO introduced a trust‑region constraint [7], GAE improved variance‑bias trade‑offs [8], and PPO replaced the hard constraint with a clipped surrogate [9]. Entropy regularization, widely adopted in these algorithms, has been shown to encourage exploration, yet the broader spectrum of conventional regularizers—L2, L1, dropout, batch normalization—is largely absent from the RL literature. TD‑regularized actor‑critic methods [6] and recent analyses of KL‑regularized approaches [3] suggest that regularization can also aid stability and sample efficiency.  
+
+While RL research introduced stability tricks such as target networks, replay, and clipping, regularization of weights has been overlooked. TD‑regularization [6] and KL‑regularized RL [3] show penalizing policy/value components can improve robustness, yet they avoid L2 or dropout. Systematically evaluating these regularizers across on‑policy and off‑policy algorithms bridges this gap and offers guidelines.

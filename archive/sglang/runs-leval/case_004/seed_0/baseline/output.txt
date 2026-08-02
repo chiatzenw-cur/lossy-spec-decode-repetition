@@ -1,0 +1,182 @@
+<|channel|>analysis<|message|>The user wants: "Please generate the Related Work section for this paper, and you have to cite these papers: 1. Title: Uncertainty in deep learning , Authors: Yarin Gal , 2016 2. Title: Bayesian compression for deep learning , Authors: Christos Louizos Karen Ullrich..., 2017 3. Title: Variational dropout sparsifies deep neural networks , Authors: Dmitry Molchanov Arsenii Ashukha..., 2017 4. Title: Structured bayesian pruning via log-normal multiplicative noise , Authors: Kirill Neklyudov Dmitry Molchanov..., 2017 5. Title: Soft weight-sharing for neural network compression , Authors: Karen Ullrich Edward Meeds..., 2017 6. Title: Trained ternary quantization , Authors: Chenzhuo Zhu Song Han..., 2016 7. Title: 2017) presented an approximation for the KL divergence under a (zero-centered) log uniform prior (Eq. (5)). Since our quantizing prior is essentially a composition of shifted log uniform priors, we construct a composition of the approximation given by Molchanov et al , Authors: Molchanov , 2017"
+
+We need to produce a Related Work section ~308 words, citing these papers. So we need to produce citations in the format of the paper. The paper uses citations like (Denil et al., 2013). So we should use similar style: (Gal, 2016), (Louizos et al., 2017), (Molchanov et al., 2017), etc. For the 7th one, it's also Molchanov et al., 2017. So maybe we can mention the same citation again.
+
+We need to integrate the citations into the text. The related work section will discuss related work in areas: pruning, quantization, Bayesian compression, variational dropout, structured Bayesian pruning, soft weight-sharing, ternary quantization, and the KL approximation. The last one also references Molchanov's KL approximation.
+
+We should keep it roughly 308 words. Let's draft.
+
+We start with a paragraph summarizing earlier pruning and quantization methods, mention SqueezeNet, MobileNets, etc. But the related work section should focus on referencing the specific cited works. We'll mention the earlier works like SqueezeNet, MobileNets, etc. But we need to cite the references. The user only gave a set of references to cite. But we could also mention other works like SqueezeNet, but we might need to cite them too. But we only have the list of references to cite. The user might only want those citations. But we can mention other works but we might not have the citation keys. But we should not add citations that are not in the list. The user didn't provide citation keys for SqueezeNet or MobileNets. So we should avoid citing them. We can just mention them without citations or we can mention them but not cite. However, the user expects the citations to be present. They explicitly list 7 citations. So we should use them.
+
+We need to produce ~308 words. Let's count approximate words. Roughly 50 words per paragraph, 6 paragraphs? That would be 300 words. Or just one long paragraph. Let's aim for 6 paragraphs of ~50 words each. That would be about 300 words.
+
+We need to use citations like (Gal, 2016). The 7th citation is also Molchanov et al., 2017. So we will use (Molchanov et al., 2017) for 3, 4, 7. So we have multiple citations from that paper.
+
+We also need to mention "soft weight sharing" (Ullrich et al., 2017). And "trained ternary quantization" (Zhu & Han, 2016). And "Bayesian compression" (Louizos et al., 2017). And "variational dropout sparsifies" (Molchanov et al., 2017). And "structured Bayesian pruning via log-normal multiplicative noise" (Neklyudov et al., 2017). And "uncertainty in deep learning" (Gal, 2016). These are the references.
+
+We also mention the KL approximation. The last citation basically is the same Molchanov et al., 2017 used for KL approximation. So we can say "As in Molchanov et al. (2017), we use their approximation for the KL divergence under a log-uniform prior." That covers the 7th.
+
+We also mention that the current method builds on these. We also mention that the Bayesian approach introduces uncertainty.
+
+We need to maintain academic tone.
+
+Let's draft:
+
+Paragraph 1: Overview of network compression: pruning and quantization. No citation needed? Might mention but we can skip.
+
+Paragraph 2: mention Bayesian compression (Louizos et al., 2017) and its extension to structured pruning (Neklyudov et al., 2017). Also mention that their method uses log-normal multiplicative noise and a sparsity-inducing prior. Use citations.
+
+Paragraph 3: mention variational dropout sparsifying networks (Molchanov et al., 2017). They introduced Sparse Variational Dropout, learning dropout rates per weight. Use citation.
+
+Paragraph 4: mention soft weight-sharing (Ullrich et al., 2017). They introduced a clustering prior for weight sharing. Use citation.
+
+Paragraph 5: mention ternary quantization (Zhu & Han, 2016). They propose trained ternary quantization. Use citation.
+
+Paragraph 6: mention uncertainty in deep learning (Gal, 2016). They discuss Bayesian methods for uncertainty. Use citation.
+
+Paragraph 7: mention KL approximation (Molchanov et al., 2017) used for log-uniform prior, extended to our quantizing prior. Use citation.
+
+We need to keep ~308 words. Let's draft and then count.
+
+We can combine some paragraphs to keep within the word count. Let's attempt to write 6 paragraphs of ~50 words each. We'll aim for 6 paragraphs.
+
+Let's draft:
+
+Paragraph 1: "Network compression has become a central research line in recent years..."
+
+Paragraph 2: "A number of Bayesian approaches have been proposed..."
+
+Paragraph 3: "Variational dropout has emerged as a powerful tool for learning sparsity..."
+
+Paragraph 4: "Soft weight sharing has demonstrated the benefits of clustering weight values..."
+
+Paragraph 5: "Ternary quantization techniques further reduce memory footprint..."
+
+Paragraph 6: "Finally, the treatment of uncertainty in deep learning..."
+
+Paragraph 7: "The KL divergence approximation..."
+
+But we might exceed 308 words. Let's do a rough count. 6 paragraphs of 50 words each = 300 words. We need to be careful. Let's write each paragraph and count.
+
+Paragraph 1 (approx 50 words):
+"Network compression has gained increasing attention as deep models grow in size and complexity. Two dominant families of techniques – pruning and quantization – aim to reduce the number of active parameters while preserving predictive accuracy. While early works focused on hand–crafted sparsity patterns, recent efforts have turned to learning the compression strategy directly from data."
+
+Count words: Let's count: Network(1) compression(2) has(3) gained(4) increasing(5) attention(6) as(7) deep(8) models(9) grow(10) in(11) size(12) and(13) complexity.(14) Two(15) dominant(16) families(17) of(18) techniques(19) –(20) pruning(21) and(22) quantization(23) –(24) aim(25) to(26) reduce(27) the(28) number(29) of(30) active(31) parameters(32) while(33) preserving(34) predictive(35) accuracy.(36) While(37) early(38) works(39) focused(40) on(41) hand–crafted(42) sparsity(43) patterns,(44) recent(45) efforts(46) have(47) turned(48) to(49) learning(50) the(51) compression(52) strategy(53) directly(54) from(55) data.(56)
+
+That's 56 words. We want ~50, but it's okay, we can adjust.
+
+Paragraph 2 (approx 50 words):
+"Bayesian compression methods have emerged as a principled alternative to deterministic pruning. Louizos et al. (2017) introduced a sparsity‑inducing prior that yields a posterior over weight magnitudes, enabling automatic removal of unimportant parameters. Their work was subsequently extended to structured pruning by Neklyudov et al. (2017), who employed log‑normal multiplicative noise to prune entire neurons or filters."
+
+Count: Bay(1)esian(2) compression(3) methods(4) have(5) emerged(6) as(7) a(8) principled(9) alternative(10) to(11) deterministic(12) pruning.(13) Louizos(14) et(15) al.(16) (2017)(17) introduced(18) a(19) sparsity‑inducing(20) prior(21) that(22) yields(23) a(24) posterior(25) over(26) weight(27) magnitudes,(28) enabling(29) automatic(30) removal(31) of(32) unimportant(33) parameters.(34) Their(35) work(36) was(37) subsequently(38) extended(39) to(40) structured(41) pruning(42) by(43) Neklyudov(44) et(45) al.(46) (2017)(47) who(48) employed(49) log‑normal(50) multiplicative(51) noise(52) to(53) prune(54) entire(55) neurons(56) or(57) filters.(58)
+
+58 words.
+
+Paragraph 3 (approx 60 words):
+"Variational dropout has also been adapted for sparsification. Molchanov et al. (2017) proposed Sparse Variational Dropout, learning a separate dropout rate for each weight and pruning those with high uncertainty. This approach was shown to match or surpass deterministic pruning baselines while providing a fully Bayesian posterior that captures weight uncertainty."
+
+Count: Variational(1) dropout(2) has(3) also(4) been(5) adapted(6) for(7) sparsification.(8) Molchanov(9) et(10) al.(11) (2017)(12) proposed(13) Sparse(14) Variational(15) Dropout,(16) learning(17) a(18) separate(19) dropout(20) rate(21) for(22) each(23) weight(24) and(25) pruning(26) those(27) with(28) high(29) uncertainty.(30) This(31) approach(32) was(33) shown(34) to(35) match(36) or(37) surpass(38) deterministic(39) pruning(40) baselines(41) while(42) providing(43) a(44) fully(45) Bayesian(46) posterior(47) that(48) captures(49) weight(50) uncertainty.(51)
+
+51 words.
+
+Paragraph 4 (approx 60 words):
+"An alternative Bayesian strategy is soft weight sharing, where a mixture prior clusters weight values into a small set of centroids. Ullrich et al. (2017) demonstrated that this clustering prior dramatically reduces the effective number of parameters while maintaining accuracy, and can be combined with variational inference to obtain a compact posterior."
+
+Count: An(1) alternative(2) Bayesian(3) strategy(4) is(5) soft(6) weight(7) sharing,(8) where(9) a(10) mixture(11) prior(12) clusters(13) weight(14) values(15) into(16) a(17) small(18) set(19) of(20) centroids.(21) Ullrich(22) et(23) al.(24) (2017)(25) demonstrated(26) that(27) this(28) clustering(29) prior(30) dramatically(31) reduces(32) the(33) effective(34) number(35) of(36) parameters(37) while(38) maintaining(39) accuracy,(40) and(41) can(42) be(43) combined(44) with(45) variational(46) inference(47) to(48) obtain(49) a(50) compact(51) posterior.(52)
+
+52 words.
+
+Paragraph 5 (approx 60 words):
+"Quantization-specific research has produced several high‑performance methods. Trained ternary quantization (Zhu & Han, 2016) learns three discrete weight values and demonstrates that the resulting ternary network can rival full‑precision accuracy on ImageNet. This line of work motivates the integration of a multi‑modal prior that encourages weights to collapse onto a few quantization levels, as we propose."
+
+Count: Quantization-specific(1) research(2) has(3) produced(4) several(5) high‑performance(6) methods.(7) Trained(8) ternary(9) quantization(10) (Zhu(11) &(12) Han,(13) 2016)(14) learns(15) three(16) discrete(17) weight(18) values(19) and(20) demonstrates(21) that(22) the(23) resulting(24) ternary(25) network(26) can(27) rival(28) full‑precision(29) accuracy(30) on(31) ImageNet.(32) This(33) line(34) of(35) work(36) motivates(37) the(38) integration(39) of(40) a(41) multi‑modal(42) prior(43) that(44) encourages(45) weights(46) to(47) collapse(48) onto(49) a(50) few(51) quantization(52) levels,(53) as(54) we(55) propose.(56)
+
+56 words.
+
+Paragraph 6 (approx 50 words):
+"Beyond compression, Bayesian treatments also provide uncertainty estimates for predictions. Gal (2016) showed that dropout can be interpreted as approximate Bayesian inference, yielding calibrated uncertainty estimates. Our method shares this Bayesian foundation, enabling both compression and uncertainty quantification within a single framework."
+
+Count: Beyond(1) compression,(2) Bayesian(3) treatments(4) also(5) provide(6) uncertainty(7) estimates(8) for(9) predictions.(10) Gal(11) (2016)(12) showed(13) that(14) dropout(15) can(16) be(17) interpreted(18) as(19) approximate(20) Bayesian(21) inference,(22) yielding(23) calibrated(24) uncertainty(25) estimates.(26) Our(27) method(28) shares(29) this(30) Bayesian(31) foundation,(32) enabling(33) both(34) compression(35) and(36) uncertainty(37) quantification(38) within(39) a(40) single(41) framework.(42)
+
+42 words.
+
+Paragraph 7: about KL approximation. (approx 60 words):
+"Finally, the KL divergence term in the ELBO is critical for controlling the trade‑off between model fit and sparsity. Molchanov et al. (2017) provided a closed‑form approximation for the KL divergence under a zero‑centered log‑uniform prior, which we adapt and extend to our multi‑modal quantizing prior. This extension allows efficient training and tight posterior concentration around the desired quantization levels."
+
+Count: Finally,(1) the(2) KL(3) divergence(4) term(5) in(6) the(7) ELBO(8) is(9) critical(10) for(11) controlling(12) the(13) trade‑off(14) between(15) model(16) fit(17) and(18) sparsity.(19) Molchanov(20) et(21) al.(22) (2017)(23) provided(24) a(25) closed‑form(26) approximation(27) for(28) the(29) KL(30) divergence(31) under(32) a(33) zero‑centered(34) log‑uniform(35) prior,(36) which(37) we(38) adapt(39) and(40) extend(41) to(42) our(43) multi‑modal(44) quantizing(45) prior.(46) This(47) extension(48) allows(49) efficient(50) training(51) and(52) tight(53) posterior(54) concentration(55) around(56) the(57) desired(58) quantization(59) levels.(60)
+
+60 words.
+
+Now sum all paragraphs: 56 + 58 + 51 + 52 + 56 + 42 + 60 = 375 words. Too many; we need ~308 words. We need to cut about 70 words. Let's reduce each paragraph by about 10 words.
+
+Paragraph 1: currently 56 words. We can reduce to 45-50 words. Let's rewrite: "Network compression has become a central research line as deep models grow in size. Two dominant techniques – pruning and quantization – aim to reduce parameters while preserving accuracy. Early works used hand‑crafted sparsity, but recent efforts learn compression directly from data." Count words: Network(1) compression(2) has(3) become(4) a(5) central(6) research(7) line(8) as(9) deep(10) models(11) grow(12) in(13) size.(14) Two(15) dominant(16) techniques(17) –(18) pruning(19) and(20) quantization(21) –(22) aim(23) to(24) reduce(25) parameters(26) while(27) preserving(28) accuracy.(29) Early(30) works(31) used(32) hand‑crafted(33) sparsity,(34) but(35) recent(36) efforts(37) learn(38) compression(39) directly(40) from(41) data.(42)
+
+42 words.
+
+Paragraph 2: 58 words. We can reduce to ~48. Let's rewrite: "Bayesian compression offers a principled alternative to deterministic pruning. Louizos et al. (2017) introduced a sparsity‑inducing prior that yields a posterior over weight magnitudes, enabling automatic removal of unimportant parameters. Neklyudov et al. (2017) extended this to structured pruning by using log‑normal multiplicative noise to prune whole neurons or filters." Count: Bayesian(1) compression(2) offers(3) a(4) principled(5) alternative(6) to(7) deterministic(8) pruning.(9) Louizos(10) et(11) al.(12) (2017)(13) introduced(14) a(15) sparsity‑inducing(16) prior(17) that(18) yields(19) a(20) posterior(21) over(22) weight(23) magnitudes,(24) enabling(25) automatic(26) removal(27) of(28) unimportant(29) parameters.(30) Neklyudov(31) et(32) al.(33) (2017)(34) extended(35) this(36) to(37) structured(38) pruning(39) by(40) using(41) log‑normal(42) multiplicative(43) noise(44) to(45) prune(46) whole(47) neurons(48) or(49) filters.(50)
+
+50 words.
+
+Paragraph 3: 51 words. We can cut to ~45. Rewrite: "Variational dropout has been adapted for sparsification. Molchanov et al. (2017) proposed Sparse Variational Dropout, learning a dropout rate for each weight and pruning those with high uncertainty. It matches or exceeds deterministic baselines while providing a Bayesian posterior that captures weight uncertainty." Count: Variational(1) dropout(2) has(3) been(4) adapted(5) for(6) sparsification.(7) Molchanov(8) et(9) al.(10) (2017)(11) proposed(12) Sparse(13) Variational(14) Dropout,(15) learning(16) a(17) dropout(18) rate(19) for(20) each(21) weight(22) and(23) pruning(24) those(25) with(26) high(27) uncertainty.(28) It(29) matches(30) or(31) exceeds(32) deterministic(33) baselines(34) while(35) providing(36) a(37) Bayesian(38) posterior(39) that(40) captures(41) weight(42) uncertainty.(43)
+
+43 words.
+
+Paragraph 4: 52 words. Reduce to ~45. Rewrite: "Soft weight sharing clusters weight values into a small set of centroids via a mixture prior. Ullrich et al. (2017) showed that this clustering prior dramatically reduces the effective number of parameters while maintaining accuracy, and can be combined with variational inference for a compact posterior." Count: Soft(1) weight(2) sharing(3) clusters(4) weight(5) values(6) into(7) a(8) small(9) set(10) of(11) centroids(12) via(13) a(14) mixture(15) prior.(16) Ullrich(17) et(18) al.(19) (2017)(20) showed(21) that(22) this(23) clustering(24) prior(25) dramatically(26) reduces(27) the(28) effective(29) number(30) of(31) parameters(32) while(33) maintaining(34) accuracy,(35) and(36) can(37) be(38) combined(39) with(40) variational(41) inference(42) for(43) a(44) compact(45) posterior.(46)
+
+46 words.
+
+Paragraph 5: 56 words. Reduce to ~45. Rewrite: "Trained ternary quantization (Zhu & Han, 2016) learns three discrete weight values and shows that ternary networks can rival full‑precision accuracy on ImageNet. This motivates a multi‑modal prior that pulls weights toward a few quantization levels, as we propose." Count: Trained(1) ternary(2) quantization(3) (Zhu(4) &(5) Han,(6) 2016)(7) learns(8) three(9) discrete(10) weight(11) values(12) and(13) shows(14) that(15) ternary(16) networks(17) can(18) rival(19) full‑precision(20) accuracy(21) on(22) ImageNet.(23) This(24) motivates(25) a(26) multi‑modal(27) prior(28) that(29) pulls(30) weights(31) toward(32) a(33) few(34) quantization(35) levels,(36) as(37) we(38) propose.(39)
+
+39 words.
+
+Paragraph 6: 42 words. Maybe it's fine. But we can reduce to ~35. Rewrite: "Bayesian treatments also provide uncertainty estimates. Gal (2016) showed dropout can be viewed as approximate Bayesian inference, yielding calibrated uncertainty. Our method shares this Bayesian foundation, enabling both compression and uncertainty quantification in one framework." Count: Bayesian(1) treatments(2) also(3) provide(4) uncertainty(5) estimates.(6) Gal(7) (2016)(8) showed(9) dropout(10) can(11) be(12) viewed(13) as(14) approximate(15) Bayesian(16) inference,(17) yielding(18) calibrated(19) uncertainty.(20) Our(21) method(22) shares(23) this(24) Bayesian(25) foundation,(26) enabling(27) both(28) compression(29) and(30) uncertainty(31) quantification(32) in(33) one(34) framework.(35)
+
+35 words.
+
+Paragraph 7: 60 words. Reduce to ~45. Rewrite: "The KL divergence term in the ELBO controls the trade‑off between fit and sparsity. Molchanov et al. (2017) provided a closed‑form approximation for a zero‑centered log‑uniform prior, which we extend to our multi‑modal quantizing prior. This lets us train efficiently while concentrating the posterior around the desired quantization levels." Count: The(1) KL(2) divergence(3) term(4) in(5) the(6) ELBO(7) controls(8) the(9) trade‑off(10) between(11) fit(12) and(13) sparsity.(14) Molchanov(15) et(16) al.(17) (2017)(18) provided(19) a(20) closed‑form(21) approximation(22) for(23) a(24) zero‑centered(25) log‑uniform(26) prior,(27) which(28) we(29) extend(30) to(31) our(32) multi‑modal(33) quantizing(34) prior.(35) This(36) lets(37) us(38) train(39) efficiently(40) while(41) concentrating(42) the(43) posterior(44) around(45) the(46) desired(47) quantization(48) levels.(49)
+
+49 words.
+
+Sum now: 42 + 50 + 43 + 46 + 39 + 35 + 49 = 304 words. Good. Slightly under 308, but within range. Let's count accurately: 42+50=92; +43=135; +46=181; +39=220; +35=255; +49=304. So 304 words. Good.
+
+Now we need to ensure citations are correct. We have citations like (Gal, 2016), (Louizos et al., 2017), (Neklyudov et al., 2017), (Molchanov et al., 2017), (Ullrich et al., 2017), (Zhu & Han, 2016). We also used (Molchanov et al., 2017) again for KL approximation. That covers all the 7 references.
+
+We also mention "molchanov et al. (2017)" for both the variational dropout and KL approximation. Good.
+
+We need to mention "structured Bayesian pruning via log-normal multiplicative noise" for Neklyudov et al., 2017. We mention "log-normal multiplicative noise".
+
+We need to mention "soft weight-sharing" for Ullrich et al., 2017. Good.
+
+We need to mention "trained ternary quantization" for Zhu & Han, 2016. Good.
+
+We need to mention "uncertainty in deep learning" for Gal, 2016. Good.
+
+We need to mention "Bayesian compression for deep learning" for Louizos et al., 2017. Good.
+
+We need to mention "variational dropout sparsifies deep neural networks" for Molchanov et al., 2017. Good.
+
+We need to mention "structured Bayesian pruning via log-normal multiplicative noise" for Neklyudov et al., 2017. Good.
+
+We need to mention "soft weight-sharing for neural network compression" for Ullrich et al., 2017. Good.
+
+We need to mention "Trained ternary quantization" for Zhu & Han, 2016. Good.
+
+We need to mention "2017) presented an approximation for the KL divergence under a (zero-centered) log uniform prior (Eq. (5)). Since our quantizing prior is essentially a composition of shifted log uniform priors, we construct a composition of the approximation given by Molchanov et al , Authors: Molchanov , 2017." This is basically the same Molchanov 2017. Good.
+
+Thus citations are all present.
+
+Now we produce the final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Related Work**
+
+Network compression has become a central research line as deep models grow in size. Two dominant techniques – pruning and quantization – aim to reduce parameters while preserving accuracy. Early works used hand‑crafted sparsity, but recent efforts learn compression directly from data.  
+
+Bayesian compression offers a principled alternative to deterministic pruning. Louizos et al. (2017) introduced a sparsity‑inducing prior that yields a posterior over weight magnitudes, enabling automatic removal of unimportant parameters. Neklyudov et al. (2017) extended this to structured pruning by using log‑normal multiplicative noise to prune whole neurons or filters.  
+
+Variational dropout has been adapted for sparsification. Molchanov et al. (2017) proposed Sparse Variational Dropout, learning a dropout rate for each weight and pruning those with high uncertainty. It matches or exceeds deterministic baselines while providing a Bayesian posterior that captures weight uncertainty.  
+
+Soft weight sharing clusters weight values into a small set of centroids via a mixture prior. Ullrich et al. (2017) showed that this clustering prior dramatically reduces the effective number of parameters while maintaining accuracy, and can be combined with variational inference for a compact posterior.  
+
+Trained ternary quantization (Zhu & Han, 2016) learns three discrete weight values and shows that ternary networks can rival full‑precision accuracy on ImageNet. This motivates a multi‑modal prior that pulls weights toward a few quantization levels, as we propose.  
+
+Bayesian treatments also provide uncertainty estimates. Gal (2016) showed dropout can be viewed as approximate Bayesian inference, yielding calibrated uncertainty. Our method shares this Bayesian foundation, enabling both compression and uncertainty quantification in one framework.  
+
+The KL divergence term in the ELBO controls the trade‑off between fit and sparsity. Molchanov et al. (2017) provided a closed‑form approximation for a zero‑centered log‑uniform prior, which we extend to our multi‑modal quantizing prior. This lets us train efficiently while concentrating the posterior around the desired quantization levels.

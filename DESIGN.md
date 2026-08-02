@@ -149,12 +149,12 @@ remote deployment already pins revisions, preserve those pins.
 Use the archived prompts under:
 
 ```text
-prompts/gpt_oss_120b_9k_11k_leval/
+prompts/leval_9k_11k/
 ```
 
-The directory name is historical. GPT-OSS-20B and GPT-OSS-120B use the same
-`o200k_harmony` encoding, so the rendered Harmony prompts are valid for the
-20B pilot. The server must still report its own prompt-token count in each run.
+These prompts were rendered and counted with `o200k_harmony`, which every
+GPT-OSS size shares, so the archived counts apply to the 20B pilot. The server
+must still report its own prompt-token count in each run.
 
 The initial pilot consists of the five entries marked
 `selected_for_pilot=true`:
@@ -204,7 +204,7 @@ Agents must inspect and preserve these files before changing anything:
 | `remote/run_server.sh` | Starts baseline, strict, or lossy SGLang server |
 | `scripts/run_lossy_experiment.py` | Sends archived prompts and stores complete run artifacts |
 | `LOSSY_GPT_OSS_20B.md` | Human-facing remote runbook |
-| `prompts/gpt_oss_120b_9k_11k_leval/` | Five pilot prompts plus three reserve prompts |
+| `prompts/leval_9k_11k/` | Five pilot prompts plus three reserve prompts |
 
 The request runner currently records:
 
@@ -243,7 +243,7 @@ requires the phases below.
    LOSSY_GPT_OSS_20B.md
    remote/
    scripts/run_lossy_experiment.py
-   prompts/gpt_oss_120b_9k_11k_leval/
+   prompts/leval_9k_11k/
    ```
 
 3. Run:

@@ -1,0 +1,211 @@
+<|channel|>analysis<|message|>We need to produce a "Related Work" section for this paper, citing these 11 papers. The output length: around 295 words. The content: we need to discuss related work in variational inference, bias reduction, importance sampling, flows, adversarial methods, etc. We need to refer to the papers by their titles and author lists. We'll need to cite them with brackets or parentheses. The titles are given; we can use them as citations: (Bamler et al., 2017) etc. Also we have to mention the contributions.
+
+Let's carefully read the instruction:
+
+"Instruction: Please generate the Related Work section for this paper, and you have to cite these papers:
+1. Title: Perturbative black box variational inference , Authors: Robert Bamler Cheng Zhang... , 2017
+2. Title: Nice: Non-linear independent components estimation , Authors: Laurent Dinh David Krueger... , 2014
+3. Title: Adversarial message passing for graphical models , Authors: Theofanis Karaletsos , 2016
+4. Title: Improving variational inference with inverse autoregressive flow , Authors: Diederik P Kingma Tim Salimans... , 2016
+5. Title: Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks , Authors: Lars Mescheder Sebastian Nowozin... , 2017
+6. Title: Masked autoregressive flow for density estimation , Authors: George Papamakarios Iain Murray... , 2017
+7. Title: On the opportunities and pitfalls of nesting monte carlo estimators , Authors: Tom Rainforth Robert Cornish... , 2017
+8. Title: Tighter variational bounds are not necessarily better , Authors: Tom Rainforth Tuan Anh Le... , 2017
+9. Title: Markov chain monte carlo and variational inference: Bridging the gap , Authors: Tim Salimans Diederik Kingma... , 2015
+10. Title: A collapsed variational bayesian inference algorithm for latent dirichlet allocation , Authors: Yee W Teh David Newman... , 2007
+11. Title: Deep and hierarchical implicit models , Authors: Dustin Tran Rajesh Ranganath... , 2017
+
+The suggested output length is around 295 words. Output:"
+
+We will produce a related work section referencing these works. We need to keep the length ~295 words. We'll mention how these works relate to our JVI method. Provide citations in parentheses with author names and year. Use the titles maybe: (Bamler et al., 2017) etc. Let's count approximate words.
+
+We can produce around 295 words. Let's draft and then count.
+
+We need to discuss the following topics:
+
+- Variational inference and black-box VI, including Perturbative Black Box VI (Bamler et al., 2017).
+- Flow-based variational families: NICE (Dinh et al., 2014), IAF (Kingma & Salimans, 2016), MAF (Papamakarios et al., 2017).
+- Adversarial approaches: Adversarial message passing (Karaletsos, 2016), Adversarial Variational Bayes (Mescheder et al., 2017).
+- Nested MC estimators: Rainforth et al. (2017) on opportunities and pitfalls, Rainforth et al. (2017) on tighter bounds not necessarily better.
+- MCMC-VI bridging: Salimans & Kingma (2015).
+- DVI: Teh et al. (2007) collapsed VB for LDA.
+- Deep and hierarchical implicit models: Tran et al. (2017).
+- Possibly mention other related works.
+
+We need to keep the text at around 295 words. Let's draft about 280-300 words. We'll need to count words.
+
+Draft:
+
+"Related Work
+
+Variational inference has seen a surge of advances that aim to improve the expressiveness of the variational family or the tightness of the evidence lower bound. Perturbative Black‑Box Variational Inference (Bamler et al., 2017) introduced a stochastic linearization of the ELBO that reduces bias by constructing an auxiliary perturbation. Flow‑based extensions such as NICE (Dinh et al., 2014), Inverse Autoregressive Flow (Kingma & Salimans, 2016) and Masked Autoregressive Flow (Papamakarios et al., 2017) enlarge the variational family by applying invertible transformations, thereby enabling richer posterior approximations. Adversarial techniques have also been explored; Adversarial Message Passing (Karaletsos, 2016) and Adversarial Variational Bayes (Mescheder et al., 2017) unify VAEs with GANs, using discriminator networks to refine the inference distribution. 
+
+The importance‑weighted ELBO (IWAE) sits between simple ELBO and more sophisticated estimators. Rainforth et al. (2017a) studied the opportunities and pitfalls of nesting Monte‑Carlo estimators, showing that higher‑order bounds can be derived but may suffer from variance inflation. Their subsequent work (2017b) argued that tighter bounds do not always lead to better learning. Our JVI approach builds on these insights by applying higher‑order jackknife bias correction to the IWAE objective, yielding a debiased log‑evidence estimator. 
+
+Connections to Markov chain Monte‑Carlo (MCMC) methods are also relevant. Salimans & Kingma (2015) proposed a hybrid MCMC–VI algorithm that uses MCMC steps to correct the variational approximation, while Teh et al. (2007) introduced a collapsed VB algorithm for latent Dirichlet allocation that reduces variance via Rao–Blackwellisation. More recently, Tran et al. (2017) presented deep and hierarchical implicit models that bypass explicit density evaluation, offering an alternative route to flexible inference. These diverse strands illustrate the rich landscape of bias‑reduction, variance‑control, and expressiveness strategies that our JVI method complements."
+
+Now count words. Let's count manually or approximate. But we need to keep ~295 words. Let's count:
+
+"Related(1) Work(2)
+
+Variational(3) inference(4) has(5) seen(6) a(7) surge(8) of(9) advances(10) that(11) aim(12) to(13) improve(14) the(15) expressiveness(16) of(17) the(18) variational(19) family(20) or(21) the(22) tightness(23) of(24) the(25) evidence(26) lower(27) bound.(28) Perturbative(29) Black‑Box(30) Variational(31) Inference(32) (Bamler(33) et al.,(34) 2017) introduced(35) a(36) stochastic(37) linearization(38) of(39) the(40) ELBO(41) that(42) reduces(43) bias(44) by(45) constructing(46) an(47) auxiliary(48) perturbation.(49) Flow‑based(50) extensions(51) such(52) as(53) NICE(54) (Dinh(55) et al.,(56) 2014),(57) Inverse(58) Autoregressive(59) Flow(60) (Kingma(61) & Salimans,(62) 2016) and(63) Masked(64) Autoregressive(65) Flow(66) (Papamakarios(67) et al.,(68) 2017) enlarge(69) the(70) variational(71) family(72) by(73) applying(74) invertible(75) transformations,(76) thereby(77) enabling(78) richer(79) posterior(80) approximations.(81) Adversarial(82) techniques(83) have(84) also(85) been(86) explored;(87) Adversarial(88) Message(89) Passing(90) (Karaletsos,(91) 2016) and(92) Adversarial(93) Variational(94) Bayes(95) (Mescheder(96) et al.,(97) 2017) unify(98) VAEs(99) with(100) GANs,(101) using(102) discriminator(103) networks(104) to(105) refine(106) the(107) inference(108) distribution.(109)
+
+The(110) importance‑weighted(111) ELBO(112) (IWAE) sits(113) between(114) simple(115) ELBO(116) and(117) more(118) sophisticated(119) estimators.(120) Rainforth(121) et al.(122) (2017a) studied(123) the(124) opportunities(125) and(126) pitfalls(127) of(128) nesting(129) Monte‑Carlo(130) estimators,(131) showing(132) that(133) higher‑order(134) bounds(135) can(136) be(137) derived(138) but(139) may(140) suffer(141) from(142) variance(143) inflation.(144) Their(145) subsequent(146) work(147) (2017b) argued(148) that(149) tighter(150) bounds(151) do(152) not(153) always(154) lead(155) to(156) better(157) learning.(158) Our(159) JVI(160) approach(161) builds(162) on(163) these(164) insights(165) by(166) applying(167) higher‑order(168) jackknife(169) bias(170) correction(171) to(172) the(173) IWAE(174) objective,(175) yielding(176) a(177) debiased(178) log‑evidence(179) estimator.(180)
+
+Connections(181) to(182) Markov(183) chain(184) Monte‑Carlo(185) (MCMC)(186) methods(187) are(188) also(189) relevant.(190) Salimans(191) &(192) Kingma(193) (2015) proposed(194) a(195) hybrid(196) MCMC–VI(197) algorithm(198) that(199) uses(200) MCMC(201) steps(202) to(203) correct(204) the(205) variational(206) approximation,(207) while(208) Teh(209) et al.(210) (2007) introduced(211) a(212) collapsed(213) VB(214) algorithm(215) for(216) latent(217) Dirichlet(218) allocation(219) that(220) reduces(221) variance(222) via(223) Rao–Blackwellisation.(224) More(225) recently,(226) Tran(227) et al.(228) (2017) presented(229) deep(230) and(231) hierarchical(232) implicit(233) models(234) that(235) bypass(236) explicit(237) density(238) evaluation,(239) offering(240) an(241) alternative(242) route(243) to(244) flexible(245) inference.(246) These(247) diverse(248) strands(249) illustrate(250) the(251) rich(252) landscape(253) of(254) bias‑reduction,(255) variance‑control,(256) and(257) expressiveness(258) strategies(259) that(260) our(261) JVI(262) method(263) complements.(264)
+
+"
+
+We have 264 words. We need around 295 words. We can add about 30-35 words.
+
+We can add a paragraph describing the "perturbative black box variational inference" earlier? Already there. We can add mention of "perturbative black box variational inference" is included. We can add comment about "deep and hierarchical implicit models" being an alternative. We can add mention of "adversarial message passing" and "adversarial variational bayes" unify VAE and GAN. We already have that.
+
+We can add a sentence about "non-linear independent components estimation NICE" (Dinh et al.) and "inverse autoregressive flow" (Kingma & Salimans), "masked autoregressive flow" (Papamakarios). We already have those. We can add mention of "adversarial message passing" etc. Did we mention "adversarial message passing"? Yes. Did we mention "adversarial variational bayes"? Yes.
+
+We can add a sentence about "deep and hierarchical implicit models" (Tran et al.). Already there.
+
+We can add a sentence about "perturbative black box variational inference" (Bamler et al.). Yes.
+
+We can add a sentence about "on the opportunities and pitfalls of nesting monte carlo estimators" (Rainforth et al. 2017). Yes.
+
+We can add a sentence about "Tighter variational bounds are not necessarily better" (Rainforth et al. 2017). Yes.
+
+We can add a sentence about "Markov chain monte carlo and variational inference: Bridging the gap" (Salimans & Kingma 2015). Yes.
+
+We can add a sentence about "A collapsed variational Bayesian inference algorithm for latent Dirichlet allocation" (Teh et al. 2007). Yes.
+
+We can add a sentence about "Deep and hierarchical implicit models" (Tran et al. 2017). Yes.
+
+We need to include all citations, but we already did. We might want to mention "Perturbative black box variational inference" in more detail.
+
+Also we might want to mention "non-linear independent components estimation" NICE.
+
+We might mention "inverse autoregressive flow" and "masked autoregressive flow".
+
+We might mention "adversarial message passing" and "adversarial variational bayes".
+
+We might mention "deep and hierarchical implicit models".
+
+We might mention "on opportunities and pitfalls of nesting monte carlo estimators".
+
+We might mention "tighter variational bounds are not necessarily better".
+
+We might mention "Markov chain monte carlo and variational inference: bridging the gap".
+
+We might mention "collapsed variational Bayesian inference algorithm for latent Dirichlet allocation".
+
+We might mention "perturbative black box variational inference".
+
+We need to ensure we include all 11 citations. Let's double-check that we have all 11:
+
+1. Perturbative black box variational inference (Bamler et al., 2017) - yes.
+2. Nice: Non-linear independent components estimation (Dinh et al., 2014) - yes.
+3. Adversarial message passing for graphical models (Karaletsos, 2016) - yes.
+4. Improving variational inference with inverse autoregressive flow (Kingma & Salimans, 2016) - yes.
+5. Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks (Mescheder et al., 2017) - yes.
+6. Masked autoregressive flow for density estimation (Papamakarios et al., 2017) - yes.
+7. On the opportunities and pitfalls of nesting monte carlo estimators (Rainforth et al., 2017a) - yes.
+8. Tighter variational bounds are not necessarily better (Rainforth et al., 2017b) - yes.
+9. Markov chain monte carlo and variational inference: Bridging the gap (Salimans & Kingma, 2015) - yes.
+10. A collapsed variational bayesian inference algorithm for latent dirichlet allocation (Teh et al., 2007) - yes.
+11. Deep and hierarchical implicit models (Tran et al., 2017) - yes.
+
+All 11 citations present. Good.
+
+Now we need to add 30-35 words to reach ~295. Let's add an extra paragraph of about 25-30 words. We can add a sentence summarizing the synergy between JVI and these works. For example:
+
+"Collectively, these developments underscore the value of combining expressive variational families, importance weighting, and bias correction to achieve tighter evidence estimates while maintaining computational tractability."
+
+But we need to add 30-35 words. Let's count: "Collectively, these developments underscore the value of combining expressive variational families, importance weighting, and bias correction to achieve tighter evidence estimates while maintaining computational tractability." Count words:
+
+Collectively,(1) these(2) developments(3) underscore(4) the(5) value(6) of(7) combining(8) expressive(9) variational(10) families,(11) importance(12) weighting,(13) and(14) bias(15) correction(16) to(17) achieve(18) tighter(19) evidence(20) estimates(21) while(22) maintaining(23) computational(24) tractability.(25)
+
+25 words. We need 30-35 more. Maybe add another sentence: "Future work may explore hybrid adversarial–flow architectures that further reduce bias while controlling variance, building on the insights from the aforementioned studies." Count words:
+
+Future(1) work(2) may(3) explore(4) hybrid(5) adversarial–flow(6) architectures(7) that(8) further(9) reduce(10) bias(11) while(12) controlling(13) variance,(14) building(15) on(16) the(17) insights(18) from(19) the(20) aforementioned(21) studies.(22)
+
+22 words. Combined with previous 25 gives 47 words. We need ~30-35 more? Wait we need to add about 31-35 words. We added 47 words. That brings total words to 264+47=311 words. That's slightly above 295. We can trim some.
+
+We can cut the second sentence to 15 words: "Future work may explore hybrid adversarial–flow architectures that further reduce bias while controlling variance." Count words:
+
+Future(1) work(2) may(3) explore(4) hybrid(5) adversarial–flow(6) architectures(7) that(8) further(9) reduce(10) bias(11) while(12) controlling(13) variance.(14)
+
+14 words. Combined with first sentence 25 gives 39 words. 264+39=303 words. Still above 295.
+
+We can cut first sentence to 20 words. "Collectively, these developments highlight the importance of combining expressive variational families and bias correction to tighten evidence estimates." Count words:
+
+Collectively,(1) these(2) developments(3) highlight(4) the(5) importance(6) of(7) combining(8) expressive(9) variational(10) families(11) and(12) bias(13) correction(14) to(15) tighten(16) evidence(17) estimates.(18)
+
+18 words. Combined with second sentence 14 gives 32 words. 264+32=296 words. Good. Slightly above 295 by 1 word. We can reduce further to 295 exactly or less. We can remove one word. Let's remove "expressive" maybe. Then second sentence: "Collectively, these developments highlight the importance of combining variational families and bias correction to tighten evidence estimates." Count words:
+
+Collectively,(1) these(2) developments(3) highlight(4) the(5) importance(6) of(7) combining(8) variational(9) families(10) and(11) bias(12) correction(13) to(14) tighten(15) evidence(16) estimates.(17)
+
+17 words. Combined with second sentence 14 gives 31 words. 264+31=295 words exactly. Good.
+
+Now we need to ensure we have all citations. Let's scan the text for each citation:
+
+- Bamler et al., 2017: yes
+- Dinh et al., 2014: yes
+- Karaletsos, 2016: yes
+- Kingma & Salimans, 2016: yes
+- Mescheder et al., 2017: yes
+- Papamakarios et al., 2017: yes
+- Rainforth et al., 2017a: yes
+- Rainforth et al., 2017b: yes
+- Salimans & Kingma, 2015: yes
+- Teh et al., 2007: yes
+- Tran et al., 2017: yes
+
+All citations present.
+
+Now we need to ensure that the text references the titles in parentheses, but we used author-year citations. The instruction says "cite these papers" but didn't specify formatting. The style used in the paper is referencing e.g., "(Kingma & Welling, 2013)". So using author-year is fine. We used "Bamler et al., 2017" etc. Good.
+
+We also need to maintain the style: parenthetical citations after the sentence. We inserted them like (Bamler et al., 2017) etc. Good.
+
+We need to ensure to include the titles? The instruction says "cite these papers" but didn't require titles. Typically citations referencing authors and year suffice. But the instruction gave the titles and authors. We can just cite as (Bamler et al., 2017) etc. Good.
+
+We need to ensure the final output is only the related work section.
+
+Let's produce the final output: We'll include the text as a section "Related Work". We need to keep the output length around 295 words. Our final text is 295 words.
+
+Let's re-write the final section carefully, ensuring no extra spaces or extra words.
+
+We'll output:
+
+"Related Work
+
+Variational inference has seen a surge of advances that aim to improve the expressiveness of the variational family or the tightness of the evidence lower bound. Perturbative Black‑Box Variational Inference (Bamler et al., 2017) introduced a stochastic linearization of the ELBO that reduces bias by constructing an auxiliary perturbation. Flow‑based extensions such as NICE (Dinh et al., 2014), Inverse Autoregressive Flow (Kingma & Salimans, 2016) and Masked Autoregressive Flow (Papamakarios et al., 2017) enlarge the variational family by applying invertible transformations, thereby enabling richer posterior approximations. Adversarial techniques have also been explored; Adversarial Message Passing (Karaletsos, 2016) and Adversarial Variational Bayes (Mescheder et al., 2017) unify VAEs with GANs, using discriminator networks to refine the inference distribution. 
+
+The importance‑weighted ELBO (IWAE) sits between simple ELBO and more sophisticated estimators. Rainforth et al. (2017a) studied the opportunities and pitfalls of nesting Monte‑Carlo estimators, showing that higher‑order bounds can be derived but may suffer from variance inflation. Their subsequent work (2017b) argued that tighter bounds do not always lead to better learning. Our JVI approach builds on these insights by applying higher‑order jackknife bias correction to the IWAE objective, yielding a debiased log‑evidence estimator. 
+
+Connections to Markov chain Monte‑Carlo (MCMC) methods are also relevant. Salimans & Kingma (2015) proposed a hybrid MCMC–VI algorithm that uses MCMC steps to correct the variational approximation, while Teh et al. (2007) introduced a collapsed VB algorithm for latent Dirichlet allocation that reduces variance via Rao–Blackwellisation. More recently, Tran et al. (2017) presented deep and hierarchical implicit models that bypass explicit density evaluation, offering an alternative route to flexible inference. These diverse strands illustrate the rich landscape of bias‑reduction, variance‑control, and expressiveness strategies that our JVI method complements. 
+
+Collectively, these developments highlight the importance of combining variational families and bias correction to tighten evidence estimates. Future work may explore hybrid adversarial–flow architectures that further reduce bias while controlling variance."
+
+Now let's count again to ensure 295 words. We'll count words again carefully.
+
+"Related(1) Work(2)
+
+Variational(3) inference(4) has(5) seen(6) a(7) surge(8) of(9) advances(10) that(11) aim(12) to(13) improve(14) the(15) expressiveness(16) of(17) the(18) variational(19) family(20) or(21) the(22) tightness(23) of(24) the(25) evidence(26) lower(27) bound.(28) Perturbative(29) Black‑Box(30) Variational(31) Inference(32) (Bamler(33) et al.,(34) 2017) introduced(35) a(36) stochastic(37) linearization(38) of(39) the(40) ELBO(41) that(42) reduces(43) bias(44) by(45) constructing(46) an(47) auxiliary(48) perturbation.(49) Flow‑based(50) extensions(51) such(52) as(53) NICE(54) (Dinh(55) et al.,(56) 2014),(57) Inverse(58) Autoregressive(59) Flow(60) (Kingma(61) & Salimans,(62) 2016) and(63) Masked(64) Autoregressive(65) Flow(66) (Papamakarios(67) et al.,(68) 2017) enlarge(69) the(70) variational(71) family(72) by(73) applying(74) invertible(75) transformations,(76) thereby(77) enabling(78) richer(79) posterior(80) approximations.(81) Adversarial(82) techniques(83) have(84) also(85) been(86) explored;(87) Adversarial(88) Message(89) Passing(90) (Karaletsos,(91) 2016) and(92) Adversarial(93) Variational(94) Bayes(95) (Mescheder(96) et al.,(97) 2017) unify(98) VAEs(99) with(100) GANs,(101) using(102) discriminator(103) networks(104) to(105) refine(106) the(107) inference(108) distribution.(109)
+
+The(110) importance‑weighted(111) ELBO(112) (IWAE) sits(113) between(114) simple(115) ELBO(116) and(117) more(118) sophisticated(119) estimators.(120) Rainforth(121) et al.(122) (2017a) studied(123) the(124) opportunities(125) and(126) pitfalls(127) of(128) nesting(129) Monte‑Carlo(130) estimators,(131) showing(132) that(133) higher‑order(134) bounds(135) can(136) be(137) derived(138) but(139) may(140) suffer(141) from(142) variance(143) inflation.(144) Their(145) subsequent(146) work(147) (2017b) argued(148) that(149) tighter(150) bounds(151) do(152) not(153) always(154) lead(155) to(156) better(157) learning.(158) Our(159) JVI(160) approach(161) builds(162) on(163) these(164) insights(165) by(166) applying(167) higher‑order(168) jackknife(169) bias(170) correction(171) to(172) the(173) IWAE(174) objective,(175) yielding(176) a(177) debiased(178) log‑evidence(179) estimator.(180)
+
+Connections(181) to(182) Markov(183) chain(184) Monte‑Carlo(185) (MCMC) methods(186) are(187) also(188) relevant.(189) Salimans(190) &(191) Kingma(192) (2015) proposed(193) a(194) hybrid(195) MCMC–VI(196) algorithm(197) that(198) uses(199) MCMC(200) steps(201) to(202) correct(203) the(204) variational(205) approximation,(206) while(207) Teh(208) et al.(209) (2007) introduced(210) a(211) collapsed(212) VB(213) algorithm(214) for(215) latent(216) Dirichlet(217) allocation(218) that(219) reduces(220) variance(221) via(222) Rao–Blackwellisation.(223) More(224) recently,(225) Tran(226) et al.(227) (2017) presented(228) deep(229) and(230) hierarchical(231) implicit(232) models(233) that(234) bypass(235) explicit(236) density(237) evaluation,(238) offering(239) an(240) alternative(241) route(242) to(243) flexible(244) inference.(245) These(246) diverse(247) strands(248) illustrate(249) the(250) rich(251) landscape(252) of(253) bias‑reduction,(254) variance‑control,(255) and(256) expressiveness(257) strategies(258) that(259) our(260) JVI(261) method(262) complements.(263)
+
+Collectively,(264) these(265) developments(266) highlight(267) the(268) importance(269) of(270) combining(271) variational(272) families(273) and(274) bias(275) correction(276) to(277) tighten(278) evidence(279) estimates.(280) Future(281) work(282) may(283) explore(284) hybrid(285) adversarial–flow(286) architectures(287) that(288) further(289) reduce(290) bias(291) while(292) controlling(293) variance.(294)"
+
+We have 294 words. We need around 295 words. Good. 294 is fine.
+
+Now we need to ensure we haven't included any extra words like "Related Work" header. That counts as two words? "Related" and "Work". Yes we counted "Related" (1) "Work" (2). Good. The total words including header is 294. Good.
+
+We need to ensure no hidden words like "Black‑Box" counts as one? We counted "Black‑Box" as one word. We counted "Black‑Box" as word 30. Good.
+
+Now output the section as final. Ensure proper formatting. We'll output exactly the text above.<|end|><|start|>assistant<|channel|>final<|message|>**Related Work**
+
+Variational inference has seen a surge of advances that aim to improve the expressiveness of the variational family or the tightness of the evidence lower bound. Perturbative Black‑Box Variational Inference (Bamler et al., 2017) introduced a stochastic linearization of the ELBO that reduces bias by constructing an auxiliary perturbation. Flow‑based extensions such as NICE (Dinh et al., 2014), Inverse Autoregressive Flow (Kingma & Salimans, 2016) and Masked Autoregressive Flow (Papamakarios et al., 2017) enlarge the variational family by applying invertible transformations, thereby enabling richer posterior approximations. Adversarial techniques have also been explored; Adversarial Message Passing (Karaletsos, 2016) and Adversarial Variational Bayes (Mescheder et al., 2017) unify VAEs with GANs, using discriminator networks to refine the inference distribution. 
+
+The importance‑weighted ELBO (IWAE) sits between simple ELBO and more sophisticated estimators. Rainforth et al. (2017a) studied the opportunities and pitfalls of nesting Monte‑Carlo estimators, showing that higher‑order bounds can be derived but may suffer from variance inflation. Their subsequent work (2017b) argued that tighter bounds do not always lead to better learning. Our JVI approach builds on these insights by applying higher‑order jackknife bias correction to the IWAE objective, yielding a debiased log‑evidence estimator. 
+
+Connections to Markov chain Monte‑Carlo (MCMC) methods are also relevant. Salimans & Kingma (2015) proposed a hybrid MCMC–VI algorithm that uses MCMC steps to correct the variational approximation, while Teh et al. (2007) introduced a collapsed VB algorithm for latent Dirichlet allocation that reduces variance via Rao–Blackwellisation. More recently, Tran et al. (2017) presented deep and hierarchical implicit models that bypass explicit density evaluation, offering an alternative route to flexible inference. These diverse strands illustrate the rich landscape of bias‑reduction, variance‑control, and expressiveness strategies that our JVI method complements. 
+
+Collectively, these developments highlight the importance of combining variational families and bias correction to tighten evidence estimates. Future work may explore hybrid adversarial–flow architectures that further reduce bias while controlling variance.
