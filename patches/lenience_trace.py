@@ -1,0 +1,248 @@
+"""Per-proposal-token trace for the lenience-patched rejection sampler.
+
+Why per proposal and not per round
+----------------------------------
+A speculative round can accept several draft tokens at once, so a per-round mean
+acceptance cannot say *which* token started a divergence. Corruption onset has to
+be attributed to an individual emitted token, which means recording every
+proposal: its target and draft probabilities, the uniform draw it was tested
+against, and — critically — whether the strict rule would have rejected it.
+
+`lossy_only` is the whole point. It is computable from a single lossy run,
+because strict acceptance is a deterministic function of the same (p, q, u) the
+lossy rule already used:
+
+    strict_accept = (p / q)       >= u
+    lossy_accept  = (p / (lam*q)) >= u
+    lossy_only    = lossy_accept and not strict_accept
+
+So the strict arm does not need to be instrumented at all; each lossy run
+carries its own counterfactual.
+
+Phase 1 is observation only. Nothing here alters acceptance, because changing
+the trajectory while measuring it would destroy the failure being studied.
+
+Enabling
+--------
+Written by the server launcher, uid-scoped like the lenience factor itself
+(EngineCore is spawned with a sanitised environment, so env vars cannot be used):
+
+    /tmp/lossy-spec-decode-trace-$UID   ->  destination .jsonl path
+
+Absent or empty disables tracing with near-zero overhead.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import pathlib
+import sys
+import threading
+
+import torch
+
+_TRACE_PATH_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-trace-{os.getuid()}")
+# Flush every round: the engine is SIGKILLed at teardown, so a large buffer
+# loses its tail. The first collected run lost ~65 rows this way.
+_FLUSH_EVERY = 1  # rounds
+_MAX_REAL_BATCH = 8  # above this, the call is a profiling/warmup pass
+_EPS = 1e-12
+_PLACEHOLDER = -1  # vllm PLACEHOLDER_TOKEN_ID
+
+
+def _resolve_destination() -> pathlib.Path | None:
+    try:
+        raw = _TRACE_PATH_FILE.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    return pathlib.Path(raw) if raw else None
+
+
+class _Tracer:
+    def __init__(self) -> None:
+        self.path = _resolve_destination()
+        self.enabled = self.path is not None
+        self._rows: list[dict] = []
+        self._round = 0
+        self._emitted = 0  # running output position
+        self._skipped_warmup = 0
+        self._lock = threading.Lock()
+        if self.enabled:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            # Truncate: one engine serves one request under the fresh-server
+            # protocol, so a stale file would silently merge two trajectories.
+            self.path.write_text("", encoding="utf-8")
+            print(
+                f"[LENIENCE TRACE] pid={os.getpid()} -> {self.path}",
+                file=sys.stderr,
+                flush=True,
+            )
+
+    def _flush(self) -> None:
+        if not self._rows:
+            return
+        with self.path.open("a", encoding="utf-8") as handle:
+            for row in self._rows:
+                handle.write(json.dumps(row, separators=(",", ":")) + "\n")
+        self._rows.clear()
+
+    @torch.no_grad()
+    def record(
+        self,
+        *,
+        draft_token_ids: torch.Tensor,      # [num_tokens]
+        draft_probs: torch.Tensor | None,   # [num_tokens, V]
+        target_probs: torch.Tensor,         # [num_tokens, V]
+        uniform_probs: torch.Tensor,        # [num_tokens]
+        recovered_token_ids: torch.Tensor,  # [num_tokens]
+        bonus_token_ids: torch.Tensor,      # [batch, 1]
+        output_token_ids: torch.Tensor,     # [batch, max_spec_len+1]
+        cu_num_draft_tokens: torch.Tensor,  # [batch]
+        num_draft_tokens: list[int],
+        lenience_factor: float,
+    ) -> None:
+        if not self.enabled:
+            return
+        # vLLM profiles and captures CUDA graphs with a large dummy batch before
+        # serving anything. Those passes reach this sampler with hundreds of
+        # synthetic sequences and would otherwise dominate the trace: the first
+        # collected run had 2048 of its 3570 rows from two warmup calls of 1024
+        # dummy sequences each. Real serving here is one request per engine.
+        if len(num_draft_tokens) > _MAX_REAL_BATCH:
+            self._skipped_warmup += 1
+            return
+
+        dt = draft_token_ids.to(torch.int64)
+        p = target_probs.gather(1, dt.unsqueeze(1)).squeeze(1).float()
+        if draft_probs is None:
+            q = torch.ones_like(p)
+        else:
+            q = draft_probs.gather(1, dt.unsqueeze(1)).squeeze(1).float()
+        u = uniform_probs.float()
+
+        ratio = torch.where(q > 0, p / q, torch.full_like(p, float("inf")))
+        strict_ok = (q > 0) & (ratio >= u)
+        lossy_ok = (q > 0) & (ratio / lenience_factor >= u)
+
+        # How far down the target's ranking the drafted token sits, and how
+        # peaked the target is there. Rank 0 means the target's own argmax.
+        rank = (target_probs > p.unsqueeze(1)).sum(dim=1)
+        top1 = target_probs.max(dim=1).values.float()
+
+        # Full-distribution features. The per-token p and q say whether *this*
+        # proposal was lucky; these say whether the drafter and target disagree
+        # about the whole next-token distribution, which is the thing expected
+        # to drift before a corruption.
+        log_t = torch.log(target_probs.clamp_min(_EPS))
+        ent = -(target_probs * log_t).sum(dim=1).float()
+        if draft_probs is None:
+            # Greedy drafting: q is one-hot, so its entropy is 0 and the KLs are
+            # degenerate. Recorded as null rather than a misleading number.
+            draft_ent = kl_pq = kl_qp = tv = None
+        else:
+            log_d = torch.log(draft_probs.clamp_min(_EPS))
+            draft_ent = (-(draft_probs * log_d).sum(dim=1)).float().tolist()
+            # KL(p||q): how much the drafter misses where the target has mass.
+            kl_pq = (target_probs * (log_t - log_d)).sum(dim=1).float().tolist()
+            # KL(q||p): how much mass the drafter puts where the target has none
+            # -- the direction that produces wrong tokens the verifier must catch.
+            kl_qp = (draft_probs * (log_d - log_t)).sum(dim=1).float().tolist()
+            # Bounded companion: KL is unstable when either side has near-zero
+            # mass, total variation is not, so a spike in one but not the other
+            # is informative rather than numerical noise.
+            tv = (0.5 * (target_probs - draft_probs).abs().sum(dim=1)).float().tolist()
+
+        dt_l = dt.tolist()
+        p_l, q_l, u_l = p.tolist(), q.tolist(), u.tolist()
+        s_l, l_l = strict_ok.tolist(), lossy_ok.tolist()
+        rank_l, top1_l, ent_l = rank.tolist(), top1.tolist(), ent.tolist()
+        rec_l = recovered_token_ids.to(torch.int64).tolist()
+        out = output_token_ids.tolist()
+        bonus = bonus_token_ids.reshape(-1).tolist()
+
+        with self._lock:
+            start = 0
+            for b, n in enumerate(num_draft_tokens):
+                run = 0          # accepted draft tokens so far this round
+                rejected = False
+                for j in range(n):
+                    i = start + j
+                    emitted = out[b][j]
+                    if emitted == _PLACEHOLDER:
+                        # Slot never evaluated (an earlier position was rejected).
+                        break
+                    accepted = emitted == dt_l[i]
+                    if accepted:
+                        run += 1
+                        source = "accepted_draft"
+                    else:
+                        rejected = True
+                        source = "recovered" if emitted == rec_l[i] else "other"
+                    self._rows.append(
+                        {
+                            "round": self._round,
+                            "batch": b,
+                            "pos_in_round": j,
+                            # position of THIS token in the final output stream
+                            "output_position": self._emitted,
+                            "draft_token_id": dt_l[i],
+                            "emitted_token_id": emitted,
+                            "p": round(p_l[i], 8),
+                            "q": round(q_l[i], 8),
+                            "p_over_q": round(p_l[i] / q_l[i], 6) if q_l[i] > 0 else None,
+                            "u": round(u_l[i], 8),
+                            "lam": lenience_factor,
+                            "strict_would_accept": bool(s_l[i]),
+                            "lossy_would_accept": bool(l_l[i]),
+                            "actually_accepted": bool(accepted),
+                            # the counterfactual that matters: emitted only
+                            # because the bar was lowered
+                            "lossy_only_accepted": bool(accepted and l_l[i] and not s_l[i]),
+                            "emission_source": source,
+                            "target_rank": int(rank_l[i]),
+                            "target_top1_prob": round(top1_l[i], 6),
+                            "target_top1_margin": round(top1_l[i] - p_l[i], 6),
+                            "target_entropy": round(ent_l[i], 5),
+                            "draft_entropy": None if draft_ent is None else round(draft_ent[i], 5),
+                            "kl_target_draft": None if kl_pq is None else round(kl_pq[i], 5),
+                            "kl_draft_target": None if kl_qp is None else round(kl_qp[i], 5),
+                            "tv_distance": None if tv is None else round(tv[i], 5),
+                            "consecutive_accepted_length": run,
+                        }
+                    )
+                    self._emitted += 1
+                    if rejected:
+                        break
+                if not rejected and run == n:
+                    # Every draft token survived, so the bonus token is emitted.
+                    self._rows.append(
+                        {
+                            "round": self._round,
+                            "batch": b,
+                            "pos_in_round": n,
+                            "output_position": self._emitted,
+                            "draft_token_id": None,
+                            "emitted_token_id": bonus[b] if b < len(bonus) else None,
+                            "emission_source": "bonus",
+                            "consecutive_accepted_length": run,
+                            "lam": lenience_factor,
+                        }
+                    )
+                    self._emitted += 1
+                start += n
+            self._round += 1
+            if self._round % _FLUSH_EVERY == 0:
+                self._flush()
+
+    def close(self) -> None:
+        if self.enabled:
+            with self._lock:
+                self._flush()
+
+
+TRACER = _Tracer()
+
+import atexit  # noqa: E402
+
+atexit.register(TRACER.close)

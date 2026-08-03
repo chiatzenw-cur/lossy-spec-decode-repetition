@@ -64,6 +64,14 @@ def parse_args() -> argparse.Namespace:
         default=str(REPO_ROOT / ".venv-vllm" / "bin" / "python"),
         help="Interpreter for both the server and the request client.",
     )
+    parser.add_argument(
+        "--trace-proposals",
+        action="store_true",
+        help=(
+            "Record every proposal token (p, q, u, strict/lossy counterfactual) to "
+            "<run dir>/proposals.jsonl. Observation only; does not alter acceptance."
+        ),
+    )
     parser.add_argument("--overwrite", action="store_true", help="Redo runs that already exist.")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -92,6 +100,23 @@ def health_ok(port: int) -> bool:
             return response.status == 200
     except Exception:
         return False
+
+
+TRACE_PATH_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-trace-{os.getuid()}")
+
+
+def set_trace_destination(path: pathlib.Path | None) -> None:
+    """Tell the patched sampler where to write its proposal trace.
+
+    A file, not an environment variable: EngineCore is spawned with a sanitised
+    environment, so env vars never reach the sampler. Must be set before the
+    server starts, because the tracer resolves it at import.
+    """
+    if path is None:
+        TRACE_PATH_FILE.write_text("", encoding="utf-8")
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        TRACE_PATH_FILE.write_text(str(path), encoding="utf-8")
 
 
 def start_server(args: argparse.Namespace, arm: str, log_path: pathlib.Path):
@@ -196,6 +221,18 @@ def main() -> int:
         status = "ok"
         try:
             stop_server()
+            # Set before start_server: the tracer resolves its destination at
+            # import, inside EngineCore. Staged outside the run directory --
+            # run_experiment_vllm.py refuses to write into a directory that
+            # already exists, so creating the trace there first would trip its
+            # overwrite guard. Moved into the run directory afterwards.
+            run_dir = REPO_ROOT / args.runs_root / case / f"seed_{seed}" / tag
+            trace_stage = (
+                REPO_ROOT / args.log_root / f"{tag}_{case}_seed{seed}_proposals.jsonl"
+                if args.trace_proposals
+                else None
+            )
+            set_trace_destination(trace_stage)
             process = start_server(args, arm, log_path)
             try:
                 completed = request_once(args, arm, case, seed, tag, log_path)
@@ -206,13 +243,25 @@ def main() -> int:
                 stop_server()
                 if process.poll() is None:
                     os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                if trace_stage is not None and trace_stage.is_file():
+                    if run_dir.is_dir():
+                        trace_stage.replace(run_dir / "proposals.jsonl")
+                    else:
+                        print(f"  warning: run dir missing, trace left at {trace_stage}", file=sys.stderr)
         except (RuntimeError, OSError) as exc:
             status = f"{type(exc).__name__}: {exc}"
             failures += 1
             print(status, file=sys.stderr)
             stop_server()
+        finally_trace = None
+        try:
+            set_trace_destination(None)
+        except OSError as exc:  # non-fatal: only affects the next run's tracing
+            finally_trace = str(exc)
         elapsed = time.perf_counter() - started
         print(f"[{index}/{len(todo)}] {status} in {elapsed:.0f}s", flush=True)
+        if finally_trace:
+            print(f"  warning: could not clear trace destination: {finally_trace}", file=sys.stderr)
         results.append(
             {
                 "case": case,

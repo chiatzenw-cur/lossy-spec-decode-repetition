@@ -20,7 +20,7 @@ declare -A UPSTREAM=(
   ["v1/worker/gpu/spec_decode/rejection_sampler_utils.py"]="bfaec14e220cf669ddfd2b3ef6d2c556dc8fae60ef71e65a2e7ae068fb386a2a"
 )
 declare -A PATCHED=(
-  ["v1/sample/rejection_sampler.py"]="036d1538652634a536470e6e702d894772c166b3ad5a504ace54cf4d4421acca"
+  ["v1/sample/rejection_sampler.py"]="81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d"
   ["v1/worker/gpu/spec_decode/rejection_sampler_utils.py"]="0ad55a1cb39f2306c78a170fdb6468a36b55643c6610c85cd46c908e0d313112"
 )
 
@@ -85,8 +85,14 @@ else
   find "$sp/vllm" -name '__pycache__' -type d -prune -exec rm -rf {} + 2>/dev/null || true
 fi
 
+# The proposal tracer is a separate module the patch imports. Installed here so
+# a patched interpreter is never missing it (the import is unconditional).
+cp "$here/lenience_trace.py" "$pkg/v1/sample/lenience_trace.py"
+echo "installed $pkg/v1/sample/lenience_trace.py"
+
 echo "running acceptance test..."
 "$PYTHON" "$here/test_lenience.py"
+"$PYTHON" "$here/test_trace.py"
 echo
 echo "select the lenience factor by writing it to /tmp/lossy-spec-decode-lenience-$(id -u)"
 echo "(remote/run_server_vllm.sh does this for every mode, including strict)"

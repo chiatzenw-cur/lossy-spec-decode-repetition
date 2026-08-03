@@ -35,7 +35,7 @@ LENIENCE_FACTOR_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-lenience-{os.getuid
 # verifier ran, without trusting the directory name or an external server log.
 PATCHED_FILES = {
     "vllm/v1/sample/rejection_sampler.py": (
-        "036d1538652634a536470e6e702d894772c166b3ad5a504ace54cf4d4421acca"
+        "81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d"
     ),
     "vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": (
         "0ad55a1cb39f2306c78a170fdb6468a36b55643c6610c85cd46c908e0d313112"
