@@ -1,0 +1,220 @@
+<|channel|>analysis<|message|>We need to find p prime smallest such that exists integer n with p^2 | n^4 +1. So we need p^2 dividing n^4+1. That means n^4 ≡ -1 mod p^2. We know that modulo p, need n^4 ≡ -1 mod p. So -1 must be a 4th power residue mod p. In terms of the Legendre symbol: 4th power residue if (-1)^{(p-1)/4}??? Wait standard results: For odd p, (n^4 | -1) ]; There is primitive root: the equation x^4 ≡ -1 mod p has solution iff p ≡ 1 mod 4? Let's analyze: This is a quadratic residue condition: For x^4 ≡ -1 mod p, we need existence of x such that x^4 ≡ -1. But x^4 ≡ -1 => (x^2)^2 ≡ -1 => -1 quadratic residue. Since (-1)^((p-1)/2) ≡ 1 mod p. So -1 must be a quadratic residue modulo p. That holds if p ≡ 1 mod 4. So necessary condition for p. Now for existence further? Typically 4th power residue: For prime p ≡1 mod4, there are solutions: x^4 = a mod p is solvable if a^((p-1)/4) ≡ 1 mod p. Here a=-1. Check (-1)^((p-1)/4) = (-1)^((p-1)/4). For p ≡1 mod4, (p-1)/4 integer. So a is a 4th power residue iff a^((p-1)/4) ≡ 1 mod p. Since -1 ^ ((p-1)/4) = (-1)^((p-1)/4). We need to evaluate this sign. For p=1 mod4, (p-1)/4 is even or odd? Let's check: Suppose p=5 => (p-1)/4=1 => odd. For p=13 => (13-1)/4=3 => odd; 17 => (17-1)/4=4 => even. So values vary. So a is 4th power residue iff (-1)^((p-1)/4) = 1. That means (p-1)/4 is even. So we need (p-1)/4 even: p-1 ≡ 0 mod 8 => p ≡ 1 mod 8. So p must be ≡ 1 mod 8 for -1 to be a 4th power residue. That ensures n^4 ≡ -1 mod p is solvable.
+
+But we also need solution modulo p^2. For lifting to p^2, we need the derivative: Suppose solution x mod p satisfies x^4 ≡ -1 mod p, and we want to find lift to mod p^2. Use Hensel's lemma. For p odd, we need that 4 x^3 ≠ 0 mod p. That is, p does not divide 4 x^3, i.e., x not ≡ 0 mod p. Since x^4 ≡ -1 mod p, x ≠ 0 mod p. So derivative not zero. Thus by Hensel lemma, solutions lift to p^2. Thus for any prime p such that -1 is a 4th power residue mod p, there exists n such that p^2 divides n^4+1. So minimal p is the smallest prime with p ≡ 1 mod 8. Let's test small primes: 2: p=2. 2^2=4 but 4 does not divide n^4+1? Let's test: n^4 mod 4 can be 0 or 1. Then n^4+1 mod 4 = 1 or 2. n^4 modulo 4: n even yields 0; n odd =>1. So n^4+1 mod 4 = 1 or 2, not divisible by 4. So p=2 fails. Next prime p=3: needs 9 dividing n^4+1? Check if 3 splits -1 in mod3? 3 ≡3 mod? 3≡3 mod4; not congruent 1 mod8. But maybe p=3? Let's test n=1 => 1+1=2 not 3; 2^4+1=17 not 9. 3^4+1=82 not 9. So not.
+
+p=5: 5≡5 mod8? 5 mod8? 5. 5≡1 mod4 but not 1 mod8. So -1 is not a 4th power residue. Check small n? 0^4+1=1 mod25 no. 1^4+1=2 mod25 no. 2^4+1=17, not 0. 3^4+1=82 mod25 = 7. 4^4+1=257 mod25? 4^4=256; 256+1=257 mod25=7? 257-250=7. So 5 not. So p=5 not. Next p=7: 7≡7 mod8 not 1. But may fail. 9? 7^2=49. n^4 divisible by 49? We can test but likely not. Next p=13: 13 ≡5 mod8; 5 mod8? Wait 13-? 13 mod8=5. So not. p=17 -> 17≡1 mod8. So p=17 might be smallest.
+
+Need to confirm: The smallest prime p ≡ 1 mod8 is 17. Let's check if p=17 works has n^4+1 divisible by 17^2=289. Let's test small n maybe? We'll search quickly: Compute n in [0,16]. We can compute n^4 mod 17 quickly. n^4 mod17: 0^4=0; 1^4=1; 2^4=16; 3^4=81=81-68=13; 4^4=256=256-238=18 -> 18? Wait 256-238=18; 18 mod17=1. 5^4=625: 625 mod17: 17*36=612 remainder 13. 6^4=1296: 1296 mod17: 17*76=1292 remainder4. 7^4=2401: 2401 mod17 = 2401-238=2163? Actually 17*141=2397 remainder4. 8^4=4096: 17*241=4097 remainder -1 => 16. 9^4=6561: 17*386=6562 remainder -1? Wait 17*386=6562, so remainder -1 => 16. 10^4=10000: mod17: 17*588=9996 remainder4. 11^4=14641: 17*861=14637 remainder4. 12^4=20736: 17*1220=20740 remainder -4 =13. 13^4=28561: 17*1680=28560 remainder1. 14^4: 14^2=196; 14^4=196^2=38416; 17*2261=38437 remainder -21? Actually 17*2262 = 38454 remainder -38. Not easier. Let's compute n^4+1 modulo 17: We need n^4 ≡ -1 mod17 which is 16. So n^4 should be 16. Let's find n such that n^4 ≡ 16 mod17. From above: we found 2^4=16, 8^4=16, 9^4=16? Wait 9^4=16 mod17. so n=2,8,9 maybe? n=8 gave 16; n=9 gave 16.
+
+So it's solvable n=2? Let's check: n=2: 2^4+1=16+1=17. 17 divisible by 17^2? No. The problem condition: n^4+1 divisible by p^2. So simply modulo prime can't. Need n such that 17^2 divides n^4+1. So 17^2 divides n^4+1. Since we can lift a solution modulo p^2 to p^2 if derivative is not zero. Actually if p=17, the congruence n^4 ≡ -1 mod17 has solutions n=2,8,9,... etc. But we need a solution n^4 ≡ -1 mod17^2. Hensel-lifting ensures that there exists m such that m^4 ≡ -1 mod17^2. So we need to find m such that 17^2 divides m^4+1. But we also need minimal m, the least positive integer m satisfying that.
+
+But we might also need to compute minimal n that works. But we need minimal m such that p^2 divides m^4+1. The problem says: Let p be minimum prime where there exists integer n with p^2 | n^4+1. Find least positive integer m such that m^4+1 divisible by p^2. So we need smallest m.
+
+Thus we need to find p=17, find minimal integer m for which m^4+1 divisible by 17^2. Let's find m.
+
+We need to compute all congruence classes mod 17^2 for which m^4 ≡ -1 mod17^2. We can pick n=2? Wait 2^4+1=17 not 289. Let's check 17^2 =289.
+
+Let's solve n^4 ≡ -1 mod 289. Since 17^2 prime power; we can maybe use Lifting exponent? Approach: Let's use Hensel's lemma to find solutions. We know that there exists polynomial f(x)=x^4 + 1 mod 17^2. At x ≡ 2 mod 17, f(2) ≡ 2^4+1=17 mod289? Wait 17 mod289. So f(2)=17. So we need to adjust to get f=0 mod 289; use Newton's approach: Solve for x ≡ 2 + 17k. Compute f(x)= (2+17k)^4+1. Expand: x^4 = (2+17k)^4 = 2^4 + 4*2^3*17k + 6*2^2*(17k)^2 + 4*2*(17k)^3 + (17k)^4. However compute modulo 289: 17^2=289. For x^4 mod 289, we can compute terms up to 17^2. Use binomial to 2^4 + 4*8*17k + 6*4*17^2 k^2 + ... The terms with powers of 17^2 or higher can be dropped. So
+
+(x^4) ≡ 2^4 + 4*8*17k + 6*4* (17^2) k^2 (since 14?) Wait 4*8*17k = 32*17k? Actually 4*(2^3) * 17k = 4*8*17k = 256k? 4*8=32. So 32*17k = 544k. Because 17^2=289. 544k mod 289? 544-289=255. So 544k ≡ 255k mod 289. Similarly, 6*4*17^2 k^2 = 24*289*k^2 = 24*289 k^2. Since 289^2?? Wait 24*289. Multiply by 289? Actually 6*4=24. 24*17^2k^2 = 24*289*k^2. Since we are mod 289, 24*289*k^2 ≡0. So higher terms vanish.
+
+Thus x^4 ≡ 16 + 255k mod 289. Then f(x) = x^4 + 1 ≡ 16 + 255k + 1 = 17 + 255k.
+
+We need this ≡0 mod 289. So 17 + 255k ≡ 0 (mod 289). So 255k ≡ -17 (mod 289). Simplify: 255 mod 289 = 255. gcd(255,289) =? 289-255=34. 255 - 7*34=255-238=17. So gcd=17? Actually gcd(255,289) = 17. So equation 255k ≡ -17 mod 289. Divide by 17: (255/17)k ≡ -1 mod 289/17. 255/17=15. 289/17=17. So 15k ≡ -1 (mod 17). Solve: 15k ≡ 16 (mod 17). 15 ≡ -2 mod 17. So -2 k ≡ 16 mod 17 => Multiply by -1: 2k ≡ 1 mod 17. So 2k ≡ 1 mod 17. Inverse of 2 mod 17 is 9 (since 2*9=18≡1). So k ≡ 9*1 ≡ 9 mod 17. So k ≡9 mod 17. Then minimal k in range [0,16] that satisfies k ≡9 mod 17 is 9. So we compute x = 2 + 17k = 2 + 17*9 = 2+153 = 155. Thus x=155 is a solution mod 289. But is minimal positive? We can mod 289 so the smallest positive solutions are 155 and other numbers mod 289. But we must check also by using other root mod 17: 8,9, etc. Let's test for n=8: n=8 + 17k.
+
+Compute (8+17k)^4. Expand: 8^4=4096. 4096 mod 289? 289*14=4046, remainder 50. So base is 50. Use binomial: (8+17k)^4 = 4096 + 4*8^3*17k + 6*8^2*17^2k^2 + ... . But 8^3=512, 8^2=64. So first term: 4096. Then next: 4*512*17k = 2048*17k=34816k. Mod 289: 289*120=34680, remainder 136, so 34816k ≡ 136k mod 289. Similarly 6*64*17^2k^2 = 384*289k^2 = 384*289k^2. 289*k^2*384 ≡ 0 mod 289. So we have (x^4) ≡ 50 + 136k mod 289. Then f(x)= x^4 + 1 ≡ 51 + 136k.
+
+Set 51 + 136k ≡0 mod 289.=> 136k ≡ -51 mod 289. 136 mod 289 is 136. gcd(136,289)=? 289-136=153, 136-153? Wait 153 > 136, so 289-136=153. 136-153? No. Actually compute gcd: 289 mod 136 = 289-136=153, 136 mod 153 = 136. So GCD is gcd(136,289)=? Let's compute 289-136=153, 136-153? No negative. We can use Euclidean: 289%136 = 289-136*2=289-272=17. 136%17=136-17*8=136-136=0. So gcd=17. So 136k ≡ -51 mod 289; divide by 17. 136/17=8. So 8k ≡ -3 mod 289/17=17. So 8k ≡ 14 mod 17 (since -3 mod 17 = 14). So need 8k ≡14 mod 17. Multiply by inverse of 8 mod 17: 8 inverse is 15? 8*15=120 ≡ 1 mod17? 120-119=1. Yes 15. So k ≡ 15*14 mod17 = 210 mod17. 210 mod17: 17*12=204 remainder 6. So k ≡6 mod17. So k=6 gives minimal x =8 + 17*6 =8+102=110. So x=110 is another solution.
+
+Check for n=9: 9^4 = 6561. 6561 mod289? 289*22=6358 remainder 203. 9^4=6561; 1^4 = 1? But anyway. So 9^4=6561. 6561/289? 289*22=6358; remainder 203, yes. 9^4 mod 289 = 203. Let's compute 9^4 = 6561. 9^4 + 1 = 6562 mod 289 = 203+1=204? Wait 6561+1=6562; mod 289 = 203 +1 = 204. Good.
+
+Now compute (9+17k)^4 modulo 289. Use binomial: (a + b)^4 = a^4 + 4a^3b + 6a^2b^2 + ... up to 289 divides. Let's compute:
+
+a=9, b=17k. The first term 9^4=6561; reduce mod 289: 6561 mod 289 = 203. Next term 4a^3b = 4*9^3*17k = 4*729*17k = 2916*17k = 495,? Let's compute: 2916*17=2916*10=29160; +2916*7=20412; total 49572. So 4a^3b= 49572k. 49572 mod 289? Compute 289*171? 289*170=49130; remainder 442; 442-289=153. So 171= 257? Wait 291... Let's compute precisely: 289*171=171*289=171*(300-11)=51300-1881=49419. remainder 49572-49419=153. So 45572? Wait 469? Actually 49572-49419 = 153. So 4a^3b ≡ 153k mod289.
+
+Thus 6a^2b^2 is 6*81*17^2k^2 = 486*289 k^2? Wait 6*81=486. So 486*289k^2 ≡0 mod289. So total x^4 ≡ 203 + 153k mod289. Then f(x)= x^4+1 = 204 + 153k mod289.
+
+Set 204+153k ≡0 (mod289). 153k ≡ -204 mod289. 153 - something: compute gcd(153,289). Compute 289-153=136. 153-136=17. So gcd=17. Divide 153=9*17. 289=17*17. So 153k ≡ -204 mod289. -204 mod 289 = 85? Because 289-204=85. So 153k ≡ -204 mod289 => 153k ≡ -204 mod289 but we can compute gcd: 153=9*17. 204=12*17? 204 divisible by 17? 17*12=204 yes. So we can multiply: 153k ≡ -204 mod289 => 9*17k ≡ -12*17 mod289 => 9k ≡ -12 mod17 => 9k ≡ 5 mod17. Since -12 mod17 ≡ 5. Inverse of 9 mod17 is 2? 9*2=18≡1 mod17. So k ≡ 2*5 ≡10 mod17. So k=10 gives minimal x=9+17*10=9+170=179.
+
+Therefore smallest solutions are 110, 155, 179, maybe 2? Wait 155 from 2. 110 from 8; 179 from 9. Are there any others? Let's test find all solutions mod 289: general solutions are 2 + 17k, 8 + 17k, 9 + 17k, and potentially others like? Actually we may have 2,8,9, 16? Let's check n=16: 16^4 mod 17 equals? 16 ≡ -1 mod 17; (-1)^4 =1. So n^4 ≡ 1 mod17. So -1 cannot exist. So we only consider those n with n^4 ≡ -1 mod17. In modulo 17, we had 2,8,9? Wait 16^4 congruent? 16^4 = -1^4 =1 mod17 = 1, not -1. So we earlier found n^4 ≡ 16 mod17. We found n such that n^4 ≡ -1 mod17: 2,8,9,... Could also be 16? Let's check 16^4=1, not -1. So only those with n^4 ≡ 16. So possible residues: n ≡ 2, 8, 9? 2^4=16, 8^4=4096 mod17: 16. 9^4=? 9^4 = 6561 mod17 = about 6561 - 17*386=6561-6562= -1 so 16 mod17? Wait 9^4=6561. 6561 mod17: 17*386 = 6562, remainder -1. So 6561 mod17 is -1 mod17 = 16. So n=9 works. 16^4? Wait -1^4 =1. So 1. So only n=2,8,9. So there are 3 roots modulo 17: 2,8,9. Each lifts to a unique solution mod 289.
+
+Thus m's minimal positive L ≡ 2,8,9 mod 17 each plus 17 multiple. But we found m for 2: 155; for 8: 110; for 9: 179. But we also might have negative solutions: 17-? But 17-? 17-1 =16 ; 2?? We potentially could include n= 17-? "Test complement of n" for n mod 17. But n^4 modulo 17 symmetrical: (17 - a)^4 ≡ (-a)^4 ≡ a^4. So 17-2=15; 15^4 mod17? 15^4=225^2=50625; 50625 mod17? 225 mod17-? Wait compute 15^4 = (15^2)^2 = 225^2=50625. 225 mod17 = 225-17*13=225-221=4. So 15^4 = 4^2=16 mod17. So 15 as residue also 16 mod17; 15^4=16; So 15 root mod17. Actually 15 mod17 = -2. So 15 (i.e., -2) is also root. But we didn't include 15? Wait earlier we considered only 2,8,9. In resulting, n=15 which is the negative of 2, but encloses same? 15 is root. 15^4 = (16^4)? Wait 15^4 mod17 =? 15^4=50625? Ok mod17=16. So we have 15 as root. So 15 can also produce solutions. But we predicted 3 root mod17? Might be 4? Let's analyze groups. For unit group mod17, the set of residues of order dividing 8? Actually 17-1=16. 4th power residues are of order dividing 4? The number of solutions might be 4? There are 4 solutions of x^4 ≡ -1 mod17 because 4th power equation can have up to 4 because polynomial degree 4. Let’s find n such that n^4 ≡ -1 mod17. We have n=2,8,9,15? But 15 is -2 modulo 17. So indeed 4 solutions? Let's test: n=8? 8^4=16. 9? yes. 15? 15^4= same as 2^4, sign? Actually (-2)^4=16. So 8^4=16. 10^4=10^4 (10^4 mod17?). 10^4=10000 mod17. 10000 mod17=?? 17*588=9996 remainder4. So 10^4=4. not 16. So possible to get only 4? Let's test n=11? 11^4=14641 mod17; 14641 mod17? 17*861=14637 remainder 4. So 4. So n=15 only allowed. 18? We can mod 17: 18 ≡1. So n=1 gives 1, not 16.
+
+Thus 2 and 15 are opposite sign; 8 and 9 also? 8/9? 8+9=17? 8+9=17, but 8 and 9 are inverses? Because 8*15=120? 8*9? 8*9=72 mod17 = 4? Eh. So 8 and 9 aren't opposites but each is in set.
+
+But check the group of solutions to x^4 ≡ -1 mod17. Let's compute 4th roots: Solve x^4 ≡ -1. Consider x ≡ g^t where g is primitive root mod17. For example, 3 is primitive root. 3^k mod17: 3^1=3; 3^2=9; 3^3=27 ≡10; 3^4=30 mod17=13; 3^5=39 mod17=5; 3^6=15; 3^7=11; 3^8=16; 3^9=14; 3^10=8; 3^11=7; 3^12=4; 3^13=12; 3^14=2; 3^15=6; 3^16=1. The exponent 4 of x^4: x^4 ≡ -1 mod17 => x^4 ≡ 16 (since 16 = -1). That is g^{4t} ≡ -1 ≡ g^{?}. Exponent of -1 is g^{?}. In group of order 16, -1 is element of order 2, which is g^{8}. So we require g^{4t} ≡ g^{8} => 4t ≡ 8 (mod 16) => t ≡ 2 (mod 4). So t ≡ 2, 6, 10, 14? Let's analyze: 4t ≡ 8 mod16 => 4t=8+16k => t=2+4k. So t=2,6,10,14 produce solutions. So g^2=9; g^6=15; g^10=8; g^14=2. So 4 solutions: 2,8,9,15. So indeed 4 solutions. So we missed 15.
+
+Thus we need to find all solutions for n mod 17. Each lifts to 17 unique root modulo 289. So we need to find minimal m among all them. Among solutions we found 110,155,179? Wait 110 is from 8, 155 from 2, 179 from 9. What about 15? Let's compute for 15.
+
+We need a k such that n =15+17k, solve.
+
+Compute (15+17k)^4 mod 289.
+
+The base 15^4 = 50625 mod289? we need 15^4 mod 289: we computed earlier 16^2? Actually we already computed 15^4 = 50625 ≡ 16 mod 289? Let's compute 289*175=289*175=50625. 289*175=? Wait 289*175= 289*100=28900; +289*75=21675? Wait 289*75=21675; sum=50575. Hmm difference 50625-50575=50. So 289*175=50575, remainder 50. So 15^4 +1 = 50+1=51. So (15+17k)^4 as similar to 8 case earlier. Let's check expansions: As before 15^4 = 15^4 mod 289? Wait we had 16^4 earlier? 16^4=65536? Let's recalc: 15^4 = (15^2)^2 = 225^2. 225^2 = 50625, as we computed. So 15^4 mod289 = 50625-289*175 = 50625-50575 = 50. So 15^4 ≡50. Good. Then 4*15^3*17k: 15^3=3375? Actually 15^3=3375. 4*15^3=13500. Multiply by 17k: 13500*17k = 229500 k. 229500 mod289? We'll compute 289*794? 289*794=289*800-289*6=231200-1734=229466. remainder 34. So 229500k ≡34k mod289. Then higher terms vanish. So x^4 ≡ 50 + 34k mod289. f(x)= 51 + 34k mod289. Need 51+34k ≡0 mod289 => 34k ≡ -51 mod289. We can solve: gcd(34,289)=? 34 prime? 34=2*17. gcd(34,289)=? 289=17*17. So gcd=17. So 34k ≡ -51 mod289 => 2k*17 ≡ -51 mod289 => divide by 17: 2k ≡ -51/17 = -3? 51/17 =3. So 2k ≡ -3 mod17 => 2k ≡ 14 mod17. Because -3 mod17 =14. So 2k ≡ 14 mod17 => k ≡7 mod17 (since 2*7=14). So k=7 gives minimal x = 15 + 17*7 = 15 + 119 = 134. So solution m = 134. But compare earlier solutions 110, 155, 179: 134 is smallest. But check if 110 is greater than 134? Wait 110 < 134. So 110 maybe smaller. But we earlier found 110 for 8, 155 for 2, 179 for 9. So 110 is less. Wait 110 seems smaller. Did we compute 110? Let's check 110 is 8 + 17*6 = 8+102=110. Good.
+
+Check whether 110^4+1 divisible by 289? Let's quick test using modulo: compute 110^4 mod 289. Use pattern: Since 110 mod17=8. 110 ≡ 8 + 17*6? That's 8+102=110. So 110 ≡8 mod17. 8^4 mod17=16. So 110^4 ≡16 mod17. We need 110^4 ≡? We need to check mod 289. Our earlier calculation gave m=110: x^4 = 51 + 136k with k=6? Wait earlier we had 8+17k general. Let's compute general: For n=8+17k, f(x)=51+136k mod289. For k=6 we had f(x) ≡0. Let's test k=6: f(8+17*6)=51+136*6 = 51+816=867. 867 mod289: 289*3=867, remainder 0. So yes satisfied. Good.
+
+Check 110^4+1: Since 110^4 ≡ -1 mod289? Wait 110^4 +1 ≡ 0 mod289? Because f(110)=0. So indeed 110^4+1 divisible by 289. Good.
+
+Now there might be smaller m less than 110 maybe? Let's attempt to try m=15 (but 15? 15^4+1=50625+1=50626; 50626/289? 289*175=50575, remainder 51. So not divisible. Stays. Let's test m=1? 1^4+1=2 not divisible. So we need m<110 minimal. Since earlier we found solutions 110, 134, 155, 179, difference 110 is smallest, but we must check if there are any smaller solutions from 2 mod 17 but not with k=9? Our earlier minimal k for 2 is 9 because k ≡ 9 mod17 gives 2 + 17k. But 2 + 17*9 = 155. But maybe k= -8 (i.e., 9-17)= -8? 2 + 17*(-8) = 2 - 136 = -134 mod289, but we can take positive x=289-134=155? Wait but we might need minimal positive residue such that n mod 289 is unique. So minimal x between 0 and 288 is 155: 155 mod 289. But there's also 2 + 17*9 =155. So 155. So yes. For 8: minimal k from 6 gives 110. For 9: minimal k=10 gives 179. For 15: minimal k=7 gives 134. So 110 is smallest. But we might check if there exist other solutions to x^4 ≡ -1 mod17 but not 0? Already considered 4 solutions. So m=110 is smallest positive integer real solution.
+
+But we should check if there could exist n smaller that also satisfies p^2 divides n^4+1. Let's test for n=3? 3^4 +1=82 not divisible by 289. 4^4=256+1=257. 5^4=625+1=626. 6^4=1296+1=1297. 7^4=2401+1=2402. 8^4=4096+1=4097. 9^4=6561+1=6562. 10^4=10000+1=10001. 11^4=14641+1=14642. 12^4=20736+1=20737. 13^4=28561+1=28562. 14^4=38416+1=38417. 15^4=50625+1=50626. 16^4=65536+1=65537. 17^4=83521+1=83522. 18^4=104976+1=104977. 19^4=130321+1=130322. 20^4=160000+1=160001. 21^4=194481+1=194482. 22^4=234256+1=234257. 23^4=279841+1=279842. 24^4=331776+1=331777. 25^4=390625+1=390626. 26^4=456976+1=456977. 27^4=531441+1=531442. 28^4=614656+1=614657. 29^4=707281+1=707282. 30^4=810000+1=810001. 31^4=923521+1=923522. 32^4=1048576+1=1048577. 33^4^? Let's check maybe 80 presumably large. But check 110? That is 110. So minimal m=110.
+
+But check 13^4 +1 = 28561+1? 28561+1=28562 maybe divisible by 289? 28562/289= 98? 289*98=283? Let's compute 289*98 = 289*100 - 289*2 = 28900 - 578 = 28322. remainder 240? Wait 28562-28322=240. So not.
+
+So 110 seems minimal. Let's confirm that 110^4+1 divisible by 289. We can do mod289: 289*116= 289*116 => 289*100=28900; +289*16=4624; total 33524. 110^4= (110^2)^2. Compute 110^2 = 12100, mod 289. 289*41=11849; remainder 12100-11849=251. So 110^2 ≡ 251 mod 289. Now 110^4 mod 289 = (251)^2 mod 289. Compute 251^2 = 251*251. 250*251 = 62750 + 251 = 63001. 63001 mod 289: 289*218= 289*200=57800 + 289*18=5202 => 57800+5202=63002. remainder 63001-63002= -1. So 251^2 ≡ -1 mod 289. Good so 110^4+1 ≡ 0 mod 289. So n=110 is correct.
+
+Check 110 is less than 134, 155, 179. Good. So answer m=110.
+
+But we need to confirm that p=17 minimal prime for which existence n with p^2 divides n^4+1. Let's test p=13? Check if 13 satisfies property, or 13 fails?
+
+Check 7? Not 17.
+
+We saw condition that p ≡ 1 mod 8 is necessary. The smallest prime p satisfying this is 17. Let's confirm p=9? Not prime. 17. Good.
+
+Also we need to consider p=3? No. 2? p=2 fails.
+
+Large primes: 41? But 17 is minimal.
+
+Thus answer: m=110.
+
+Let's confirm all reasoning: derive p must be 17. Provide l.h.
+
+We'll craft solution steps:
+
+- We need n^4+1 divisible by p^2; equivalently n^4 ≡ -1 (mod p^2).
+- Mod p results: n^4 ≡ -1 mod p; thus -1 is a 4th power residue modulo p.
+- If p ≠ 2 we already brute: need p ≡ 1 mod 4 for −1 to be a quadratic residue; and to be 4th power residue need p ≡ 1 mod 8. Because 4th power residues are those with a^((p-1)/4)=1, thus with a=-1 giving (-1)^((p-1)/4) = 1 => (p-1)/4 even => p ≡1 mod 8.
+- So p must be 1 mod 8, but p can be 2 unrealistic. The minimal prime with p≡1 mod 8 is 17.
+
+- For any p with p ≡1 mod 8, ... we can find solutions via lifting: using Hensel's lemma, each solution mod p lifts to mod p^2.
+
+- For p=17, find integers n satisfying n^4 ≡ -1 (mod 17). Number of solutions 4: residues 2,8,9,15.
+- Write equation (n+17k)^4 +1 eq 0 mod 289. Use binomial expansion: resulting linear equation in k modulo 17. Solve each to find minimal k.
+
+- For 2: n=2+17k; x^4+1 ≡ 17+255k (mod 289) => k ≡ 9 mod17 => n=155.
+
+- For 8: 8+17k; 51+136k ≡0 => k ≡ 6 mod17 => m=110.
+
+- For 9: 9+17k; 204+153k ≡0 => k ≡ 10 mod17 => m=179.
+
+- For 15: 15+17k; 51+34k ≡0 => k ≡ 7 mod17 => m=134.
+
+- Minimum among these equals 110. So answer: 110.
+
+If there is other power p=2? But we saw no, p=2 has no. Thus final answer: 110.
+
+We should also mention that process ensures m=110. Also p=17. Provide  final answer.
+
+We'll output answer: \boxed{110}.<|end|><|start|>assistant<|channel|>final<|message|>Let  
+
+\[
+n^{4}+1\equiv 0\pmod{p^2}\qquad (p\ \text{prime})
+\]
+
+so that \(n^{4}\equiv-1\pmod{p^2}\).  
+First look at the congruence modulo \(p\):
+
+\[
+n^{4}\equiv-1 \pmod{p}\qquad\Longrightarrow\qquad (-1)\text{ is a 4th power residue mod }p .
+\]
+
+--------------------------------------------------------------------
+### 1.  The prime \(p\) must satisfy \(p\equiv 1\pmod 8\)
+
+For a prime \(p\neq 2\)
+
+\[
+(-1)^{(p-1)/2}\equiv 1\pmod p    \Longleftrightarrow\  p\equiv 1 \pmod 4 ,
+\]
+
+so \(-1\) is a quadratic residue.  
+In a cyclic group \(\mathbb{Z}_{p}^{\times}\) the 4th power residues are the elements whose exponent is divisible by \(4\).
+Hence \(-1\) is a 4th power residue iff  
+
+\[
+(-1)^{(p-1)/4}\equiv 1\pmod p .
+\]
+
+Now \((-1)^{(p-1)/4}=1\) precisely when \((p-1)/4\) is even, i.e.
+
+\[
+p-1\equiv 0\pmod 8 \quad\Longleftrightarrow\quad p\equiv 1\pmod 8 .
+\]
+
+Consequently \(p\) must be a prime congruent to \(1\pmod 8\).
+(The prime \(p=2\) fails because \(n^{4}\equiv 0 \text{ or }1\pmod 4\) and \(n^{4}+1\equiv 1\text{ or }2\pmod 4\).)
+
+The smallest prime that satisfies \(p\equiv 1\pmod 8\) is \(p=17\).
+Hence  
+
+\[
+p=17\quad\text{and}\quad 17^2=289 .
+\]
+
+--------------------------------------------------------------------
+### 2.  Finding solutions modulo \(17^2\)
+
+First solve  
+
+\[
+n^{4}\equiv-1 \pmod{17}\qquad (1)
+\]
+
+We work with a primitive root modulo \(17\); \(3\) is one.  
+Writing \(n\equiv 3^t\) and \(-1\equiv 3^8\) (because \(-1\) has order \(2\)), we need
+
+\[
+3^{4t}\equiv 3^8 \pmod{17}\;\Longrightarrow\; 4t\equiv 8\pmod{16}\;\Longrightarrow\; t\equiv 2\pmod{4}.
+\]
+
+Thus the four solutions of (1) are
+
+\[
+n\equiv 2,\;8,\;9,\;15\pmod{17}.
+\]
+
+--------------------------------------------------------------------
+### 3.  Lifting to \(17^2\)
+
+For any solution \(x_0\) of (1) we can write \(x=x_0+17k\) and
+expand \(x^4+1\) by the binomial theorem.  
+Because \(n\equiv 0\pmod 17\) is impossible (otherwise \(x^4\equiv0\pmod{17}\)), the derivative
+\(4x^{3}\not\equiv0\pmod{17}\) and Hensel’s lemma guarantees that each reduction
+\(x_0\) lifts to exactly one solution modulo \(17^2\).
+
+Below we write for each \(x_0\) the linear equation in \(k\) that yields the lift.
+
+| \(x_0\) | \(x^4+1\) modulo \(289\) | Congruence for \(k\) | \(k\) (minimal \(\ge 0\)) | Minimal \(x\) |
+|--------|-------------------------|-----------------------|---------------------------|--------------|
+| 2 | \(17+255k\equiv0\) | \(155k\equiv-17\pmod{289}\) → \(k\equiv9\pmod{17}\) | 9 | 155 |
+| 8 | \(51+136k\equiv0\) | \(136k\equiv-51\pmod{289}\) → \(k\equiv6\pmod{17}\) | 6 | 110 |
+| 9 | \(204+153k\equiv0\) | \(153k\equiv-204\pmod{289}\) → \(k\equiv10\pmod{17}\) | 10 | 179 |
+| 15 | \(51+34k\equiv0\) | \(34k\equiv-51\pmod{289}\) → \(k\equiv7\pmod{17}\) | 7 | 134 |
+
+(For example, for \(x_0=8\):
+\[
+(8+17k)^4\equiv 8^4+4\cdot 8^3\cdot17k
+      = 16+136k\pmod{289}\;\Longrightarrow\; 51+136k\equiv0.)
+\]
+
+--------------------------------------------------------------------
+### 4.  The smallest positive integer \(m\)
+
+The four candidates for \(m\) are \(110,\;134,\;155,\;179\).
+The smallest among them is
+
+\[
+m=110 .
+\]
+
+Indeed
+\[
+110^4+1\equiv 0 \pmod{289},
+\]
+because \(110^2\equiv251\pmod{289}\) and \(251^2\equiv-1\pmod{289}\).
+
+--------------------------------------------------------------------
+\[
+\boxed{110}
+\]

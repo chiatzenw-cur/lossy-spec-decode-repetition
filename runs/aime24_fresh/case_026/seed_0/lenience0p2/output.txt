@@ -1,0 +1,1483 @@
+<|channel|>analysis<|message|>We need to analyze problem.
+
+Given ABCDEF convex equilateral hexagon, all pairs of opposite sides are parallel: so Opposite sides AB || DE, BC || EF, CD || FA. Also equilateral hexagon meaning all sides equal? Wait "equilateral hexagon" means all sides equal and all internal angles may vary? Usually equilateral hexagon means all sides equal length. But the problem says "convex equilateral hexagon". Yes.
+
+Let let's denote side length s.
+
+Given triangle whose sides are extensions of AB, CD, EF: meaning lines along the directions of AB, CD, EF extended to form triangle. Triangular shape formed by those three lines pairwise intersect at vertices: the triangle formed by those lines. Since AB, CD, EF are parallel pairs? Wait AB parallel to DE, BC parallel to EF, CD parallel to FA. But AB is not parallel to CD, but AB and EF are not parallel to each other? Wait AB is parallel to DE, but EF is parallel to BC. But not: AB and CD are not parallel? Quick: AB opposite DE (parallel). BC opposite EF (parallel). CD opposite FA. So AB and CD not necessarily parallel, but AB and CD are adjacent. So AB, CD, EF are all edges and we have triangle from extended lines along these three edges presumably. But AB and CD are consecutive; CD is defined from consecutive vertices; EF is separated. So maybe we have extended lines along AB: we extend the line through A and B, similarly line through C and D, line through E and F. Those three lines meet pairwise to form triangle. So we have intersection of: l1 = AB, l2 = CD, l3 = EF.
+
+We need side lengths of triangle formed by those lines. They give side lengths 200, 240, 300. Thus the distances between intersections of these lines. We're told the side lengths of this triangle are 200, 240, 300. We need to find side length s of hexagon.
+
+We can use geometry: Suppose ABCDEF is a parallelogram shape. Actually since all pairs of opposite sides are parallel, opposite sides align. So we can consider that triangle is formed by three lines with edges not parallel.
+
+But the triangle's sides correspond to the distances between lines AB and CD, etc. Let’s denote distances between these lines. But the triangle formed by lines: At each pair of lines, they meet at an angle. Since the hexagon sides are consecutive, lines AB and CD are separated by some angle along sides: At vertex B, interior angle between BA and BC. Similarly CD line: its extension? Not exactly; but we can model vector directions.
+
+Let's denote vectors: AB = vector a; BC = vector b; CD = vector c; DE = vector d; EF = vector e; FA = vector f.
+
+Since all sides equal, |a| = |b| = |c| = |d| = |e| = |f| = s.
+
+We know opposite directions: AB opposite DE: so a + d =? Actually AB vector a is from A to B; DE is from D to E; opposite sides are parallel: AD? Wait between D and E? So AB is parallel to DE, but direction may be same or opposite? In a convex parallelogram, adjacent sides are not parallel but may contain opposite sides. But it's a hexagon? If AB and DE are parallel, does orientation reversed? Should be AB and DE are opposite sides, so AB and DE are parallel but not necessarily pointing same direction (since shape is convex, maybe they are oriented opposite). For a parallelogram, opposite sides are parallel and equal length. So AB and DE: they are opposite sides, so A,B to C? Wait indexes: AB - from A to B; DE - from D to E. For convex hexagon with order, the sides connect: A-B-C-D-E-F-A. So AB and DE are opposite sides but not necessarily same orientation? If hexagon is equilateral, then edges are basically a sequence of directions with periodicity: 3 sides, then opposite sides produce parallelogram like shape. So we can say AB direction = a, DE direction = d, but we don't know a relative to d.
+
+But maybe the lines AB and CD, and EF form a triangle? Let's analyze 2D oriented vectors: let the lines through AB: direction a. Similarly line through CD: direction c. Ell lines. We also have edges AB, BC, CD, DE, EF, FA: these six directions.
+
+Let’s denote vectors: a = AB, b = BC, c = CD, d = DE, e = EF, f = FA.
+
+We have the condition a = a (size s); d = a (should be parallel to a). But which direction? Considering orientation of hexagon (convex), we might have d = some multiple of a but could be opposite sign? Let's think relative orientation: Suppose hexagon looks like symmetrical: If AB and DE are parallel, we could consider that AB is a vector moving from A to B; DE is from D to E. In a regular hexagon, these two are parallel but opposite direction. So d = a. Actually if orientation around polygon, the direction from A to B is a, from B to C is b, from C to D is c, from D to E is d, from E to F is e, from F to A is f. For a regular hexagon with vertices equally spaced, a = b rotated by 60°, etc.
+
+But as we have parallelogram property: ABCDEF is a convex hexagon with opposite sides parallel, can also think of it as pair of parallelograms? Let's analyze: edges a,b,c,d,e,f shape such that the vector sum from A to B to C to D to E to F to A equals 0: a + b + c + d + e + f = 0.
+
+Now if a,b,c,d,e,f maintain parallel pairs, then a + d = 0? Wait if segment AB has direction a, and DE is d, maybe parallel but opposite direction; but d is from D to E (horizontal). But folding yields net displacement. Similarly, b + e = 0? No. Opposite sides: AB and DE are opposite; BC and EF are opposite; CD and FA are opposite.
+
+Thus a + d = 0 (since they are parallel with opposite direction). Similarly, b + e = 0; c + f = 0. Because we have 3 pairs. So we can deduce:
+
+a = s * u0, b = s * v0, c = s * w0; d = -s * u0, e = -s * v0, f = -s * w0.
+
+Now we have a + b + c + d + e + f = 0 holds automatically (since a+d=0, b+e=0, c+f=0). So the convex condition requires that the edges are arranged in such a pattern: the three vectors go in certain order and returning to same point.
+
+Thus for hexagon with all sides equal and opposite sides parallel, the shape is basically a 3-vector sum: a + b + c = -(a + b + c) by closure. So a + b + c = - (a + b + c). So the sum of the first three vectors must be zero? Wait if all opposite sides cancel, then sum of the first three equals zero. Let's check: sum of first three: a + b + c. sum of last three is -a - b - c. So total 0 indeed. So we just need a + b + c = 0. But since the direction of the three vectors is from each other rotated by interior angles (since they're consecutive). Without more restrictions, the sides wouldn't necessarily sum to zero as we define a + b + c = -a - b - c. Indeed it always holds because the opposite sides cancel. But the sum of first three may not be zero; that depends on the shape, but re-check: Actually there are 6 sides and we say a + b + c + d + e + f = 0. With d = -a, e = -b, f = -c, sum becomes a + b + c - a - b - c = 0. So the sum of first three is zero otherwise? Wait we eliminated. So a+b+c is zero? That implies all three vectors must sum to zero? Wait from a + b + c - a - b - c = 0. Cancel everything: yes 0. So all we have done is factoring; it's tautological. But still imposes nothing about a+b+c individually. So we just need a + b + c a vector such that sum of three vectors corresponds to some orientation. But if we consider that the shape cannot be degenerate so we need that a,b,c are not collinear.
+
+Thus shape is determined by the three vectors that form a triangle (like a "compass" shape). Actually if a+b+c = 0, then the three vectors form a closed triangle. Because a+b+c = 0 implies triangular shape. Then a,b,c form a triangular shape with sides lengths equal to s. So the triangle formed by the three vectors a, b, c must close. So that is a triangle with sides s. That is a equilateral triangle? Wait if the vertices of a triangle formed by the three vectors side lengths equal s, then all sides equal s: So triangle ABC? Actually we have a, b, c are each length s. So we have a, b, c as three equal length vectors forming triangle closed. That is a triangle of side s. So we can say that the hexagon can be constructed by placing a and then b and then c, and then -a, -b, -c. So it is basically a "three-plane" symmetric shape.
+
+Hence we have 3 vectors of equal length s that form a triangle in plane. Since a, b, c all have magnitude s, and a + b + c = 0, then the completed triangle formed by connecting tail-to-tip of a, then b, then c. So indeed the shape is a parallelogram or more? Actually the perimeter of hexagon will be a closed shape: start at A, go along a to B, then b to C, etc. So this shape is basically a "non-regular" equilateral hexagon but with equal side length.
+
+However, we also know that AB and DE are parallel and equal length, which holds if we set d = -a: but d = -a is opposite of a. So works.
+
+Now what about triangle with extensions of AB CD EF. The line direction of AB: vector a (from A to B). The line direction of CD: vector c. The line direction of EF: vector e = -b? Wait e = -b is from E to F along EF. So direction for EF line is e = -b. So the line for EF direction is -b.
+
+So we are extending lines AB, CD, EF. Their direction vectors: a, c, and e = -b. Note that the lines are along a, c, -b, respectively.
+
+So the triangle formed by these three lines has side lengths equal to distance between each pair of lines? Wait the triangle formed by intersection points: The three lines meet in pairs forming a triangle: I think the lines are not parallel (if e+b? Wait -b vs c vs a). Are they pairwise non-parallel? But they are lines, each extended infinitely. They might cross each other at a point. Suppose we pick lines:
+
+- The line L1: direction of AB.
+
+- The line L2: direction of CD.
+
+- The line L3: direction of EF.
+
+Now for each pair, we can determine their intersection angles. For example, L1 and L2 intersect at some angle; line passes through "point"? The directions of AB hugging the hexagon; the angle between lines L1 and L2 equals angle between AB and CD: which is angle? We have AB adjacent to BC; BC adjacent to CD; So AB and CD are separated by two edges: AB ⟂? Wait there is angle between AB and CD: that's the angle between AB and CD. We can compute vector directions: AB as a, BC as b, CD as c. So AB direction relative to BC is some interior angle. We can compute angle between AB and BC measured by arccos of 1 -? We don't know interior angle. But we can find relation between a,b,c due to geometry.
+
+Because we know the triangle formed by lines AB, CD, EF has sides lengths 200, 240, 300. So the distances between the intersection lines created by the three lines are the triangle.
+
+Thus we can derive the distances between lines given lengths of parallel polygons. Let's attempt to construct geometry.
+
+Suppose we have three parallel lines: AB works as a line, CD as another line, EF as third line. It is given that the hexagon is convex. Points of intersection of AB and CD, CD and EF, EF and AB could produce triangle vertices. Suppose we define intersection of AB and CD at P, CD and EF at Q, EF and AB at R. Then triangle PQR is formed by the extensions of lines. Since AB, CD, EF are pairwise non-parallel (they are sides of the equilateral hexagon, so they must be at angles 60°, 60°, 120°? Actually we need to compute difference between directions). Let's assume three vectors a,b,c with length s. The angle between a and b is a geometry: interior angles: AB and BC adjacent, so angle at vertex B equals angle between vector a and vector b. The interior angles might be variable.
+
+To find the distance between the two lines to produce the triangle edges, we need perpendicular distances between adjacent lines. But maybe easier: we can use geometry: The line intersections of AB and CD are given by the lines AB and CD. Since AB and CD are not parallel but could be crossing. We can compute the length of segment PQ which is perpendicular to AB and CD? Wait PQR is a triangle formed by the three lines; its side lengths are not lengths between inters' lines, but the length of the segment connecting intersection points of lines AB and CD, etc. That is indeed along the legs of the triangle.
+
+But we can compute distances between line representations along a coordinate system.
+
+Consider a vector representation: We'll set the hexagon with vertices A, B, C, D, E, F, with side vectors of length s. Let us place them such that we have half-turn symmetry: vector d = -a etc. So we can construct coordinates:
+
+Let a = vector a = (s, 0). Let b = vector b = s * (cos β, sin β), where β is angle between a and b (positive orientation). Similarly c = vector c = s * (cos γ, sin γ). But we need to know orientation relative to side lengths. The internal angles are at vertices C, D, E, F, A, B. But we don't require them, but we can compute.
+
+But we also know that after moving a, we have b. Then we have c direction. The next sides must be d = -a, e = -b, f = -c. So the closure works.
+
+Thus we can write coordinates: Start at A at the origin O (0,0). Let B = A + a = (s,0) if we choose a as x-axis.
+
+Then C = B + b = (s,0) + s * (cos β, sin β). Choose coordinates: b = s (cos β, sin β). Next D = C + c = (s,0) + s * cos β + s * (cos γ, sin γ). And F = A + f? Wait we had F after E? F = A + f? Actually F follows from vertex A to F? In sequential order, after F, we come back to A. So F = A + f. Then EF: from E to F: e = -b. So E = F + e = F - b. So E coordinate: F + (-b). We also have D = C + c = D.
+
+Since we have coordinates, we might verify if we get the correct closure.
+
+But easier: We need an expression for the distance between the line AB and CD as points. Because the triangle formed by their intersections forms a triangle with side lengths given.
+
+But we can attempt to param: let direction 1: AB along x-axis. Define orientation of hexagon with 6 sides: suppose internal angles at vertices: we can deduce using vector relationships.
+
+But perhaps we can use geometry using folding: The lines AB, CD, EF are edges at distances replaced by s? Let's analyze: Because AB and CD are adjacent edges separated by two other edges: AB between A and B, then B to C, then C to D. So the segment CD has direction c. The line between them is at some angle.
+
+Now, we might think of a parallelogram "symmetric" shape: The triangle formed by the extension lines indicates that between AB and CD, the side lengths are determined by the geometry of the hexagon. The distance between L1 and L2 depends on the shape of the hexagon; but the distances between the three intersections are the sides lengths we know.
+
+Thus we have to find s given the triangle sides.
+
+There might be a known relation: For an equilateral hexagon with opposite sides parallel and equilateral, the lengths of triangle formed by the long diagonals correspond to lengths equal to s * (sqrt(3)/2?), etc. But the given side lengths 200, 240, 300 correspond to lengths of these diagonals.
+
+We can derive using vector geometry: Suppose we have coordinates for intersection points to compute triangle side lengths.
+
+Let vector a = (s, 0). Let vector b = s * (cos β, sin β). Let vector c = s * (cos γ, sin γ). Then vector directions: a + b + c = closed vector? Actually a + b + c = -? Wait we might have that a + b + c = -(a + b + c). Actually we earlier realized sum of first three vectors = X; but we might set constraints that the shape is "equilateral hexagon". That may require a + b + c = something: Actually what is the sum of residual after the first 3? If we consider a + b + c + d + e + f = 0, with d = -a, e = -b, f = -c. So a + b + c - a - b - c = 0. Works. So we have no constraint on a+b+c.
+
+Thus the only assumption is that a, b, c all are of equal length s, but may have arbitrary angles too.
+
+But we must also maintain convex shape: The turning angles must be continuous. If a, b, c all positive orientation moving around, the direction change from a to b is maybe less than 180°, etc.
+
+The direction of the lines: L1 = direction a Y. L2 = direction c. L3 = direction -b.
+
+Because EF is -b.
+
+We need side lengths between L1 and L2: i.e., length of side on triangle where L1 and L2 intersect, measured along the segment between intersection points. Let's compute distances between intersection points.
+
+Let the intersection points be: let M = intersection of lines AB (L1) and CD (L2). Let N = intersection of CD and EF (L2 & L3). Let O = intersection of EF and AB (L3 & L1).
+
+We need to compute absolute distances between M and N, etc.
+
+Let's denote vectors: a = AB, b = BC, c = CD. For hexagon, let these be positive orientation (counterclockwise). Because the hexagon is convex & with sides order, the vectors start at A to B to C to D to E to F to A.
+
+So we need to adopt coordinates: Place A at origin. Let B = a. Let C = a + b. Let D = a + b + c. Let E = a + b + c - b? Wait F = A + f? Actually F = A + f. Let's find coordinates: z=complex. After one loop.
+
+Let's set coordinates: Choose a = vector a.
+
+Let us use complex numbers (or 2D). Suppose we let a = a. Then B = a. Let b = b. C = a + b. Let c = c. D = a + b + c. Let d = -a. E = D + d = a + b + c - a = b + c. F = E + e? Wait but e = -b, so F = b + c - b = c. So F = c. Then A = F + f? Wait f = -c, so final closure: F + f = c - c = 0.
+
+Thus we can express:
+
+A = 0
+B = a
+C = a + b
+D = a + b + c
+E = b + c
+F = c
+
+Thus group: Vertex A, B, C, D, E, F.
+
+Now lines AB passes through A(0,0) and B(a). But we need line AB: extends along vector a.
+
+Similarly CD: segment between C at a + b and D at a + b + c. CD is vector c.
+
+Thus line CD passes through C (a+b) direction c. And EF is line from E to F: E to F: B + c? Wait E = b + c. So F = c. So line EF passes through F (c) and E (b+c). But we can take direction vector: E - F = b + c - c = b. Wait EF: from E to F is vector e = -b. So line EF is direction -b. So the line equation can be given as line through point c in direction -b.
+
+Alternatively, we can think of line at point c: param c + t * (-b). Yes.
+
+Hence the lines: L1: through origin O, direction a.
+
+L2: through point a + b (which is the step of C to D) direction c.
+
+L3: through point c (which is F) direction -b.
+
+Now we need to find intersection points of these lines:
+
+- Intersection L1 (O, a) and L2 (C, c). L2 passes through C = a + b; direction c. So the intersection point M satisfies: For some t, P = t * a (since L1 passes through O). P = (a + b) + s * c. Solve for t and s.
+
+- Intersection L2 (C, c) and L3 (F, -b). That intersection Q satisfies: (a + b) + s * c = c + t * (-b).
+
+- Intersection L3 (F, -b) and L1 (O, a). Solve for intersection.
+
+The side length of triangle (PQR) is computed via distances between these points.
+
+We have unknowns: a, b, c as complex vectors of length s. We know a, b, c lengths all s. Parameterization: a, b, c all have magnitude s, but may have independent orientations.
+
+Thus the problem reduces to: Given a, b, c, each unit vector of length s, compute distances between intersection points M, N, O. Those lengths are given as 200, 240, 300. Find s.
+
+We can use vector algebra: Let’s set up equations.
+
+Let u = a/s, v = b/s, w = c/s. These are unit vectors of length 1. We want to find s satisfying something.
+
+Let's denote unknowns.
+
+Let x: a position vector (sum of unit vectors times s). But writing simpler: let us consider a = s*u, b = s*v, c = s*w.
+
+Thus we can use s as scaling factor. Then intersection points would be linear in s? Let's check: Suppose M is intersection of lines L1 (through O direction a) and L2 (through C = a + b). Then equations: t a = (a + b) + s' c. Solve for t, s'. Actually we can solve via vector linear equations. Possibly we can express M in terms of s.
+
+Because unknowns scale: Since a,b,c share same magnitude, we expect linear scaling factor s. The distances between intersection points might be proportional to s. So we can compute ratio of lengths depending on orientation only, then find s.
+
+But distances given could be word lengths 200, 240, 300. So the scaling factor might produce some scaling factor. Let's analyze ratio wise: Suppose we compute (M, N, O) in vector terms: fractional multiples of s. Then the resulting lengths between M, N, O will be s times some function depending only on orientation vectors. This orientation can be solved via side lengths of triangle? Wait we know that the distances between M, N, O are 200, 240, 300. In terms of s, each side length can be expressed as s times some ratio (maybe 0.6? Actually we need to find scaling factor). But we also may have more constraints: the triangle's side lengths 200,240,300. We can determine orientation of some vector using law of cosines etc. But maybe we can find that s is the R/ something? Let's attempt to derive.
+
+We can try to choose coordinate system where we can compute intersection distances analytically.
+
+Let’s set a = s * (1,0). Let b = s * (cos β, sin β). Let c = s * (cos γ, sin γ). Where 0 < β < 180°, 0 < γ < 180°, etc. But angles are relative. The orientation of line CD relative to AB may be given by angle between a and c: angle between u and w.
+
+But we have the same magnitude, but we can solve orientation from geometry.
+
+Alternatively, we can use geometry with complex numbers: Let us make portion of geometry: Since the three vectors a, b, c all of same length s, the point coordinates produce the shape: For some coordinates.
+
+We can use general solution: Suppose we get line equations. Let's pick small s imprecision.
+
+Let a = vector (s,0). Let b = s * (cos β, sin β). Let c = s * (cos γ, sin γ).
+
+Thus we have coordinates:
+
+A = (0,0)
+B = (s,0)
+C = (s + s cos β, s sin β)
+D = (s + s cos β + s cos γ, s sin β + s sin γ)
+E = (s cos β + s cos γ , s sin β + s sin γ)
+F = (s cos γ , s sin γ)
+
+Now lines:
+
+L1: through A(0,0) along direction a = (s,0).
+
+L2: through C (s + s cos β, s sin β) with direction c = (s cos γ, s sin γ).
+
+L3: through F (s cos γ, s sin γ) with direction -b = (-s cos β, -s sin β).
+
+Thus we need intersection between L1 and L2.
+
+Compute M: param L1: P = t * a = (s t, 0). Param L2: Q = C + u * c = (s + s cos β + s cos γ u, s sin β + s sin γ u). Because direction c = s (cos γ, sin γ). Wait we need to consider that L2 has vector s c? Actually direction is c, and vector c = s*(cos γ, sin γ). But that is entire vector length s; but we are in param L2: P = C + u * c. But we may want to treat scaling factor: u ∈ R. So we may variable instead w. define t1 and t2.
+
+Equation: (s t, 0) = (s + s cos β + s cos γ u, s sin β + s sin γ u)
+
+Set equality.
+
+Equation for x: s t = s + s cos β + s cos γ u
+=> t = 1 + cos β + cos γ u
+
+Equation for y: 0 = s sin β + s sin γ u
+=> sin β + sin γ u = 0 => u = - sin β / sin γ.
+
+Plug into t equation: t = 1 + cos β + cos γ * (- sin β / sin γ) = 1 + cos β - cos γ * sin β / sin γ.
+
+Thus M coordinates: (s t, 0) = (s t, 0). So M = (s t, 0).
+
+Now N: intersection of L2 (C, c) and L3 (F, -b). So param: L2: C + u * c = (s + s cos β + s cos γ u, s sin β + s sin γ u).
+L3: F + v * (-b) = (s cos γ, s sin γ) + v * (-s cos β, -s sin β) = (s cos γ - s cos β v, s sin γ - s sin β v).
+
+Set equal:
+
+s + s cos β + s cos γ u = s cos γ - s cos β v
+s sin β + s sin γ u = s sin γ - s sin β v
+
+Divide by s:
+
+1 + cos β + cos γ u = cos γ - cos β v
+sin β + sin γ u = sin γ - sin β v
+
+Solve: Unknowns u and v.
+
+From second: sin β + sin γ u = sin γ - sin β v
+=> sin β + sin γ u = sin γ - sin β v
+
+We can also bring terms:
+
+From second: sin β + sin γ u = sin γ - sin β v
+
+From first: 1 + cos β + cos γ u = cos γ - cos β v
+
+We can solve for u and v.
+
+We can try to solve for u and v. Let's use unknowns to eliminate v.
+
+Let’s express v in terms of u from first: cos β v = cos γ - (1 + cos β + cos γ u) = cos γ - 1 - cos β - cos γ u = (cos γ - 1 - cos β) - cos γ u.
+
+Thus v = [(cos γ - 1 - cos β) - cos γ u] / cos β.
+
+Similarly from second: sin β v = sin γ - sin β - sin γ u = (sin γ - sin β) - sin γ u.
+
+Thus v = [ (sin γ - sin β) - sin γ u ] / sin β.
+
+Thus two ODE: That gives second equality:
+
+[(cos γ - 1 - cos β) - cos γ u] / cos β = [ (sin γ - sin β) - sin γ u ] / sin β.
+
+We can cross-multiply: (cos γ - 1 - cos β) - cos γ u times sin β = (sin γ - sin β) - sin γ u times cos β.
+
+Simplify each side.
+
+Compute left side LHS: (cos γ - 1 - cos β) sin β - cos γ u sin β.
+
+Right side RHS: (sin γ - sin β) cos β - sin γ u cos β.
+
+Now we can solve for u.
+
+Let us make variable K, L.
+
+Let’s denote: Eq = LHS - RHS = 0.
+
+Compute left constant term: (cos γ - 1 - cos β) sin β - (sin γ - sin β) cos β = 0.
+
+Compute each:
+
+- Left constant term: (cos γ - 1 - cos β) sin β - (sin γ - sin β) cos β = (cos γ - 1 - cos β) sin β - sin γ cos β + sin β cos β.
+
+Simplify: cos γ sin β - sin β - cos β sin β - sin γ cos β + sin β cos β.
+
+We see cancel terms: - cos β sin β + sin β cos β = 0. Good. So constant term: cos γ sin β - sin β - sin γ cos β = - sin β + cos γ sin β - sin γ cos β.
+
+Thus constant term: sin β (cos γ - 1) - sin γ cos β.
+
+We now combine with u terms: LHS - RHS includes - cos γ u sin β - (- sin γ u cos β) = - cos γ u sin β + sin γ u cos β = u( sin γ cos β - cos γ sin β ) = u * ( sin β cos γ?) Wait compute: sin γ cos β - cos γ sin β = sin (γ - β) using identity sin α cos β - cos α sin β = sin(α-β). Great.
+
+Thus final equation: Constant term + u * (sin γ cos β - cos γ sin β) = 0:
+
+sin β (cos γ - 1) - sin γ cos β + u * (sin γ cos β - cos γ sin β) = 0.
+
+Thus u = [ sin γ cos β - sin β (cos γ - 1) ] / ( sin γ cos β - cos γ sin β). Let's compute numerator: sin γ cos β - sin β (cos γ - 1) = sin γ cos β - sin β cos γ + sin β. Wait more: sin γ cos β - sin β cos γ + sin β.
+
+Thus numerator: sin γ cos β - sin β cos γ + sin β.
+
+Denominator: sin γ cos β - cos γ sin β = sin γ cos β - sin β cos γ = -? Actually sin γ cos β - sin β cos γ = - (sin β cos γ - sin γ cos β). So denominator is - (sin β cos γ - sin γ cos β). But note that sin γ cos β - sin β cos γ = - (sin β cos γ - sin γ cos β). Another representation: sin γ cos β - cos γ sin β = sin(γ - β). But yes.
+
+So let D = sin γ cos β - cos γ sin β = sin(γ - β). Thus denominator is D. So we have u = [ sin γ cos β - sin β cos γ + sin β ] / D.
+
+But we also have that cos γ sin β - sin γ cos β = -? Actually D = sin(γ - β) = sin γ cos β - cos γ sin β.
+
+Thus u = [ sin γ cos β - sin β cos γ + sin β ] / D.
+
+Simplify numerator: sin γ cos β - sin β cos γ + sin β = sin(γ - β) + sin β. That is D + sin β.
+
+Thus u = ( D + sin β ) / D = 1 + sin β / D.
+
+Thus u = 1 + ( sin β ) / D.
+
+Now we have expression for u; we might not need to find v. We found that for intersection Q, parameter u is such that L2 = C + u * c = D +? Wait we used L2 = C + u * c, e: we used same variable. But we used earlier in deriving M to solve for parameter u, with u in terms of sin β / sin γ (with D = sin γ). Actually we used earlier to compute intersection for M: t = (sin u??) Wait there we used different variable u (like same variable? We'll differentiate). But our u (here after solving with intersection of lines L2 and L3) depends on angles of vectors. This may get complicated.
+
+But perhaps we can find relation between angles and triangle sides provided that there is a known formula for these distances, maybe easier.
+
+Alternate approach: Because the hexagon is equilateral with opposite sides parallel, it can be expressed as a sum of three parallelogram: basically imagine an equilateral hexagon is like interior region of a parallelogram with zigzag? Actually the hexagon is basically an equilateral hexagon whose opposite sides parallel; you can think it as a parallelogram of two triangles? Wait.
+
+Take quadrature: The hexagon can be decomposed into two congruent equilateral triangles rotated by 180°? Let's think: Actually the hexagon is a 3-agon formed by polygon with two copies of two equilateral triangles? Possibly we just may deduce key relation: The triangle formed by lines AB, CD, EF equals the outer triangle formed by the three lines each of length s. The distances between them each correspond to the distance between lines equal to something like the length of a side of the hexagon times scaling factor.
+
+But maybe simpler: the triangle formed by lines AB, CD, EF is the triangle formed by 3 side-centered strips of an equilateral hexagon? Wait.
+
+Let's step back: Suppose we consider an equilateral hexagon with opposite sides parallel. In fact this is equivalent to a shape called "equilateral hexagon" known as "tetragonal hexagon"? Another concept: The hexagon is such that the edges form the sides of a parallelogram with a third pair? Possibly the geometry is symmetrical: In such a hexagon, using perpendicular directions from each parallel-line pair produce the triangle shape.
+
+Consider the hexagon as a polygon where vectors a, b, c parallel with -a, -b, -c. The triangle formed by the lines AB, CD, EF can be seen as the "outer triangle" formed by those edges. The triangle formed by the lines of the 3 directions is a scaled triangle that is the shape of the polygon formed by these three vectors: The distances from each line to the intersection of the other two lines? Actually if we think of that triangle arises from the completion of the 3 vectors as a hexagon: The triangle formed by the lines AB, CD, EF is mathematically the triangle formed by the connecting endpoints of the vectors a, b, c such that they form a triangle (out?). But we have to find the side lengths.
+
+Wait, maybe the triangle formed by lines AB, CD, EF is the triangle formed by the edges of the hexagon moved so that each line passes through the vertex of its opposite side? hmm.
+
+Alternatively, perhaps consider that the hexagon is the set of points where the sum of the directed edges of each parallel pair forms a central area.
+
+Let's compute using vector geometry: The intersection points of the lines AB, CD, EF. We derived earlier that the intersection points are:
+
+M = (s t, 0) where t = 1 + cos β + cos γ u, with u = - sin β / sin γ.
+
+Now t = 1 + cos β - (cos γ * sin β / sin γ), m = M at coordinates (s t, 0).
+So point M is on the x-axis at x coordinate s t.
+
+Similarly, N = intersection of L2 and L3: Let's compute intersection coordinates.
+
+Let's solve for intersection equations more systematically.
+
+Let us parameterize: L2: x = a + s_d + t c, where a = a + b? Wait but we just derived general expression:
+
+We can compute using coordinates: A = (0,0). B = (s,0). C = (s + s cos β, s sin β). D = A + B + C? Actually D = (s + s cos β + s cos γ, s sin β + s sin γ). E = (s cos β + s cos γ, s sin β + s sin γ). F = (s cos γ, s sin γ).
+
+Now lines:
+
+- L1: passes through (0,0) and (s,0) -> x-axis at y=0.
+
+- L2: passes through C( s + s cos β, s sin β ) with direction c: s cos γ, s sin γ. So param: L2(t) = (s + s cos β + s cos γ t, s sin β + s sin γ t). (t real).
+
+- L3: passes through F( s cos γ, s sin γ ) with direction -b: (-s cos β, -s sin β). So L3(t) = (s cos γ - s cos β t, s sin γ - s sin β t).
+
+Now intersection M between L1 and L2: L1: point (s t1, 0). But that is only x-axis. To compute M, we set y=0 from L2.
+
+- y-coordinate from L2: s sin β + s sin γ t = 0 -> t = - sin β / sin γ. Then x coordinate: s + s cos β + s cos γ t = s + s cos β - s cos γ * sin β / sin γ -> s * (1 + cos β - (cos γ sin β / sin γ)). Denote M = (s * m_x , 0). So M.x = s * M_x.
+
+Similarly, N = intersection of L2 and L3. Let's compute that.
+
+Set param for L2: L2(t) = (s + s cos β + s cos γ t, s sin β + s sin γ t).
+
+L3(u) = (s cos γ - s cos β u, s sin γ - s sin β u).
+
+We can find t and u such that L2(t) = L3(u). Solve with components.
+
+Solve y-equation: s sin β + s sin γ t = s sin γ - s sin β u => sin β + sin γ t = sin γ - sin β u
+
+=> sin γ t + sin β u = sin γ - sin β
+
+Therefore sin γ t + sin β u = sin γ - sin β. (Equation1)
+
+Solve x-equation: s + s cos β + s cos γ t = s cos γ - s cos β u => 1 + cos β + cos γ t = cos γ - cos β u
+
+=> cos γ t + cos β u = cos γ - (1 + cos β)
+
+Thus cos γ t + cos β u = (cos γ - 1 - cos β).
+
+Thus we have two equations:
+
+(A) sin γ t + sin β u = sin γ - sin β
+(B) cos γ t + cos β u = cos γ - 1 - cos β
+
+Solve for t, u.
+
+Let's treat as linear system: unknowns t and u.
+
+Let’s solve in terms of u. Use determinant but maybe easier.
+
+Write as matrix:
+
+[sin γ, sin β] [t] = [ sin γ - sin β]
+[cos γ, cos β] [u] = [ cos γ - 1 - cos β ]
+
+Actually we need to be careful: In second equation: cos γ t + cos β u = cos γ - 1 - cos β.
+
+So we can solve:
+
+t = (sin β * (cos γ - 1 - cos β) - cos β * (sin γ - sin β)) / denominator.
+Wait determinant: Δ = sin γ * cos β - cos γ * sin β = sin(γ - β) = D.
+
+Similarly:
+
+Solve for u by Cramer's rule: u = (sin γ * (cos γ - 1 - ... ) - cos γ * (sin γ - sin β)) / D? Actually we compute for u:
+
+u = ( sin γ * (cos γ - 1 - cos β) - cos γ * (sin γ - sin β) ) / D.
+
+Let's compute.
+
+But maybe we don't need exact values; we only need lengths of L1-L2-L3 intersection points. Given lengths are 200, 240, 300. That imposes good relation between β,γ, and s. But we can maybe find s by solving "M,N,O" expressions resulting in lengths.
+
+Let's compute distances:
+
+M = (s M_x, 0). Note M_x = 1 + cos β - (cos γ sin β / sin γ). We already computed.
+
+But we also need M coordinates: we need O intersection: intersection of L1 and L3. Solve L1: (x1,0). L3: (s cos γ - s cos β u, s sin γ - s sin β u). So intersection L1 at y=0: set 0 = s sin γ - s sin β u => u = sin γ / sin β.
+
+Then x coordinate: For L3: x = s cos γ - s cos β u = s cos γ - s cos β * ( sin γ / sin β ) = s cos γ - s (cos β sin γ / sin β). Thus O.x = s (cos γ - cos β sin γ / sin β). Set O.x = 0? Wait M and O are both intersection of L1 with lines. So O.x is that. The equation is: O = (s cos γ - s cos β sin γ / sin β, 0). But we need to check: For O, the line L3 is at (n). But we also need intersection with L3: L3 passes through F at x = s cos γ, u = sin γ / sin β. That gives x value as above.
+
+Hence M.x > O.x? We'll find later.
+
+Now we have three intersection points: M at (s M_x, 0), O at (s O_x, 0), and N (N.x, N.y). Because N is intersection of lines CD and EF, which lies somewhere in interior? Let's compute N coordinates: N = L2(t) or L3(u). Choose one: use L3(u): L3(u) = (s cos γ - s cos β u, s sin γ - s sin β u). With u = sin γ / sin β? Wait that is for intersection with L1. Actually we need u for intersection of lines L2 and L3.
+
+Given we solved for u for intersection M? Wait we solved for intersection M earlier gave: from L1 vs L2: you get u = -sin β / sin γ. So that is the parameter for line L2 (since L2(t) = ... with t). Wait that's for intersection of L1 and L2; the variable t is t (call t0). Good.
+
+Similarly intersection N (between L2 and L3) corresponds to parameters t and u we solved earlier: Solve for t and u. So we can find N coordinates and compute distances.
+
+But we also had simpler: For line L1, intersection occurs along x-axis; but we still need side among M and N and N and O; but N may be off-axis.
+
+We need to find directions: So we can compute distances between M, N, and O: given that we have side lengths of triangle: 200, 240, 300.
+
+Let's calculate lengths.
+
+Compute vector M: M = (s * M_x, 0). N = (x_N, y_N). O = (s * O_x, 0). Determine distances:
+
+- side MO: distance between M and O horizontally: MO = s * |M_x - O_x|.
+
+- side MN: distance between M and N.
+
+- side NO: distance between N and O.
+
+We need to equate lengths of these sides to 200, 240, 300. But we don't know which correspond. Without loss of generality, we can assign any of those (like MO = ???). But we can determine using unit orientation.
+
+Given the lengths among the 3 sides, we can treat MO as the longest side? Let's pick lengths 300 as the longest side. But MO is horizontal distance between M and O nodes. But N can be anywhere; but determine geometry: In triangle of lines, vertex points M and O lie on x-axis, while N is above or below. So the side MO lies along the x-axis; thus MO is the horizontal edge of triangle, i.e., side between points where two lines intersect along the x-axis. This is the segment of the side of intersection between lines AB and CD (M), and EF and AB (O). So MO is the distance between intersection points of lines AB with CD and AB with EF (overlap). So we can compute MO as distance between M and O, which is difference between x-coordinates of two intersections of line L1 with lines L2 and L3. The triangle is such that the base MO is along the x-axis; and the third vertex N lies off-axis. So we can compute distances.
+
+We also know that the order of the triangle's side lengths matters. For instance, MU may be shorter than maybe the 200-300? But verify.
+
+Let's compute numeric expressions for M.x, O.x.
+
+Let M_x = 1 + cos β - (cos γ sin β / sin γ). (Equation 1)
+
+O.x = cos γ - cos β sin γ / sin β. but O is at x-axis. Then O coordinates: (s * O_x, 0). In M and O coordinates, we need numeric difference.
+
+We must compute M_x and O_x from parameters β,γ. Then we can find absolute difference. We might want to compute the distance between M and O; side lengths: 200, 240, 300. So MO is maybe 200? Because the other two sides would be longer.
+
+But we can compute cross product of M and N to find lengths.
+
+But we can compute direct lengths using vector geometry with unknowns.
+
+However, the problem may have a simpler approach: think of the hexagon such that the 3 lines L1,L2,L3 are equal-length wedge-shaped lines along each side. The triangle formed by the lines essentially is a triangle that encloses a parallelogram area that equals sum of distances between lines.
+
+Alternative approach: In parallelogram, the distance between two parallel lines is given by area of hexagon divided by the side length times something.
+
+Actually given that the hexagon is equilateral, the side lengths are equal and the included angles are variable.
+
+Because the hexagon is equilateral, we can find that the three lines form a triangle whose side lengths are 200, 240, 300. That triangle is similar to the hexagon's medial triangle? Wait maybe we can compute the hexagon side length as 200 / (√3)? Let's try compute approximate.
+
+Let me compute side lengths of parallelogram shaped such that the three sides are equal s. The triangle formed by lines AB, CD, EF is the triangle formed by connecting the endpoints of the three vectors of the lattice: e.g., the sum of vectors.
+
+This occurs if we consider the hexagon as the parallelogram of step  4? Wait 3*vector? Actually we have a parallelogram with the third side? Eh.
+
+Let's attempt find orientation: Suppose we consider the parallelogram constructed by connecting the three vectors sequentially: we have triangle formed by three vectors (a, b, c). So triangle stands central. The lines AB, CD, EF are along those vectors: a, c, and -b. Indeed, if we think of the triangle formed by these three vectors (a, b, c). The side lengths of the triangle formed by lines AB,L2,L3 equals side lengths of that triangle formed by vectors s? Wait maybe we get direct relation: The length between intersection of lines AB & CD (line L1 and L2) equals the length of vector b? We can check geometry:
+
+Take vector b = s * something. The segment MB of line AB to intersection B? Eh.
+
+But we can compute ??? Let's use property: Suppose we have lines L1 and L2 with direction vectors a and c. The point at intersection of L1 and L2 is between lines from A=0 and C = a + b. The vector L1 coming from A to intersection along a vector a. The other line L2 passes through C, a point offset from B. Since triangle formed by lines AB and CD: the point at intersection between these two lines forms a triangle of a 3 side lengths? Wait maybe the triangle formed by lines AB, CD, EF is actually the triangle formed by the vectors a, b, c themselves (since we shift lines?). Let's test by drawing: Suppose we have A=0, B=a, C=a+b. L2: line through C and direction c. The intersection of lines L1 and L2, M. Then the intersection of L2 and L3 at N, and intersection of L3 and L1 at O. Does the triangle M,N,O correspond to a translation of triangle formed by a, b, c? Maybe analogous to complement of lines. In fact, we can consider vectors a, b, and c. If you shift lines L1 and L2 relative to each other, the intersection point M is influenced by the offset of L2's line from line L1 (via point C). C is A + a + b. That offset relative to L1 basically imposes a translation by (a + b). Similarly other intersections.
+
+Hence distance between M and O is equal to something defined by vector requiring only the distance between lines through C and F. That distance could be 2 times s? Actually not.
+
+I think we can solve the algebraic equation for side lengths with unknowns. But maybe easier to solve via Poisson: Suppose we denote s as average of side length. Then we can find ratio of the sides lengths: For a triangle formed by lines AB, CD, EF, the side lengths are basically 2 * s / sin(A/2). But I need to find known formula.
+
+Let's consider the hexagon as AB - BC - CD - DE - EF - FA. The lines AB and CD are edges of assembly. We can compute the distance between them; it's the perpendicular distance between these lines. Or the side lengths of triangle formed by lines ABCD? Actually if AB and CD are parallel, their intersection length is infinite? Wait AB and CD are not parallel.
+
+Now, the line AB is direction a; line CD is direction c. Because a, b, c produce triangle shape with magnitude equal. Their intersection distance is commanded by the geometry. Similarly between lines AB (a) and EF ( -b). But we might find that the lengths of this triangle sides are 2s we can find?
+
+Let's examine the triangle formed by the lines AB, CD, EF. If we consider the region of the polygon formed by the lines a, b, c, but those lines not necessarily symmetrical? Actually maybe the triangle formed by lines AB, CD, EF has side lengths equal to 2s times some trig functions. But we can analyze systematically: For line AB: direction a. The line CD: line through C. The relative position of CD relative to L1 is based on translation of C = a + b. So intersection M is found by solving system we did earlier. Actually any param t such that M (x,0). Similarly we can param for N etc.
+
+But maybe shape of this triangle is exactly the triangle formed by the segments of the hexagon: The triangle formed by the pair of edges AB, BC, and CD? Wait there is a triangle formed by A, B, D? But AB and CD are not consecutive; B and D have vertex C. Not.
+
+Consider if we take the hexagon's vertices (po; maybe the triangle formed by lines AB, BC, and CD? But they are not; but the lines AB and CD: Intersection M on line AB and CD? Similarly for a line b? Actually after extension of AB and CD, they intersect at intersection point of two lines parallel to lines AB and CD; the vertices of triangle formed by them might be the base of triangle connecting vertices of these lines? Eh.
+
+Maybe easiest: we can express the positions of these intersection points as fractions of sides (s) by using formula of polygon; then compute side lengths and equate them to given numbers.
+
+Ok let's attempt to write symbolic solutions; we need the length of side MO and of other sides: M - N, and N - O. Because we have three variables to match, which might allow us to solve for angles, then s.
+
+We need to find numeric lengths.
+
+Let us param: Let direction of a = (1,0). Let c be rotated by angle φ relative to a? Actually we can think that the angles between a and b and between b and c and between c and a? But we can define angles from a to b, and from a to c? However, to find closed shape, we need relation between a,b,c? But we could treat that as the shape is basically a triangle formed by three vectors a, b, c. This is not requiring relationship between a and b. So we choose arbitrary angles.
+
+Maybe easier: Let’s transform to variable such that the hexagon is formed by completing the parallelogram. Indeed, with a,b,c as vectors of magnitude s. So we can express in terms of a, b, c. Then we can compute side lengths as functions of some unknowns.
+
+Because the hexagon is equilateral, we could also use property: Because all three pairs of opposite sides are parallel, we can think of the hexagon as composed of two half-size triangles? Wait we like to shape.
+
+Let's find vector of shape: The hexagon is built from sides a, b, c, -a, -b, -c. Now we need triangle formed by lines AB (a) and CD (c). For intersection, the unknowns are basically lens.
+
+Actually we can use vector calculus to find lengths of these triangle's sides: Because the intersection points are linear combinations of a, b, c. Provide formulas for M and N and distances.
+
+For intersection between L1 and L2: M is defined by M = t1 * a. We derived t1 = 1 + cosβ - (cos γ sin β / sin γ), but maybe easier to compute M in terms of a and b relatively: Let's compute M directly using vector representation: we have equations:
+
+M = t1 * a; where t1 is parameter such that M is on L2.
+
+Line L2: L2 passes through C = a + b and direction c. So M = (a + b) + k c, we used earlier t for param.
+
+We need to find intersection, so M = t1*a = (a + b) + k c. Solve for t1 and k. That's we can write as:
+
+t1*a - k c = a + b.
+
+Alternatively, we can solve: t1*a - k c = a + b.
+
+But we can represent e.g. by using vectors: maybe we can use vector cross product: For example, the intersection point along L1: vector from 0 to M. So M = (a + b) - k c. But as k solves.
+
+Let's denote t1-a?? Wait we want M expressed in terms of a, b, c.
+
+M = t1 a = (a + b) + k c.
+
+That's two equations relating t1, k. But we can rearrange: (t1 a - k c) = a + b.
+
+But t1 and k unknown, but here we can compute t1 and k by solving for t1 & k using dot product with cross product.
+
+Alternatively, we need to find M as t1 a. But we don't need t1 if we set v: M = (a + b) + k c. That can be expressed in terms of a and b? But we can't isolate k.
+
+But we can use vector equations: we can get t1 by dot product with cross.
+
+But perhaps easier is to find coordinates using fixed geometry. Let's set coordinates: Let a = (s,0). Let b = s*(cos β, sin β). Let c = s*(cos γ, sin γ). So we can plug into numeric.
+
+Thus we can compute M in terms of known values: its coordinates x = s * (1 + cos β + cos γ * u). But u from earlier: u = - sin β / sin γ. So we can compute M.x: 1 + cos β + cos γ * u. Evaluate u: - sin β / sin γ. So M.x = 1 + cos β - cos γ * sin β / sin γ.
+
+Therefore M.x = 1 + cos β - (cos γ sin β)/ sin γ. Similarly, O.x = cos γ - (cos β sin γ)/ sin β.
+
+Thus MO = s * (M.x - O.x). Might there be simplification.
+
+Compute M.x - O.x = (1 + cos β - cos γ sin β / sin γ) - (cos γ - cos β sin γ / sin β).
+
+Let's reduce:
+
+= 1 + cos β - cos γ sin β / sin γ - cos γ + cos β sin γ / sin β.
+
+Combine: 1 + cos β - cos γ + cos β sin γ / sin β - cos γ sin β / sin γ.
+
+= 1 + cos β - cos γ + (cos β sin γ / sin β) - (cos γ sin β / sin γ).
+
+(Also note cos β sin γ / sin β = (cos β / sin β) * sin γ. Similarly cos γ sin β / sin γ = (cos γ / sin γ) * sin β.
+
+Thus we have difference: 1 + cos β - cos γ + (cos β sin γ / sin β) - (cos γ sin β / sin γ). That's >0 likely.
+
+We can compute this expression in terms of tan differences?
+
+Set p = cos β / sin β = cot β. Similarly q = cos γ / sin γ = cot γ. So expression becomes:
+
+MO = s (1 + cos β - cos γ + (cot β) sin γ - (cot γ) sin β).
+
+But we may express sin γ - sin β etc.
+
+Need relation between angles.
+
+Alternatively, maybe we should compute cos β and sin β from unknowns. But we can also find relation between β and γ from triangle formed by lines. Because the side lengths of triangle formed by lines AB, CD, EF are given. Perhaps we can solve β and γ.
+
+Let us compute N coordinates using earlier equations. We find the intersection N of lines L2 and L3. We will compute N coordinates: For L2: L2(t) = (s + s cos β + s cos γ t, s sin β + s sin γ t). We have t & u unknown.
+
+From earlier equations, we derived solution for t and u:
+
+Denote D = sinγ cosβ - cosγ sinβ = sin(γ-β). So:
+
+t = ( sinβ (cosγ - 1 - cosβ) - cosβ (sinγ - sinβ) ) / D.
+
+Simplify numerator:
+
+sinβ cosγ - sinβ - sinβ cosβ - cosβ sinγ + cosβ sinβ = combine: sinβ cosγ - sinβ cosβ - cosβ sinγ + sin? Wait we have sinβ cosβ? There's a term sinβ cosβ; but there is also - sinβ cosβ? Let's compute: sinβ cosβ - sinβ cosβ? There's a - cosβ sinβ from the second? Wait 2 terms: sinβ cosβ term? Let's compute:
+
+∂numerator:
+
+First part: sinβ * (cosγ - 1 - cosβ) = sinβ cosγ - sinβ - sinβ cosβ.
+
+Second part: - cosβ *(sinγ - sinβ) = - cosβ sinγ + cosβ sinβ.
+
+Now sum: sinβ cosγ - sinβ - sinβ cosβ - cosβ sinγ + cosβ sinβ.
+
+Combine: sinβ cosγ - sinβ cosβ? Actually the - sinβ cosβ cancels with + cosβ sinβ. So we cancel these. So we have:
+
+sinβ cosγ - sinβ - cosβ sinγ. So numerator = sinβ cosγ - sinβ - cosβ sinγ.
+
+So t = (sinβ cosγ - sinβ - cosβ sinγ) / D.
+
+Similarly we can compute u using preceding formula earlier: u = (sinγ cosγ - cosβ sinγ - cosβ cosγ? Wait compute.
+
+From earlier, u = ( sinγ * (cos γ - 1 - cos β) - cos γ * (sin γ - sin β) ) / D.
+
+Let's compute numerator: sinγ * (cos γ - 1 - cos β) = sinγ cos γ - sinγ - sinγ cosβ.
+
+Second part: - cosγ * (sin γ - sin β) = - cosγ sinγ + cosγ sinβ.
+
+Sum: sinγ cosγ - sinγ - sinγ cosβ - cosγ sinγ + cosγ sinβ.
+
+Note sinγ cosγ - cosγ sinγ = 0. So left: - sinγ - sinγ cosβ + cosγ sinβ
+
+So u = ( - sinγ - sinγ cosβ + cosγ sinβ)/ D.
+
+Thus we have t and u.
+
+Now we have N coordinates: compute N = L2(t) = A + t c? Wait we choose A = a + b? Actually we derived L2(t) = (s + s cos β + s cos γ t, s sin β + s sin γ t). So N_x = s + s cos β + s cos γ t; N_y = s sin β + s sin γ t.
+
+So N_x = s (1 + cos β + cos γ t). Similarly N_y = s (sin β + sin γ t). Actually we can use i such that M coordinate is s M_x, where M_x = 1 + cos β + cos γ t0? Actually we had earlier t0 for intersection between L1 and L2: let t0 = - sin β / sin γ. That is earlier t0 that we denoted as u. So for intersection: t0 = (-sin β / sin γ). So M_x = 1 + cos β + cos γ * t0.
+
+We can confirm that constant t0 is the same as t0 = -sin β / sin γ => cosγ t0 = -cosγ sinβ/ sinγ. That matches earlier equation for M_x.
+
+So M_x = 1 + cos β + cos γ * (-sin β / sin γ)
+
+= 1 + cos β - cos γ sin β / sin γ. So consistent.
+
+Now N_x = s (1 + cos β + cos γ t). So N will have a different t expression: t = ( sinβ cosγ - sinβ - cosβ sinγ ) / D. Actually note that t expression may involve factor of angle difference. But we can compute N_x, N_y relative to sin, cos, s.
+
+Now compute distances: M-C? Actually M,N coordinates may be messy but we can compute squares.
+
+But we also might compute ratio of side lengths (MO, MN, NO). We need to identify which is 200, 240, 300.
+
+We might find that the lengths of the sides are proportional to s times some trigonometric function of difference of angles. Let us compute side lengths of triangle:
+
+Segment MO: distance between M and O along x-axis. Distances: M.O = |M_x - O_x| * s.
+
+Alternatively we can compute side lengths lengths of triangle: e.g.
+
+MO = s * |M_x - O_x|.
+
+Similarly distance between M and N: sqrt((M_x - N_x)^2 + N_y^2). Since M_y = 0.
+
+Let's compute these.
+
+Now we can compute the lengths as in multiples of s. So ratio of side lengths to s might be independent of s? Wait maybe ratio depends only on angles; we can set s = 1. So we have triangle side lengths L = s * f(angles). So the ratios of L is f1, f2, f3. So given lengths of 200, 240, 300, we can find scaling factor s by dividing by some constant.
+
+Thus we may compute f1, f2, f3 via formula. But we can't guess angles; but we know that 3 is a triangle with sides 200, 240, 300, which is a 6-8-10? Actually 200,240,300 can be scaled by 10: 20,24,30; then we can reduce by 2 -> 10,12,15? Actually 20,24,30 is 20*3? Wait 20,24,30 equals 20,24,30. These are scaled by 2: (10,12,15). Are these a 1:1.2:1.5 ratio? But not Pythagorean.
+
+But we can find the semiperimeter etc. The triangle may be acute? Let's compute side lengths: 200,240,300. Compute side lengths ~ maybe a right triangle? For right triangle, if sides are 200,240,300, check squares: 200^2=40000, 240^2=57600 sum= 97600. 300^2=90000. 97600 != 90000. So it's not right.
+
+But we might notice that the triangle sides are 200,240,300. Possibly the side lengths of triangle formed by lines AB, CD, EF Determine s.
+
+Maybe the ratio s to triangle side lengths equal a constant? Let's attempt to find a formula: Suppose s=??? We'll try compute approximate.
+
+Let's consider a simplified case: Suppose orientation such that a,b,c form a triangle of 3 equal sides, i.e., s vector: a, b: rotate by positive angle (say 120°? Wait if a,b,c make a triangle of 3 equal sides? Actually we can think of a= -b etc. But as we have a, b, c with positive orientation.
+
+Let us try a scenario where b is rotated by 60°, c is rotated by 120° relative to a. That would be analogous to regular hexagon, where a = s*(1,0). b = s*(1/2, sqrt(3)/2). c = s*(-1/2, sqrt(3)/2). That shape's hexagon is a regular hexagon (since the angles are 120°). But if hexagon is equilateral and regular? Opposite sides parallel indeed (since all sides equal). So perhaps we can treat for regular hexagon: a = (1,0)*s. Then the direction of b is s*(1/2, sqrt(3)/2). Similarly c is s*(-1/2, sqrt(3)/2). Then we can compute triangle formed by lines AB (a), CD (c), EF ( -b). Let's test for this regular hexagon: Because a, b, c are separated by 120° increments: angles between a and b: 120°, between b and c: 120°, between c and a: 120°. The lines may produce a triangle with side lengths: 200,240,300 maybe? Let's compute the triangle side lengths.
+
+Let's compute with s=1. Then we compute intersection points.
+
+Alternatively, we see that for a regular hexagon, we might get a triangle with side lengths 2 * sqrt(3) maybe? Actually with s=1, the triangle formed by lines AB, CD, EF may intersect at certain points. Let's compute quickly to see if the triangle is of sides 200,240,300 scaled by s.
+
+Set s=1. Use a as (1,0). Let β = 120° between a & b; so b = (cos120°, sin120°) = (-1/2, sqrt(3)/2). But we need c: angle between a and c? Actually a->c angle: we need vertices: a, then b: step from B to C. So b = rotate by angle 120°. Then c: from B to C? Wait orientation after find a + b + c fits? Let's choose vector c such that vector c seems to differ from b by 120° as well? That seems possible. Let's set c = rotate of b by 120°, i.e., 240° from a. So a = (1,0). b = (cos120°, sin120°) = (-1/2, √3/2). c = rotate of b by 120°, so c = cos(240°) + i sin(240°) = (-1/2, -√3/2). Wait but does c's vector orientation match? Actually if we choose c = (-1/2, -√3/2), then the shape would be a regular hexagon with all angles 120°, side lengths 1. Let's check: That's a grid: a (1,0) from A to B; b rotates to B->C; then c rotates to C->D; d equals -a = (-1,0); etc. That indeed forms a convex hexagon. This is indeed a regular hexagon.
+
+Now compute line intersections:
+
+Let a = (1,0). b = (-1/2, sqrt3/2).
+c = (-1/2, -sqrt3/2).
+
+centers: s = 1.
+
+Now we compute intersection points.
+
+Compute M: intersection of line L1 (x-axis) and CD (line through (1+b). Actually C = a + b = 1 + (-1/2) + i etc.
+
+Let’s compute A:0; B:1,0; C: (1 + (-1/2) = 0.5; y = 0 + sqrt3/2). So C = (0.5, 0.866025). D: C + c = (0.5 - 0.5, 0.866 - 0.866) = (0, 0). Good. So D is back to origin. Then E: D + d = (0,0) + d = (0,0)?? Wait d = -a = (-1,0)? So D is B? Let's compute: E = D + d = (0,0)+(-1,0) = (-1,0). F = E + e = E + (-b). Need b = (-1/2, 0.866). So -b = (1/2, -0.866). So F = (-1, 0) + (1/2, -0.866) = (-0.5, -0.866). Great.
+
+Alternatively we can use symmetrical shape.
+
+Now we compute L1: y=0; line through A (0,0). L2: line through D (0,0) with direction c? Wait L2 should be line through C and D? Wait CD is along C->D: C at (0.5, 0.866) and D at (0,0). So L2: line through C (0.5,0.866) direction c = (-1/2,-√3/2). So line through C: C + t * (-1/2,-√3/2). This line covers C, D on extension. But will L2 intersect with L1 at point? Let's solve intersection of L1: y=0, and L2: line through C. Setting coordinates: x=0.5 + t*(-1/2) , y=0.866 + t*(-√3/2) = 0.
+
+Solve for t: 0.866 + t*(-0.866) = 0 => t = 1. So intersection M at t=1 => x = 0.5 + 1 * (-1/2) = 0.5 - 0.5 = 0. So M = (0,0). So M coincides with point D? Actually L1 y=0 includes A (0,0). M is at 0. So M is B? Wait B at (1,0). D is at (0,0). So M is at origin.
+
+Thus M is at origin, intersection of AB and CD, indeed at D.
+
+Hence M O is segment between intersection points of AB and CD, and AND AB and EF: Let's compute O: intersection of L1 and L3: L3: line through F (-0.5, -0.866) direction -b which is (1/2,-√3/2). Because -b = (-(-1/2), -(√3/2)) = (1/2, -0.866). Actually need to check the direction of EF: EF as segment from E to F. F = (-0.5,-0.866). E = (-1,0). So vector EF from E to F: F - E = (0.5, -0.866). So yes -b (which is (1/2,-0.866)). So line passes through F: at ( -0.5, -0.866 ), direction (1/2,-0.866). Intersect with L1 y=0. So we need param: (-0.5 + s * 1/2, -0.866 + s * (-0.866)). Set y=0: -0.866 + s*(-0.866) = 0 => s = -1. Actually -0.866 + s*(-0.866) = 0 => (s - 1)*(-0.866) = 0 => s - 1 = 0 => s = 1. So s=1 obtains y=0? Wait compute: s = -? Let's compute: -0.866 + s*(-0.866). Solve for s: -0.866 + s*(-0.866) = 0 => s*(-0.866) = 0.866 => s = -1. Yes, but we can treat s≥0? Actually -0.866 + s*(-0.866) = 0 => multiply both sides by -1: 0.866 - s*(-0.866) = 0? Wait better: Let's compute: t = parameter.
+
+Equation: y = -0.866 + t*(-0.866). For y=0 => -0.866 + t*(-0.866) = 0 => t(-0.866)=0.866 => t = -1. So t = -1.
+
+Now x coordinate: x = -0.5 + t*0.5 = -0.5 + (-1)*0.5 = -0.5 - 0.5 = -1. So O = (-1,0) which is point E.
+
+Thus endpoints M & O are at D and E? Wait M at origin (0,0). O at (-1,0). So MO = 1. Thus in this regular hexagon, side lengths of triangle formed by lines AB, CD, EF are: MO = 1, and MN and NO maybe not symmetrical. But we need to find lengths. Let's compute N: intersection of L2 and L3.
+
+Find line intersection of CD and EF: L2: line through C and D (point all lying along line). L3: line through F and E (point). Let's solve intersection.
+
+L2 param: C (0.5, 0.866) + t*(-0.5, -0.866). L3 param: F (-0.5, -0.866) + u*(1/2,-0.866). Let's compute intersection: 
+
+Coordinate equality: 0.5 - 0.5 t = -0.5 + 0.5 u (x), 0.866 - 0.866 t = -0.866 - 0.866 u (y).
+
+Set t =? Solve x: 0.5 - 0.5 t = -0.5 + 0.5 u => multiply 2: 1 - t = -1 + u => bring terms: u + t = 2. Express u = 2 - t.
+
+From y: 0.866 - 0.866 t = -0.866 - 0.866 u => 0.866(1 - t) = -0.866(1 + u) => divide 0.866: 1 - t = - (1 + u). So 1 - t = -1 - u. => 1 - t + u = -1. => u - t = -2. 
+
+Now we have u = 2 - t. So 2 - t - t = -2 → 2 - 2t = -2 → 2t = 4 → t = 2. Then u = 2 - t = 0.
+
+Hence intersection at (x,y). Use t=2. Then x = 0.5 - 0.5*2 = 0.5 - 1 = -0.5. y = 0.866 - 0.866*2 = 0.866 - 1.732 = -0.866. So N = (-0.5, -0.866). Wait that's point F? Wait F = (-0.5, -0.866). So N equals F. Actually, we find the intersection of lines CD and EF occurs at F maybe? But F lies on EF but also on extension line of CD? Actually we found intersection of lines CD and EF is at F.
+
+Is that consistent? Let's check: L2 is extension of CD; line through C (0.5, 0.866) and direction c. Does L2 pass through F (-0.5,-0.866). Are these collinear? Let's compute direction vector from C to F: (-0.5-0.5, -0.866-0.866)= (-1, -1.732). This direction ratio ( -1 / -1.732 = 0.577 ), which is (cos γ / sin γ). This maybe indeed is same as line direction c? Wait c has direction (-0.5, -0.866). But direction vector is (-0.5, -0.866). Are they same? Let's compute ratio: -0.5/-0.866 = 0.577. So same ratio. So yes F lies on line CD extension; but F lies on CD extension with R parameter 2? That's indeed.
+
+Thus for regular hexagon, N points coincides with F, M = D, O = E.
+
+Thus the triangle formed by M=N=F? Wait M is at D; O is at E; N is at F. But the triangle formed by these points is actually D-E-F which is a side of hexagon (forming triangle?), but we computed that the vertices coincide at D (0,0), E(-1,0), F(-0.5,-0.866). So we can compute side lengths:
+
+Distance between D and E: 1 (the base?). Actually D -> E side length = 1 (since along AB). So MO = 1.
+
+Distance between E and F: distance between (-1,0) and (-0.5,-0.866) = sqrt( (0.5)^2 + (-0.866)^2) = sqrt(0.25 + 0.75) = sqrt(1) =1.
+
+Distance between F and D: distance D to F: sqrt((0.5)^2 + (0.866)^2)=1.
+
+So triangle is a triangle of side 1. So all sides equal; So triangle formed by lines AB, CD, EF is an equilateral triangle of side equal to s if s is side length for regular hexagon.
+
+But our given side lengths 200,240,300 are not all equal. So regular hexagon is not the case.
+
+Thus we must have general orientation.
+
+Let’s analyze generic. Suppose the hexagon is such that the vectors a, b, c produce a triangle of side lengths s. But we can choose orientation such that the triangle formed by lines AB, CD, EF is actually equal to the externally formed triangle of directions a, b, c. Maybe the triangle formed by those lines is just a triangle formed by connecting the three points at vertices of that triangle? Let's test: If we consider the triangle formed by lines AB, CD, EF: they are the extensions of each side; the intersection points are at L1∩L2 = P; L2∩L3 = Q; L3∩L1 = R. We can compute they are points at the intersections of the lines: we found that these points are at coordinates that depend on the three vectors a, b, c. But we can find the triangle P-Q-R =? Let's find that triangle P-Q-R might modify equal to the "triangle formed by points of vertices A, B, C"? Wait need to confirm.
+
+Alternatively, think of the advanced property: For an equilateral hexagon, the line intersection of lines parallel to sides with from opposite side produce triangle with side-lengths equal to s * (something) maybe representing the three side lengths of the hexagon itself? Actually consider the following: For an equilateral hexagon, the lines along the sides of a, b, c are parallel to a,b,c; the way they converge may yield the triangle formed by considering the first three directions (a, b, c). There might be a similar triangle.
+
+Alternatively, we can compute the short side lengths exactly in terms of the interior angles between a, b, c. Let's compute using coordinate representation and derive formulas.
+
+Better approach: Let’s treat the hexagon as a finite set of points. Then choose coordinate system: Let a and b be known; let c be vector unknown.
+
+But we can param by angles between a and b, and between a and c while they are all equal length s. Then we can compute side lengths of triangle formed by lines along a, c, and -b.
+
+Let's compute cross product for area.
+
+Alternative: Suppose an equilateral hexagon is defined by vectors a, b, c. Then the positions of lines AB are along a, CD along c, and EF along -b.
+
+Now we can consider triangular geometry of the tower formed by extremes of those vectors:
+
+But the triangle formed by lines AB, CD, EF: If we consider the points of intersection of the lines with the local coordinates, we found that each point has coordinate being a linear combination of a, b, c.
+
+Similarly, we can compute the lengths of these side lengths as functions of s.
+
+For instance, let's compute intersection A: Points:
+
+Define intersection of L1 (AB: a) and L2 (CD: c). Write them as: t1 a = (a + b) + t2 c. So 2 unknowns t1 t2. Solve for t1 =? But not necessary.
+
+But we restrict that a,b,c all same length s.
+
+Thus we can express in terms of s.
+
+Let’s denote the dot products between a and b: dot(a,b) = s^2 cos φ, where φ = angle between a and b.
+
+Similarly, dot(a,c) = s^2 cos ψ, where ψ = angle between a and c.
+
+Also dot(b,c) = s^2 cos θ, where θ = angle between b and c.
+
+To find intersection lengths of lines, we can deduce using geometric formulas.
+
+But maybe the problem expects using concepts of linear algebra? Let's adopt vector approach: Let also compute vectors:
+
+Let a a = vector a (s length).
+Let b vector b (s length).
+Let c vector c (s length).
+
+We can choose a = (1,0)s for convenience. Then the coordinates of a, b, c depends on angles.
+
+Let’s treat a = (1,0). Let b = (cos β, sin β). Let c = (cos γ, sin γ). So we have a dot c = cos γ.
+
+Now we can compute intersection points via linear algebra solving for two unknown scalars.
+
+Let's compute intersection point M between L1 and L2: t1 a = (a + b) + t2 c. Expand a vector a = (1,0). So M = t1 a = t1(1,0). But this can also be expressed as (1 + cos β + cos γ t2, sin β + sin γ t2).
+
+Thus we must equate 1 + cos β + cos γ t2 = t1, and sin β + sin γ t2 = 0. So t1 = 1 + cos β + cos γ t2. Actually we found t1 = M_x. Then sin β + sin γ t2 = 0 -> t2 = - sin β / sin γ.
+
+Thus we can compute t1 = 1 + cos β + cos γ (-sin β / sin γ).
+
+Thus M = (t1, 0). Coordinates are (t1, 0). Good.
+
+Similarly for N: intersection of L2 and L3: We need to find t2 and u3: equality.
+
+Let's apply matrix earlier: intersection of L2: (1 + cos β + cos γ t2, sin β + sin γ t2). L3: (cos γ - cos β u3, sin γ - sin β u3).
+
+Equate coordinates: (1 + cos β + cos γ t2) = cos γ - cos β u3 and (sin β + sin γ t2) = sin γ - sin β u3.
+
+We solved these equations earlier to find t2 and u3. But we may find t2 and u3.
+
+From (1 + cos β + cos γ t2) = cos γ - cos β u3, we get:
+
+(1 + cos β - cos γ) + cos γ t2 = - cos β u3.
+
+Let me compute precisely:
+
+Let (1 + cos β + cos γ t2) = cos γ - cos β u3. Bring terms.
+
+t2 * cos γ = cos γ - cos β u3 - (1 + cos β).
+
+Simplify: cos γ t2 = cos γ - cos β u3 -1 - cos β = (cos γ - 1 - cos β) - cos β u3.
+
+Thus cos γ t2 = (cos γ - 1 - cos β) - cos β u3.
+
+Similarly, sin β + sin γ t2 = sin γ - sin β u3.
+
+Thus sin γ t2 = sin γ - sin β u3 - sin β.
+
+Thus we can solve for t2 and u3. We can express these equations as linear in u3, t2.
+
+Thus we can solve by matrix.
+
+Let’s set eq1: cos γ t2 + cos β u3 = (cos γ - 1 - cos β).
+
+eq2: sin γ t2 + sin β u3 = sin γ - sin β.
+
+We can solve systematically: Let’s treat variables t2 and u3.
+
+Equation B: [cos γ cos β; sin γ sin β] * [t2; u3]^T = [ (cos γ - 1 - cos β) ; (sin γ - sin β) ].
+
+Solve for t2, u3:
+
+We can compute using inverse of 2x2 matrix: M = [[cos γ, cos β], [sin γ, sin β]]. Its determinant: cos γ * sin β - cos β * sin γ = sin(γ - β). Thus solving:
+
+t2 = ( (cos γ - 1 - cos β) * sin β - cos β * (sin γ - sin β) ) / D.
+
+Similarly, u3 = ( cos γ * (sin γ - sin β) - sin γ * (cos γ - 1 - cos β) ) / D.
+
+Where D = sin(γ - β).
+
+Now compute t2 as earlier formula: t2 = ( sinγ cos β? Wait earlier we got t2 = sinβ cosγ - sinβ - cosβ sinγ / D. That matches? Let's check.
+
+Compute numerator for t2:
+
+A = sinβ*(cos γ -1 - cos β) - cos β*(sin γ - sin β). Expand:
+
+A = sinβ cos γ - sinβ - sinβ cos β - cosβ sinγ + cosβ sinβ.
+
+Simplify: sinβ cos γ - sinβ - sinβ cosβ ~ but sinβ cosβ - sinβ cosβ cancel? Actually - sinβ cosβ + cosβ sinβ = 0. So A = sinβ cosγ - sinβ - cosβ sinγ.
+
+Thus t2 = ( sinβ cosγ - sinβ - cosβ sinγ ) / D.
+
+Now if we factor D = sin(γ - β). So t2 = ( sinβ cosγ - sinβ - cosβ sinγ ) / sin(γ - β). Similarly earlier we had u2? Wait earlier we had t = ( sinβ cosγ - sinβ - cosβ sinγ ) / D. That's same.
+
+Now we compute t2.
+
+Now we can compute N coordinates: N_x = 1 + cosβ + cosγ t2; N_y = sin β + sinγ t2.
+
+We also compute O = intersection of L1 and L3: solve earlier.
+
+But let's compute vector lengths like M.distance to O and N: difference between M and O? Actually M coordinates M = (t1, 0). O coordinates O = (cos γ - cos β sin γ / sin β, 0). Then MO = s *(t1 - O_x). Because speeds symmetrical.
+
+Wait but we need cross distances.
+
+Actually but we need to compute triangle side lengths: M goes to N, N to O and O to M. That can be measured: But we can compute via t1, t2, O_x.
+
+We can compute MO as (t1 - o_x) via s.
+
+Now the length of side MN: sqrt((t1 - N_x)^2 + N_y^2). Similarly NO.
+
+Given that we can equate them to 200,240,300 relative to s.
+
+Now we have unknowns β, γ, and s. Solve for those lengths. Since we have two unknowns but we have 3 equations (3 sides lengths). There might be only one possible solution, but we can find s must satisfy equations.
+
+But we may attempt to solve numerically.
+
+But we could simplify: Let’s write general expressions for distances in terms of a, b, c. The side lengths of triangle formed by lines AB, CD, EF can be determined by the cross product of the lines: Actually the length of the side between intersection of L1 and L2, and intersection of L2 and L3 equals some value involving side lengths a,b,c with angles between them.
+
+Simplify: We can analyze the geometry of these three lines as follows:
+
+Let the slopes of the lines: direction of AB: a vector. Similarly CD: c. EF: -b. The intersection of lines M (AB & CD) yields a region that lies on the extension of lines AB and CD; this intersection general geometry is defined by intersection of lines of slope c and a. So we can find length of segment between intersection M and N? This is segment between intersection of line AB and CD, to intersection of line CD and EF.
+
+Suppose we find unit direction vector for a and c: Suppose we find that the difference between line AB and CD: the intersection point forms M is the line at distance from origin at a point.
+
+Alternatively, we can compute distance between the intersection M and N: It equals distance between the intersection of AB & CD, and intersection of CD & EF.
+
+We can consider the intersection point between L2 and L3 (N). That's on line L2 (line CD). So N lies on CD and EF. That means N lies along line CD, in direction of vector c.
+
+Similarly M lies on line CD and AB? Actually M lies on line CD (L2) and AB. So M lies on line CD too? Wait M lies on line CD because it's intersection of AB and CD. So both M and N are on line CD. Paradox? But N is intersection of lines CD and EF. So M and N lie on CD line indeed. Yes they are both on line CD. Then segment MN lies along line CD. Similarly O and M lie on AB line? Actually O lies on line AB, since intersection of L1 and L3; it's on AB. So M and O are on AB line. So segment MO is along line AB.
+
+Thus triangle sides are actually along the lines: MO along AB; MN along CD; NO along EF. Among these, MO is along L1; MN along L2; NO along L3. Good.
+
+Thus MO is length of segment between intersection of line AB with CD and line AB with EF. Equivalent to intersection of line CD and line parallel to AB? Wait they are on AB.
+
+Now we can compute horizontal distances in orientation.
+
+Thus segments along AB, CD, EF. That is: M and O correspond to intersection points of AB with CD and EF respectively. So M and O are on AB, horizontal line: so distance between them is 0? Wait AB line is axis. So M is found on AB line: x = t1, O = x = x_O. So distance between M and O is simply difference between x-coordinates: line AB along coordinate axis.
+
+Thus MO length real distance between M and O.
+
+Similarly, MN is along CD: line L2. Segment defined by two intersection points M and N on line CD. So its length equals distance between M and N along line CD, i.e., difference of parameter along CD.
+
+Thus,N lies on CD. So we can find distance along L2: difference between M and N.
+
+Similarly NO on EF: along line -b: length equals difference between N and O along line EF.
+
+Hence we can compute distances easier.
+
+Because M and O are on AB. M is at x = M_x such that M_y = 0. O is at x = O_x such that O_y=0.
+
+Distances in terms of param values.
+
+Similarly, M and N share line CD: produce parameter difference along CD direction: param variable t_2 used earlier? Let's set param along CD.
+
+Let’s write param at M: M on line CD, so we can express M along CD param: From C to D? Actually line CD: vector c from C to D. So M (point inside extension) will be at some parameter t: M = C + t * c. Where t accounts for direction from C to D. But we found t for M: maybe t = 0? Wait earlier we built t = - sin β / sin γ. But that is the parameter for intersection of lines L1 and L2: we used t to denote parameter from C. So yes M can be reached from C with t = tM. Similarly N similarly has tN = found by solving simultaneous equations.
+
+Then MN distance along line CD is length |tN - tM| * |c| = |tN - tM| * s.
+
+Thus we can use param values.
+
+Similarly for NO: along line EF; we have param for N in terms of EF: vector -b; M? Wait O lies on line EF; Actually O lies on line EF? Wait O is intersection L1 and L3. Actually L3 passes through F and direction -b. So O lies on line L3. So O = F + v_O*(-b). After solving earlier: O solved with u = - sin γ / sin β? Wait we found earlier intersection of AB with L3, parameter u value - sin γ / sin β? Actually earlier we derived ufor intersection of L1 and L3: u = - sin γ / sin β? Wait we set u such that y = 0: sin γ - sin β u = 0 => u = sin γ / sin β. Then but might cause x negative etc. The formula earlier: u = - sin γ / sin β? Actually we solved earlier correctly: 0 = sinγ - sin β u => u= sin γ / sin β. Wait earlier for O we had u = - sin γ / sin β? Let's compute: For O we have L3: F + v*(-b). So we set v = some variable. Let's set y = sin γ - v sin β. Set that to zero: sin γ - v sin β = 0 -> v = sin γ / sin β.
+
+Thus O = F + v*(-b) = F + (sin γ / sin β)*(-b). So O = F - (sin γ / sin β) * b.
+
+Now N intersection with L3: N is point between line CD and EF; N lies on both. For the intersection of L3 and CD, we find N = F + v*(-b). Parameter v1 (call vN). So we can compute N_x, N_y.
+
+Thus O and N coordinates may be expressed accordingly. But once we compute param variables, we can deduce side lengths along L2 and L3. We can solve accordingly.
+
+Thus we can find the lengths:
+
+MO = s * |M_x - O_x|.
+
+MN = |t_M - t_N| * s, along line CD.
+
+NO = |v_N - v_O| * s.
+
+We can compute these formulas easily.
+
+Now function for t_M (the parameter along line CD for M) using t0 = - sin β / sin γ.
+
+Thus t_M = - sin β / sin γ.
+
+Similarly N param t_N: solution from earlier equation t = ( sin β cos γ - sin β - cos β sin γ ) / D.
+
+Similarly O param v_O (the value of v for O). For O, we have v = sin γ / sin β. Let's check if v_O corresponds to negative sign? Let's compute location: O = F + (sin γ / sin β) * (-b). So O vector = F - t_O * b? Wait p_{O} = F + (sin γ / sin β) * (-b) = F - (sin γ / sin β) b.
+
+But we can also compute x coordinate: O.x = cos γ - cos β sin γ / sin β (s cos β). Wait we compute earlier O.x from formulas. That fits.
+
+Now for N:
+
+Solve for N via intersection of L3 and CD: param: N = F + v_N*(-b). So we can compute v_N from earlier.
+
+Equation: N = F + v_N (-b). Also we had N lies on CD: N = C + t_N * c. So we can find t_N = previous t.
+
+But also formula for N along line EF: v_N = ??? Usually we found u and t earlier by solving t and u simultaneously.  We need to express N in terms of v_N. But we have v_N such that N = F + v_N*(-b). Let v_N = u_N.
+
+Now N coordinates: N = F + v_N*(-b).
+
+Given earlier we have also equations:
+
+x_N = 1 + cos β + cos γ t_N (as above). So we can solve for v_N.
+
+But we can compute v_N from equation after solving for t_N; as found earlier.
+
+Let's compute resulting v_N from earlier formula: solving t and u:
+
+For intersection we had t&u earlier for intersection of L2 & L3; there we had variable u that satisfies lines: L2: ... + u c. We had parameter u when we set N = (a + b) + u c. We also had parameter v for N on EF: maybe call v. We solved earlier where u & v are variables? Wait earlier we set u for line L2. Then we solved with u and v for L2 & L3. Actually we found equations:
+
+(1 + cos β + cos γ t) = cos γ - cos β u
+(sin β + sin γ t) = sin γ - sin β u
+
+Where t (like earlier variable t for L2) and u (variable for L3). In that earlier we set u as v. So that we used u from L3. But we may call it u, but we can compute u as we solved earlier for u. Actually we found u = -sin γ - sinγ cosβ + cosγ sinβ / D. That yields u = ( - sin γ (1 + cos β) + cos γ sin β ) / D.
+
+Wait earlier we had u = ( - sin γ - sinγ cosβ + cos γ sin β ) / D. Since we had earlier expression for u. Let's compute.
+
+Thus u= ( - sin γ - sin γ cosβ + cosγ sinβ ) / D. Which we can express as:
+
+u = ( - sinγ (1 + cosβ) + cosγ sinβ ) / D
+
+Simplify: u = - sinγ (1 + cosβ) / D + cosγ sin β / D.
+
+Thus v_N = u. So v_N = u.
+
+Now we can compute distances:
+
+MN = |t_M - t_N| * s.
+
+Compute t_M = -sinβ/ sin γ.
+
+t_N = (sin β cosγ - sinβ - cosβ sinγ ) / D.
+
+Now D = sinγ cosβ - cosγ sinβ.
+
+Now we can compute the length of MN: δ_t = t_N - t_M.
+
+Similarly NO: lies on line -b direction. For N, we have parameter v_N = u. For O as O is at param v_O = sinγ / sin β. So difference |v_N - v_O| * s.
+
+Similarly MO = s * |t_M - O_x|? Wait O_x coordinate we earlier computed? Actually O coordinate is on line AB; we know O coordinate: x = cos γ - cosβ sin γ / sin β. So O_x = cos γ - cosβ sin γ / sin β. That equals something. Then M coordinate: x = t_M.
+
+Thus MO = s * |t_M - cos γ + cosβ sin γ / sin β|.
+
+Ok.
+
+Now we can compute side lengths for given β and γ. But we can also try numeric approximations.
+
+Let’s attempt solving numerically. We'll treat s as unit.
+
+We set s = 1 (just scale). Then we choose some β and γ. The intersection points compute side lengths. We can solve for β and γ such that side lengths ratio equal to 200:240:300. But maybe we only need to find s scaling factor from side lengths: They are proportional to s. So the side lengths must be scaled by s. Because s multiplies entire arrangement; we can scale all coordinates by s. So the set of side lengths in triangle appear scaled by s. So we can think: For any ratio of angles, the triangle sides lengths will be some multiple s times scaling factor determined by angles. Then we can find s by dividing the known lengths by ratio.
+
+But we can attempt to find s from base approach: Suppose match lengths? Let's attempt to compute typical ratio for a generic configuration.
+
+We may just compute ratio between MO and MN: from formulas compute a ratio depending only on angles (β, γ). Then we can find s such that the proportions of lengths match 200,240,300. Since we have 3 lengths, we can try to find angles such that ratio of lengths is 200:240:300.
+
+We can choose any assignment: Suppose we choose MO = 200, MN = 240, NO = 300, or maybe different ordering. So we need to compute view.
+
+But maybe we can find that if we choose MO to be maximum? Because in regular hexagon, O, M, N are all same distances. So oriented difference.
+
+But maybe we need to find s and angles: Let's attempt to try numeric trial solution.
+
+I think that the triangle's side lengths are also the equilateral triangle formed by extension of lines AB, CD, EF. The lines AB, CD, EF are essentially along three directions; the shorter side between them will be the side of triangle formed by something such as area of parallelogram? Hmm.
+
+But maybe we can find some relation: The open triangle formed by lines AB, CD, EF has sides length equal to s times area of the hexagon? Let's analyze.
+
+Because the triangle formed by contacting lines AB, CD, EF includes the hexagon maybe? Let's compute area of hexagon. For equilateral hexagon with sides s and interior angles at vertices A ...?
+
+Area of hexagon equals sum of areas of 6 parallelograms? For general hexagon, area formula can be half of sum of cross products. Another approach: The triangle formed by lines AB (L1), CD (L2), EF (L3). That triangle encloses the hexagon. The side lengths of triangle are meaning distance between L1, L2; L1, L3; L2, L3? Actually the distance between L1 and L2 is the length of the points M and O. But the line intersection at L1 and L2 produce M, line intersection at L1 & L3 produce O. The edges between them coincide with perpendicular lines? Wait the side of triangle along L1 is between M and O along AB line.
+
+Now we can compute MO length as difference of the "abscissa" of two points where L1 intersects lines L2 and L3. In geometry of lines, the line AB is angle of 0 degrees (after translation). The lines L2 and L3 are offset from AB by some angle and by some offset relative to origin.
+
+The distances between L1 and L2 lines: Because the difference between the position of lines along normal direction is related to distance. But we are not measuring perpendicular distance but intersection distance.
+
+Wait the segment MN is the difference between intersection of lines L2 & L1 and L2 & L3; but both points lies on L2.
+
+Thus MN is along line CD.
+
+Could the triangles sides correspond to side lengths in triangle formed by the vertices of original hexagon? Let's check: For example, the side of triangle along L2 is MN; It uses the points M and N: M is intersection of L1 and L2; N intersection of L2 and L3. So the intersection of L2 with lines L1 and L3 correspond to crossing lines through C and D. So may correspond to points where lines L1 and L3 cross the line CD. But these crosspoints correspond to distances between L1 and L3 on line CD.
+
+Thus formula: For line CD, lines L1 and L3 are "parallel lines" relative to line CD? Not parallel; but they cross at some points. The segment MN connecting those crosspoints will be a linear segment that is difference in the position of intersection along L2. These coordinates express the parallel projection of AB line onto line CD by a translation. Similarly O from L1 to LM? Actually M is intersection of line L1 and line L2. That intersection is along direction AB.
+
+But maybe we can compute length of MN as the distance between lines L1 and L3 when measured along L2. So distances are equal to lengths of cross segments between directed lines with respect to each side. These are basically independent of s up to scaling. So we can refer.
+
+We can compute these segments with vector differences. Let's compute the projection of vector a along plane of c.
+
+We have line L2 direction c. We know that line L1's intersection point with L2 is defined by solving:
+
+Take L2 param: t is component along c. In the expression we had earlier: We can treat param along c, maybe we can circumvent.
+
+Let’s write relative coordinates between intersection points of L2 with L1 and L3. For line L2, we can define the coordinate along line L2 via parameter t, such that point equals C + t c.
+
+But we can compute t parameter differences by projecting vector something. For instance, intersection of line L1 using line param: L1 has param: x = s t1. So we can express the intersection point of L1 with line L2: In terms of equations:
+
+Let L2: s (point) = (a + b) + t2 c. So we can count offset from C.
+
+We can compute t2 for intersection of L1 with L2: t2_M = t0 = - sin β / sin γ. earlier we found t2_M = t2_M. So t2_N correspond to t2_N.
+
+Thus MN length = |t2_M - t2_N| * |c| = |t2_M - t2_N| * s.
+
+Thus do we find size of triangle side lengths is just s times some geometry with cos, sin of angles.
+
+Similarly for MO: we need t2_M and t3 of O? Actually to compute MO, they are in same line AB, so the distance between M and O equals difference between their x positions; but could we find that difference purely from angles? Indeed.
+
+For MO, we must find coordinates of M and O with x coordinate: For M: x = t1 * s, where t1 = 1 + cos β + cos γ * t2_M.
+
+But that might correspond to something like? Let's compute M directly from coordinates: M = t1 * a. So M = t1 s * (1, 0). Similarly O can be computed as x_O = cos γ - cos β sin γ / sin β, times s. But that's after solving earlier. Then difference between M and O.
+
+Thus MO = s * (t1 - O_x). Since one of them is a function of angles only.
+
+Similarly our segment lengths for FN and others are functions of angles only.
+
+Thus we can compute numeric ratio of side lengths in terms of angles. Let's implement them symbolically.
+
+But maybe we can find simpler relation between angles as degrees. Let's see if the given side lengths are in a 1-to-1.5 ratio? 200:240:300 corresponds to ratio 2 : 2.4 : 3. So this ratio is 2:2.4:3.
+
+We might need to find angles such that triangle sides ratio 200:240:300.
+
+Let's denote that the triangle side lengths are s * a1, s * a2, s * a3 where a1, a2, a3 depend on angles.
+
+Hence we can compute ratio a1:a2:a3 = 200:240:300 = 200:240:300. Write ratio 200:240:300 = 20:24:30 = simplify dividing by 2: 10:12:15. So ratio approximate: 10:12:15.
+
+If we can compute a1,a2,a3, equate to ratio 10:12:15; find s.
+
+We also can use the fact that a1^2 + a2^2 + a3^2 maybe constant like? But not necessarily.
+
+But we can find angles by solving equations for ratio?
+
+But let's try to approximate angles such that ratio hold. Suppose the hexagon has sides lengths 200? Actually side lengths may produce approximate side lengths.
+
+Moreover, we might attempt to find integer s.
+
+Because the triangle sides are 200,240,300 which is small given hexagon might be small but we can choose s accordingly.
+
+But this seems like an advanced geometry with unknowns.
+
+But we might reduce ratio maybe to something like 400:480:600? Wait that's not.
+
+Ok.
+
+But we can attempt to solve using substitution: We can compute normal vectors.
+
+Let us compute cross product of vectors a and b etc.
+
+Because lines AB, CD, EF correspond to directions a, c, (-b). Observing that a + c - b =? We can compute a + c - b? Actually a + c + b = sum of 3 vector -> but they cannot all sum to zero but we can compute transformation.
+
+Instead we need to think geometric construct.
+
+But maybe easier: The triangle formed by lines AB, CD, EF, and the interior hexagon, is like parallelogram? Wait the shape of triangle is formed by lines that produce the half-plane from each side direction.
+
+But we have the property that the extension of lines AB and CD and EF meet to form triangle formed by their pair intersections. The sides lengths are related to line distances between these lines.
+
+Let's denote the direction of AB: a = (1,0).
+
+Let angle of L2: relative to AB: let angle between AB and CD is θ: So angle between direction a and c is θ. This angle between lines: Because a and c are separated by some angle at vertex B? Actually we have a=AB. The angle between AB and BC is interior angle. But we need angle between AB and CD: This is the angle between AB and c vector. Since a is vector a, and b is vector b. So difference: the angle between a and c is 120? Wait from earlier we have b=some vector with angle β relative to a. Similarly, c would be angle between a and something? Actually c's angle relative to a depends on sum of angles of internal angles. But we might not need that.
+
+But we defined polar angles for b: angle between AB and BC = β. And c: angle between AB and CD? Guarantee? Actually coordinates: b is vector from B to C. Then c is vector from C to D. So the angle between a and c is the sum of the internal angles between AB and BC and also between BC and CD. But find orientation: maybe easier: Let O be reference.
+
+But we can compute angle between a and c = (360° - (angle a to b + angle b to c + ???). But want maybe easier to treat as variable.
+
+But we might use law of cosines to compute side lengths of triangle.
+
+Let’s define coordinate: Let angle between a and b = α (call α ) because we can pick α <=180? Actually given convex shape, α <180.
+
+Let angle between b and c = β. Then angle between a and c = α+ β? But we could choose α similarly.
+
+Alternatively we can define angles among a, b, c given as 3 vectors = 120° (since sum of turning angles of polygon is 720°? Actually since hexagon has 6 interior angles sum 720°, so sum of exterior angles 720- 360 = 360°, each turning 60 degrees? Wait in a convex hexagon all interior angles < 180°, sum of exterior angles = 360°. What are the distances between directions? Each turning angle is between successive edges: angle between a and b maybe something. We also need to choose c orientation.
+
+But we can choose angles: Let angle between a and b = θ1. Angle between b and c = θ2. Angle between c and d = θ3. But we maybe can't directly.
+
+But easier: Let a = vector a, then b = vector b. c = vector c. Because opposite sides are parallel, we have a + d = 0; d = -a; and other pairs. So we can treat a, b, c free.
+
+Thus angles of triangle formed by lines AB, CD, EF = a, c, -b.
+
+But we can find angles essentially:
+
+Angle between line AB and line CD: This is angle between directions a and c. Let's say φ = angle between a and c. Similarly, angle between line CD and line EF: angle between c and -b. Then XOR? Let's find angle between line CD and line EF: = angle between c and -b. But we need to use orientation.
+
+But we can compute sine of angle between a and c. Then relative to side lengths of triangle defined by the lines? Actually the triangle side lengths are determined by distances between the intersection points. Could be defined by formula for distance between two lines intersecting at a point like angles.
+
+But we might get an approach: This triangle formed by lines equals triangle that results from connecting the vertices of the hexagon with coordinates symmetrical. But anyway, we can compute side lengths using linear algebra.
+
+Better approach: Instead of solving for angles, maybe we can find s directly using invariants: Because area of triangle formed by lines AB, CD, EF equals the area of hexagon? Not exactly.
+
+Alternatively, maybe we can analyze using vector approach: compute area of triangle to express side lengths as well using the cross product of line directions. That might produce easier relation.
+
+Because area of a triangle formed by lines AB, CD, EF equals area of hexagon? Let's test with regular hexagon. For regular hexagon side s=1, area of hexagon is 2.598..., area of triangle formed by lines AB, CD, EF (a triangle with side length 1) is sqrt(3)/4 ≈0.433. Ratio: 0.433/2.598=0.1667. This is far from 1.
+
+But we can compute area of triangle formed by lines AB, CD, EF: sides: Let side lengths P, Q, R. Use Heron's formula for area. Maybe area of triangle similar to 1/2 of s^2? Actually we can get side lengths by s times a function of angles.
+
+We can solve for coordinates, compute area for general case, but we can skip many steps.
+
+Now we might simply attempt to find analytic solution for s and angles given side lengths.
+
+Maybe we attempt to solve original algebraic equations for β, γ, s.
+
+Let’s step into solving for s:
+
+We set s unknown; we set coordinates accordingly; compute M, N, O; compute side lengths; solve for β, γ, s. Let's attempt to compute numeric approximations. Use reasoning/mathematical reasoning.
+
+But given the difficulty, maybe we can propose simpler approach: We can find that the triangle formed by the 3 lines AB, CD, EF has side lengths that equal to the lengths of the long diagonals of the hexagon, maybe? Actually we could compute.
+
+Compute distances from intersection of lines AB and CD to line AB? That equals length of side? But we might approximate.
+
+Find side lengths two: Intersection of AB and CD; but AB is not parallel to CD. Thus the length of the segment of the side of the triangle along the line L2 is basically length of not perpendicular but along line L2? It might be equal to two times the length of some side? Let’s compute for regular hexagon: s=1, side length 1. Domino example: For regular hexagon sides 1: The triangle formed by lines AB and CD and EF had side lengths 1. So we can compute that maybe the length is 1. That equals side length s. So for regular hexagon, side lengths of triangle are s. But we found earlier that for regular hexagon side lengths s=1 produce triangle with side lengths 1.
+
+But the triangle with sides 200,240,300 has non-equal sides; maybe it's not a regular hexagon but a general equilateral hexagon (s not any maybe?). Our finding indicates that the triangle formed by lines AB, CD, EF maybe is always the triangle of side lengths s times the length of side lengths of triangle formed by the vectors w? But maybe because each side equals one side of the hexagon.
+
+Let's analyze: Suppose we take rectangle formed by vectors AB, BC, CD, etc. There is a parallelogram? Actually we can find that the triangle formed by lines AB, CD, EF is akin to formed by connecting the points A, A + d? Actually need to find concept.
+
+But still.
+
+Given the difficulty, we might just present the answer as s = 100? Wait check: Suppose triangle sides ratio 200:240:300 corresponds to ratios 10:12:15. The ratio of side lengths is 1: 12/10 = 6/5 = 1.2 ; 15/10 =3/2 = 1.5. That might relate to side lengths of polygon equal to some constant? Possibly the lengths of AB, BC, and CD? Wait side lengths of triangle may correspond to side lengths of something such as segments between AB and CD etc. Suppose we equate side lengths of triangle = t * s. So side lengths maybe t1 s, t2 s, t3 s. So we have s = 200 / t1 = 240 / t2 = 300 / t3. So s must be such that s * t1 = 200, etc. So s proportional to side lengths.
+
+Thus we can find ratio of side lengths to s.
+
+Thus we can treat that the side lengths (triangle) are not equal to s, but they are some multiple of s. But we can find s by solving for something else.
+
+But maybe the side lengths of triangle formed by lines AB, CD, EF equal to the side lengths of hexagon? Actually for regular hexagon, side lengths equal to s. Thus maybe s can be scaled by same factor for all sides; but for general hexagon, the side lengths may not be equal to s. So we can treat ratio constants.
+
+The triangle side lengths may always be s times something: that something could be 2 * cos( (something)/2 ). Let's test: Using a shape with a and c not equal to s? Let's compute for arbitrary angles.
+
+Let's compute numeric to find s. Let's set unknown β,γ, but we also need to compute cos, sin, etc. We'll attempt algebraic solution.
+
+But we can also find relation from coordinates of M, N, O. Let's compute M, N, O coordinates:
+
+- Provided earlier M coordinates (along line L2 and L1) we can compute intersection.
+
+But perhaps to compute closed form, we can use complex variables: a,b,c expressed with same magnitude; we can find lengths using simple formulas maybe.
+
+But we might circumvent by using geometry: For the equilateral hexagon with side length s, the sine/cosine of area of triangle formed by lines AB, CD, EF is given by s macros.
+
+We can compute the side lengths from geometry of a right triangle formed by triple.
+
+But we can compute the distances between line L2 and line L1 inside line L2? Actually to get length of segment MN = distance between L1 and L3 measured along L2. That equals (distance between L2 and L1) * cot(angle). But that might involve geometry.
+
+Actually, consider the intersection of line L2 with line L1. It exists at some points. The angle between L2 and L1 is angle between vectors a and c. Then intersection M. Similarly intersection of L2 and L3 occurs at angle between c and -b. Let's denote angles:
+
+- Angle between L2 and L1: φ = angle between a and c. So L2 and L1 angle φ.
+
+- Angle between L2 and L3: ψ = angle between c and -b.
+
+- Angle between L1 and L3: θ = angle between a and -b. That is angle between a and b? Actually because b and -b, angle between a and -b is 180°- angle between a and b? Wait the angle between a and b is interior angle at vertex B? Let's denote interior angle between a and b: φ0 = angle between a and b. Then angle between a and -b is 180°- φ0. So it is supplementary.
+
+Thus triangle corresponds to triangle that has sides also equal to s times something? Not relevant.
+
+Better use brand: The edges of the triangle formed by the line L2 and L1 and L3 called "triangle ABC" maybe. Actually we can compute side lengths as distances between parallel lines.
+
+For each side of triangle, say MO along L1. The distance between L1 lines is the difference of foot squares of intersection of line L2 and L3. In this case, we can compute length of segment between the points where line L2 meets L1 at M and line L3 meets L1 at O. So that's essentially a linear difference of distance between L1 and lines L2 and L3. Intersection points along L1. In general, distance between two intersection points with L1 is equal to the ratio of the distances between L1 and that lines? Actually we can compute the distances along L1 as:
+
+Because the cross intersection of lines L2 and L3 at intersection point N. For a formula for triangle side lengths:
+
+Let sides of triangle in terms of lines L1, L2, L3. Suppose we consider angles: P1 = intersection of L1 and L2. P2 = intersection of L1 and L3. Then the distance between P1 and P2 along L1 is given by:
+
+distance(P1, P2) = 2 * h / sin θ where h is some distance between L1 and line? Let's compute.
+
+Actually we can consider labeled lines: L1 has direction vector a. The line CD is L2, direction vector c. The other line EF is L3.
+
+Compute intersection of L1 and L2 at M; where L2 intersects L1 along L1 at some point M. And intersection of L1 and L3 at O. Let's define coordinate along L1: x coordinate. For any ray along L1, we can compute its coordinate.
+
+Using a planar viewpoint: The line L2 intersects L1 at M; that's same as solving for param t such that L2(t) = point along L1: x = t a. L1 coordinates: ( t*|a|, 0). Because we assume L1 reference as x-axis. So intersection yields the time.
+
+For M: param t1 = t1 * s = s1? Actually we earlier computed M coordinate derived from solving.
+
+We found M coordinate: t1 = 1 + cos β + cos γ t0. with t0 = - sin β / sin γ. This gives M coordinate.
+
+Now we can solve for general formula. But due to the sum of angular parameters, the expression might simplify to something like (1 + cos β - sin β cot? Actually we can compute more elegantly.
+
+We can compute from formula: M coordinate: m = t1 s = (1 + cos β - cos γ sin β / sin γ) s.
+
+Let's compute N coordinates: t_N. Meanwhile, N on L2 as point; hold.
+
+But we actually only need lengths of M, N, O along L1 and L2 etc.
+
+Given the complexity, we can attempt to solve using numeric approach but we might circumvent by noticing that thickness.
+
+The triangle sides lengths correspond to s times large scalars; we can calibrate s once we find t1 etc.
+
+But we need to find s. But we can choose α and γ such that the sides ratio 200:240:300. We can attempt to find a values of β and γ such that ratios of side lengths match.
+
+Let's attempt numeric example: maybe we can find a sample where sides are exactly 200:240:300. with s maybe 400? Let's test.
+
+Because s presumably related to distances. The side length of triangle might be scaled by s. Let's suppose s = some constant.
+
+But we also can find shape where MO = 200, MN = 240, NO = 300. We can assume ordering and try.
+
+Let’s try compute using formulas we derived for MO, MN, NO. Let's define them in terms of β and γ. Let's use approximate numeric values to guess β and γ.
+
+Let's set β first.
+
+We need to solve for β and γ such that the side lengths are in ratio 200:240:300. We'll compute the side lengths normalized to s. So we will compute lengths of scaled with s=1, and compute ratio a1 = MO/s, a2=MN/s, a3=NO/s. We then adjust s: the ratio 200:240:300 = 200:240:300, we can solve for s scaling factor = 200 / a1? Wait we need all side lengths to match the same s. Because the side lengths are s * a1? Actually we have side lengths: MO = s * a1, MN = s * a2, NO = s * a3. Suppose 200,240,300 correspond to them respectively: MO = s * a1, etc. So we have s = 200 / a1, s = 240 / a2, s = 300 / a3. So we should have a1:a2:a3 directly ratio to side lengths: a1 : a2 : a3 = 200 : 240 : 300. But ratio 200:240:300 => dividing by 20: 10:12:15. Thus we need a1:a2:a3 = 10:12:15. So a1/a2=10/12=5/6. So we can find β and γ such that ratio a1/a2 = 0.8333.
+
+Similarly, a2/a3 = 12/15 = 4/5.
+
+Thus we need to find β and γ that produce a1/a2 ratio. Similarly the third ratio is automatically satisfied.
+
+But we also have find s.
+
+Let's compute ratio of a1/a2 and a2/a3.
+
+Now we need to find formulas for a1,a2,a3. Let's compute them.
+
+From earlier, a1 = MO / s = M.x - O.x. M.x = t1, where t1=1+cosβ - cosγ sin β / sin γ. O.x = cos γ - cosβ sin γ / sin β. So a1 = (1 + cosβ - cosγ sin β / sin γ) - (cos γ - cosβ sin γ / sin β). So a1 = 1 + cosβ - cosγ sin β / sin γ - cos γ + cosβ sin γ / sin β.
+
+Compute a2 = MN / s. MN = |tN - tM| * s. So a2 = |tN - tM|. tM = - sinβ / sin γ. tN = (sin β cosγ - sinβ - cosβ sinγ) / D. So ratio tN - tM? But we need absolute difference. We'll compute positive difference: tN - tM. For generic β and γ positive? Let's compute.
+
+Similarly a3 = NO / s = abs(v_N - v_O) where v_N = u from earlier formula, v_O = sinγ / sin β. So a3 = |v_N - sinγ/ sin β|.
+
+Take absolute magnitude; these can be positive.
+
+We can compute numeric approximations. But we can attempt to solve simultaneously.
+
+Because variables β,γ with given ratio of a1:a2:a3.
+
+Given complexity, we can fit by solving a simpler polynomial.
+
+But perhaps we can try using actual numeric solving with known formulas: But we as ChatGPT cannot compute a system of equations. But we might approximate using concept: The side lengths of triangle correspond to S *? If we set s→1 and naive parameter compute. We can choose shape of hexagon where opposite sides are parallel; but we are free to choose any orientation of vectors pair. So we can set ratio a1 =3, a2 = 3? No. Wait general.
+
+Maybe some easier geometry: The lines AB, CD, EF form a triangle; for each edge of hexagon, we can find line extension containing the opposite side. I'd guess that the triangle formed by the line extensions of 3 sides form triangle analogous to time of the hexagon. Maybe the triangle formed by these lines is the triangle formed by the vertices of original hexagon that are not connected? Actually central triangle: A, C, E? Actually let's compute: The points A, C, E lie on vertices of hexagon: Suppose we take the three vertices at even positions? Since it is equilateral hexagon, maybe we can get triangle formed by A, C, E? The distance between A and C etc. That triangle might be in relation with line intersections. But we compute earlier for regular hexagon: A=(0,0), C=(0.5,0.866). Distance between A and C? That is 1. So side lengths equal to s. Indeed, triangle A-C-E is central? Let's compute other distances: A to E: (0,0) to E(-1,0) = 1. So triangle lengths: 1. So indeed the triangle in regular hexagon is equilateral for A,C,E. That's example of a general equilateral hexagon? So it might be in general that the triangle formed by the intersections of these lines AB, CD, EF is equal to triangle A-C-E to some translation? But wait maybe the intersection points are A-C-E's reflections. Let's check: In regular hexagon, intersection M = D (0,0). That's also (0,0). Intersection O = E. Intersection N = F. So triangle is D-E-F. If we take A, C, E, the triangle is not D-E-F. So the triangle is different.
+
+Thus maybe the points M,N,O are a translation of vertex A-C-E.
+
+Let's find M and O: For regular hexagon, D at (0,0). That is not A. So M is along D? That seems like shifting.
+
+Wait we can find that the triangle formed by lines AB, CD, EF is likely D, E, F for the regular hexagon. Since N = F and O=E, M = D. So it is the triangle from vertex D-E-F. So we earlier computed D-E-F triangle lengths 1.
+
+Thus indeed for regular hexagon, we have that triangle formed by lines AB, CD, EF is the triangle D-E-F of the hexagon. So maybe in general for any equilateral hexagon with opposite sides parallel, there's a vertex translation offset such that lines L1 (AB), L2 (CD), L3 (EF). Intersection yields vertices D, E, F? Let's test: For general hexagon, intersection of L2 and L3: we set L2 line passes through C and D. L3 line passes through F. Their intersection might approach F? The intersection of extensions of CD & EF might produce F. Similarly, intersection of L1 and L2 might produce D? Let's confirm: Intersection of L1 with L2: maybe at D? Wait D is at a + b + c. L1 is line through A; but does D lie on line through A? Nothing ensures.
+
+But we can compute: The intersection of line AB and CD not necessarily D. But we might compute the intersection of AB and CD: For our hexagon, L2 passes through C. It may be extended to D? Let's consider D maybe: Do D lies on line AB? D may not be on line AB, but we can test. Suppose we have tilt: the intersection of L1 with line L2 is perhaps equal to intersection of line AB and line CD. But we already found for regular hexagon, L2 and L1 intersect at D (0,0). Because D is at (0,0); L1 x-axis at y=0. So maybe D lies on line AB? No, AB is along x-axis from (0,0) to (1,0) along entire x-axis. So D is at (0,0) indeed on line AB pass through A. So D is on line AB. So D ∈ L1, but also D is a point of intersection of line AB with line CD.
+
+Observation: D is on line CD? Actually the line CD is along line from C to D. So D is on line CD. Good. So D lies on both lines AB and CD (since we have AB extended at A, so D is on extension?). The line AB is along x-axis; but D is at (0,0). So D lies on line AB. So D is intersection of lines AB and CD indeed. That implies D is intersection of lines AB and CD. So M coincides with D for regular hexagon. But is that generally true? For general hexagon may not be. But we must determine if intersection of AB and CD is indeed D, due to shape defined? Let's check system: For general hexagon, the positions of D: D = a + b + c. We also need to compute intersection of line AB with line CD: L2: line through C and D.
+
+To check if D lies on line AB (L1), we should check whether D lies on the line through A (0,0) but maybe not (a) if we set a = (s,0). So D lies on line AB if and only if C vector lies on line AB? Actually D = a + b + c. For D to lie on line AB: D must be a vector along a. Because a line AB through origin is direction a. So D lies on line AB means D is a multiple of a. But D = a + b + c. We need D = t * a. But as we argued, a + b + c may not be along a. For our larger geometry, only if certain particular angles.
+
+But we compute earlier B = a, C = a + b. Then D = a + b + c. For D to lie on line AB, its orientation must be along a. So D must be linear combo of a (the vector a). That means b + c must be parallel to a: b + c = (t-1) a. Similarly, b and c must be arranged such that sum of b + c along a. This might not be generic.
+
+But we can compute the condition: vector sum (b + c) must be parallel to a.
+
+Now given the relationship between a,b,c as we have: we can consider the w vector: a = (s,0). b and c angles relative to a. It seems possible that for a generic hexagon the sum of b + c is not necessarily parallel to a. But can produce intersection of line AB and CD not at D. But we can find solve for L1 and L2 intersection: we earlier computed M coordinate with formula; we had M coordinate as t1 * a. Since t1 is not necessarily equal to the length of D? We found M coordinate after solving.
+
+But we might not need to rely on this.
+
+Maybe we can use but we note symmetry: Triangles M,N,O correspond to the shifted points of triangle defined by connecting vertices of the hexagon? We can compute them coordinates which produce the triangle. Let's try to compute coordinate differences:
+
+Let vector A=(0,0). The first unknown vector a? We can compute a = (1,0). Then we need to consider a length s=1.
+
+Now we can choose general vector b and c. We likely need to produce numeric solutions using symbolic reasoning to solve for angles.
+
+But we can try approximate shape that results in side lengths 200,240,300. But which side lengths correspond to which side?
+
+Let's ignore orientation and predict that the side lengths are of the triangle M N O: M,O on AB.
+
+Thus the length of MO is along AB line: difference of something. It's similar to horizontal length for L1 coordinate difference.
+
+Thus the side of triangle formed by line AB and both lines of the other sides. So we treat M and O coordinate along L1, difference of t1 - O_x.
+
+We can treat relative difference of t parameters.
+
+Because CA? But we can compute using the formula earlier.
+
+Maybe we can compute v=M, N coordinates by solving analytic.
+
+Thus we can then use ratio equation: a1 / a2 = 200/240 = 5/6.
+
+Let's attempt to compute a1 and a2 from formulas.
+
+Simplify: Let's define p = cos β, q = sin β; r = cos γ, s = sin γ.
+
+Now we can express:
+
+t_M = - q / s. t_N = ( q r - q - p s ) / ( r s - s p?) Wait we must compute.
+
+D = sin γ cos β - cos γ sin β = s p - r q.
+
+Thus D = (s p - r q). Actually sin γ cos β - cos γ sin β = s * p - r * q.
+
+Therefore tN = (q * r - q - p s) / (s p - r q).
+
+Similarly, maybe t_n - t_m is something.
+
+We also can compute Mx = 1 + cos β + cos γ * t_M = 1 + p + r * t_M.
+
+Similarly, O_x = cos γ - cos β sin γ / sin β = r - p * s/ q.
+
+Thus a1 = M_x - O_x = (1 + p + r * t_M) - (r - p s/ q ) = 1 + p + r * t_M - r + p s/ q.
+
+Simplify: a1 = 1 + p - r + r * t_M + p s/ q.
+
+Compute r * t_M = r * (- q / s) = - r q / s.
+
+Thus a1 = 1 + p - r - r q / s + p s/ q.
+
+Thus a1 = 1 + p - r - r q / s + p s/ q.
+
+Now a2 = |tN - tM|.
+
+Compute tN - tM = (q r - q - p s)/(s p - r q) - (- q / s).
+
+Simplify: tN - tM = (q r - q - p s)/(s p - r q) + q / s.
+
+Similarly, we want a3 = |v_N - v_O| where v_N = u; v_O = s / q = sin γ / sin β? Actually we had v_O = sin γ / sin β.
+
+But previous compute: v_O = sinγ / sin β. Because we set v = sin γ / sin β.
+
+We had u computed earlier: u = ( - sin γ - sin γ cos β + cos γ sin β ) / D = (- s - s p + r q) / D = ( - s (1 + p) + r q ) / D = ( r q - s (1+p) ) / (s p - r q).
+
+Thus v_N = u. So a3 = |v_N - v_O|.
+
+Compute v_N - v_O = [ r q - s (1+p) ] / (s p - r q) - s / q.
+
+Hence we can compute these two expressions. Hard but perhaps we can evaluate numerically.
+
+Let’s pick some unspecific values. Let's attempt find rational values maybe require simple? Let's try find possibilities where p = cos β = cos γ = 1/2? But then s, etc.
+
+We can attempt to set chosen values. Let's attempt to set as some symmetrical shape: maybe β = 90°, γ = 60°, etc. But more maybe choose such that the sums produce ratio 10:12:15.
+
+But we can use a computer solving approach conceptually: we can attempt approximate numeric solutions.
+
+We can solve for like using approximate one variable angle? Let's treat the hexagon's three equal angles maybe equal? But we don't know.
+
+We have 3 legs.
+
+We can try for symmetrical case: For a symmetrical shape: Suppose we have two angles equal, maybe a=0, b symmetrical.
+
+But we might vary one angle.
+
+But a symmetrical triangle with p = r, maybe r = cos ϕ, s = sin ϕ; p = cos ψ? This might produce.
+
+Let's attempt to analyze shape when β = γ (we set a symmetrical orientation). That might produce some first simple case but maybe the formula for triangle sides may be symmetric. That would produce a triangle maybe with sides ratio 1:1:1? Actually we can test for β = γ.
+
+If β=γ: Let β = γ. Then we can set p = cos β, q = sin β, r = cos γ = p, s = sin γ = q.
+
+Now evaluate N: r = p, s = q.
+
+Now compute tM = -q / s = -1. So tM = -1.
+
+Now tN = (q r - q - p s)/(s p - r q) = (q p - q - p q)/(q p - p q) = (q p - q - p q)/(0). Because denominator s p - r q = q p - p q = 0. So tN is undefined, meaning this configuration leads to lines L2 and L3/?? Wait we should disregard because D = 0 leads to degenerate or lines parallel? Let's compute D: sinγ cosβ - cosγ sinβ = q p - p q = 0. So lines L2 and L3 may be parallel? Actually angle between L2 and L3 being zero? That is p and cos? Actually cosγ = cosβ and sinγ = sinβ. So vector c and vector b have same direction. So c is parallel to b. But we require that b and c correspond to two consecutive sides: we can choose c = b. So two sides would be collinear, which would produce a degenerate hexagon. So D=0 indicates degenerate? So we can't have β=γ.
+
+Thus we require β≠γ.
+
+Perhaps we re-evaluate: Actually the condition that D=0 would mean that lines L2 and L3 are parallel, meaning triangle side lengths would be degenerate. So we must have β different from γ such that D≠0.
+
+Thus we can assume no.
+
+But not so easy.
+
+Yet we can just come up with a nicer solving: maybe we can solve system using known inccopes.
+
+Observe that the sides lengths correspond to a small arrangement: Let side lengths sorted ascending 200,240,300. So 200 < 240 < 300. That's fairly big differences: ratio 1:1.2:1.5. The ratio indicates that relative lengths maybe ratio of differences between angles.
+
+Possibly the difference between vertical direction of lines yields.
+
+We can treat as:
+
+Given vectors a, b, c particularly oriented. The length between intersection P and intersection R (along line AB) is maybe proportional to the distance on line CD? Actually we can't.
+
+We might need approximations.
+
+But we can solve numeric with disguised algebra:
+
+We can set unknowns β, γ. Then compute side lengths as formulas above. Solve for particular triple that yields ratio 200:240:300.
+
+We can use tool: let produce ratio a1/a2=5/6 and a2/a3=4/5.
+
+We can attempt to find approximate numeric values.
+
+But we have no computational environment. But we can attempt to approximate manually.
+
+Let's attempt to compute the ratio of side lengths using approximate formulas: Problem from a contest (maybe known from AoPS). The side lengths are 200,240,300. Maybe the hexagon side length is 200? But need to compute.
+
+We can try to think that triangles between lines correspond to similarity to side lengths.
+
+Let's analyze extreme: If sides lengths extremely variable. Suppose the hexagon is a degenerate shape with two sides forming a right triangle arrangement. But we may find a certain formula for side lengths.
+
+We can think of param in terms of lengths: For any equilateral hexagon with side s, the triangle formed by extensions of lines AB, CD, EF is the triangle formed by the vectors a, b, c, because when we extend lines, the segment connecting the intersection points (for AB & CD, etc) equals the length of the third side? Let's test: Suppose the hexagon is any shape where vector a,b,c are equal length s. The triangle formed by connecting midpoints of the segments that satisfy linear along these lines might be equal to s times something? Let's test using small numeric example maybe 3 angles?
+
+Let's attempt to set one side horizontal with a. Suppose we fix b angle relative to a. Then we find ellipse.
+
+But we can approximate by solving for angles and side ratio.
+
+Ok, maybe I can think simpler: Suppose using the hexagon with side AB and DE separated by some distance. The intersections of L1 and L2 (call M) and L2 and L3 (call N) which are defined by lines AB and CD lines connecting for positions of segments.
+
+Observe that points M and N are on L2. So the length of MN is just the distance between the intersection of L2 with AB and with EF: that distance maybe just equals the distance between two parallels considered.
+
+But we can compute distance from L2 to AB using the property of parallel lines? Because the angle between L2 and AB is of value angle between a and c. For any two non-parallel lines that intersect, the distance between their intersection points at AB and along line L2 can be expressed as a function of distances from the intersection point of AB and L3 with arbitrarily far. But not.
+
+But we can compute using vector geometry:
+
+Let the intersection of L2 with AB is at point M, The intersection of L2 with EF is N.
+
+Since L2 is line through C (C = a + b) in direction c. So we can param as: M = C + t1 * c, and N = C + t2 * c.
+
+Thus we can compute the vectors needed to satisfy AB and EF.
+
+But we will compute these t's with indices.
+
+From earlier we derived t1 = - sin β / sin γ. For t1 negative? Wait t1 = - sin β / sin γ. If sin γ positive. negative may indicate M lies on line extended from D? Actually M on line CD and AB might be negative param. Part.
+
+Now we can compute t2 = ( sin β cosγ - sin β - cosβ sinγ ) / ( sin γ cosβ - cos γ sinβ ). That's D = sin γ cosβ - cos γ sin β. So t2 numerator: sin β cosγ - sin β - cosβ sin γ.
+
+We can find t2 - t1 = ?
+
+But we need ratio of length of t2 - t1 to length relative to other segments.
+
+However maybe we can solve using the concept of "vector triple product" maybe.
+
+Ok but due to time, we can consider solving using geometry formula for area of triangle.
+
+Let’s use formula for side length measured along lines: For any two lines L1 and L2 intersecting at M, the distance between L1 and L3 when measured along L2 between these intersection points is defined as something.
+
+But we can compute using slopes.
+
+For line AB, direction a; line CD: direction c; line EF: direction -b. Suppose we compute coordinates of intersection points.
+
+We can treat system of lines.
+
+Let's compute intersection coordinates explicitly using algebra, but we can also compute numeric values.
+
+Let’s choose a = (1,0). Optionally we can compute with random angles.
+
+But we can solve equation system for parameters:
+
+Let’s denote unknown angles α, β for convenience.
+
+We can treat the unknowns as cos β and sin β etc.
+
+We can set variables u = cos β, v = sin β; p = cos γ, q = sin γ.
+
+Given constraints: u^2 + v^2 = 1; p^2 + q^2 = 1.
+
+Now the side lengths formulas for triangle:
+
+a1 = 1 + u - p - (p * v / q) + (u * q / v). Wait earlier a1 expressed as 1 + u - p - (p * v / q) + u * q / v.
+
+Yes.
+
+Also a2 = ( (v p - v - u q) / (q u - p v ) ) + (q? Actually t2 - t1? Let's compute tN = (v p - v - u q) / (q u - p v).
+
+But we can compute tN - tM = tN - (-v / q) = tN + v / q.
+
+Thus a2 = tN + v / q.
+
+Plug tN expression: tN = (v p - v - u q)/(q u - p v). So a2 = (v p - v - u q + (q u - p v)*(v / q) ??? Wait this is messy.
+
+Ok to compute a2:
+
+a2 = (v p - v - u q)/(q u - p v) + v / q.
+
+Take common denominator: (q u - p v). Write v / q = v * ( (q u - p v) / (q (q u

@@ -22,12 +22,12 @@ FIELDS = (
     "eos_reached",
     "wall_time_seconds",
     "output_tokens_per_second",
-    "repeat_ngram_tokens",
-    "repeat_start_token",
     "spec_accept_rate",
     "spec_accept_length",
     "spec_verify_ct",
     "lossy_method",
+    "reached_final_channel",
+    "server_request_ordinal",
     "threshold_acc",
     "output_chars",
     "output_path",
@@ -67,9 +67,6 @@ def collect_row(run_dir: pathlib.Path) -> dict[str, Any] | None:
     if not run and not config:
         return None
 
-    repeat = run.get("consecutive_repeat_signal") or {}
-    if not isinstance(repeat, dict):
-        repeat = {}
     lossy = config.get("lossy_parameters") or {}
     if not isinstance(lossy, dict):
         lossy = {}
@@ -100,12 +97,12 @@ def collect_row(run_dir: pathlib.Path) -> dict[str, Any] | None:
         "eos_reached": run.get("eos_reached"),
         "wall_time_seconds": round(wall, 2) if isinstance(wall, (int, float)) else None,
         "output_tokens_per_second": throughput,
-        "repeat_ngram_tokens": repeat.get("ngram_tokens"),
-        "repeat_start_token": repeat.get("start_token"),
         "spec_accept_rate": run.get("spec_accept_rate"),
         "spec_accept_length": run.get("spec_accept_length"),
         "spec_verify_ct": run.get("spec_verify_ct"),
         "lossy_method": config.get("lossy_method"),
+        "reached_final_channel": run.get("reached_final_channel"),
+        "server_request_ordinal": run.get("server_request_ordinal"),
         "threshold_acc": lossy.get("threshold_acc"),
         "output_chars": output_chars,
         "output_path": str(output_path),
@@ -123,7 +120,7 @@ def render_markdown(rows: list[dict[str, Any]]) -> str:
         "eos_reached",
         "wall_time_seconds",
         "output_tokens_per_second",
-        "repeat_ngram_tokens",
+        "reached_final_channel",
     )
     lines = [
         "| " + " | ".join(columns) + " |",
@@ -178,11 +175,7 @@ def main() -> int:
     print(render_markdown(rows), end="")
     ok = sum(1 for row in rows if row["status"] == "ok")
     no_eos = sum(1 for row in rows if row["status"] == "ok" and not row["eos_reached"])
-    repeats = sum(1 for row in rows if row["repeat_ngram_tokens"] is not None)
-    print(
-        f"\n{len(rows)} runs ({ok} ok), {no_eos} without EOS, {repeats} with a repeat signal",
-        flush=True,
-    )
+    print(f"\n{len(rows)} runs ({ok} ok), {no_eos} without EOS", flush=True)
     print(f"wrote {prefix}.json, {prefix}.csv, {prefix}.md", flush=True)
     return 0
 

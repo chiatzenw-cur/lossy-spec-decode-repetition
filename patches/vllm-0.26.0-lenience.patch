@@ -1,0 +1,177 @@
+--- a/vllm/v1/sample/rejection_sampler.py
++++ b/vllm/v1/sample/rejection_sampler.py
+@@ -7,9 +7,50 @@
+ from dataclasses import replace
+ from typing import TYPE_CHECKING
+ 
++import os
++import sys
++
+ import torch
+ import torch.nn as nn
+ 
++# LOSSY-VERIFICATION PILOT PATCH (not upstream vLLM).
++#
++# Lenience relaxes the acceptance test by a factor lam in (0, 1]:
++#     strict   accept iff  p(x) / q(x)         >= u
++#     lenient  accept iff  p(x) / (lam * q(x)) >= u
++# lam == 1.0 makes the multiply a no-op.
++#
++# Naming: the knob is the lenience FACTOR (lam), not beta. In the mentored-
++# decoding notation of Xia et al. it is 1 - alpha; their beta is a different
++# parameter that they fix at 1, so calling this one beta misidentifies it.
++#
++# This is the V1 model-runner path. vLLM 0.26.0 ships two runners; which one is
++# live depends on VllmConfig.use_v2_model_runner, and for this config it is V1,
++# so patching only the V2 kernel in gpu/spec_decode/rejection_sampler_utils.py
++# had no effect at all. Both are patched to avoid depending on that choice.
++#
++# The factor comes from a file, not the environment: vLLM spawns EngineCore with
++# a sanitised environment and env vars never reach the sampler. The path is
++# uid-scoped under /tmp so that a clone in any directory agrees with the server
++# script -- a repo-relative path silently desynchronises the writer and the
++# reader whenever the clone is not the one this file was generated from.
++_LENIENCE_FACTOR_FILE = f"/tmp/lossy-spec-decode-lenience-{os.getuid()}"
++try:
++    with open(_LENIENCE_FACTOR_FILE) as _f:
++        _LENIENCE_FACTOR = float(_f.read().strip())
++    _LENIENCE_FACTOR_SOURCE = _LENIENCE_FACTOR_FILE
++except (OSError, ValueError):
++    _LENIENCE_FACTOR = 1.0
++    _LENIENCE_FACTOR_SOURCE = f"default, no readable {_LENIENCE_FACTOR_FILE}"
++if not 0.0 < _LENIENCE_FACTOR <= 1.0:
++    raise ValueError(f"lenience factor must be in (0, 1]; got {_LENIENCE_FACTOR}")
++print(
++    f"[LENIENCE PATCH v1] pid={os.getpid()} lenience_factor={_LENIENCE_FACTOR} "
++    f"({_LENIENCE_FACTOR_SOURCE})",
++    file=sys.stderr,
++    flush=True,
++)
++
+ from vllm.logger import init_logger
+ from vllm.triton_utils import tl, triton
+ from vllm.v1.outputs import LogprobsLists, LogprobsTensors, SamplerOutput
+@@ -503,6 +544,7 @@
+         max_spec_len,
+         vocab_size,
+         synthetic_conditional_rates,
++        _LENIENCE_FACTOR,
+         NO_DRAFT_PROBS=draft_probs is None,
+         SYNTHETIC_MODE=synthetic_mode,
+     )
+@@ -786,6 +828,7 @@
+     max_spec_len,
+     vocab_size,
+     synthetic_conditional_rates_ptr,  # [num_speculative_tokens] or None
++    lenience_factor,  # scalar; 1.0 for the strict rule
+     NO_DRAFT_PROBS: tl.constexpr,
+     SYNTHETIC_MODE: tl.constexpr,
+ ):
+@@ -828,7 +871,11 @@
+                 )
+                 # NOTE(woosuk): While the draft probability should never be 0,
+                 # we check it to avoid NaNs. If it happens to be 0, we reject.
+-                accepted = draft_prob > 0 and target_prob / draft_prob >= uniform_prob
++                # Lenience: p(x) / (lam * q(x)) >= u. lam == 1.0 is a no-op.
++                accepted = (
++                    draft_prob > 0
++                    and target_prob / (draft_prob * lenience_factor) >= uniform_prob
++                )
+             if accepted:
+                 token_id = draft_token_id
+             else:
+--- a/vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py
++++ b/vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py
+@@ -1,10 +1,62 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++import math
++import os
++import sys
++
+ import torch
+ 
+ from vllm.triton_utils import tl, tldevice, triton
+ from vllm.v1.worker.gpu.sample.gumbel import gumbel_block_argmax, tl_rand32
+ 
++# LOSSY-VERIFICATION PILOT PATCH (not upstream vLLM).
++#
++# Lenience relaxation of the acceptance rule by a factor lam in (0, 1]:
++#     strict   accept iff  p(x)/q(x)        > u
++#     lenient  accept iff  p(x)/(lam*q(x))  > u
++#
++# The kernel already works in log space, so this is one additive term:
++#     log p > log u + log q + log(lam)
++# log(lam) <= 0, so a smaller factor lowers the bar and accepts more draft
++# tokens. lam == 1.0 gives log(lam) == 0.0 exactly, and `x > y + 0.0` is
++# bit-identical to `x > y` in IEEE754, so the strict control arm is unaffected
++# by this expression (the kernel is still recompiled with an extra argument,
++# so equivalence of the whole run is an empirical claim, not a proof).
++#
++# Naming: the knob is the lenience FACTOR (lam), not beta. In the mentored-
++# decoding notation of Xia et al. it is 1 - alpha; their beta is a different
++# parameter that they fix at 1, so calling this one beta misidentifies it.
++#
++# The factor is read from a FILE, not an environment variable. vLLM spawns its
++# EngineCore worker with a sanitised environment: the env var was verified
++# present in the API server's /proc/<pid>/environ and absent from EngineCore's,
++# so any env-var channel silently leaves the factor at 1.0 and the lossy arm
++# becomes an unlabelled copy of the strict arm. That failure produced two bogus
++# datasets before it was caught, so the value is logged loudly at import.
++#
++# The path is uid-scoped under /tmp, not repo-relative: a hardcoded clone path
++# desynchronises the writer (run_server_vllm.sh) from this reader as soon as
++# someone clones to a different directory, and the failure is silent.
++_LENIENCE_FACTOR_FILE = f"/tmp/lossy-spec-decode-lenience-{os.getuid()}"
++try:
++    with open(_LENIENCE_FACTOR_FILE) as _f:
++        _LENIENCE_FACTOR = float(_f.read().strip())
++    _LENIENCE_FACTOR_SOURCE = _LENIENCE_FACTOR_FILE
++except (OSError, ValueError):
++    _LENIENCE_FACTOR = 1.0
++    _LENIENCE_FACTOR_SOURCE = f"default, no readable {_LENIENCE_FACTOR_FILE}"
++if not 0.0 < _LENIENCE_FACTOR <= 1.0:
++    raise ValueError(f"lenience factor must be in (0, 1]; got {_LENIENCE_FACTOR}")
++_LENIENCE_LOG_FACTOR = math.log(_LENIENCE_FACTOR)
++# stderr, not stdout: run_server_vllm.sh probes this module by capturing
++# stdout, and an extra line there breaks the check.
++print(
++    f"[LENIENCE PATCH] pid={os.getpid()} lenience_factor={_LENIENCE_FACTOR} "
++    f"log_factor={_LENIENCE_LOG_FACTOR} ({_LENIENCE_FACTOR_SOURCE})",
++    file=sys.stderr,
++    flush=True,
++)
++
+ 
+ @triton.jit
+ def _compute_max_and_sumexp(logits):
+@@ -508,6 +560,8 @@
+     # [num_logits, num_blocks]
+     local_residual_mass_ptr,
+     local_residual_mass_stride,
++    # scalar; log of the lenience factor, 0.0 for the strict rule
++    log_lenience,
+     vocab_num_blocks,
+     PADDED_VOCAB_NUM_BLOCKS: tl.constexpr,
+     HAS_DRAFT_LOGITS: tl.constexpr,
+@@ -621,7 +675,11 @@
+                 else:
+                     # Probability ratio test: p(x) > u * q(x)
+                     # Equivalent log form: log_p(x) > log(u) + log_q(x)
+-                    accepted &= target_logprob > tl.log(u) + draft_logprob
++                    # Lenience: p(x) > u * lam * q(x), i.e. + log(lam) on RHS.
++                    # log_lenience is 0.0 for strict: test unchanged.
++                    accepted &= (
++                        target_logprob > tl.log(u) + draft_logprob + log_lenience
++                    )
+                 accepted &= is_valid_draft
+                 tl.store(sampled_ptr + req_idx * sampled_stride + i, draft_sampled)
+             accepted_length += accepted
+@@ -1060,6 +1118,7 @@
+         cumulative_log_p,
+         local_residual_mass,
+         local_residual_mass.stride(0) if local_residual_mass is not None else 0,
++        _LENIENCE_LOG_FACTOR,
+         vocab_num_blocks,
+         PADDED_VOCAB_NUM_BLOCKS=padded_vocab_num_blocks,
+         HAS_DRAFT_LOGITS=has_draft_logits,

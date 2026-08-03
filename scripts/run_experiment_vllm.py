@@ -9,10 +9,14 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
+import os
 import pathlib
+import re
 import subprocess
 import sys
+import sysconfig
 import time
 import urllib.error
 import urllib.request
@@ -21,11 +25,49 @@ from typing import Any
 
 DEFAULT_PROMPT_ROOT = pathlib.Path("prompts/leval_9k_11k")
 
+# Same path the patched sampler reads, derived the same way. Hardcoding a
+# repo-relative path here (as an earlier version did) desynchronises writer and
+# reader for anyone whose clone is not the one the patch was generated from.
+LENIENCE_FACTOR_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-lenience-{os.getuid()}")
+
+# Files the Lenience patch touches, with the sha256 of the patched form. The
+# hashes go into every config.json so a run directory alone proves which
+# verifier ran, without trusting the directory name or an external server log.
+PATCHED_FILES = {
+    "vllm/v1/sample/rejection_sampler.py": (
+        "036d1538652634a536470e6e702d894772c166b3ad5a504ace54cf4d4421acca"
+    ),
+    "vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": (
+        "0ad55a1cb39f2306c78a170fdb6468a36b55643c6610c85cd46c908e0d313112"
+    ),
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", required=True, choices=("baseline", "strict", "lossy"))
-    parser.add_argument("--tag", help="Output directory label; defaults to mode or lossy_a<value>.")
+    parser.add_argument(
+        "--lossy-method",
+        choices=("lenience", "synthetic_acceptance"),
+        default=None,
+        help="Required in lossy mode. Must match the server's LOSSY_RULE.",
+    )
+    parser.add_argument(
+        "--lenience-factor",
+        type=float,
+        default=None,
+        help=(
+            "Required for --lossy-method lenience. Accept iff p/(factor*q) >= u. "
+            "Checked against the value the server actually loaded."
+        ),
+    )
+    parser.add_argument(
+        "--synthetic-acceptance-length",
+        type=float,
+        default=None,
+        help="Required for --lossy-method synthetic_acceptance; must match SYNTH_LEN.",
+    )
+    parser.add_argument("--tag", help="Output directory label; defaults to a name built from the arm.")
     parser.add_argument("--server-url", default="http://127.0.0.1:30000")
     parser.add_argument("--prompt-root", type=pathlib.Path, default=DEFAULT_PROMPT_ROOT)
     parser.add_argument("--cases", nargs="+", default=None)
@@ -38,10 +80,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default="gpt-oss-20b", help="Served model name.")
     parser.add_argument("--draft-model", default="nebius/EAGLE3-gpt-oss-20b")
     parser.add_argument(
-        "--synthetic-acceptance-length",
-        type=float,
+        "--assert-fresh-server",
+        action="store_true",
+        help=(
+            "Fail unless the server has served nothing yet. Output depends on how "
+            "many requests preceded it on the same engine, so an arm comparison is "
+            "only clean if both sides sit at the same position -- which one request "
+            "per server makes trivially true."
+        ),
+    )
+    parser.add_argument(
+        "--server-log",
+        type=pathlib.Path,
         default=None,
-        help="Required in lossy mode; must match the server's SYNTH_LEN.",
+        help=(
+            "Server stdout/stderr log. The patched sampler announces the factor it "
+            "loaded there; recording that line is the only proof that does not "
+            "depend on the file still holding the same value."
+        ),
     )
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
@@ -124,6 +180,32 @@ def server_info(base_url: str) -> dict[str, Any]:
     return info
 
 
+def engine_totals(base_url: str) -> dict[str, float]:
+    """Cumulative work counters, used only to tell a fresh engine from a used one."""
+    wanted = (
+        "vllm:prompt_tokens_total",
+        "vllm:generation_tokens_total",
+        "vllm:request_success_total",
+        "vllm:spec_decode_num_drafts_total",
+    )
+    out: dict[str, float] = {}
+    try:
+        request = urllib.request.Request(f"{base_url.rstrip('/')}/metrics")
+        text = urllib.request.urlopen(request, timeout=30).read().decode("utf-8")
+    except Exception:
+        return out
+    for line in text.splitlines():
+        if line.startswith("#"):
+            continue
+        for metric in wanted:
+            if line.startswith(metric):
+                try:
+                    out[metric] = out.get(metric, 0.0) + float(line.rsplit(" ", 1)[1])
+                except (ValueError, IndexError):
+                    pass
+    return out
+
+
 def git_commit() -> str | None:
     try:
         return subprocess.check_output(
@@ -131,6 +213,106 @@ def git_commit() -> str | None:
         ).strip()
     except (OSError, subprocess.CalledProcessError):
         return None
+
+
+def git_dirty() -> bool | None:
+    try:
+        out = subprocess.check_output(
+            ["git", "status", "--porcelain"], text=True, stderr=subprocess.DEVNULL
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return bool(out.strip())
+
+
+def sha256_of(path: pathlib.Path) -> str | None:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def vllm_install_info() -> dict[str, Any]:
+    """Version and verifier hashes of the vLLM this interpreter would import.
+
+    Read off disk rather than by importing vLLM: this is the client process and
+    importing it costs ~10s per invocation, which the one-server-per-case driver
+    pays once per case. Only meaningful when the runner shares a filesystem with
+    the server, which is the supported single-box setup.
+    """
+    info: dict[str, Any] = {"version": None, "commit_id": None, "site_packages": None}
+    try:
+        purelib = pathlib.Path(sysconfig.get_paths()["purelib"])
+    except Exception:
+        return info
+    info["site_packages"] = str(purelib)
+    version_py = purelib / "vllm" / "_version.py"
+    try:
+        text = version_py.read_text(encoding="utf-8")
+    except OSError:
+        return info
+    for key, pattern in (
+        ("version", r"__version__ = version = '([^']+)'"),
+        ("commit_id", r"__commit_id__ = commit_id = '([^']+)'"),
+    ):
+        match = re.search(pattern, text)
+        if match:
+            info[key] = match.group(1)
+    files: dict[str, Any] = {}
+    for rel, expected in PATCHED_FILES.items():
+        got = sha256_of(purelib / rel)
+        files[rel] = {"sha256": got, "matches_lenience_patch": got == expected}
+    info["verifier_files"] = files
+    info["lenience_patch_applied"] = all(
+        entry["matches_lenience_patch"] for entry in files.values()
+    )
+    return info
+
+
+def lenience_in_force() -> dict[str, Any]:
+    """The factor the patched sampler would load, read from its own channel.
+
+    The server writes this file before starting and the sampler reads it at
+    import, so agreement between it and --lenience-factor is what makes a run
+    directory self-describing.
+    """
+    record: dict[str, Any] = {"path": str(LENIENCE_FACTOR_FILE), "value": None}
+    try:
+        record["value"] = float(LENIENCE_FACTOR_FILE.read_text().strip())
+        record["mtime_utc"] = dt.datetime.fromtimestamp(
+            LENIENCE_FACTOR_FILE.stat().st_mtime, dt.timezone.utc
+        ).isoformat()
+    except (OSError, ValueError) as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+    return record
+
+
+def server_log_lenience(path: pathlib.Path | None) -> dict[str, Any] | None:
+    """The factor the sampler actually announced, scraped from the server log.
+
+    The file check above can only say what the file held when the client looked;
+    this says what the engine loaded at import, which is the value that ran.
+    """
+    if path is None:
+        return None
+    record: dict[str, Any] = {"path": str(path), "lines": [], "factors": []}
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+        return record
+    for line in text.splitlines():
+        if "[LENIENCE PATCH" not in line:
+            continue
+        record["lines"].append(line.strip())
+        match = re.search(r"lenience_factor=([0-9.eE+-]+)", line)
+        if match:
+            try:
+                record["factors"].append(float(match.group(1)))
+            except ValueError:
+                pass
+    record["distinct_factors"] = sorted(set(record["factors"]))
+    return record
 
 
 def selected_cases(prompt_root: pathlib.Path) -> list[str]:
@@ -147,31 +329,15 @@ def selected_cases(prompt_root: pathlib.Path) -> list[str]:
     return selected
 
 
-def first_consecutive_repeat(
-    tokens: list[int], n_values: tuple[int, ...] = (32, 16, 8), repeats: int = 3
-) -> dict[str, int] | None:
-    best: dict[str, int] | None = None
-    for n in n_values:
-        span = n * repeats
-        for start in range(0, len(tokens) - span + 1):
-            block = tokens[start : start + n]
-            if all(tokens[start + i * n : start + (i + 1) * n] == block for i in range(1, repeats)):
-                candidate = {"start_token": start, "ngram_tokens": n, "consecutive_repeats": repeats}
-                if best is None or candidate["start_token"] < best["start_token"]:
-                    best = candidate
-                break
-    return best
-
-
 def safe_tag(args: argparse.Namespace) -> str:
     if args.tag:
         tag = args.tag
-    elif args.mode == "lossy":
-        if args.synthetic_acceptance_length is None:
-            raise ValueError("--synthetic-acceptance-length is required in lossy mode")
-        tag = f"lossy_a{args.synthetic_acceptance_length:g}".replace(".", "p")
-    else:
+    elif args.mode != "lossy":
         tag = args.mode
+    elif args.lossy_method == "lenience":
+        tag = f"lenience{args.lenience_factor:g}".replace(".", "p")
+    else:
+        tag = f"synthetic{args.synthetic_acceptance_length:g}".replace(".", "p")
     allowed = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
     if not tag or any(ch not in allowed for ch in tag):
         raise ValueError(f"Unsafe tag: {tag!r}")
@@ -184,12 +350,110 @@ def validate_args(args: argparse.Namespace) -> None:
             "temperature must be > 0: at temperature 0 the verifier takes a greedy path and the "
             "probabilistic acceptance rule under test is not exercised"
         )
-    if args.mode == "lossy" and args.synthetic_acceptance_length is None:
-        raise ValueError("lossy mode requires --synthetic-acceptance-length")
-    if args.mode != "lossy" and args.synthetic_acceptance_length is not None:
-        raise ValueError("--synthetic-acceptance-length is only valid with --mode lossy")
     if args.max_new_tokens < 1:
         raise ValueError("--max-new-tokens must be positive")
+
+    if args.mode == "lossy":
+        if args.lossy_method is None:
+            raise ValueError("lossy mode requires --lossy-method {lenience,synthetic_acceptance}")
+        if args.lossy_method == "lenience":
+            if args.lenience_factor is None:
+                raise ValueError("--lossy-method lenience requires --lenience-factor")
+            if not 0.0 < args.lenience_factor < 1.0:
+                raise ValueError(
+                    f"--lenience-factor must be in (0, 1) to be lossy; got {args.lenience_factor} "
+                    "(1.0 is the lossless rule: run it as --mode strict)"
+                )
+            if args.synthetic_acceptance_length is not None:
+                raise ValueError("--synthetic-acceptance-length is not used by --lossy-method lenience")
+        else:
+            if args.synthetic_acceptance_length is None:
+                raise ValueError(
+                    "--lossy-method synthetic_acceptance requires --synthetic-acceptance-length"
+                )
+            if args.lenience_factor is not None:
+                raise ValueError("--lenience-factor is not used by --lossy-method synthetic_acceptance")
+    else:
+        for name, value in (
+            ("--lossy-method", args.lossy_method),
+            ("--lenience-factor", args.lenience_factor),
+            ("--synthetic-acceptance-length", args.synthetic_acceptance_length),
+        ):
+            if value is not None:
+                raise ValueError(f"{name} is only valid with --mode lossy")
+
+
+def acceptance_rule_record(args: argparse.Namespace) -> dict[str, Any]:
+    """Everything needed to identify the acceptance rule from the artifact alone.
+
+    Also fails the run when the factor the server loaded disagrees with the one
+    requested -- including the strict arm, which must be running at exactly 1.0.
+    An arm mislabelled here is invisible afterwards: that is how a 'strict' run
+    directory ended up holding lossy output once already.
+    """
+    in_force = lenience_in_force()
+    record: dict[str, Any] = {
+        "mode": args.mode,
+        "lossy_method": args.lossy_method,
+        "lossy_parameters": {},
+        "lenience_factor_in_force": in_force,
+    }
+
+    if args.mode == "lossy" and args.lossy_method == "lenience":
+        factor = args.lenience_factor
+        record["lossy_parameters"] = {"lenience_factor": factor}
+        record["acceptance_rule"] = f"accept iff p(x) / ({factor:g} * q(x)) >= u"
+        # Naming: this factor is lambda. In the mentored-decoding notation of
+        # Xia et al. it is 1 - alpha; their beta is a different parameter, fixed
+        # at 1 there, so recording this as beta would misidentify the method.
+        record["taxonomy"] = {
+            "family": "mentored decoding (Xia et al.)",
+            "lambda": factor,
+            "alpha_equivalent": round(1.0 - factor, 12),
+            "note": "lambda = 1 - alpha; residual and bonus sampling are unchanged from stock",
+        }
+    elif args.mode == "lossy":
+        record["lossy_parameters"] = {
+            "synthetic_acceptance_length": args.synthetic_acceptance_length
+        }
+        record["acceptance_rule"] = (
+            f"synthetic: accept at a prescribed rate for mean length "
+            f"{args.synthetic_acceptance_length:g}, ignoring p and q"
+        )
+    else:
+        record["acceptance_rule"] = "accept iff p(x) / q(x) >= u"
+
+    # The synthetic rule does not read the factor file, so there is nothing to
+    # cross-check; every other arm must agree with what the sampler loaded.
+    expected = None if (args.mode == "lossy" and args.lossy_method != "lenience") else (
+        args.lenience_factor if args.mode == "lossy" else 1.0
+    )
+    record["lenience_factor_expected"] = expected
+
+    announced = server_log_lenience(args.server_log)
+    if announced is not None:
+        record["lenience_factor_announced_by_server"] = announced
+
+    if expected is not None:
+        got = in_force["value"]
+        if got is None:
+            raise ValueError(
+                f"expected lenience factor {expected:g} but {LENIENCE_FACTOR_FILE} is unreadable "
+                f"({in_force.get('error')}). Start the server with remote/run_server_vllm.sh, "
+                "which writes it for every mode."
+            )
+        if abs(got - expected) > 1e-12:
+            raise ValueError(
+                f"server loaded lenience factor {got:g}, run was invoked for {expected:g}. "
+                "Refusing to write a mislabelled run directory."
+            )
+        if announced is not None and announced.get("distinct_factors"):
+            if any(abs(f - expected) > 1e-12 for f in announced["distinct_factors"]):
+                raise ValueError(
+                    f"server log {args.server_log} announces lenience factor(s) "
+                    f"{announced['distinct_factors']}, run was invoked for {expected:g}"
+                )
+    return record
 
 
 def run_one(
@@ -198,7 +462,8 @@ def run_one(
     seed: int,
     tag: str,
     info: dict[str, Any],
-    commit: str | None,
+    provenance: dict[str, Any],
+    ordinal: int,
 ) -> dict[str, Any]:
     case_dir = args.prompt_root / case
     prompt_path = case_dir / "rendered_prompt.txt"
@@ -231,16 +496,9 @@ def run_one(
 
     config = {
         "timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "git_commit": commit,
         "backend": "vllm",
-        "mode": args.mode,
         "tag": tag,
-        "lossy_method": "synthetic_acceptance" if args.mode == "lossy" else None,
-        "lossy_parameters": (
-            {"synthetic_acceptance_length": args.synthetic_acceptance_length}
-            if args.mode == "lossy"
-            else {}
-        ),
+        **provenance["acceptance"],
         "model": args.model,
         "draft_model": None if args.mode == "baseline" else args.draft_model,
         "seed": seed,
@@ -250,7 +508,18 @@ def run_one(
         "input_tokens_archived": prompt_metadata.get("input_tokens"),
         "prompt_case": case,
         "prompt_source_id": prompt_metadata.get("source_id"),
+        "reference_answer": prompt_metadata.get("reference_answer"),
         "endpoint": f"{args.server_url.rstrip('/')}/v1/completions",
+        # Request position on this engine. Output depends on it (see README), so
+        # a comparison is only clean between runs that share it; the fresh-server
+        # driver pins it to 1 on both arms.
+        "server_request_ordinal": ordinal,
+        "fresh_server_asserted": args.assert_fresh_server,
+        "engine_totals_before_first_request": provenance["engine_totals_at_start"],
+        "vllm": provenance["vllm"],
+        "git_commit": provenance["git_commit"],
+        "git_dirty": provenance["git_dirty"],
+        "command": provenance["command"],
     }
     write_json(output_dir / "config.json", config)
     write_json(output_dir / "request.json", request_payload)
@@ -283,22 +552,16 @@ def run_one(
     finish_reason = choice.get("finish_reason")
     (output_dir / "output.txt").write_text(str(output_text), encoding="utf-8")
 
-    # vLLM returns token ids only when echo/logprobs are requested; the repeat
-    # detector falls back to logprob token ids when they are present.
-    logprobs = choice.get("logprobs") or {}
-    output_ids = logprobs.get("tokens") if isinstance(logprobs, dict) else None
-    output_ids = output_ids if isinstance(output_ids, list) else []
-
     run_record = {
         "status": "ok",
         "backend": "vllm",
         "wall_time_seconds": elapsed,
+        "server_request_ordinal": ordinal,
         "input_tokens": usage.get("prompt_tokens", prompt_metadata.get("input_tokens")),
         "output_tokens": usage.get("completion_tokens"),
         "finish_reason": finish_reason,
         "eos_reached": finish_reason == "stop",
         "reached_max_new_tokens": finish_reason == "length",
-        "consecutive_repeat_signal": first_consecutive_repeat(output_ids) if output_ids else None,
         "usage": usage,
         # Harmony channels: a degenerate loop lives in `analysis` and never
         # reaches `final`, so length has to be attributed per channel or a
@@ -335,17 +598,53 @@ def main() -> int:
         unknown = [case for case in cases if not (args.prompt_root / case).is_dir()]
         if unknown:
             raise ValueError(f"Unknown cases under {args.prompt_root}: {', '.join(unknown)}")
+        acceptance = acceptance_rule_record(args)
+        totals = engine_totals(args.server_url)
+        if args.assert_fresh_server:
+            if not totals:
+                raise ValueError(
+                    f"cannot verify a fresh server: no usable counters at {args.server_url}/metrics"
+                )
+            used = {name: value for name, value in totals.items() if value > 0}
+            if used:
+                raise ValueError(
+                    f"server has already served requests ({used}); --assert-fresh-server "
+                    "requires an engine that has done no work yet"
+                )
+            if len(cases) * len(args.seeds) > 1:
+                raise ValueError(
+                    "--assert-fresh-server takes exactly one case and one seed: the guarantee "
+                    "is one request per engine, and only the first request is at ordinal 1"
+                )
     except (ValueError, OSError, json.JSONDecodeError) as exc:
         print(f"configuration error: {exc}", file=sys.stderr)
         return 2
 
+    provenance = {
+        "acceptance": acceptance,
+        "engine_totals_at_start": totals or None,
+        "vllm": vllm_install_info(),
+        "git_commit": git_commit(),
+        "git_dirty": git_dirty(),
+        "command": sys.argv,
+    }
+    if args.mode == "lossy" and args.lossy_method == "lenience":
+        if not provenance["vllm"].get("lenience_patch_applied"):
+            print(
+                "configuration error: the Lenience patch is not applied to "
+                f"{provenance['vllm'].get('site_packages')}; run bash patches/apply.sh",
+                file=sys.stderr,
+            )
+            return 2
+
     info = server_info(args.server_url)
-    commit = git_commit()
     failures = 0
+    ordinal = 0
     for case in cases:
         for seed in args.seeds:
+            ordinal += 1
             try:
-                run_one(args, case, seed, tag, info, commit)
+                run_one(args, case, seed, tag, info, provenance, ordinal)
             except Exception as exc:
                 failures += 1
                 print(f"{case} seed={seed} failed: {type(exc).__name__}: {exc}", file=sys.stderr)

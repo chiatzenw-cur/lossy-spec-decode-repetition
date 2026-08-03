@@ -33,16 +33,32 @@ GPU_UTIL="${GPU_UTIL:-0.85}"
 
 # Lossy knob.
 #
-# LOSSY_RULE=lenience uses a patched kernel: accept iff p(x)/(BETA*q(x)) > u.
-#   The patch does NOT survive a vLLM upgrade and is currently NOT applied.
-#   Note the env var must not be named VLLM_*: vLLM strips unrecognised VLLM_*
-#   variables before spawning EngineCore, so the sampler never sees them and the
-#   arm silently degrades to strict. That happened once already.
+# LOSSY_RULE=lenience uses the patched kernel: accept iff
+#   p(x)/(LENIENCE_FACTOR*q(x)) > u. Needs `bash patches/apply.sh`.
 # LOSSY_RULE=synthetic uses vLLM's stock `synthetic` method, which accepts at a
 #   prescribed rate irrespective of p and q. No patch needed.
 LOSSY_RULE="${LOSSY_RULE:-synthetic}"
-BETA="${BETA:-0.2}"
+LENIENCE_FACTOR="${LENIENCE_FACTOR:-0.2}"
 SYNTH_LEN="${SYNTH_LEN:-3.0}"
+
+# The knob used to be called BETA. It is renamed because beta is a *different*
+# parameter in the mentored-decoding literature (fixed at 1 there); this factor
+# is 1 - alpha. Fail rather than ignore a stale BETA=... in someone's shell
+# history, which would silently run the wrong arm.
+if [[ -n "${BETA:-}" ]]; then
+  echo "BETA is no longer read; use LENIENCE_FACTOR=$BETA instead" >&2
+  exit 2
+fi
+
+# The lenience factor reaches the sampler through this file, never through the
+# environment: vLLM spawns EngineCore with a sanitised environment, verified via
+# /proc/<pid>/environ. The path is uid-scoped under /tmp and hardcoded
+# identically in the patch, so it does not depend on where the repo is cloned.
+#
+# Written in EVERY mode, including baseline and strict: if it is left over from
+# an earlier lossy run, a strict server started afterwards silently picks up the
+# stale factor and the control arm is not a control arm.
+factor_file="/tmp/lossy-spec-decode-lenience-$(id -u)"
 
 common_args=(
   --model "$MODEL_PATH"
@@ -79,49 +95,54 @@ spec_json() {
 
 case "$MODE" in
   baseline)
-    echo "mode=baseline model=$MODEL_PATH port=$PORT seed=$SEED"
+    printf '%s\n' "1.0" > "$factor_file"
+    echo "mode=baseline model=$MODEL_PATH port=$PORT seed=$SEED lenience_factor=1.0"
     exec "$PYTHON" -m vllm.entrypoints.openai.api_server "${common_args[@]}"
     ;;
   strict)
     # `standard` is probabilistic rejection sampling, min(1, p/q): lossless with
     # respect to the target distribution. Paired with draft_sample_method, this
     # is the control arm the lossy rules are compared against.
+    printf '%s\n' "1.0" > "$factor_file"
     cfg="$(spec_json standard '')"
-    echo "mode=strict draft=$DRAFT_MODEL_PATH k=$NUM_SPEC rule=standard draft_sample=$DRAFT_SAMPLE_METHOD port=$PORT seed=$SEED"
+    echo "mode=strict draft=$DRAFT_MODEL_PATH k=$NUM_SPEC rule=standard draft_sample=$DRAFT_SAMPLE_METHOD port=$PORT seed=$SEED lenience_factor=1.0"
     exec "$PYTHON" -m vllm.entrypoints.openai.api_server "${common_args[@]}" --speculative-config "$cfg"
     ;;
   lossy)
     if [[ "$LOSSY_RULE" == "synthetic" ]]; then
+      printf '%s\n' "1.0" > "$factor_file"
       cfg="$(spec_json synthetic ",\"synthetic_acceptance_length\":$SYNTH_LEN")"
       echo "mode=lossy rule=synthetic draft=$DRAFT_MODEL_PATH k=$NUM_SPEC accept_len=$SYNTH_LEN port=$PORT seed=$SEED"
     else
       # Lenience runs the same `standard` code path as the strict arm; the only
-      # difference is the beta term in the patched kernel, which is exactly the
+      # difference is the factor in the patched kernel, which is exactly the
       # single-variable contrast the pilot needs. Refuse to start unless the
       # patch is actually present: without it this silently becomes the strict
       # arm and produces a null result that looks like a real measurement.
       # Module path is version-specific: vLLM 0.20.1 called this
       # probabilistic_rejection_sampler_utils, 0.26.0 renamed it.
+      # Write the factor BEFORE the probe, not just before the server: the probe
+      # imports the patched module too, and announces whatever it reads to
+      # stderr, which lands in the same log the runner scrapes. Writing after it
+      # leaves a stale 1.0 line in a lossy run's log.
+      printf '%s\n' "$LENIENCE_FACTOR" > "$factor_file"
       probe="$("$PYTHON" - <<'PY'
 try:
-    import vllm.v1.worker.gpu.spec_decode.rejection_sampler_utils as m
-    print("yes" if hasattr(m, "_LENIENCE_LOG_BETA") else "no")
+    import vllm.v1.sample.rejection_sampler as v1
+    import vllm.v1.worker.gpu.spec_decode.rejection_sampler_utils as v2
+    ok = hasattr(v1, "_LENIENCE_FACTOR") and hasattr(v2, "_LENIENCE_LOG_FACTOR")
+    print("yes" if ok else "no")
 except Exception:
     print("no")
 PY
 )"
       if ! grep -qx "yes" <<<"$probe"; then
-        echo "LOSSY_RULE=lenience needs the beta patch, which is not applied." >&2
-        echo "Re-apply it after the vLLM upgrade, or use LOSSY_RULE=synthetic." >&2
+        echo "LOSSY_RULE=lenience needs the patch: run 'bash patches/apply.sh'." >&2
+        echo "Without it this arm silently equals the strict arm." >&2
         exit 5
       fi
-      # Written to a file, not exported: vLLM sanitises the environment when it
-      # spawns EngineCore, so env vars never reach the sampler (verified via
-      # /proc/<pid>/environ). The patched module reads this file at import.
-      repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-      printf '%s\n' "$BETA" > "$repo_root/.lenience_beta"
       cfg="$(spec_json standard '')"
-      echo "mode=lossy rule=lenience beta=$BETA draft=$DRAFT_MODEL_PATH k=$NUM_SPEC port=$PORT seed=$SEED"
+      echo "mode=lossy rule=lenience lenience_factor=$LENIENCE_FACTOR (via $factor_file) draft=$DRAFT_MODEL_PATH k=$NUM_SPEC port=$PORT seed=$SEED"
     fi
     exec "$PYTHON" -m vllm.entrypoints.openai.api_server "${common_args[@]}" --speculative-config "$cfg"
     ;;

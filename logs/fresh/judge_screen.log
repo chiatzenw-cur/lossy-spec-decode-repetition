@@ -1,0 +1,95 @@
+30 cases, 3 positions, 700-token windows
+work: 180 absolute + 90 pairwise + 90 null-check = 360 judgements
+  10/360 judged (6.3s each, ~37 min left)
+  20/360 judged (6.3s each, ~36 min left)
+  30/360 judged (5.8s each, ~32 min left)
+  40/360 judged (5.6s each, ~30 min left)
+  50/360 judged (5.4s each, ~28 min left)
+  60/360 judged (5.0s each, ~25 min left)
+  70/360 judged (4.9s each, ~24 min left)
+  80/360 judged (4.7s each, ~22 min left)
+  90/360 judged (4.7s each, ~21 min left)
+  100/360 judged (4.7s each, ~20 min left)
+  110/360 judged (4.7s each, ~19 min left)
+  120/360 judged (4.7s each, ~19 min left)
+  130/360 judged (4.7s each, ~18 min left)
+  140/360 judged (4.7s each, ~17 min left)
+  150/360 judged (4.7s each, ~17 min left)
+  160/360 judged (4.7s each, ~16 min left)
+  170/360 judged (4.7s each, ~15 min left)
+  180/360 judged (4.8s each, ~14 min left)
+  190/360 judged (5.0s each, ~14 min left)
+  200/360 judged (5.3s each, ~14 min left)
+  210/360 judged (5.3s each, ~13 min left)
+  220/360 judged (5.5s each, ~13 min left)
+  230/360 judged (5.7s each, ~12 min left)
+  240/360 judged (5.8s each, ~12 min left)
+  250/360 judged (6.0s each, ~11 min left)
+  260/360 judged (6.0s each, ~10 min left)
+  270/360 judged (6.0s each, ~9 min left)
+  280/360 judged (6.2s each, ~8 min left)
+  290/360 judged (6.3s each, ~7 min left)
+  300/360 judged (6.4s each, ~6 min left)
+  310/360 judged (6.5s each, ~5 min left)
+  320/360 judged (6.6s each, ~4 min left)
+  330/360 judged (6.7s each, ~3 min left)
+  340/360 judged (6.8s each, ~2 min left)
+  350/360 judged (6.8s each, ~1 min left)
+  360/360 judged (6.8s each, ~0 min left)
+
+# Judge screening: 360 judgements, 34 unparseable
+
+## Absolute ratings (0 = severe, 2 = no problem)
+
+| arm | intelligible | coherent | progressing | on_task | clean | minor | degraded |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| strict | 1.98 | 2.00 | 2.00 | 1.98 | 85 | 2 | 1 |
+| lossy | 2.00 | 1.96 | 2.00 | 1.98 | 84 | 4 | 1 |
+
+## Blind pairwise (75 matched window pairs)
+
+- judged worse, strict: 23
+- judged worse, lossy: 42
+- tie / no difference: 10
+- two-sided sign test on the 65 decided pairs: p = 0.025
+- raw A/B split (position bias check): A=21 B=44
+- defect cited: garbled=48, contradiction=10, circling=5, non_sequitur=2
+
+## Null check (same arm, different positions): 65/74 called a winner
+  Anything well above chance here means the judge separates excerpts that
+  differ only in position, and the pairwise result cannot be read as an arm effect.
+
+## Triage queue: worst 25 windows for a human to read
+
+| severity | case | arm | position | tokens | evidence |
+|---:|---|---|---:|---|---|
+| 6/8 | case_021 | lossy | 0.25 | 3922-4622/17089 | For each prime factor p^e, the number of solutions modulo p^e is 2. |
+| 6/8 | case_021 | strict | 0.50 | 4575-5275/9851 | r(r-1)≡0 mod d , r≥t } where t=ceil((1+sqrt(1+4d))/2} +? Wait we require s≥⌈(1+sqrt(1+4d))/2⌉? |
+| 7/8 | case_002 | lossy | 0.75 | 24224-24924/32766 | At point A, you are inside the circle. |
+| 7/8 | case_012 | lossy | 0.75 | 2502-3202/3803 | "R implies up, but we can go left and down but not allowed because staying on grid?" |
+| 7/8 | case_023 | strict | 0.50 | 3542-4242/7785 | ,a3,9,9,9 sum=30. |
+| 7/8 | case_029 | strict | 0.25 | 2321-3021/10686 | sqrt(ρ^2)-6)^2+z^2-9. |
+| 7/8 | case_030 | lossy | 0.25 | 7842-8542/32768 | that the colors are different. That is a condition that for any empty cell, its row and column must have the s |
+| 7/8 | case_030 | lossy | 0.50 | 16034-16734/32768 | But we can have only one color: but we can still have R_i all W, but some columns B unreachable. |
+| 8/8 | case_001 | strict | 0.25 | 77-777/1710 |  |
+| 8/8 | case_001 | lossy | 0.25 | 46-746/1586 |  |
+| 8/8 | case_001 | lossy | 0.50 | 443-1143/1586 |  |
+| 8/8 | case_001 | strict | 0.75 | 932-1632/1710 |  |
+| 8/8 | case_001 | lossy | 0.75 | 839-1539/1586 |  |
+| 8/8 | case_002 | strict | 0.25 | 7841-8541/32765 |  |
+| 8/8 | case_002 | lossy | 0.25 | 7841-8541/32766 |  |
+| 8/8 | case_002 | strict | 0.50 | 16032-16732/32765 |  |
+| 8/8 | case_002 | lossy | 0.50 | 16033-16733/32766 |  |
+| 8/8 | case_002 | strict | 0.75 | 24223-24923/32765 |  |
+| 8/8 | case_003 | lossy | 0.25 | 7841-8541/32765 |  |
+| 8/8 | case_003 | strict | 0.50 | 14116-14816/28932 |  |
+| 8/8 | case_003 | lossy | 0.50 | 16032-16732/32765 |  |
+| 8/8 | case_003 | strict | 0.75 | 21349-22049/28932 |  |
+| 8/8 | case_003 | lossy | 0.75 | 24223-24923/32765 |  |
+| 8/8 | case_004 | strict | 0.25 | 2251-2951/10405 |  |
+| 8/8 | case_004 | lossy | 0.25 | 7841-8541/32767 |  |
+
+Read one with:
+  python -c "import sys;from openai_harmony import *;e=load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS);t=e.encode(open(sys.argv[1]).read(),allowed_special='all');print(e.decode(t[int(sys.argv[2]):int(sys.argv[3])]))" <output.txt> <start> <end>
+
+wrote runs/aime24_fresh/judge.jsonl

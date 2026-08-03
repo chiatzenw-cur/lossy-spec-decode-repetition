@@ -1,0 +1,694 @@
+<|channel|>analysis<|message|>We need to analyze problem.
+
+Given b >= 2 integer. A positive integer n is "b-beautiful" if it has exactly two digits in base b (i.e., between b and b^2-1 inclusive). Suppose its base-b representation is [a, c] where a is most significant digit, c is least significant digit. In base b, 2-digit representation is a*b + c. digits a, c must be integers 0 <= a,c <= b-1. But "exactly two digits" means a > 0. Also digits sum to sqrt(n) (which is positive integer? The problem says sum to sqrt(n). Let's carefully parse: "sum to sqrt n" meaning the sum of the two digits equals sqrt(n). For square root, note sqrt(n) may not be integer; but sum of digits is integer (0-...). But we might require sqrt(n) to be integer. But for digits sum to be integer, then sqrt(n) must equal integer. So n must be a perfect square; otherwise, sqrt(n) is not integer. But they don't say √n is integer; but for n with 2 digits, sum is integer and we want sum equal to sqrt(n) meaning sqrt(n) must be integer. So n must be a perfect square. Thus n is a perfect square between b^2? Wait 2-digit numbers: The smallest 2-digit number in base b is (b)^1 = b, no because first digit is 1, but with all digits zero? That's base 10 had base b: digits must be between 0 and b-1. The smallest 2-digit number is 1*b + 0 = b, but 0 is allowed. So the range includes [b, (b-1)*b + (b-1)] = [b, b^2 -1]. So the set n must be perfect squares between b and b^2 -1. For each such n, we need to check if digits a,b in base b representation sum to sqrt(n) = k. Since k^2 = n, digits a and c must satisfy the digit sum equals k: a + c = k.
+
+Also digits representation: a = floor(n / b), c = n mod b.
+
+Because n total = a*b + c. So the problem reduces to: For given base b, find k such that b <= k^2 <= b^2 -1 (since 2-digit representation range) and there exist digits a,b (since b+? Wait we have digits a and c: a in 1..b-1, c in 0..b-1). So we want a + c = k. For a = floor(k^2/b), c = k^2 mod b.
+
+We can express a, c as k^2 = a*b + c, 0 <= c < b.
+
+Ok, but a + c = k.
+
+Thus a = floor(k^2 / b), c = k^2 - a*b. And a + c = k => a + k^2 - a*b = k => a + (k^2 - a*b) = k -> a + k^2 - a*b = k => k^2 - a*b + a = k.
+
+We can solve for a from this: a*(1 - b) + k^2 = k => a*(1 - b) = k - k^2 => a*(b - 1) = k^2 - k.
+
+Thus a = (k^2 - k)/(b - 1).
+
+Simplify: a = k(k-1)/(b-1). Because 1 - b = -(b-1). So a = (k(k-1))/(b-1).
+
+But a must be integer - so since k^2 - k = k(k-1). So b-1 must divide k(k-1). Also a must be in [1, b-1].
+
+Also c = k^2 - a*b = k^2 - b*a = k^2 - b*(k(k-1)/(b-1)) = k^2 - (b*k(k-1))/(b-1). Simplify? With c = k^2 - a*b. But we also need c between 0 and b-1. So c <= b-1.
+
+Also have c = k^2 - a*b = k^2 - a*b. But if we substitute a, we get something. Alternatively check c = k^2 - a*b. But a computed from above yields c = k. Wait compute: from equality a + c = k, we have c = k - a. So automatically c within 0..b-1 if c >= 0. So we can use that.
+
+Thus we have a = k(k-1)/(b-1). And c = k - a = k - k(k-1)/(b-1) = k - k(k-1)/(b-1). Let's compute c works: We need c integer with 0 <= c < b.
+
+We also must satisfy that a >= 1 (since at least 1 digit). So a >=1; also a <= b-1. And c <= b-1, >=0.
+
+But a expressed in that formula; This essentially imposes constraints on b relative to k. Let's analyze.
+
+Let b-1 denote d. Then d >= 1. Then a = k(k-1)/d. So d must divide k(k-1). Because a integer.
+
+Also a <= d because a <= b-1? Wait bc a <= b-1 = d. But a = k(k-1)/d. So condition k(k-1)/d <= d => k(k-1) <= d^2. So d >= sqrt(k(k-1)). Also a >=1 => k(k-1)/d >=1 => d <= k(k-1). As d >=1.
+
+Also a must be integer less than d (so a <= d). But plenty of constraints.
+
+Also c = k - a = k - k(k-1)/d.
+
+Need c <= d and >=0. c <= d condition may be automatically satisfied? Let's analyze.
+
+c = k - a = k - k(k-1)/d = k*(1 - (k-1)/d) = k*(d - k +1)/d. Since k - a = k - k(k-1)/d = k(d - (k-1))/d = k(d - k +1)/d.
+
+So c = k(d - k +1)/d. Must be integer >=0. Since numerator nonnegative, d>=k-1? Wait if d <= k-1 then d - k + 1 <= 0 => c <=0. But we can allow c=0, but if <=0 maybe negative. But we need c >=0. For d between k-1 and k? Let's compute carefully. For d >= k-1, the numerator nonnegative; for d < k-1, negative. So c must be >=0 => d >= k-1. Equivalent: b-1 >= k-1 => b >= k. Since we must be two-digit representation, ensures highest digit a not zero. That means a <= b-1. So likely b >= k.
+
+Also c <= d: required c <= d: k(d - k +1)/d <= d. Multiply d: k(d - k +1) <= d^2. Equivalent k(d - k +1) <= d^2. Expand: k d - k(k-1) <= d^2 => k d - k(k-1) <= d^2 => bring all: d^2 - k d + k(k-1) >=0. That is (d - k)^2 + k -? Wait let's compute: d^2 - k d + k(k-1). Hard.
+
+Let’s re-evaluate: satisfy a + c = k with a <= d, c <= d. Since a <= d, and c <= d by definition. Since a <= d, but also c <= d automatically satisfied? But check if c > d; can happen. For d small, c may exceed d. E.g., d = k-1 small maybe. But we might enforce c <= d. But we can also simply check c < b.
+
+Ok, we must compute number of such n (k^2) for given b.
+
+Simplify: For each k integer such that b <= k^2 <= b^2 -1. For each k, we have b-1 must divide k(k-1). Express k(k-1) = k(k-1) mod (b-1). Indicate condition: b-1 divides k(k-1). This ensures a integer. Also c will be integer automatically? yes because c = k - a. So c =k - k(k-1)/(b-1) automatically integer 0 <= c <= b-1? Because if a integer, the remainder is integer. So it works.
+
+But we also require that b <= k^2 <= b^2 - 1, meaning k between ceil(sqrt(b)) and floor(sqrt(b^2-1)) = floor(b sqrt(1 - 1/b^2) ) but usually just k ≤ b-1. Because k^2 <= b^2 -1 < b^2, so k ≤ b-1. The minimal k condition: k^2 >= b, so k >= ceil(sqrt(b)). So k is from ceil(sqrt(b)) to b-1 inclusive. So number of 2-digit numbers = b-1 - ceil(sqrt(b)) +1 = b-1 - ceil(sqrt(b)) +1 = b - ceil(sqrt(b)). So the number of candidates is roughly b minus sqrt(b) about. That might be large as b grows.
+
+But we need to check additional condition: b-1 divides k(k-1). That is the main requirement.
+
+Hence we need count of k such that k(k-1) divisible by (b-1), with b >= sqrt(b) < k < b.
+
+So for each b, compute number of k for that interval meeting divisibility by d = b-1.
+
+Goal: find smallest b such that there are more than ten such quick squares (b-beautiful). So count >10.
+
+But this might be manageable. Need to find minimal b. Let's brute manually reasoning? But maybe rational evaluation ensures that b-1 needs to be small.
+
+Possibly we can find general formula: For each completed k, we need k(k-1) ≡0 mod (b-1). Equivalent to k(k-1) ≡ 0 mod d. Let's find pattern.
+
+Let’s analyze d = b-1. We need k(k-1) ≡ 0 mod d. Use Chinese remainder? Actually k(k-1) divisible by d means d divides product of consecutive integers.
+
+This means that the set of residues modulo d for k such that k(k-1) mod d is 0. So solutions for k modulo d. Since k(k-1) ≡ 0 mod d, so either k ≡ 0 mod d, or k ≡ 1 mod d, or any factor such that product of two numbers mod d = 0? Wait standard: d divides product a*b, then some factor of prime factors may divide one factor. But if d is prime power not necessarily, requirement is that for all prime factors of d occur in product. That means for each prime p dividing d, we need at least one of k or k-1 shares p z. Equivalent to all primes p dividing d must divide k or (k-1). That is equivalent to k ≡ 0 (mod p) or k ≡ 1 (mod p). This holds for all p|d. For entire d, we need that k modulo d must satisfy for each prime factor property.
+
+But we can avoid per prime by being product of some primes each dividing either k or k-1. But we might circumvent by: For all primes p dividing d, condition: k ≡ 0 mod p or k ≡ 1 mod p. So there might be many possibilities.
+
+Therefore for each k, it's a "semiprime" condition etc.
+
+But we might also compute number of solutions directly: For a given n, the number of k that satisfy fixed d? Let's analyze general: For fixed d, number of k with d ∈ [b-1], of k between ceil(sqrt(b)) and b-1 inclusive.
+
+We can think of gcd? Hmm.
+
+We can attempt to enumerate for approximate b.
+
+Ok. Let's attempt to use sample approach: Since we need >10 such k, we need d possibly small. Let's think.
+
+The number of k that satisfy that condition is about d/2 maybe? Actually we need k such that k(k-1) mod d = 0. For d in range [k, etc]. But maybe easier: Since k in [ceil(sqrt(b)), b-1] inclusive, count of k in that interval.
+
+Let's compute approximate values for small d.
+
+We can brute by reasoning. But I'd rather compute small b values to find when count >10.
+
+We can elegantly write small script mentally? Let's attempt to manually search with reasoning.
+
+Define n = b-1.
+
+We need number of k in [ceil(sqrt(b)), b-1] satisfying k(k-1) divisible by n.
+
+We can also express choosing k mod n. So in each interval of length n, there are ~n/2 solutions? Actually number of solutions for k in [1,n] could be 0? Let's compute pattern: For k in [1,n] inclusive, whether k(k-1) divisible by n? Suppose n is arbitrary. Find number of solutions for k in [1,n]. For d=1, it's trivial. For n=2, k(k-1) mod2. For n=2, solution when n divides product. Let's evaluate k=1:1*0=0 mod2 yes. k=2:2*1=2 ≡0 mod2 yes. So 2 solutions. Similarly n=3: k^2-k mod3: k=1 gives 0=>0; k=2 gives 2 mod3? Actually 2*1=2 mod3 not 0. k=3: 3*2=6 mod3,0. So k=1,3 => 1? wait 1 and 3 values within [1,3] indeed. So up to 2 solutions. yields 2. n=4: k=1:1*0=0 mod4 yes. k=2:2*1=2 mod4 not. k=3:3*2=6 mod4 2 no. k=4:4*3=12 mod4 0. So 2 solutions. n=5: k=1:1*0=0. k=2:2*1=2? 2 mod5 no. k=3:6 mod5 1 no. k=4:12 mod5 2 no. k=5:5*4=20 mod5 0. So 2 solutions: k=1,5. n=6: test k=1:0 yes; k=2: 2 mod6; k=3:6 mod6 yes; k=4:12 mod6 0; k=5:20 mod6 2; k=6:30 mod6 0. So k=1,3,4,6 4 solutions. So pattern maybe 2 per prime factor? Wait.
+
+But we need k from ceil(sqrt(b)) to b-1. For large n, that interval may be large. Let's approximate approximate count: number of solutions is roughly number of residues modulo n of the form 0 or 1 mod each prime factor. But there may be many solutions.
+
+Alternatively can compute: For each divisor d of d (contrary to d?), the number of solutions? Let's attempt to compute set of solutions for each k. Since k(k-1) divisible by n => n divides product of two consecutive integers.
+
+If n divides k product, then k k-1 mod n equals 0; meaning valid k when k mod n is either 0 or 1 for each prime? Let's double-check: Suppose n=6. For k=1 and 3 and 4 and 6. Let's test: k=1 mod6 1; k=3 mod6 3; k=4 mod6 4? Wait 4? 4 mod6 4 but that is not 0 or 1. But 3*2=6 divisible. So k=3.
+
+The rule "k ≡ 0 or 1 mod n" is too restrictive; because for composite n, we can get other solutions where product has multiple prime factors distributed. Eg n=6 => primes 2 and 3. For k=3, we have k divisible by 3, but k-1=2 is divisible by 2. But k is not 0 or 1 mod 6; but 3 is 3 mod6 => 3. So indeed condition is each prime's factor divides either k or k-1. For n=6=2*3 => prime factors: For 2 we need k even or k-1 even. For 3 we need k multiple of 3 or k-1 multiple of 3. So k must satisfy k ≡ 0 or 1 mod 2; k ≡ 0 or 1 mod 3. But numbers 0-5 that satisfy both conditions: 0,1,3,4. Because 0,1 satisfy both; 3 satisfies mod 3; 4 satisfies mod 2? Wait 4 mod 3 is 1; 3 mod 2 is 1. So any combination of (0 or1) mod 2 and (0 or1) mod 3. So Chinese remainder gives 4 solutions for mod6. So indeed number of solutions mod n equals product over prime powers p^e of number of solutions mod p^e. For each prime p^e, we need k(k-1) divisible by p^e. Minimal solution count: (0,1) mod p^e? Let's analyze for p^e.
+
+Let g(p^e) be number of solutions modulo p^e to x(x-1) ≡ 0 mod p^e.
+
+We're looking at solution set x = 0 or 1 modulo p^e, but also other solutions if order e>1? For p^e>2, consider x = 0 or 1 mod p. But might need multiple of p^e. For x = 0 mod p^e, then product divisible by p^e. If x=0, obviously divisible. If x=1, gives x-1=0. But also multiples of p^e such that x-1 divisible by p^e? For x=1 + kp^e ... but that up to modulus p^e. Actually Condition: If x divisible by p^e, then product divisible by p^e. If x-1 divisible by p^e, then product divisible. So solutions mod p^e are exactly x ≡ 0 or 1 mod p^e. Are there other solutions? Let's check p^e=4: x=2? 2(1)=2 divisible by 4? no. 4? no. So no. So exactly two residues for prime powers? Wait for p=2, let's analyze p^2=4: x=2? 2(1)=2 divisible by4? no. Similarly x=3: 3(2)=6 not divisible by4. So only 0 and 1. For p^2=8: x=4? 4(3)=12 divisible by8? 12 not divisible by8. So only 0/1. So indeed for prime powers p^e, there are exactly two residues. Except maybe when p does not satisfy? Wait for p=2, e=1: 2*0=0, 1*0=0, ok.
+
+Thus for each prime factor p^e, the number of solutions modulo p^e is 2. But because the solutions are 0 or 1 mod p^e individually, they combine via CRT, giving 2^r mod n solutions where r = number of distinct prime factors of n (not prime powers). For each prime factor p^e, the solution set is 0 or 1 mod p^e. So for each prime factor, there are 2 possibilities. Combined -> 2^ω(n) solutions where ω(n) = number of distinct prime factors of n. Because for each prime factor we choose whether to take 0 or 1 modulo that prime power.
+
+Thus the number of solutions modulo n is 2^{ω(n)}.
+
+But check n=6: ω=2: 2^2=4 correct. n=4: ω=1: 2^1=2. Good. n=12: ω=2: 4? Let's test: n=12: primes 2,3. Solutions: 0,1,? Wait compute 3? 3 mod 12, 3*2=6 not divisible by 12. 4? 4*3=12 divisible by 12. So 4 qualifies. 6? 6*5=30 not divisible by 12. 7? 7*6=42 not divisible. 9? 9*8=72 divisible by12? 72 divisible by12 yes. 10? 10*9=90 divisible by? 90/12=7.5 not. 11? 110//12=9.166. So solutions: 0,1,4,9,? check 13? 13 mod 12 =1; but 13+12? ~??? Actually 13? For 13 mod 12 1 would be 1. So not 13 < 12, but 2^? 9 we found. So maybe solutions: 0,1,4,9. That is 4 solutions consistent. So 2^ω.
+
+Thus we can compute number of solutions modulo n via inclusion-exclusion. For n= n (b-1), number of solutions mod n is 2^{ω(n)}.
+
+This is a key property: For any n, number of solutions modulo n where k(k-1) divisible by n is 2^{ω(n)}.
+
+Thus number of k in [1,n] that satisfy: For each modular residue 0 <= k < n, we have 2^{ω(n)} residues. So proportion of solutions is 2^{ω(n)} / n. For large n with many words, maybe small.
+
+But only within [1,n] inclusive. So the number of solutions within [1,n] is 2^{ω(n)} (plus maybe 1 depending on n=1?). Actually in [1,n], includes 0? Wait, 0 is not an allowed k because k >= sqrt(b) >=1? Actually for k≥1, but 0 not considered. Since k must be at least sqrt(b) >=1, so k may start at 1. For k=0 not considered. But we can still treat modulo n.
+
+But the set of solutions modulo n among 1..n includes all residues except 0? But there's number 2^{ω(n)} residues, each correspond to a unique k in [1,n]. But we might exclude the possibility k=0? Because a residue corresponds to a value between 0 and n-1. So k=n corresponds to residue 0? Actually 0 mod n equivalence is k = n. So n corresponds to residue 0. So within the range [1,n], we can represent solutions as numbers that are equal to one of the residues a where 0 <= a < n (for each residue). So it's the same set of solutions. So theoretical solutions count = 2^{ω(n)}.
+
+Thus, for n=b-1, the number of k such that the condition holds is 2^{ω(b-1)}. But we also need that k in [ceil(sqrt(b)), b-1]. Because that interval might exclude some residues.
+
+But we also require that k cannot be 0? Wait k=0 not allowed. So the only solutions in range [1,n] will include all 2^{ω(n)} unique residues because they are from 1 to n inclusive. But we need to exclude maybe k=0? but that is not in range. So k=n counts.
+
+But we must also ensure k >= sqrt(b). But some of the 2^{ω(n)} residues might fall lower than sqrt(b). But if n is large enough, whichever 2^{ω(n)} solutions may not be less than sqrt(b). But maybe for small b, sqrt(b) might be small relative to n.
+
+Let's examine n=b-1. The maximum k is n. The minimal squared sqrt(b) is about sqrt(b). So k minimum is sqrt(b). For b large, sqrt(b) is about sqrt(n+1). So maybe a subset of solutions may fall below sqrt(b). So count of solutions within [ceil(sqrt(b)), b-1] is at most 2^{ω(n)}. But maybe less.
+
+But we want count >10. So we want at least 11 such solutions n. Because any b gives at most 2^{ω(n)}. So at least 11 solutions occurs if 2^{ω(n)} >10. Since 2^{ω(n)} is integer. So required is at least 2^{ω(n)} >=11-? Wait we need count >10; we only guarantee count <= 2^{ω(n)}. So we need 2^{ω(n)} >= 11. But is 2^{ω(n)} may exceed 11 but only some solutions might be below sqrt(b). So number may be <11. But we can check. We just need the minimal b such that there are >10 solutions in [ceil(sqrt(b)),b-1]. That means there are at least 11 such k.
+
+So we need to check small b such that (b-1) has many distinct prime factors. However, small b's may have the sqrt(b) cutoff removing some solutions. So we need to compute actual count.
+
+We can compute for each b maybe using logic of residues.
+
+Let's attempt to compute enumerating small b until find >10.
+
+We need to find b minimal such that there are at least 11 squares that satisfy.
+
+Let's compute manual using reasoning.
+
+But we can try to compute number of b-beautiful numbers (n) for each b. For each b we can count k in (ceil(sqrt(b)) to b-1) with k(k-1) divisible by n = b-1. This is same as k in [ceil(sqrt(b)), b-1] such that k ≡ 0 mod d1 or k-1 ≡ 0 mod d1? Actually earlier we derived that each prime factor p of d allows to choose k ≡ 0 or 1 modulo p^e. But we can treat the combinations of congruence conditions.
+
+However we also have at most each residue k in [1,n]; so any k congruent to a residue mod n is unique. So the set of solutions mod n is only given by the recipe: for each prime factor p^e of d, choose the residue r_p which is 0 or 1 modulo p^e; then combine via CRT to get a residue r modulo n.
+
+Thus the number of solutions modulo n is 2^{ω(n)}.
+
+But we need to count those residues that are >= sqrt(b). But since sqrt(b) is about sqrt(n+1) maybe close to sqrt(n). We may need to basically see all residues that are >= sqrt(b). Suppose n = b-1 is large and has many digits; the residues might be small or large; we need to check each.
+
+Maybe easier to compute enumerated 2^{ω(n)} numbers.
+
+Because n could be 2^r (un-distinct) but still many distinct prime factors.
+
+But we might consider b small but with many prime factors.
+
+Let's compute enumeration for small b:
+
+Let's do b=16? Then d=15=3*5. Six? Wait 15 has distinct prime factors 3,5→ ω=2. Number of solutions mod 15 theoretical: 2^2=4.
+
+But we need to start at ceil(sqrt(b)) = ceil(4)=4; up to 15.
+
+Compute 4 to 15 inclusive. Let's check k solutions: need k(k-1) divisible by 15. Since k can be 1,0, etc. Let's test small: 4*3=12 not divisible. 5*4=20 mod15? 20 mod15=5 not 0. 6*5=30 mod15=0. 7*6=42 mod15=12 mod15? 12 not zero. 8*7=56 mod15=56 mod15=11? 56-45=11. 9*8=72 mod15=12? 72 mod15=12? 60 off, 12. 10*9=90 mod15=0. 11*10=110 mod15=5? 110-105=5. 12*11=132 mod15=?? 132-120=12? 12. 13*12=156 mod15=6? 156-150=6. 14*13=182 mod15=... 180=12, remainder 2. 15*14=210 mod15=0. So solutions k=6,10,15. That's 3 solutions? Wait 6,10,15 reduce to 3? But we have only 3 solutions below sqrt(b). But 15 had 2^ω=4 solutions, which we predicted: zeros? maybe 1? The solutions mod 15: digits 0,1,? 2? there should be 4 residues: 0,1,? 5,? 14? I trust formula: solutions mod 15 can be 0,1,? 5,? 8? Something. Let's compute: Prime factor 3: choose 0 or 1 mod 3. For prime factor 5: choose 0 or 1 mod 5. Combine mod 3 & 5: we get residues modulo 15: 0 or 1 may correspond to 0 and 1; 5 as 0 mod3 and 1 mod5? Actually 5 mod3=2, 5 mod5=0. So 5 qualifies. 10 mod5? Wait 10 mod5=0 of 5. 7? 7 is mod3=1, mod5=2. 9? etc. Let's produce pairs:
+
+Let (a,b) values 0 or 1. 0 mod3, 0 mod5 => 0. 0 mod3, 1 mod5 => 10. 1 mod3, 0 mod5 => 5? 5 mod3=2, 5 mod5=0. So 5 qualifies. 1 mod3, 1 mod5 => 1? 1 mod3=1, 1 mod5=1. So 1. So residues: 0,5,10,1. That's 4 residues. So indeed we had 0,1,5,10. That's 4 numbers. In our interval [1,15], that gives residues 0,1,5,10 -> 0 corresponds to 15. 1 corresponds to k=1. So k=1 also qualifies? Let's check 1*0=0 divisible by 15. So k=1 is also valid. But our list earlier had k=6,10,15. Wait we missed k=1? Let's check 1-? 1*0=0 divisible by 15 indeed. Did we also achieve k=5? 5*4=20 mod15=5 not 0. So k=5 not valid. Wait but 5 value maybe but 5*4=20, remainder 5 not 0. So 5 not valid? Let's analyze our earlier reasoning: For p=5, 5 must divide either k or k-1. For k=5, k divisible by 5 => 5*4=20 divisible by 5? oh but we require divisible by 15=3*5. So k divisible by 5 covers the 5 factor but not 3. So we require k divisible by 5 and also 3? Wait k divisible by 5-sub. So we need k divisible by 5 but also 3 divides either k or k-1. 5 is 5 mod3=2, not 0 or 1. So k=5 fails due to 3 divisibility? For k=5, k%3=2, k-1=4%3=1; 1 mod3 is 1? For the 3 factor, we need k or k-1 divisible by 3. k-1=4 not divisible by 3. So fails. So k=5 fails. Why did formula earlier produce 5 as residue? Let's recompute combination method: Suppose prime factor 3: choose 0 or1 mod3. For prime factor 5: choose 0 or 1 mod5. For each combination, compute k that satisfies both mod 3 and mod5; we combine by CRT. So we found combinations:
+
+(0,0) => 0 mod3 and 0 mod5 -> k ≡0 mod15: 0,15
+
+(0,1) => 0 mod3 and 1 mod5 -> 10 mod15? Wait 10 mod3=1? 10 mod3=1. So not 0 mod3. Wait 10 mod3=1, not 0. So wrong. Let's actually compute: k ≡0 mod3 and k ≡1 mod5. Solve: x ≡0 mod3 => x=3m. For mod5: 3m ≡1 mod5 => 3m ≡1 => m ≡ ? 3 inv mod5 = 2? 3*2=6≡1. Actually 3*2=6≡1; yes 3*2=6. So m ≡ 2 mod5 => m = 2+5t => x=3m=3*(2+5t)=6+15t. So smallest positive x=6, which is 6 mod15. So 6 is a solution. Indeed 6 < 15. Good.
+
+(1,0) => k ≡1 mod3 and k ≡0 mod5 => 5? Solve: x≡1 mod3: x=1+3m. 1+3m ≡0 mod5 => 3m ≡4 mod5 => 3m ≡4 => m ≡? 3 inverse mod5 is 2; m ≡ 2*4=8≡3 mod5 => m=3+5t => x=1+3*3=10 correct. So x=10. Good.
+
+(1,1) => k ≡1 mod3, k ≡1 mod5 => 1.
+
+Thus residues: 0 (15), 1,6,10. So within [1,15], solutions are 1,6,10,15. That's 4 solutions. Good. 5 not,6 yes. So correct.
+
+We earlier had k=6,10,15. Did we missed k=1? we did mistake earlier. So count 4 solutions for b=16.
+
+Now see count: 4. Good.
+
+We need count >10. So we need more than 10 solutions in the interval [ceil(sqrt(b)), b-1]. Many b produce many solutions? Let's analyze for small b.
+
+Compute for b=5: b=5 (d=4). d=4 (prime power only 2^2). ω=1: only 2 solutions modulo 4: 0 or1. n=4. k must be between ceil(sqrt(5))=3 because sqrt(5)=2.236, ceil 3. So k values in [3,4] inclusive. Solutions: k=3 results in 3*2=6 divisible by 4? 6 mod 4=2 no. k=4: 4*3=12 divisible by4? 12 mod4=0 yes. So count 1 (k=4). Condition: 2^ω=2 solutions overall but we count only 1. So <10.
+
+b=7: d=6, ω=2: two solutions modulo 6? Wait d=6 has 2^2=4 solutions mod6. So candidates k in [ceil sqrt(7)=3, 6] => 3,4,5,6. k=3: 3*2=6 divisible by6? 6 mod6=0 yes. k=4: 4*3=12 divisible by6? 12 mod6=0 yes. k=5: 5*4=20 divisible by6? 20 mod6=2 no. k=6: 6*5=30 divisible by6? 30 mod6=0 yes. So count 3. Good.
+
+We need to keep counting until >10.
+
+But we need to skip small d's; we will need many solutions due to high prime factors.
+
+Because each distinct prime factor adds multiply by 2. So d must have at least 4 distinct primes to have 2^4=16 solutions, >10. So b-1 must have at least 4 distinct primes (≥ 4 different primes). But also extra condition about square root restriction.
+
+Let's consider minimal b-1 with 4 distinct primes: the smallest product of 4 distinct primes is 2*3*5*7 =210. That would be d=210 which is 6? Wait 210<b? b=211. Actually n=b-1 = 210. Then 2^ω=16 solutions mod 210. But we only need to count the number of solutions in the interval [sqrt(b), b-1]. sqrt(b)=sqrt(211)=~14.5; so min k=15. So we need 16 solutions in [1,210] but from 15 to 210. Because many residues may be small <15. But we may still count more than 10.
+
+Similarly for n with 4 distinct primes maybe require bigger numbers but also need to consider residues too.
+
+But we must check minimal b giving >10. Let's test small b-1 with 4 distinct primes maybe smaller: e.g., 2*3*5*7 = 210; 2*3*5*11=330; 2*3*7*11=462 etc. For 210, we have 16 solutions; some may be <15 likely; we might get >10 with some as small values. But actual count would be maybe somewhat less.
+
+However we can also consider b-1 with 5 distinct primes, but then d maybe bigger; else many solutions may still have more than 10. But minimal b may still be 210 because we need 4 distinct primes but maybe also 2^4=16 >10; but we might need that at least 11 solutions are > sqrt(b). For n=210, 16 solutions modulo 210; number in [15,210] maybe 15? Let's analyze: if solutions are 0-1-2-3-4-... after find all residues? Hard.
+
+But we can find the minimal >10 thus must produce many k. So we can test small b where b-1 with 4 distinct primes.
+
+Check d=2*3*5*7 =210, but also 2*3*5*7=210. So we need b=211. However we must consider b maybe bigger but we test the range.
+
+But maybe there is small d with 4 distinct primes but less than 210? Wait 2*3*5*7 = 210, yes. So d=210 minimal.
+
+But maybe we can find a smaller b with more than 10 distinct primes but some repeated? Number of distinct primes may be 3 but maybe produce 2^3=8 <10. So not.
+
+But we might find d=2*3*5*7=210. That's first candidate. But maybe there is some b with d=2*3*5*7 but with more primes? For d less than 210, maximum distinct primes count = 3. Because 2*3*5=30 (3 primes). So can't get >10. So no.
+
+Unless there is case where d=4 but the repeating prime factor leads to multiple solutions? For prime powers, distinct primes 1 so not enough. So the minimal b with 4 distinct primes is 211. So that's the minimal b with at least 16 total solutions modulo 210. But some may be less than sqrt(b). However 16 solutions total; maybe some small (<15) - but we might still have 16-? But we might exclude some small ones.
+
+Let's test with d=210. But perhaps there exist more solutions than 16 due to some primes also giving multiple solutions? Wait for prime power p^e, there are 2 solutions. So not due to earlier; So for d=210, number of solutions across residues 0-209 is 2^4=16. So at most 16 solutions. But how many will be >= sqrt(b) ~ sqrt(211)=14.5? The smallest positive residue with 1..210 could be 1. Many residues may be small; we may need at least 11 bigger.
+
+But maybe there are fewer than 11 being bigger; we need to examine. We can compute set of residues of formulas: For each combination of 4 primes choose 0 or 1. Let primes 2,3,5,7. We can create all residues 0,1,? combination. For each combination we get a unique residue r in [0,210). We need to count r≥??? Wait a solution means k ≡ r mod210, but k are in [1,210] as we enumerated. So the residues themselves are the actual k values in [0,210].
+
+If there are exactly 16 residues, the residues themselves are numbers 0,1,... maybe plus O numbers > 210? But we restricted to 0..209 as residues. But the residue r = a from 0..209. The solutions are at numbers k = r if r !=0 else k=210. So the values are 0,1,...,210, etc. But r = 0 is represented as k=210. So the solution set is exactly 1,2,...,210 where residue is 0? Wait 0 is not included; k=210 is included. So the 16 ... but we need to find actual values of these residues: They are some small and large numbers.
+
+We need to count the residues r≥ ceil(sqrt(b)) (which ~15). For each solution set, we essentially need 15 <= r <= 210.
+
+Let's compute the residues of 210 from these 16 combos. We need to compute all residues that satisfy each prime factor condition.
+
+I'll enumerates using CRT. We can produce all residues modulo 210 that satisfy for each prime factor p either 0 or 1 mod p^e.
+
+Compute the possible residues: choose (x_1,x_2,x_3,x_4) each 0 or 1 mod the prime power p 2,3,5,7.
+
+Because for each prime factor p^e, the exponent e=1 for 2,3,5,7. So we need to solve for each combination.
+
+Simplify: For combination of choices r mod 2 (0 or 1), mod 3 (0 or 1), mod 5 (0 or 1), mod 7 (0 or 1). So there are 2^4=16 solutions.
+
+We can compute residues via Chinese Remainder. Let's produce systematically.
+
+But easier: we can generate residues r in [0,210) such that r ≡0 or 1 mod each of the 4 primes. This is essentially a set of 16 residues.
+
+We can design small Python mentally? We could compute all via modular conditions.
+
+We can compute r modulo 210: we need to find r in 0..209.
+
+This is essentially all numbers that are simultaneously 0/1 mod 2,3,5,7. Because primes distinct. So they are just 0/1 solutions.
+
+Thus we can compute by enumerating residues small: For each computed rema.
+
+Alternatively we might compute the set: For each r in [0..209], if r%2 in {0,1} (always true), and r%3 in {0,1} and r%5 in {0,1} and r%7 in {0,1} -> we can test.
+
+But it's tough to do manually for all 210 but maybe easier to compute using inclusion.
+
+Observe that r must be 0 or 1 modulo each prime, so r must be a 0 or 1 modulo each of the primes. We're essentially adding conditions. Each combination yields a residue modulo 210; the residues are 0,1,? Let's locate all residues that satisfy r mod 210.
+
+Let's attempt to compute all residues modulo 210 by brute mental? Let's construct a small table using CRT.
+
+We can compute using small known: The set {r} is those r such that r ≡ a mod 2 (0 or1), r ≡ b mod3 (0 or1), r ≡ c mod5 (0 or1), r ≡ d mod7 (0 or1). Then unique CRT.
+
+Observation: r mod 2 0 or 1 means: the parity of r is determined.
+
+Compute all combos quickly:
+
+I'll produce 16 assignments:
+
+(0,0,0,0)
+(0,0,0,1)
+(0,0,1,0)
+(0,0,1,1)
+(0,1,0,0)
+(0,1,0,1)
+(0,1,1,0)
+(0,1,1,1)
+(1,0,0,0)
+(1,0,0,1)
+(1,0,1,0)
+(1,0,1,1)
+(1,1,0,0)
+(1,1,0,1)
+(1,1,1,0)
+(1,1,1,1)
+
+We could compute each by solving linear equations.
+
+Let's process systematically.
+
+But maybe easier to compute number of solutions that are >= 15. But we can approximate that many residues are large; maybe the smallest ones do not contain many? Let's just compute actual residues for this case.
+
+But let's analyze more general property: For product many primes, minimal residues maybe 0 or 1? Because the residues we computed correspond to small numbers maybe 0,1,2,...? Let's list positive residues like 0,1,2,? But we need all 16 residues; some may be 0? Let's examine.
+
+Better compute using CRT:
+
+Let us produce algorithm.
+
+Given remainders (a mod2, b mod3, c mod5, d mod7). The solution r mod 210 can be given by constructing r = ?
+
+Compute by Chinese remainder approach: For each prime, weight.
+
+But we could produce small r values using combinational reasoning.
+
+However maybe we just compute systematically.
+
+We need to compute each residue. Let's break into steps.
+
+We have mod 210 = 2*3*5*7. Use CRT:
+
+Let’s compute using modular inverse:
+
+Define M1 = 210 /2 = 105. For mod2, we need to find M1*(M1^-1 mod2) mod 210. Since 105 mod 2 = 1. So M1_inv mod2 = 1.
+
+So term for mod2: r_mod2 = (a * 105 * 1). Because 105 ≡ 1 mod2. So term is 105*a.
+
+For mod3: M2 = 210 /3 = 70. 70 mod3 = 1. So M2_inv=1. So term: 70 * b.
+
+For mod5: M3 = 210 /5 = 42. 42 mod5 = 2. Need inv of 2 mod5 is 3 because 2*3=6≡1. So M3_inv =3.
+
+Thus term: 42 * 3 * c = 126 * c.
+
+For mod7: M4 = 210 /7 = 30. 30 mod7 = 2. Inverse of 2 modulo 7 is 4 because 2*4=8≡1. So M4_inv=4. So term: 30 * 4 * d = 120 * d.
+
+So general solution r = (a*105 + b*70 + c*126 + d*120) mod 210.
+
+We can compute each combination.
+
+Let's compute for each combination r.
+
+Let's use raw numbers:
+
+Simplify: 105a, 70b, 126c, 120d.
+
+Now compute each.
+
+Because a,b,c,d are 0 or 1.
+
+We can compute a set.
+
+Let's produce table:
+
+For each term, we compute r.
+
+(0,0,0,0): r = 0.
+
+(0,0,0,1): r = 120 -> 120.
+
+(0,0,1,0): r = 126 -> modulo 210: 126.
+
+(0,0,1,1): r = 126 + 120 = 246; 246 mod 210 = 36.
+
+(0,1,0,0): r = 70 -> 70.
+
+(0,1,0,1): r = 70 + 120 = 190 -> 190.
+
+(0,1,1,0): r = 70 + 126 = 196 -> 196.
+
+(0,1,1,1): r = 70 + 126 + 120 = 316 -> 316-210 = 106.
+
+(1,0,0,0): r = 105 => 105.
+
+(1,0,0,1): 105 + 120 = 225 -> 225-210 = 15.
+
+(1,0,1,0): 105 + 126 = 231 -> 231-210 = 21.
+
+(1,0,1,1): 105 + 126 + 120 = 351 -> 351-210 = 141.
+
+(1,1,0,0): 105 + 70 = 175 -> 175.
+
+(1,1,0,1): 105 + 70 + 120 = 295 -> 295-210 = 85.
+
+(1,1,1,0): 105 + 70 + 126 = 301 -> 301-210 = 91.
+
+(1,1,1,1): 105 + 70 + 126 + 120 = 421 -> 421-210 = 211 -> 211-210 =1.
+
+Now list all residues:
+
+0
+1
+15
+21
+35? Actually 35 not present but we have 35? Wait 35? Not present. Let's list all:
+
+0,1,15,21,35? Actually we have ??? 35? Did we find 35? no.
+
+But we have 30? I have 30? Actually 36?
+
+Let's list the contributions more enumerated from above:
+
+Residues:
+
+0
+
+120
+
+126
+
+36
+
+70
+
+190
+
+196
+
+106
+
+105
+
+15
+
+21
+
+141
+
+175
+
+85
+
+91
+
+1
+
+But we need also 120? earlier we had 120.
+
+First entry: r = 0
+(0,0,0,1): r=120
+(0,0,1,0): r=126
+(0,0,1,1): r=36
+(0,1,0,0): r=70
+(0,1,0,1): r=190
+(0,1,1,0): r=196
+(0,1,1,1): r=106
+(1,0,0,0): r=105
+(1,0,0,1): r=15
+(1,0,1,0): r=21
+(1,0,1,1): r=141
+(1,1,0,0): r=175
+(1,1,0,1): r=85
+(1,1,1,0): r=91
+(1,1,1,1): r=1 again. So actually we have 16 residues but we have duplicates? Actually 1 appears twice due to 1 mod 210? Wait duplication may happen: e.g., combination (1,1,1,1) gives residue 1, which is same as (1,1,1,1) ??? But we also have (1,1,1,1) etc. Are there any duplicates? Let's check: 1 appears in requiring all ones. 1 appears as 1? We also had 1 earlier? The formula gave a = 1, 1 but not in earlier list. So good.
+
+Now we have set: {0,1,15,21,35,?? Wait 35 not present. Let's compute: Are there missing residues? Let's check systematically:
+
+Numbers computed: 0,1,15,21,35? Actually 35 not present but maybe 35? Let's compute: 35 is 0+? Because difference between 5 and 7? Wait 35 is 0 mod 5? Actually 35 mod2=1; 35 mod3=2; not allowed. So 35 cannot be.
+
+But there are 14 residues total: 0,1,15,21,35? 35 not present.
+
+But the solution set might have 16 residues; duplicates rule maybe 16 though duplicates, but we counted 0,1,15,21,36,70,85,91,105,106,120,135? Actually 115? We have 141?
+
+Let's list all computed distinct residues values sorted ascending: 0,1,15,21,35? Actually 35 not present. 36, 70, 85, 91, 105, 106, 120, 141, 175, 190, 196. plus maybe 136? Wait 141? yes. So total: 0,1,15,21,36,70,85,91,105,106,120,141,175,190,196. That's 15? Wait count: 0:1,1:2,15:3,21:4,36:5,70:6,85:7,91:8,105:9,106:10,120:11,141:12,175:13,190:14,196:15. Actually we only have 15 distinct residues? Did we miss one? Let's verify we didn't miss one: 210? No.
+
+But we found 5 duplicates: 0 corresponds to 210, 1 has duplicate? Wait 1 appears only once? For 1 we might see (1,1,1,1) gave 1. We also had 1? we had 1 earlier maybe from another combination? Let's test: we had 1? Actually from (1,1,1,1) we computed r=1. At first treat to compute r=1. This duplicates? Let's check from earlier combos: For (0,0,0,1) -> r=120; (0,0,1,0)->r=126; no duplicates. So number of residues computed is 15 distinct; perhaps two of them were duplicates but maybe 1 is duplicate? Let's double-check duplicates: For (1,1,1,1) we had r=1, but maybe earlier we have (1,1,1,1) again? But that's unique. So maybe count of residues 15.
+
+But we have 16 combos but we got 15 distinct. Let's deduce duplicates: For earlier group (0,0,0,0) gave r=0, but 0 corresponds to 210? Actually 0 is not in [1,209]. So r=0 not counted. So we have 15 unique residues (including 0). So count of positive residues = 15.
+
+However we also might inadvertently produce 0? Let's verify if we missed a combination that yields residue 0 not possible other than 0? Since 0 corresponds to k=210. But we must convert to 210. So for positive residues we need to treat them.
+
+Now compute k values: we need to exclude 0 because k=0 not allowed. Also we also need to include 210 which is k=210 (since r=0). So mapping from 0 to 210; but 210 > b? Actually b=211; k=210 < b. Good. So we need to consider all residues r such that r>0: if r=0 mod210, we refer to k=210; if r>0, we refer to k=r.
+
+Hence we have list of k values: 210 (for r=0), 1,15,21,36,70,85,91,105,106,120,141,175,190,196. So total 15? Wait we have 15 appended, plus 210 gives 15? But we need to count all k values: distinct set: {1,15,21,36,70,85,91,105,106,120,141,175,190,196,210} => 15 values. So number of solutions based on k values in [1,210] is 15; But maybe we missed some due to duplicates. As we just counted 15, but we expected 16, meaning we miscounted or missing a solution.
+
+Let's compute again: Maybe there is a missing residue = 30? Wait 30 may appear. But we didn't.
+
+Check 30: maybe 30 is not a valid residue. Eg (0,0,0,1) gives 120; (0,0,0,0) 0; (0,0,0,1)=120; many combos produce 30? Let's evaluate combination (0,0,0,1) yields 120; (0,0,1,1)=36; (0,1,0,1)=190; (0,1,1,0)=196 etc. But we don't have 30.
+
+A (1,1,0,1)? 85? Wait earlier yield 85. So we may miss 30. But maybe there is a missing residue 33? Wait we can parse e.g. maybe 0 or 0? Actually 0 or 1: For each prime factor not dividing the number 0? Actually we derived that all residues 0 or 1 mod p^e. Therefore the sum of residues must be those 16 residues. So there should be 16 residues as computed. But we found 15 distinct; but due to duplicates maybe the residue 0 appears only once. But we must have 16 residues total. The remainder computed 0,1,15,21,36,70,85,91,105,106,120,126? Wait we didn't have 126? But note (0,0,1,0) gave 126. Did we include 126? Did we miss 126? Let's check again: In our previous list, we didn't have 126; we had 42? Actually we had 126 as earlier candidate. Wait we didn't state 126. So we must examine if 126 is valid? Let's check previous calculation: For combination (0,0,1,0), we found r=126. Let's check: 42*3*1 = 126. But we had 126-? Wait 126 mod 210=126. The residue 126 > 0. But we didn't list it in our earlier set. So we omitted 126 accidentally.
+
+Check early: In our results the list:
+
+0
+120
+126
+36
+70
+190
+196
+106
+105
+15
+21
+141
+175
+85
+91
+1
+
+But we omitted 126 previously. Let's correct: We should include 126 as k.
+
+Hence we have 16 residues: 0,1,15,21,36,70,85,91,105,106,120,126,141,175,190,196.
+
+Counting: 0 + 15 unique. So 15 positive residues, plus 210.
+
+Thus total 15 (1,15,21,36,70,85,91,105,106,120,126,141,175,190,196) + 210 => 15 values? Wait 1+1? Count: 1,15,21,36,70,85,91,105,106,120,126,141,175,190,196,210 = 16 distinct values? Let's count: numbers: 1 (1), 15 (2), 21 (3), 36 (4), 70 (5), 85 (6), 91 (7), 105 (8), 106 (9), 120 (10), 126 (11), 141 (12), 175 (13), 190 (14), 196 (15), 210 (16). we have 16 numbers.
+
+Thus we have 16 solutions. But we need to count those that are >= sqrt(b) ~ 14.5. So min >14.5. So minimal integer ≥15. So we exclude 1. So we exclude 1. So count number with >=15: 15 numbers? Wait 16 but exclude 1? Actually we need to exclude 1. So 15. Then we have 15 >=15, 15 >10.
+
+But we also need to consider squares that are greater than lower bound. But we must check whether these k produce n = k^2 in range two-digit numbers (b <= n <= b^2-1). Since b=211, we need n between 211 and 211^2 - 1 = 211^2 - 1. k <= 210. But do we need to check exactly? Did we compute k from 1 to 210 inclusive. Good. So each k <= 210 will produce n = k^2 <= 210^2. That is n < 211^2? Since 210^2 = 44,100, but 211^2 = 44,521; actually 210^2=44,100 < 211^2 = 44,521. So all n < 211^2. So we are inside interval [211, 211^2-1]. But we also need to consider lower bound n>=b. Since b=211. For k>= sqrt(b)=√211=14.5. So k must be at least 15. Since 1 qualifies not. Also 0? but not.
+
+We also need n= k^2 >= b. For all k >= 15; k^2=225 or greater: Actually 15^2=225, which is > 211. 225 > 211; 225 > 211. So all k >= sqrt(b) => k^2 ≥ b.
+
+But do we also need that the number of digits in base b is exactly two digits? For 2-digit numbers in base b = [b, b^2-1], but that condition is equivalently n ∈ [b, b^2 -1]. So we need k^2 <= b^2-1. For k=210 <= 210 < 211. But 210^2 = 44100 which is < 211^2 - 2? Let's confirm 211^2 - 1 = 44,521 - 1? Actually 211^2 = 44,521? Let's compute: 210^2 = 44,100. 211^2 = 211*211 = 44,521? 210^2 = 44,100. Add 210*2? Actually 211^2 = 211×211 = 200×211 +11×211 = 42,200 + 2,321 = 44,521. So 211^2 -1 = 44,520. So 210^2 = 44,100 < 44,520. So yes all k^2 <=210^2 < 44,520. So all values are within [211, 44,520]. So satisfy two-digit.
+
+Thus all 210 k values produce 2-digit numbers? However k^2 < b^2-1; must be at least b. For k=210, 210^2=44,100 > 211; but need k^2 <= b^2-1 = 44,520. Yes 44,100 < 44,520; so okay. But we are not subtracting, so all are valid.
+
+But we also need to ensure that each k is in base 211 representation: k ≡? The digits of k^2 representation: a= floor(k^2 / b). But we derived property that a + c = k. But we also need that a and c are digits less than b. In our derived condition that a between 1 and b-1; but let's check for k=210 which is b-1. So k^(2) digits: maybe a= floor(210^2 / 211). Let's compute 210^2/211. 210^2=44,100, divide by 211? We'll think: Actually compute 211*209? 211*200 = 42,200; plus 211*9=1899, 42,200+1899=44,099; 44100/211 ~ 209? 211*209=44,099? Wait 211*209 = 211*210-211 = 44,310 -211=44,099. Yes difference 1. So k^2 truncated? Actually k^2 = 44,100; floor division by 211 gives 209. remainder 1. So digits: a=209, c=1. Sum a+c=210; equals k. Good.
+
+Thus all counted works.
+
+Now we need to count number of solutions >10. With b=211, we saw 15 solutions. So b=211 qualifies. But does there exist b smaller producing >10 solutions? Let's try smaller.
+
+We need exactly two-digit numbers in base b, n = k^2 between b and b^2-1. Also we need k such that k(k-1) divisible by d=b-1. Equivalent to divisibility condition.
+
+Essentially we need number of solutions k = in [ceil(sqrt(b)), b-1] satisfying divisibility. For each b, the number of solutions is at most 2^{ω(d)}. We need count >10. So we need at least 2^{ω(d)} >10. So ω(d) >=4. Because if 2^{ω(n)} = 2^4=16. But also we must have enough residues >= sqrt(b). So 2^{ω(d)} cannot exceed 10 maybe? Let's investigate.
+
+The smallest d with at least 4 distinct primes is 210. So minimal b candidate is 211. But we need to also ensure that the number of solutions exceeding 10 is present in that interval. That seems to hold.
+
+But maybe there might exist b smaller but also 2^{ω(d)} >10 because of repeated prime factor? Wait we'd need more than 10 solutions. But 2^{ω(n)} <=10 for ω <= 3. For ω=3: 2^3=8; that's not >10. So we need at least 4 distinct primes. So we require d to have at least 4 distinct prime factors. That's beginning at 210. But due to the sqrt constraint, may become 2^{ω(n)} - (# of small residues) <=10. For d=210, 2^{ω(n)} = 16. But maybe 2^{ω(n)} -1 or maybe 15 <10? Wait 2^{ω(n)}=16, but we need count >10. So it's 16. So valid. Good.
+
+But is there any case where b is small and has 4 distinct prime factors but b small such that d≥4? Wait we found minimal d 210.
+
+But maybe d could be 2 less than b-1? For example, b-1 might be 30; 30 has 3 distinct primes; still only 2^3=8 solutions <10. So we cannot get >10.
+
+Thus best candidate is b=211. So we can claim answer 211.
+
+But must check at least 10: we found 15. So not minimal? Let's check if maybe there is any b < 211 with 4 distinct primes? Our assumption: 2*3*5*7=210. So b-1 = 210. But we must check any smaller d has more distinct primes? No, because 2*3*5*7=210 is minimal product of first 4 primes. So 210 is smallest number with at least four distinct primes. But we also might have d >210 but with 4 distinct primes: e.g., 210 2*3*5*7 again; but d maybe 2*3*5*7=210 (lowest). So the only b smaller than 211 there is 210? Wait b-1=210 => b=211 . So b≥211.
+
+But check b-1 maybe 216 (like 2^3*3^3) but has 2 distinct primes only (2 and 3). 2^3=8. So not 4 distinct primes. Similarly d 240: 240 has 2,3,5. That's 3 distinct primes. So only 3 distinct primes.
+
+For 4 distinct primes, we can get for d = 210, 2*3*5*7. Next d=210*2? Wait 210 as product again. But we need number of distinct primes count 4; so 210 is first.
+
+Thus b must be at least 211. So answer 211.
+
+But we must also check: Did we count all k≥ sqrt(b). We excluded 1 timely. So 15 solutions. >10. Good.
+
+But maybe there might be smaller b if the sqrt condition counts? Let's compute for some b less than 211 (like 90? Actually we might have d=90 => 90 = 2*3*3*5? Actually 90=2*3^2*5. Distinct primes 3 -> 2^3=8. So maybe 15 <10. Wait we need >10. Only way is if d includes 4 distinct primes. So only 210 qualifies.
+
+Thus answer is 211.
+
+But let's confirm with enumeration for b=211? Actually 211 is prime. 211-1=210. So yep.
+
+Hence answer 211. Let's confirm that no other b smaller produce >10. Let's compute number of solutions for b=210? but 210>211? Wait b=211 we found.
+
+But maybe b=200? But then d=199 maybe? Distinct primes 1; 2^1=2 solutions <10. So not.
+
+Now we need to double-check there are exactly 15 b-beautiful numbers for b=211. But we need at least 11 numbers. So indeed 15.
+
+But we might also consider minimal b where there are at least 11 numbers. But seems indeed 211. Maybe there is a subtlety: number of solutions may be less than 2^{ω(d)} because lower bound exceed sqrt(b). But for b=211, we have 15 >10.
+
+But we need to ensure that count >10 indeed. We found 15 positive values. For b=211, 5 of them are > 210? Wait we only have 210? Actually maximum k=210 <=210. So all good.
+
+But we need to check whether there may be any <10 solutions for b=211? Actually we found 15. So definitely.
+
+But confirm with a different approach: For b=211, n = n = k^2. Example: 225? Wait k=15: 225. Represented in base 211 => 1*211 + 14? Actually 225 = 1*211 + 14. digits 1 and 14 (since 14 <211). Sum: 1+14=15 => sqrt(n) = 15. So 225 is 211-beautiful.
+
+For k=21 gives 441. 441 decomposed as 2*211 + 19? Let's compute 441 - 211*2 = 441-422=19. digits: 2 and 19. Sum 2+19=21, sqrt(n)=21. Good.
+
+So more valid.
+
+Thus answer 211.
+
+But let's double-check no b-1 less than 210 can produce>10. But we can test b=211 gave 15 numbers. For b=210? b-1 =209. 209 has 3 distinct primes? 209=11*19. So 2 distinct primes. So number of solutions modulo 209 = 2^2=4. So we need at most 4 solutions. So far less. So no other b.
+
+Thus final answer: 211.
+
+But double-check for nuance: Are there any small n such that 2-digit numbers in base b but digits sum to sqrt(n). We restrict k such that n is a perfect square. m= k^2. which uses k integer. But we also need that base-b representation digits sum to sqrt(n). Already derived condition.
+
+Thus each k must satisfy (b-1)|(k(k-1)).
+
+Also digits must be 0..b-1. That's satisfied. So our reasoning stands.
+
+Thus answer is 211.
+
+We also need to confirm that number of solutions >10 but can be minimal? Let's examine if b can equal 211. The minimal b with inherent count >10. So final answer 211.
+
+I'll deliver final message accordingly. Provide reasoning details: count of k from equation: (b-1) | k(k-1) . And constraints: sqrt(b) <= k <= b-1. Then variable. Add digits count. Use prime factors. So final answer 211.
+
+Let's produce final output.<|end|><|start|>assistant<|channel|>final<|message|>Let \(b\ge 2\).  
+A positive integer \(n\) is **\(b\)-beautiful** iff
+
+* \(n\) has exactly two digits in base \(b\).  
+  In base \(b\) a two‑digit number has the form  
+  \[
+  n = a\,b+c\qquad(1\le a\le b-1,\;0\le c\le b-1)
+  \]
+  and \( b \le n \le b^2-1\).
+
+* \(a+c=\sqrt n\).
+
+Since \(a+c\) is an integer, \(\sqrt n\) must be an integer, therefore \(n\) is a perfect square.
+Let \(k=\sqrt n\) (\(k\ge 1\)).  Then
+
+\[
+n = k^2 = a\,b + c ,\qquad a+c=k .
+\]
+
+Solving for \(a\) and \(c\):
+
+\[
+a=\frac{k(k-1)}{b-1},\qquad c=k-a .
+\]
+
+Hence \(a\) must be an integer, so \(b-1\) must divide \(k(k-1)\).  
+Conversely, if \(b-1\mid k(k-1)\) then \(a\) and \(c\) are integers in the required ranges, so \(k^2\) is indeed a \(b\)-beautiful number.
+
+Thus **the \(b\)-beautiful numbers are exactly the squares \(k^{2}\) such that
+
+\[
+b\le k^{2}\le b^{2}-1,\qquad (b-1)\mid k(k-1).
+\]
+
+The range of \(k\) is  
+
+\[
+\sqrt b \;\leq k \;\le\; b-1.
+\]
+
+--------------------------------------------------------------------
+### Counting solutions – the role of the prime‑factorisation of \(b-1\)
+
+For the congruence \(k(k-1)\equiv0\pmod{d}\) with \(d=b-1\), let  
+
+\[
+d=\prod_{i=1}^{r} p_i^{e_i}               \quad(\text{distinct primes }p_i).
+\]
+
+For a given prime power \(p^e\) the congruence \(k(k-1)\equiv0\pmod{p^e}\) has the two solutions
+
+\[
+k\equiv 0\pmod{p^e},\qquad k\equiv 1\pmod{p^e}.
+\]
+
+By the Chinese Remainder Theorem, the total number of residue classes modulo \(d\) satisfying
+\(k(k-1)\equiv0\pmod{d}\) is
+
+\[
+N(d)=2^{\omega(d)},
+\]
+
+where \(\omega(d)\) is the number of distinct prime factors of \(d\).
+
+The \(k\) that are solutions are exactly those residues \(1\le k\le d\) that belong to
+at least one of these \(2^{\omega(d)}\) residue classes.
+
+--------------------------------------------------------------------
+### When does the count exceed 10?
+
+We need at least \(11\) values of \(k\) in the interval \([\lceil\sqrt b\rceil ,\,b-1]\).
+Because \(\omega(d)\) is the only factor that determines how many residue classes can exist,
+not enough will be achieved unless \(\omega(d)\ge 4\); otherwise
+
+\[
+2^{\omega(d)}\le 2^{3}=8<11.
+\]
+
+So we must have \(\omega(b-1)\ge 4\).  
+The smallest integer with four distinct prime factors is
+
+\[
+(2)(3)(5)(7)=210.
+\]
+
+Consequently the smallest possible base is
+
+\[
+b=210+1=211.
+\]
+
+--------------------------------------------------------------------
+### Verification that \(b=211\) actually yields more than ten beautiful numbers
+
+Take \(b=211\). Then \(b-1=210\) has \(\omega(b-1)=4\),
+so there are
+\(2^{4}=16\) distinct residues modulo \(210\) that solve \(k(k-1)\equiv0\pmod{210}\).
+
+The actual residues \(\{k\}\) for these 16 congruence classes are
+
+\[
+\{0,1,15,21,36,70,85,91,105,106,120,126,141,175,190,196\}
+\]
+
+(the residue \(0\) corresponds to \(k=210\)).  
+The set of admissible \(k\)’s must also satisfy \(\sqrt{211}\approx 14.5\le k\le210\);
+so \(k=1\) is excluded.  
+Hence the admissible \(k\) are
+
+\[
+\{15,21,36,70,85,91,105,106,120,126,141,175,190,196,210\},
+\]
+
+which gives **15** values of \(k\).  
+Consequently there are 15 (indeed more than 10) \(b\)-beautiful numbers
+corresponding to \(k^2\) with \(k\) in this set.
+
+--------------------------------------------------------------------
+Thus the least integer \(b\ge 2\) for which there are more than ten \(b\)-beautiful integers is
+
+\[
+\boxed{211}.
+\]

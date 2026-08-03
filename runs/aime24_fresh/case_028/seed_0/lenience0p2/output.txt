@@ -1,0 +1,293 @@
+<|channel|>analysis<|message|>We need to find greatest four-digit number N such that: whenever one of its digits is changed to 1, the resulting number is divisible by 7. So all 4-digit numbers where replacing each digit in any position with 1 yields a number divisible by 7. Means for any digit position (thousands, hundreds, tens, ones) if we replace that digit with 1, we get a number divisible by 7. So the original N digits let's denote d3 d2 d1 d0 (thousands to ones). For each i, N_i = N with digit i replaced by 1. These N_i divisible by 7.
+
+We need to find greatest 4-digit N satisfying that. Let's denote N digits. Let N = 1000 a + 100 b + 10 c + d, with a,b,c,d integers 0-9, a>0. Then for each position:
+
+1) For thousands: replace a by 1; new digit: 1000*1 + 100b + 10c + d = S1 = 1000 + 100b + 10c + d. Must be divisible by 7.
+
+2) For hundreds: replace b by 1: S2 = 1000 a + 100*1 + 10c + d = 1000a + 100 + 10c + d. ≡ 0 mod 7.
+
+3) For tens: replace c by 1: S3 = 1000 a + 100 b + 10*1 + d = 1000a + 100b + 10 + d ≡ 0 mod 7.
+
+4) For ones: replace d by 1: S4 = 1000 a + 100 b + 10 c + 1 = 1000a + 100b + 10c + 1 ≡ 0 mod 7.
+
+We need these 4 congruences. Need to find maximum 4-digit N (a up to 9 but a>=1). Let's reduce modulo 7.
+
+We need 8 mod 7? 8 is 1 mod 7? Actually 8≡1. Let's compute.
+
+Let x = 1000 a, y = 100 b, z = 10 c.
+
+We need:
+
+S1: 1000 + y + z + d ≡ 0 mod 7.
+
+S2: 1000 a + 100 + z + d ≡ 0 mod 7.
+
+S3: 1000 a + 100 b + 10 + d ≡ 0 mod 7.
+
+S4: 1000 a + 100 b + 10 c + 1 ≡ 0 mod 7.
+
+So we can reduce each mod 7.
+
+Compute 1000 mod 7: 1000÷7=142*7=994, remainder 6. So 1000≡6. 100 mod7: 100-98=2. 10 mod7: 3.
+
+Thus:
+
+S1: 1000 + y + z + d = 6 (since 1000->6) + (100b)->2b + (10c)->3c + d ≡ 0 mod 7.
+
+S2: 1000a + 100 + z + d = 6a + 2 + 3c + d ≡ 0 mod 7.
+
+S3: 1000a + 100b +10 + d = 6a + 2b + 3 + d ≡ 0 mod 7.
+
+S4: 1000a + 100b +10c +1 = 6a + 2b + 3c +1 ≡ 0 mod 7.
+
+Now we have 4 equations mod 7. Let’s denote unknowns a,b,c,d. Compute.
+
+Equation (1): 6 + 2b + 3c + d ≡ 0 (mod 7). Equivalent to d ≡ -6 - 2b - 3c (mod 7) => d ≡ (1 - 2b - 3c) mod 7? Wait 6+2b+3c+d≡0 => d ≡ -6-2b-3c = 7-6-2b-3c? Actually modulo 7: -6 ≡ 1 mod7; -3c ≡ 4c mod7 (since -3≡4). So d ≡ 1 - 2b + 4c mod7? Let's compute: -6 = 1 mod7. -3c ≡ 4c mod7. So d ≡ 1 - 2b +4c mod7.
+
+Let’s record as (1a): d ≡ 1 - 2b + 4c (mod 7).
+
+Equation (2): 6a + 2 + 3c + d ≡ 0 => d ≡ -6a -2 -3c ≡ 1a? Let's compute: -6 ≡ 1 mod 7; r. So d ≡ -6a -2 -3c = (1a) -2 +4c mod7? Actually be careful: -6a ≡ 1a mod7? Because -6 ≡ 1, so -6a ≡ a. So d ≡ a -2 -3c = a -2 -3c. But -3c ≡ 4c. So d ≡ a -2 +4c mod7. So (2a): d ≡ a -2 + 4c mod7.
+
+Equation (3): 6a + 2b + 3 + d ≡ 0 => d ≡ -6a -2b -3 ≡ a -2b -3? Wait -6 ≡ 1 so -6a = a. -2b ≡ 5b? Actually -2b ≡ -2b. Write as: d ≡ -6a -2b -3 ≡ a -2b -3. But -3 ≡ 4. So d ≡ a -2b +4 mod7. But we can also express as d ≡ a -2b +4 (mod7). But check we had -3c earlier etc. Let's recompute carefully.
+
+Equation (3): 6a + 2b + 3 + d ≡ 0 => d ≡ -6a - 2b - 3 ≡ 1*a - 2b -3 mod7? Wait -6 ≡1 mod7 because -6+7=1. So -6a ≡ a. So d ≡ a -2b -3. But -3 ≡ 4. So d ≡ a -2b +4 mod7.
+
+Equation (4): 6a + 2b + 3c + 1 ≡ 0 ==> 6a + 2b + 3c + 1 ≡ 0 => 6a + 2b + 3c + 1 ≡ 0 => d is not present here. Let's note that equation (4) constrains variables.
+
+Let's rewrite statement:
+
+Equation (4) <= 0 => 6a + 2b + 3c + 1 ≡ 0 mod 7
+
+Simplify using 6a mod7: -a. So 6a ≡ -a. So -a + 2b + 3c + 1 ≡ 0 => -a + 2b + 3c +1 ≡ 0 => a ≡ 2b + 3c + 1 (mod7). But we can also write as a ≡ 2b + 3c + 1 mod 7.
+
+We can express as a (mod7) equals 2b + 3c +1.
+
+We can find digits a,b,c,d such that all satisfy.
+
+Equation (1a) d ≡ 1 - 2b + 4c mod7.
+Equation (2a) d ≡ a -2 +4c mod7.
+Equation (3a) d ≡ a -2b + 4 mod7.
+
+Now we need integers a,b,c,d satisfying those. Also constraints: a,b,c,d in [0..9] except a≥1.
+
+We also must satisfy a ≡ 2b+3c+1 mod7.
+
+Because remainder and quotient requirement: we want greatest 4-digit N satisfying mod conditions. So we need to find maximum digits lexicographically? largest N meaning largest integer. We want the largest a first then b etc.
+
+We can brute force maybe mentally but by reasoning. Let's search for solutions (a,b,c,d) that satisfy. Let's produce modular equations.
+
+Let’s compute all a,b,c,d mod 7. We need the equations in terms of residues. Actually we may need to consider digits modulo 7, but we also need them being actual digits 0-9. We'll treat each variable modulo 7.
+
+Define A=a mod7, B=b mod7, C=c mod7, D=d mod7.
+
+Equation (4): A ≡ 2B +3C +1 (mod7).
+Equation (1a): D ≡ 1 -2B +4C (mod7).
+Equation (2a): D ≡ A -2 +4C (mod7).
+Equation (3a): D ≡ A -2B +4 (mod7).
+
+We need to ensure that D is congruent to all three expressions, which gives constraints on A,B,C. Let's derive consistency.
+
+Let’s equate D values:
+
+From (1a) and (2a):
+1 - 2B + 4C ≡ A - 2 + 4C mod7 => Cancel 4C both sides: 1 - 2B ≡ A - 2 => bring to left: 1 - 2B - A + 2 ≡ 0 => 3 - 2B - A ≡ 0 => A + 2B ≡ 3 mod7.
+
+Thus A ≡ 3 - 2B mod7.
+
+From (1a) and (3a):
+1 - 2B + 4C ≡ A - 2B +4 => cancel -2B: 1 +4C ≡ A +4 => A ≡ 1+4C-4 = 4C-3? Wait compute: 1+4C ≡ A +4 => A ≡ 1+4C -4 = 4C-3.
+
+Thus A ≡ 4C - 3 mod7.
+
+Also from (2a) & (3a):
+A -2 +4C ≡ A -2B +4 => subtract A: -2 +4C ≡ -2B +4 => cancel -2B: -2+4C +2B -4 ≡ 0 => 2B + 4C -6 ≡ 0 => 2B + 4C ≡ 6 ≡ -1 mod7. So 2B + 4C ≡ -1 mod7. Multiply inverse 2 maybe? 2 inverse mod7 is 4 (since 2*4=8≡1). So B + 2C ≡ 4* (-1) = -4 ≡ 3 mod7 (because -4 ≡ 3). So B + 2C ≡ 3 mod7.
+
+Thus we have relationships:
+
+(1) A ≡ 3 - 2B mod7.
+
+(2) A ≡ 4C - 3 mod7.
+
+(3) B + 2C ≡ 3 mod7.
+
+Also from (4) a ≡ 2B+3C+1. So we can check consistency by substituting into equation (4).
+
+Let's compute using expressions A and B from 3 as variables. Solve for A and B in terms of C maybe.
+
+First, from 3: B ≡ 3 - 2C (mod7).
+
+Now plug into (1): A ≡ 3 - 2B = 3 - 2(3 - 2C) = 3 - 6 +4C = -3 +4C = 4C -3 ≡ same as (2) consistent.
+
+So we don't need the second equation; fine.
+
+Hence A ≡ 4C -3, B ≡ 3 -2C mod7.
+
+Now we also need (4) consistency: A ≡ 2B + 3C +1 mod7.
+
+Compute 2B + 3C +1 = 2*(3 - 2C) + 3C +1 = 6 -4C + 3C +1 = 7 - C = -C (since 7≡0). So 2B + 3C +1 ≡ -C mod7.
+
+Thus A ≡ -C mod7. But we also have A ≡ 4C -3. So set 4C -3 ≡ -C mod7 => 4C -3 + C ≡ 0 => 5C -3 ≡ 0 => 5C ≡ 3 mod7 => multiply by inverse of 5 mod7: 5*? 5*3=15≡1 mod7? 14 mod7=0 => 5*3=15≡1. So inverse of 5 is 3. Multiply both sides by 3: C ≡ 3*3=9≡2 mod7. So C ≡ 2 mod7.
+
+Thus C ≡ 2 (mod7). Then other residues:
+
+C ≡ 2 -> A ≡ 4*C -3 =8 -3=5 ≡ 5 mod7. B ≡3 -2C = 3 - 4 = -1 ≡ 6 mod7.
+
+Check A ≡ -C? Since -C ≡ -2 ≡ 5 mod7. Yes A ≡5.
+
+So (A,B,C) = (5, 6, 2) modulo 7.
+
+Now compute D (mod7) using D ≡ 1 -2B +4C = 1 - 2*6 +4*2 = 1 -12 +8 = -3 => 4 mod7. Or using D ≡ A -2 +4C =5 -2 +8 =11 -> 4 mod7. Or D ≡ A -2B +4 = 5 -12 +4 = -3 => 4 mod7. Good.
+
+So D ≡ 4 mod7. Also we must ensure that each digit itself is 0-9 and consistent with residue.
+
+Now we need to find digits a,b,c,d such that:
+
+a ≡ 5 (mod7), b ≡ 6 (mod7), c ≡ 2 (mod7), d ≡ 4 (mod7).
+
+Digits 0-9, a≥1.
+
+Therefore we can produce all digits that satisfy these residues:
+
+Let a=5,12,19,... but within 0-9 => a=5 or 12? Can't. a=5 only. But need a 1-9; a=5 is allowed. But also digits like a=5? Wait 5 mod7: 5,12 (but 12>9). So only a=5.
+
+b=6 or 13? 13>9. So b=6 only.
+
+c=2 or 9? 9>9? 9 is 9-7=2 so 9 also allowed: 9 mod7=2. So c can be 2 or 9.
+
+d=4 or 11? 11>9, so only 4.
+
+Thus we have a=5, b=6, c=2 or 9, d=4. 4-digit numbers: 5 6 2 4 or 5 6 9 4.
+
+Now we need the greatest such N. We compare c=9 vs 2. 5 6 9 4 > 5 6 2 4. So maximum N = 5694.
+
+Now we need Q and R of division by 1000. That means 5694 divided by 1000 => quotient = 5, remainder = 694. So Q=5 R=694 => Q+R = 5 + 694 = 699.
+
+Check that 5694 is four-digit? yes, digits 5,6,9,4.
+
+Now we must verify that replacing each digit with 1 yields divisible by 7:
+
+Compute 1694? Wait 559? Let's test each.
+
+1) Replace thousands digit: 1694? Actually 1 6 9 4 = 1694. Check mod7: 1694 / 7? 7*242=1694. Yes divisible.
+
+2) Replace hundreds digit: 5 1 9 4 = 5194. 5194/7? 7*742=5194 (since 742*7=5194). yep.
+
+3) Replace tens digit: 5 6 1 4 = 5614. 5614/7? 7*802=5614? 7*802=5614 exactly. Good.
+
+4) Replace ones digit: 5 6 9 1 = 5691. 5691/7? 7*813=5691 yes. So works.
+
+Thus final.
+
+Need answer: Q+R = 699. Provide final answer in proper format.
+
+Thus final answer:  \boxed{699}.
+
+Check careful: must ensure there are no other higher numbers; maybe we might find a larger (5,6,9,4) is indeed max. But what about any other residues causing a >5? Wait we found that a must be 5 mod7. The only a <=9 with that residue is 5, 12 not allowed. So only a=5. Could there be something else with a 12? But 12 not allowed because 4-digit number should be 12??? obviously not. So only a=5.
+
+Hence answer is 699.
+
+Just to double-check: Are there other solutions with a=5 (digit 5) but maybe b=6? Then c=2 or 9. d=4. So two numbers. 5694 > 5624 and 5694 is the maximum. So satisfied.
+
+Thus final answer.<|end|><|start|>assistant<|channel|>final<|message|>Let the four‑digit number \(N\) be \(N = 1000a+100b+10c+d\) where \(a,b,c,d\in\{0,1,\dots ,9\}\) and \(a\ge1\).  
+We require that the number obtained by replacing any one of its digits with \(1\) is divisible by \(7\).
+
+---
+
+### 1.  Congruence conditions
+
+Using \(1000\equiv 6\pmod 7\), \(100\equiv 2\pmod 7\) and \(10\equiv 3\pmod 7\) we obtain  
+
+\[
+\begin{aligned}
+&\text{Change thousand digit:}&6&+2b+3c+d\equiv0 \pmod 7,\\
+&\text{Change hundred digit:}&6a+2+3c+d\equiv0 \pmod 7,\\
+&\text{Change ten digit:}&6a+2b+3+d\equiv0 \pmod 7,\\
+&\text{Change unit digit:}&6a+2b+3c+1\equiv0 \pmod 7.
+\end{aligned}
+\]
+
+Let’s denote the residues modulo \(7\) as \(A=a\bmod7,\;B=b\bmod7,\;C=c\bmod7,\;D=d\bmod7\).
+
+From the first three equations we obtain  
+
+\[
+\begin{aligned}
+D &\equiv 1-2B+4C,\\
+D &\equiv A-2+4C,\\
+D &\equiv A-2B+4.
+\end{aligned}
+\]
+
+Equating the first two gives \(A\equiv 3-2B\),  
+equating the first and third gives \(A\equiv4C-3\),  
+equating the last two gives \(B\equiv 3-2C\).
+
+Finally, the fourth condition yields  
+
+\[
+A \equiv 2B+3C+1 \pmod 7 .
+\]
+
+Substituting \(A=3-2B\) and \(B=3-2C\) gives
+\[
+3-2B \equiv 2B+3C+1
+\quad\Longrightarrow\quad
+5C-3\equiv0\pmod7\Longrightarrow C\equiv2\pmod7.
+\]
+
+Thus  
+
+\[
+C\equiv2,\qquad B\equiv3-2C\equiv6,\qquad A\equiv4C-3\equiv5\pmod7.
+\]
+
+The third equation gives \(D\equiv 4\pmod7\).  
+So, in residues:
+\[
+a\equiv5,\qquad b\equiv6,\qquad c\equiv2,\qquad d\equiv4\pmod7 .
+\]
+
+---
+
+### 2.  Actual digits
+
+The digits must be \(0\le a,b,c,d\le9\), and \(a\ge1\).  
+The only possibilities consistent with the residues are
+
+\[
+\boxed{a=5,\quad b=6,\quad c=2\text{ or }9,\quad d=4}.
+\]
+
+Hence the two admissible four‑digit numbers are \(5624\) and \(5694\).  
+The greatest of these is \(N = 5694\).
+
+---
+
+### 3.  Verification
+
+- \(1694\) (change thousand digit) \(= 7\cdot242\)
+- \(5194\) (change hundred digit) \(= 7\cdot742\)
+- \(5614\) (change ten digit) \(= 7\cdot802\)
+- \(5691\) (change unit digit) \(= 7\cdot813\)
+
+All divisible by \(7\).  
+
+---
+
+### 4.  Quotient and remainder
+
+\(N = 5694\) divided by \(1000\):
+
+\[
+\frac{5694}{1000} = 5 \text{ remainder } 694.
+\]
+
+So \(Q = 5,\; R = 694\), and  
+
+\[
+Q + R = 5 + 694 = 699 .
+\]
+
+\[
+\boxed{699}
+\]

@@ -1,66 +1,77 @@
-# Lossy speculative decoding on GPT-OSS-20B
+# Reasoning loops under relaxed speculative decoding (GPT-OSS-20B)
 
 Speculative decoding is normally lossless: a drafted token is kept only with
 probability `p(x)/q(x)`, which preserves the target model's distribution exactly.
 Relax that rule and you go faster, because more draft tokens survive — but the
 output is no longer a sample from the target.
 
-This asks what that costs on hard reasoning problems. The answer, on AIME24:
-**accuracy drops from 9/10 to 6/10**, and every lost answer is a run that never
-finishes rather than one that finishes wrongly.
+This asks what that costs on hard reasoning problems. On all 30 AIME24 problems
+at one seed, with a freshly started server for every measurement, the answer is:
+**the model thinks ~1.45× longer for the same problem**, and it fails by not
+terminating rather than by answering wrongly. Accuracy itself is
+indistinguishable between the arms at this sample size (23/30 vs 21/30).
+
+An earlier 10-problem pilot on a shared server reported 9/10 → 6/10. That
+contrast was confounded by request position and does not survive the control —
+see [RESULTS.md](RESULTS.md#what-changed-against-the-shared-server-pilot).
 
 ## The setting
 
 One knob, everything else fixed. Lenience relaxes the acceptance test by a factor
-β ∈ (0,1]:
+λ ∈ (0,1]:
 
 ```
-strict   accept iff  p(x) / q(x)       >= u        (β = 1, lossless)
-lenient  accept iff  p(x) / (β · q(x)) >= u        (β < 1, lossy)
+strict   accept iff  p(x) / q(x)       >= u        (λ = 1, lossless)
+lenient  accept iff  p(x) / (λ · q(x)) >= u        (λ < 1, lossy)
 ```
 
-Smaller β lowers the bar, so tokens the target would have rejected get emitted
-anyway. We compare β=1.0 against β=0.2 with the same target, drafter, seed,
-prompts, and request order — the acceptance test is the only difference.
+Smaller λ lowers the bar, so tokens the target would have rejected get emitted
+anyway. We compare λ=1.0 against λ=0.2 with the same target, drafter, seed and
+prompts — the acceptance test is the only difference.
+
+Rejection recovery is untouched: rejected positions still resample from the stock
+residual `norm(max(0, p − q))`, and the bonus token still comes from `p`. In the
+taxonomy of Xia et al. this is **mentored decoding with λ = 1 − α**. Their β is a
+different parameter, fixed at 1 there — an earlier version of this repo called
+the knob β, which misidentified the method.
 
 ## The patch
 
 vLLM has no acceptance-threshold knob (`rejection_sample_method` offers only
 `standard`, `synthetic`, `block`), so Lenience needs a one-line change to the
-verifier. Against upstream vLLM 0.26.0, the substance is:
+verifier. The whole semantic change, against upstream vLLM 0.26.0:
 
 ```diff
---- vllm/v1/sample/rejection_sampler.py (upstream 0.26.0)
-+++ vllm/v1/sample/rejection_sampler.py (patched)
-@@ -787,6 +817,7 @@
-     synthetic_conditional_rates_ptr,
-+    lenience_beta,  # scalar; 1.0 for the strict rule
-     NO_DRAFT_PROBS: tl.constexpr,
-@@ -829,7 +860,11 @@
 -                accepted = draft_prob > 0 and target_prob / draft_prob >= uniform_prob
 +                accepted = (
 +                    draft_prob > 0
-+                    and target_prob / (draft_prob * lenience_beta) >= uniform_prob
++                    and target_prob / (draft_prob * lenience_factor) >= uniform_prob
 +                )
 ```
 
-plus threading the value through at the kernel launch and reading β at import.
-Full diff in [`patches/`](patches/), re-apply with `bash patches/apply.sh`.
+Everything else is plumbing: threading λ to the kernel launch, reading it at
+import, one log line. Full unified diff in
+[`patches/vllm-0.26.0-lenience.patch`](patches/vllm-0.26.0-lenience.patch);
+apply with `bash patches/apply.sh`, which verifies the upstream and patched
+sha256 of both files and then runs an acceptance test.
 
-At β=1.0 the multiply is the identity, so the control arm is provably the stock
-verifier — that is what makes this a clean single-variable contrast.
+At λ=1.0 the multiply is the identity, so the control arm is *semantically* the
+stock verifier. The kernel is still recompiled with an extra argument, so
+"bit-identical" is an empirical claim, not a proof — see the open items below.
 
 Two things cost real time and are worth knowing before touching this:
 
 - **vLLM ships two model runners.** `use_v2_model_runner` is unset by default and
   this config picks V1. Patching only the V2 kernel changes nothing at all — the
-  lossy arm comes out bit-identical to strict, which looks like a null result.
-  Both files are patched.
+  lossy arm comes out identical to strict, which looks like a null result.
+  Both files are patched, and `patches/test_lenience.py` drives the V1 kernel
+  directly (no model, no server) to prove λ reaches it.
 - **Environment variables never reach the sampler.** EngineCore is spawned with a
-  sanitised environment; `LENIENCE_BETA` was verified present in the API server's
-  `/proc/<pid>/environ` and absent from EngineCore's. β is passed via the file
-  `.lenience_beta`, and the patched module prints the value it loaded to stderr so
-  the server log proves what actually ran.
+  sanitised environment; the env var was verified present in the API server's
+  `/proc/<pid>/environ` and absent from EngineCore's. λ is passed via the file
+  `/tmp/lossy-spec-decode-lenience-$UID` — uid-scoped, not repo-relative, so a
+  clone in any directory agrees with the patch — and the patched module prints
+  the value it loaded to stderr, which the runner scrapes into every run record.
 
 ## Environment
 
@@ -80,33 +91,71 @@ verified by running. Details and the rebuild commands are in
 Two settings are not optional. **Prefix caching is disabled**: with it on, a
 request that reuses cached prompt KV takes a different numeric path than one that
 recomputes it. And **results depend on request position** — case_001 gives 1,711
-tokens as the first request on a server and 2,485 as the second. Each arm must be
-a fresh server running all cases in the same order, or the comparison is
-meaningless.
+tokens as the first request on a server and 2,485 as the second.
+
+Running both arms as fresh servers issuing the same cases in the same order is
+*not* sufficient to control that. By the second case the two arms have already
+emitted different numbers of tokens and consumed different numbers of RNG draws,
+so equal ordinal position does not mean equal engine state. The fix is one
+server per measurement:
+
+```bash
+.venv-vllm/bin/python scripts/fresh_server_replay.py \
+  --arms strict lossy --lenience-factor 0.2 \
+  --cases $(printf 'case_%03d ' $(seq 1 30)) --seeds 0 \
+  --prompt-root prompts/aime24 --runs-root runs/aime24_fresh
+```
+
+Every request is then the first request its engine ever sees, on both arms. The
+runner asserts this from `/metrics` (`--assert-fresh-server`) and records the
+ordinal in each `config.json`, so a warm request cannot be archived as a cold
+one. Everything reported below has this control; it cost about 1.5h for 60 runs.
+
+It mattered. On the ten problems the pilot shared a server for, only `case_001`
+— ordinal 1 in both — reproduced exactly. Every later case moved, and two of the
+pilot's three lossy-only failures stopped being lossy-only.
+
+## Prompts
+
+`prompts/aime24/` holds all **30** AIME 2024 problems (`HuggingFaceH4/aime_2024`
+train, ids 60–89), Harmony-rendered at `reasoning_effort=medium`, 125–455 input
+tokens. Rebuild them with:
+
+```bash
+.venv-vllm/bin/python scripts/build_aime24_prompts.py \
+  --rows-json prompts/aime24/source_rows.json --output prompts/aime24 --replace-output
+```
+
+`source_rows.json` is the archived dataset response, so the build is offline and
+deterministic; re-rendering reproduces every existing `rendered_prompt.txt` byte
+for byte.
 
 ## Tests and results
 
-10 AIME24 problems, Harmony-rendered at `reasoning_effort=medium`, one seed.
-Data in `runs/aime24/`, full write-up in [RESULTS.md](RESULTS.md).
+All 30 AIME24 problems, one seed, one fresh server per measurement. Data in
+`runs/aime24_fresh/`, full write-up in [RESULTS.md](RESULTS.md). Grade it
+yourself with `scripts/grade_aime.py --runs-root runs/aime24_fresh`.
 
-| | strict (β=1.0) | lossy (β=0.2) |
-|---|---:|---:|
-| correct answers | **9/10** | **6/10** |
-| hit the 32,768 cap | 0/10 | 3/10 |
-| never emitted a `final` channel | 0/10 | 3/10 |
-| mean accepted draft tokens/round (l̄) | 2.250 | 3.415 |
-| length inflation (geometric mean) | — | 1.44× |
+| | strict (λ=1.0) | lossy (λ=0.2) | paired test |
+|---|---:|---:|---|
+| mean accepted draft tokens/round (l̄) | 2.205 | **3.458** | higher in **30/30** |
+| length inflation (geometric mean) | — | **1.45×** | t(29)=3.04, sign p=0.016 |
+| hit the 32,768 cap | 3/30 | **7/30** | McNemar p=0.219 |
+| never emitted a `final` channel | 3/30 | **7/30** | — |
+| correct answers | 23/30 | 21/30 | McNemar p=0.625 |
+| wrong answers | 4/30 | 2/30 | — |
 
-l̄ rising in all ten cases is the mechanical proof the patch is live: a lower bar
+**Length is the effect that holds up.** It survives dropping every pair where
+either arm hit the cap (1.35×, t=2.20), so it is not a censoring artefact. l̄
+rising in all 30 cases is the mechanical proof the patch is live: a lower bar
 accepts more draft tokens by construction.
 
-The three lost answers are *exactly* the three runs that hit the cap. Lenience
-never produced a wrong answer — it produced no answer, by spending the entire
-budget inside the `analysis` channel. `case_004` is wrong under both rules, which
-is a useful control: the lossy rule does not simply degrade everything.
-
-The length statistic is weaker than it looks (paired mean log ratio 0.362, but
-t(9)=1.55, and three ratios are censored at the cap). Don't lean on it.
+**Accuracy is not.** 23/30 vs 21/30 is nothing at this n. What is asymmetric is
+the *failure mode*: lossy loses 7 answers to non-termination and 2 to wrongness,
+strict loses 3 and 4. Lenience mostly doesn't make the model answer incorrectly,
+it makes it not answer — on `case_030` the lossy run derives the correct answer
+inside its reasoning, asserts it three times, and then never opens a `final`
+channel, while strict terminates cleanly on a wrong answer.
 
 ## Self-correction markers
 
@@ -114,52 +163,23 @@ t(9)=1.55, and three ratios are censored at the cap). Don't lean on it.
 arms, normalised per 1000 generated tokens — raw counts would just re-measure the
 length difference.
 
-Markers per 1000 generated tokens, summed over 10 cases (strict: 85,580 tok, lossy: 154,655 tok).
+```bash
+.venv-vllm/bin/python scripts/analyze_markers.py --runs-root runs/aime24_fresh \
+  --arms strict lenience0p2 --labels strict lossy
+```
 
-| marker | strict /1k | lossy /1k | ratio |
-|---|---:|---:|---:|
-| wait | 2.89 | 3.66 | 1.27x |
-| hmm | 0.06 | 0.10 | 1.66x |
-| actually | 1.66 | 2.80 | 1.69x |
-| oops | 0.00 | 0.03 | - |
-| mistake | 0.02 | 0.14 | 5.81x |
-| should be | 0.11 | 0.07 | 0.68x |
-| recompute | 0.07 | 0.10 | 1.48x |
-| recheck | 0.30 | 0.11 | 0.36x |
-| redo | 0.00 | 0.00 | - |
-| let's compute | 1.44 | 2.14 | 1.49x |
+Over 30 cases (strict 301,303 tok, lossy 443,343 tok):
 
 | group | strict /1k | lossy /1k | ratio |
 |---|---:|---:|---:|
-| **hesitation** | 4.60 | 6.59 | **1.43x** |
-| **error-flag** | 0.13 | 0.21 | **1.61x** |
-| **rework** | 1.81 | 2.35 | **1.30x** |
+| **hesitation** | 4.66 | 6.02 | **1.29×** |
+| **error-flag** | 0.30 | 0.13 | 0.44× |
+| **rework** | 1.47 | 1.65 | 1.12× |
 
-Per-case totals across all markers, per 1k tokens:
-
-| case | strict | lossy | ratio |
-|---|---:|---:|---:|
-| case_001 | 2.9 | 3.2 | 1.08x |
-| case_002 | 11.5 | 13.0 | 1.12x |
-| case_003 | 6.2 | 7.8 | 1.27x |
-| case_004 | 5.0 | 4.1 | 0.82x |
-| case_005 | 7.6 | 9.6 | 1.26x |
-| case_006 | 5.0 | 9.6 | 1.92x |
-| case_007 | 4.9 | 9.1 | 1.88x |
-| case_008 | 5.1 | 3.6 | 0.70x |
-| case_009 | 6.8 | 6.1 | 0.89x |
-| case_010 | 4.8 | 3.7 | 0.78x |
-
-lossy higher in 6/10 cases.
-
-The aggregate direction matches the hypothesis: hesitation up 1.43x, explicit
-error-flagging up 1.61x, rework up 1.30x, and "mistake/wrong/miscalc" up 5.8x off
-a small base.
-
-But it is only **6/10 per case**, and the two largest movers are case_006 (1.92x)
-and case_007 (1.88x). Four cases go the other way. So this is corroborating
-evidence for the mechanism where it occurs, not a detector — it does not
-cleanly separate the arms, and it would not have flagged case_003.
+Hesitation is up 1.29× and higher in 24/30 cases. But error-flagging goes the
+*other* way, and the "mistake/wrong/miscalc" marker that read 5.8× on the
+10-case pilot reads 0.38× here — it was a small-base artefact. This is weak
+corroboration for hesitation, not a detector: it does not separate the arms.
 
 ## Hypothesis
 
@@ -167,8 +187,8 @@ The degeneration is not the model losing coherence. Its reasoning stays valid; t
 *digits* get corrupted on emission, and the model's own error-checking then traps
 it.
 
-In `case_006` the model asserts 23 distinct values for a single product
-(`13,026,069 × 1,102,721`) across 165 assertions, only 6% correct. The errors are
+In the pilot's `case_006` run the model asserts 23 distinct values for a single
+product (`13,026,069 × 1,102,721`) across 165 assertions, only 6% correct. The errors are
 `+1,500`, `−10,000`, `+600,000`, `−13,026,069` — single-digit place values and one
 exactly-one-operand slip, which is what forced-in draft tokens should look like.
 It catches itself constantly ("wait" ×114, "actually" ×84):
@@ -180,10 +200,54 @@ So the loop is: emit corrupted digits → detect the inconsistency → recompute
 get corrupted again. The wrong value is still being asserted 98% of the way
 through the output. It never converges.
 
-**This explains two of the three failures, not all three.** `case_002` is the same
-shape in symbolic form (recomputing `AD^2`/`BD` ~8× more often than strict).
-`case_003` is different — exploration density is flat, it simply case-splits
-combinatorially for 2.5× longer without concluding. So there are at least two
-lossy failure modes, and a numeric-corruption detector would catch only the first.
-The signals that caught all three are the coarse ones: cap hit, missing `final`
+That case study comes from the shared-server pilot, so read it as a mechanism
+sketch rather than evidence. The corroborating observation in the controlled
+data is `case_030`, where the lossy run reaches the correct answer in its
+reasoning and still never stops.
+
+**One mechanism does not cover every failure.** In the pilot, `case_003` showed
+flat exploration density — it simply case-split combinatorially for 2.5× longer
+without concluding, no digit corruption involved. So there are at least two lossy
+failure modes, and a numeric-corruption detector would catch only the first. The
+signals that catch all of them are the coarse ones: cap hit, missing `final`
 channel, lost answer.
+
+## Reproduce
+
+```bash
+bash patches/apply.sh          # verifies hashes, applies, runs the kernel test
+
+# control arm: lossless verifier, one server per measurement
+# lossy arm: same command with --arms lossy
+.venv-vllm/bin/python scripts/fresh_server_replay.py \
+  --arms strict lossy --lenience-factor 0.2 \
+  --cases case_001 case_002 case_003 case_004 case_005 \
+          case_006 case_007 case_008 case_009 case_010 \
+  --seeds 0 --temperature 1.0 --max-new-tokens 32768 \
+  --prompt-root prompts/aime24 --runs-root runs/aime24_fresh
+
+.venv-vllm/bin/python scripts/grade_aime.py --runs-root runs/aime24_fresh
+```
+
+The shared-server form the archived `runs/aime24/` used is in
+[RESULTS.md](RESULTS.md#reproduce). Either way the lossy arm is invoked as
+`--mode lossy --lossy-method lenience --lenience-factor 0.2`, and the runner
+refuses to write a run directory unless the factor the server actually loaded
+matches.
+
+## What this does not establish
+
+- **An accuracy effect.** 23/30 vs 21/30, McNemar p=0.625. There isn't one in
+  this data. The pilot's apparent 9/10 → 6/10 was confounded by request order.
+- **A non-termination effect.** 7/30 vs 3/30 is the right direction but
+  p=0.219. Suggestive only.
+- **Stability of any single case.** Per-case outcomes moved substantially when
+  request position changed, so one seed per case is an anecdote. The fix is 5–10
+  seeds reported as *rates* (`scripts/grade_aime.py` prints that table).
+- **That λ=1.0 is bit-identical to unpatched vLLM.** It is semantically the same
+  expression, and the kernel unit test confirms the acceptance boundary, but the
+  end-to-end control (unpatched stock vs patched λ=1.0, token-for-token) has not
+  been run.
+(The length effect *is* established here — 1.45×, t(29)=3.04, 1.35× and t=2.20
+after dropping every censored pair — which is the reverse of what the 10-case
+pilot suggested.)
