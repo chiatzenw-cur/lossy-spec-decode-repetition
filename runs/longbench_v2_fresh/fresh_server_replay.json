@@ -527,6 +527,182 @@
           "server_log": "logs/fresh_longbench_v2/lenience0p01_case_060_seed0_20260805T124133Z.log"
         }
       ]
+    },
+    {
+      "timestamp_utc": "2026-08-05T13:08:58.016374+00:00",
+      "arms": [
+        "spec_casc_opt"
+      ],
+      "lenience_factor": 0.2,
+      "command": [
+        "scripts/fresh_server_replay.py",
+        "--arms",
+        "spec_casc_opt",
+        "--spec-casc-alpha",
+        "0.05",
+        "--prompt-root",
+        "prompts/longbench_v2",
+        "--runs-root",
+        "runs/longbench_v2_fresh",
+        "--log-root",
+        "logs/fresh_longbench_v2",
+        "--max-new-tokens",
+        "8000",
+        "--cases",
+        "case_061",
+        "case_062",
+        "case_063",
+        "case_064",
+        "case_065",
+        "case_066",
+        "case_067",
+        "case_068",
+        "case_069",
+        "case_070",
+        "case_071",
+        "case_072",
+        "case_073",
+        "case_074",
+        "case_075",
+        "--trace-proposals"
+      ],
+      "runs": [
+        {
+          "case": "case_061",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 92.1,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_061_seed0_20260805T124926Z.log"
+        },
+        {
+          "case": "case_062",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 70.4,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_062_seed0_20260805T125058Z.log"
+        },
+        {
+          "case": "case_063",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 88.6,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_063_seed0_20260805T125208Z.log"
+        },
+        {
+          "case": "case_064",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 93.6,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_064_seed0_20260805T125337Z.log"
+        },
+        {
+          "case": "case_065",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 75.2,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_065_seed0_20260805T125511Z.log"
+        },
+        {
+          "case": "case_066",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 78.4,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_066_seed0_20260805T125626Z.log"
+        },
+        {
+          "case": "case_067",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 70.3,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_067_seed0_20260805T125744Z.log"
+        },
+        {
+          "case": "case_068",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 72.5,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_068_seed0_20260805T125855Z.log"
+        },
+        {
+          "case": "case_069",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 75.7,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_069_seed0_20260805T130007Z.log"
+        },
+        {
+          "case": "case_070",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 81.7,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_070_seed0_20260805T130123Z.log"
+        },
+        {
+          "case": "case_071",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 74.9,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_071_seed0_20260805T130244Z.log"
+        },
+        {
+          "case": "case_072",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 72.0,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_072_seed0_20260805T130359Z.log"
+        },
+        {
+          "case": "case_073",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 85.4,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_073_seed0_20260805T130511Z.log"
+        },
+        {
+          "case": "case_074",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 69.7,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_074_seed0_20260805T130637Z.log"
+        },
+        {
+          "case": "case_075",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p05",
+          "status": "ok",
+          "wall_time_seconds": 71.1,
+          "server_log": "logs/fresh_longbench_v2/specCascOpt0p05_case_075_seed0_20260805T130746Z.log"
+        }
+      ]
     }
   ]
 }

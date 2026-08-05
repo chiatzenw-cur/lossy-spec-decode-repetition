@@ -1,0 +1,1108 @@
+<|channel|>analysis<|message|>We need determine total gold each player wins. Since 10 players, each round, if sum > 100, no one gets golds; else each gets their bid amount. So we calculate totals for each player's record considering the round's total proposal given.
+
+The round_records show each round's total_proposal (sum of all bids). We need to combine with each player's record to compute utility. Let's list each player's record from data: They have 20 records (bids) per player. The utility array already contains the gold obtained for each player per round. They derived the outcome: bid amount if sum <=100 else 0. We can just sum their utility array.
+
+We need to find total gold for each player. We have utility arrays in player_0 to player_9. So we can sum for each.
+
+Let's compute quickly.
+
+Player_0: utility array: [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0? Wait given: 
+"utility": 
+[
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+But for player_0 we have 20 numbers: let's confirm:
+
+Records: 10,10,9,11,8,9,7,9,10,9,10,8,9,10,9,9,9,9,9,9
+
+Utility: 10,0,9,0,8,0,7,0,0,0? Wait confusion. Actually they list:
+
+"utility": [
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+       0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+But earlier summary shows 10,0,9,0,8,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0? The given inconsistent. Let's re‑validate from dataset:
+
+For player_0 section: "utility" array is:
+
+[
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+But earlier maybe mis-copied. The Provided snippet:
+
+"utility": [
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+Ok.
+
+But we only need to compare four players (player_3,4,7,9). Let's compute totals for each.
+
+We'll sum each player's utility array.
+
+Player_3: Let’s list utility numbers from snippet:
+
+"utility": [
+        10,
+        0,
+        9,
+        0,
+        10,
+        0,
+        8,
+        0,
+        10,
+        9,
+        0,
+        0,
+        8,
+        10,
+        9,
+        0,
+        9,
+        0,
+        8,
+        9
+      ]
+
+Wait check: Provided snippet for player_3:
+
+"You have to calculate the total gold. utility: [10,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]?" but need check.
+
+Let's directly refer to dataset snippet for player_3: I'm scrolling the snippet where player_3 is defined:
+
+"player_3:" ... after 'records': array, then "utility": [
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+But I'm not seeing full; I need to locate precisely, but earlier line truncated. Let's scroll back near player_3 part:
+
+It shows:
+
+"player_3": {... "records": [...], "utility": [ ... ] }.
+
+The snippet listed:
+
+```
+        "reward": [ ... } ??? 
+```
+
+But I recall reading player_3's utility line earlier: 
+```
+"utility": [
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+```
+
+But I'm not certain. Let's re-check the snippet above: Provided snippet for player_3 includes "records": ... "utility": [ ... ].
+
+In the snippet at "player_3" I see:
+
+```
+"player_3": {
+      "model": "Qwen/Qwen2-72B-Instruct",
+      "id": "player_3",
+      ...
+      "records": [
+        10,
+        11,
+        9,
+        12,
+        10,
+        11,
+        8,
+        10,
+        10,
+        9,
+        10,
+        8,
+        9,
+        10,
+        9,
+        8,
+        9,
+        10,
+        8,
+        9
+      ],
+      "utility": [
+        10,
+        0,
+        9,
+        0,
+        0,
+        0,
+        9?
+        ...
+```
+
+Actually after "records": list: 10,11,9,12,10,11,8,10,10,9,10,8,9,10,9,8,9,10,8,9. That's 20 numbers. Then utility shows many numbers similar: let's compute using pattern: For each round: if total <=100 => gets bid. For 20 rounds, we can determine.
+
+We also have round_records: list of all 20 total_proposal values for each round. Let's list with round index 1-20:
+
+Round 1: [100, 101, 90, 112, 87, 101, 82, 99, 99, 95, 102, 87, 93, 97, 95, 95, 96, 94, 93, 93. 20 items.
+
+Yes. So we can compute for each prize.
+
+Thus who wins the most golds: sum of each player's utility. We only need efficient computing for these four.
+
+We can manually compute sums:
+
+For each player, we need to get 20 series of bids.
+
+Let's compute for each player:
+
+Player_3: records list 10,11,9,12,10,11,8,10,9,9,10,8,9,10,9,8,9,10,8,9. Let's compute utility: For each round, if total <=100, utility = bid; else 0. Let's compute:
+
+Round 1: total 100, <=100 => utility = 10. So 10.
+
+Round 2: total 101, >100 => 0.
+
+Round 3: total 90 -> 0.
+
+Round 4: total 112 -> 0.
+
+Round 5: total 87 -> 0.
+Round 6: 101 -> 0.
+Round 7: 82 -> 0.
+Round 8: 99 -> 0.
+Round 9: 99 -> 0.
+Round 10: 95 -> 0.
+Round 11: 102 -> 0.
+Round 12: 87 -> 0.
+Round 13: 93 -> 0.
+Round 14: 97 -> 0.
+Round 15: 95 -> 0.
+Round 16: 95 -> 0.
+Round 17: 96 -> 0.
+Round 18: 94 -> 0.
+Round 19: 93 -> 0.
+Round 20: 93 -> 0.
+So only round 1 gives value 10. So total=10.
+
+But check earlier utility arrays show some positive values after round 1? Let's verify: our calculation says only round 1 gave 10, so total 10. But maybe some other rounds have totals <=100? Let's verify again totals: 1:100,2:101,3:90,4:112,5:87,6:101,7:82,8:99,9:99,10:95,11:102,12:87,13:87,14:97,15:95,16:95,17:96,18:94,19:93,20:93, yes. Wait the 13th round's total 87? Let's check: The list says round 13 total 87? Wait earlier list: after 10, at 11: 102, 12: 87, 13: 93, 14: 97, 15: 95, 16: 95, 17: 96, 18: 94, 19: 93, 20: 93. Actually we listed 13th as 93. So values <=100 except for 2,4,6,10,11,12,14,15,16,17,18,19,20: 95 etc all <=100. So many rounds have total <=100.
+
+Thus I mis-evaluated: numbers >100. Let's compute again all totals:
+
+Indices can summarize:
+
+Round1: 100, <=100 => value 10.
+Round2: 101, >100 => 0.
+Round3: 90, >100 => 0.
+Round4: 101? Wait we have 4: 112? Actually round sees cumulative 101? Let's compute actual table:
+
+From round_records column: list total_proposal at each row:
+
+1
+2: 100
+3: 105
+4: 112
+5: 87
+6: 101
+7: 101? Wait no, row 7: 101? Wait check row 7: 101? Actually row 7 has 101? Wait row 7: `101`? Let's re-check: sequence:
+
+round_records:
+1: 100
+2: 101
+3: 90
+4: 112
+5: 87
+6: 101
+7: 101? Wait row 7:"101"? Actually row 7: `101`? No, row 7: "101"? Let's check: row 7's total_proposal = 101? My confusion: row 7 shows: "20100"? Let's scroll to given:
+
+Round 1: 100
+Round 2: 101
+Round 3: 90
+Round 4: 112
+Round 5: 87
+Round 6: 101 (Wait from row 6: "101"? Actually row 6: "101" mis reading, but row 6: "101"? Let's re-check list: row: 1: 101, 2: 101? Wait row 6: "101"? contributions: Each row has actual values.
+
+Let's read carefully: "round_records" list shows:
+
+1: total_proposal 100
+2: 101
+3: 90
+4: 112
+5: 87
+6: 101
+7: 101?? Wait row 7 label: "101"? No, row 7: "101"? check the list: Row 7: "101"? Actually row 7 last refers to "101"? Let's list: "round_records" list is:
+
+1 count: 100
+2 count: 101
+3 count: 90
+4 count: 112
+5 count: 87
+6 count: 101
+7 count: 101? Wait re-check: the list:
+
+```
+{
+  "responses": [ ... ],
+  "total_proposal": 100
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 101
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 90
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 112
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 87
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 101
+},
+{
+  "responses": [ ... ],
+  "total_proposal": 103? Wait it says 'observed 82'??.
+
+```
+
+Let's scroll not exactly.
+
+Let's read again from the initial dataset snippet:
+
+```
+  "round_records": [
+        {
+          "responses": [ ... ],
+          "total_proposal": 100
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 105
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 90
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 112
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 87
+        },
+        "total_proposal": 101
+        "total_proposal": 101,
+        "total_proposal": 101?? Wait confusion.
+
+```
+
+ I'll re-check provided: It's at top in JSON: But the snippet printed earlier at top: 
+```
+"round_records": [
+        {
+          "responses": [ ... ],
+          "total_proposal": 100
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 105
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 90
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 112
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 87
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 101
+        },
+        ...
+```
+
+Thus the list for Round 2 is 105, not 101. Right.
+
+Let's re-check: Actually we need to parse the entire "round_records" list:
+
+I see earlier:
+
+```
+"round_records": [
+        {
+          "responses": [ ... ],
+          "total_proposal": 100
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 105
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 90
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 112
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 87
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 101
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 82
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 99
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 99
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 95
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 102
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 87
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 93
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 97
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 95
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 95
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 96
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 94
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 93
+        },
+        {
+          "responses": [ ... ],
+          "total_proposal": 93
+        }
+      ],
+```
+
+Wait we have 20 rows indeed. Let's confirm each "total_proposal" line:
+
+1: 100
+2: 105
+3: 90
+4: 112
+5: 87
+6: 101
+7: 101? Wait row 7: 101? Actually earlier we saw 101? Hmm
+
+Let's re-read the snippet after row 6 is 101? The snippet shows "list with 101" at row 6; but after that line 7: "82" at row 7: as 'total_proposal': 82. Let's re-check each number in sequence:
+
+1: 100
+2: 105
+3: 90
+4: 112
+5: 87
+6: 101
+7: 82
+8: 99
+9: 99
+10: 95
+11: 102
+12: 87
+13: 93
+14: 97
+15: 95
+16: 95
+17: 96
+18: 94
+19: 93
+20: 93
+
+Yes that matches list of rounds.
+
+Now compute each player's utility.
+
+For each player, compute sum of bids for rounds where total <=100. Let's compute for each player's bid list easily.
+
+We'll evaluate by round:
+
+Round results:
+
+R1: 100, <=100 -> success
+R2: 105, >100 -> fail
+R3: 90, <=100 -> success
+R4: 112, >100 -> fail
+R5: 87, <=100 -> success
+R6: 101, >100 -> fail
+R7: 82, <=100 -> success
+R8: 99, <=100 -> success
+R9: 99, <=100 -> success
+R10: 95, <=100 -> success
+R11: 102, >100 -> fail
+R12: 87, <=100 -> success
+R13: 93, <=100 -> success
+R14: 97, <=100 -> success
+R15: 95, <=100 -> success
+R16: 95, <=100 -> success
+R17: 96, <=100 -> success
+R18: 94, <=100 -> success
+R19: 93, <=100 -> success
+R20: 93, <=100 -> success
+
+Thus only rounds that fail: r2, r4, r6, r11. In all other rounds, players receive their bid.
+
+Thus utility for each player = sum of its bid values at all rounds except 2,4,6,11.
+
+So we need to sum player's bids across rounds 1,3,5,7,8,9,10,12,13,14,15,16,17,18,19,20. That's 16 rounds.
+
+Now compute for each player of interest.
+
+Player 3: bids [10,11,9,12,10,11,8,10,10,9,10,8,9,10,9,8,9,10,8,9] (20 numbers). We will sum excluding indexes: 2,4,6,11 -> 34? Actually indices 2,4,6,11 correspond to the 2nd,4,6,11th rounds (1-indexed). Let's identify:
+
+Round 1: 10
+Round 2: bid 11
+Round 3: 9
+Round 4: 12
+Round 5: 10
+Round 5: 10
+Wait we have mapping order: Actually we need to list all of 20.
+
+Let's list index 1-20 with value:
+
+1:10
+2:11
+3:9
+4:12
+5:10
+6:11
+7:8
+8:10
+9:10
+10:9
+11:10
+12:8
+13:9
+14:10
+15:9
+16:8
+17:9
+18:10
+19:8
+20:9
+21: Actually 20 values.
+
+Now exclude rounds 2,4,6,11. So exclude indices: 2 (index=2), 4 (index=4), 6 (index=6), 11 (index=11). Add them: 10,12,11? Wait we sum. Let's sum remaining.
+
+Compute sum of all 20-4=16 groups.
+
+We'll sum all first: -[0-10]. Let's compute cumulative sum.
+
+Ok let's calculate sum of all 20:
+
+Sum of terms: Let's add all: 
+10+11=21
++9=30
++12=42
++10=52
++11=63
++8=71
++10=81
++10=91
++9=100
++10=110
++8=118
++9=127
++10=137
++9=146
++8=154
++9=163
++10=173
++8=181
++9=190
++? Wait we had 20 numbers; we had 19? Actually we counted 20, let's recount: 1:10,2:11,3:9,4:12,5:10,6:11,7:8,8:10,9:10,10:9,11:10,12:8,13:9,14:10,15:9,16:8,17:9,18:10,19:8,20:9. 
+Now sum of all 20: 
+Let's sum until 10: we had 10+11+9+12+10+11+8+10+9+9? Wait 10th value is 9, correct. Wait we had 10 at 10? Actually 10th being? Let's list again: 1:10, 2:11,3:9,4:12,5:10,6:11,7:8,8:10,9:10,10:9,11:10,12:8,13:9,14:10,15:9,16:8,17:9,18:10,19:8,20:9.
+
+Now sum: 
+Let's sum in groups: 
+[10,11,9,12,10] = 52
++ [11,8,10,10,9] = 11+8+10+10+9=48
++ [10,8,9,10,9] = 10+8+9+10+9=46
++ [8,9,10,8,9] = 8+9+10+8+9=44
++ [?? The remaining? Wait we included up to 20. Actually we need group 5: maybe, let's sum sequentially with running total:
+
+Start 0
++10 = 10
++11 = 21
++9 = 30
++12 = 42
++10 = 52
++11 = 63
++8 = 71
++10 = 81
++10 = 91
++9 = 100
++10 = 110
++8 = 118
++9 = 127
++10 = 137
++9 = 146
++8 = 154
++9 = 163
++10 = 173
++8 = 181
++9 = 190
+
+So total 190.
+
+Now subtract 2,4,6,11:
+
+Round 2: 11
+Round 4: 12
+Round 6: 11
+Round 11: 10
+Sum of excluded: 11+12+11+10=44
+Thus sum of successful rounds: 190-44=146
+
+Thus player_3 total gold = 146.
+
+Now player 4: bids record list: [
+10
+11
+9
+12
+10
+11
+8
+10
+9
+10
+12
+11
+11
+9
+11
+10
+9
+10
+8
+10
+13: Wait mis? Let's confirm from snippet:
+
+"player_4": 
+"records": [
+10,
+11,
+9,
+12,
+10,
+11,
+12,
+11,
+10,
+12,
+11,
+11,
+10,
+9,
+11,
+10,
+12,
+10,
+9,
+10
+]
+Actually let's extract from snippet again: "player_4" earlier (the snippet list). At the part "player_4" we saw:
+
+> "player_4": {
+> "model": "Qwen/Qwen2-72B-Instruct",
+> "id": "player_4",
+> "prompt": ...,
+> "records": [
+>   10,
+>   11,
+>   9,
+>   12,
+>   10,
+>   11,
+>   8,
+>   10,
+>   9,
+>   10,
+>   12,
+>   11,
+>   10,
+>   9,
+>   11,
+>   10,
+>   12,
+>   8,
+>   10,
+>   9
+> ],
+> "utility": [ ... ]
+
+Yes list from earlier: "player_4": 
+records: 
+10,11,9,12,10,11,8,10,9,10,12,11,10,9,11,10,12,8,10,9.
+
+Yes 20 numbers.
+
+Now sum total of all 20: Let's sum:
+
+start 0
++10 =10
++11=21
++9=30
++12=42
++10=52
++11=63
++8=71
++10=81
++10=91
++9=100
++10=110
++12=122
++11=133
++10=143
++9=152
++11=163
++10=173
++12=185
++8=193
++10=203
++9=212
+Wait careful: after 20 numbers we count. Let's check we added 20 numbers but we had 21? Let's recount: 20 numbers we have: 
+1:10
+2:11
+3:9
+4:12
+5:10
+6:11
+7:8
+8:10
+9:9
+10:10
+11:12
+12:11
+13:10
+14:9
+15:11
+16:10
+17:12
+18:8
+19:10
+20:9
+
+Yes 20 numbers.
+
+Now sum again:
+
+Start 0
++10=10
++11=21
++9=30
++12=42
++10=52
++11=63
++8=71
++10=81
++10=91
++9=100
++10=110
++12=122
++11=133
++10=143
++9=152
++11=163
++10=173
++12=185
++8=193
++10=203
++9=212
+
+Yes 212. Wait we added one extra: 21 numbers? Let's re-evaluate: numbers up to 20: ... we added 21? Let's re-evaluate: I think we incorrectly added 21 numbers during summation: we started at 0 then added 10+11+9+12+10+11+8+10+9+10+10+12+11+10+9+11+10+12+8+10+9. That's 21 numbers. Actually we counted 10 twice? Let's count: add up again carefully: Perhaps the list adds 10 again at 10? let's count: 1:10,2:11,3:9,4:12,5:10,6:11,7:8,8:10,9:9,10:10,11:12,12:11,13:10,14:9,15:11,16:10,17:12,18:8,19:10,20:9. Good.
+
+Now let's sum:
+
+Start 0
+1:10
+2:11
+3:9
+4:12
+5:10
+6:11
+7:8
+8:10
+9:9
+10:10
+11:12
+12:11
+13:10
+14:9
+15:11
+16:10
+17:12
+18:8
+19:10
+20:9
+
+Use all: let's sum each group:
+
+Group 1: 10+11+9+12+10+11+8+10+9+10 = ??? Let's sum: 10+11=21, +9=30, +12=42, +10=52, +11=63, +8=71, +10=81, +9=90, +10=100. So first 10 items sum 100.
+
+Then continue: 12+11+10+9+11+10+12+8+10+9 = ??? That's 10 items: 12+11=23, +10=33, +9=42, +11=53, +10=63, +12=75, +8=83, +10=93, +9=102. So second 10 items sum 102.
+
+Total 100+102 = 202.
+
+Thus total sum is 202. I double-check earlier sum incorrectly: 212 is correct? Let's recompute: Actually we mis-summed earlier maybe due to 11 again.
+
+ Because as per grouping, 10 terms sum: 100; next 10 sum: 102 -> 202. Great.
+
+Now subtract excluded rounds 2,4,6,11.
+
+Indices: 2: 11
+4: 12
+6: 11
+11: 12
+Sum excluded: 11+12+11+12 = 46.
+
+Thus total gold = 202 - 46 = 156.
+
+Now player 7: record list: 
+"player_7": 
+"records": [
+  10,
+  10,
+  9,
+  11,
+  8,
+  10,
+  9,
+  11,
+  10,
+  9,
+  10,
+  8,
+  10,
+  10,
+  9,
+  10,
+  10,
+  10,
+  10,
+  10
+]
+
+Let's compute sum:
+
+List: 10,10,9,11,8,10,9,11,10,9,10,8,10,10,9,10,10,10,10,10
+Compute sum:
+
+First 10 items sum:
+10+10=20
++9=29
++11=40
++8=48
++10=58
++9=67
++11=78
++10=88
++9=97
++10: 107? Wait 10 items? Let's sum: 10:10,10:10,11:9,12:11,13:8,14:10,15:9,16:11,17:10,18:9,10:?? Wait we introduced 10 items incorrectly. Let's count again:
+
+Indices (1-10):
+1:10
+2:10
+3:9
+4:11
+5:8
+6:10
+7:9
+8:11
+9:10
+10:9
+
+Sum of first 10: 10+10=20
++9=29
++11=40
++8=48
++10=58
++9=67
++11=78
++10=88
++9=97
++10: Wait 10? index 10 was 9. So no 10. Actually we included 10 at index 13? Let's re-evaluate sequence of 20 values.
+
+List again precisely: 
+1:10
+2:10
+3:9
+4:11
+5:8
+6:10
+7:9
+8:11
+9:10
+10:9
+11:10
+12:8
+13:10
+14:10
+15:9
+16:10
+17:10
+18:10
+19:10
+20:10
+
+Let's compute sum systematically.
+
+We'll sum in groups of 5? Let's do:
+
+First 5: 10+10+9+11+8 = 48
++ distribute prize0? Look: 10+10=20, +9=29, +11=40, +8=48.
+
+Next 5: 10+9+11+10+9 = 49
++ sum of second group: 48 + 49 = 97
+
+Next 5: 10+8+10+10+9 = 47
++ sum of third group: 47+97 = 144
+
+Next 5: 10+10+10+10+10 = 50
++ sum of fourth group: 144+50 = 194
+
+Thus total 194.
+
+Now subtract excluded rounds 2,4,6,11:
+
+Indices: 2:11
+4: 12? Wait, round 4, index 4 has 11 because probability 11? Actually at index 4 11.
+Round 6: index 6 value 10. Wait index 6 is 10? Yes 6th round value 10.
+Round 11: index 11 value 10.
+
+Sum excluded: 11+12?? Wait this is series: 2nd round value 11 (since 2nd? It's 10? Wait row 2 we had 10? Actually our 2nd value is 10? Let's check difference: numbers for player 7 list: 10,10,9,11,8,10,9,11,10,9,10,8,... Wait index 2 = 10. Index 4 = 11. Index 6 = 10. Index 11 = 10. So excluded values: 11? Actually index 2 = 10? Wait let's recalc: 8: 1:10, 2:10, 3:9, 4:11, 5:8, 6:10, 7:9, 8:11, 9:10,10:9,11:10, etc. So excluded indices: 2:10 (not 11; exclude 10). 4: 11 ( exclude 11). 6: 10 ( exclude 10). 11: 10 ( exclude 10). Sum excluded: 10+11+10+10=41.
+
+Thus total gold = 194 - 41 = 153.
+
+Now player_9: record list: 
+"player_9": "records": [
+  10,
+  10,
+  9,
+  9,
+  8,
+  9,
+  7,
+  8,
+  9,
+  9,
+  8,
+  7,
+  7,
+  8,
+  "8",
+  "8",
+  "8",
+  "7",
+  "7",
+  "7",
+  "7"
+    ]
+Wait we need all 20 numbers: 
+- "player_9" snippet says: 
+````
+"records": [
+        10,
+        10,
+        9,
+        "9",
+        "8",
+        "9",
+        "7",
+        "8",
+        "9",
+        "9",
+        "8",
+        "7",
+        "7",
+        "8",
+        "8",
+        "8",
+        "7",
+        "7",
+        "7",
+        "7"
+      ],
+ ... "utility": ...
+```` 
+The tokens might show that the 8 numbers are 8? Actually let's list: 
+1:10
+2:10
+3:9
+4: "9" (9)
+5:8
+6:9
+7:7
+8:8
+9:9
+10:9
+11:8
+12:7
+13:7
+14: "8" (9? Actually it's 8)
+15: "8" (8)
+16: "8" (8)
+17: "7" (7)
+18: "7" (7)
+19: "7" (
