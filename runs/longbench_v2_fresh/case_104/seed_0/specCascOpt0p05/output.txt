@@ -1,0 +1,38 @@
+<|channel|>analysis<|message|>We need to find "How does Metis manage the state of RefFS?" Relevant part: In Prop "Metis managing state of RefFS"? let's review section 3.2 discussion and the slice.
+
+The question: "How does Metis manage the state of RefFS?" The options:
+
+A. Metis uses special API to command RefFS to save its state in the memory.
+B. Metis stores the state of RefFS by creating FS image on each test step.
+C. Metis rewrites the state of RefFS in a special-format file.
+D. Metis unmounts RefFS to avoid state inconsistency.
+
+We need to interpret. Let's recall the section about RefFS. In the paper, there is section 4, "RefFS: The Reference File System". It describes RefFS provides snapshot APIs for storing order. Section 4.1 "RefFS Snapshot APIs" mentions ioctl SAVE, ioctl RESTORE, etc. It says:
+
+"RefFS: snapshot APIs: ioctl SAVE, ioctl RESTORE, etc. The snapshot pool holds snapshots keyed by position; etc."
+
+We also saw earlier a part discussing state tracking for RefFS. In earlier section 3.2, we saw that for RefFS, it can store state via snapshots. But the question: "How does Metis manage the state of RefFS?" Let's check earlier had "Metis manages concrete state of RefFS" maybe we earlier loaded that during check.
+
+In the earlier part of the paper, there's a section about "Metis works with any file system... Actually, it's easier to handle different storage. Metis uses a snapshot API (RefFS) to send state command".
+
+But the question might be referencing a specific earlier part: after the abstract state description, they mentioned "Because we can't rely on the kernel's free state for user-space file systems, we used Snapshots APIs".
+
+It also says: "The snapshot pools are built into RefFS; the snapshot pool is implemented in memory; the Snapshots are stored in a memory table indexed by a key used for state exploration. When state is needed, we restore from it on demand".
+
+But the options: A and D: "μ uses special API to command RefFS to save its state in memory" — That is true because RefFS has snapshots. But is that correct? Let's check context: "Metis uses special API to command RefFS to save its state in memory" etc.
+
+Option B: "Metis stores the state of RefFS by creating FS image on each test step." That might refer to store state by making a FS image (like an image of a block device) but not at each step? Actually, they may use Snapshots to store state. Actually, earlier in "State Tracking" they mention one approach: unmount and remount to recover from on-disk state. But for RefFS, we can avoid that because of snapshot API. So does Metis manage the state of RefFS by using snapshots? The question: "How does Metis manage the state of RefFS?" So indeed, the answer: "Metis uses a special API to command RefFS to save its state in memory." Specifically, for RefFS, it's called ioctl SAVE - returning the "state" as a snapshot.
+
+However, the question could be referencing that Option B "Metis stores the state of RefFS by creating FS image on each test step." That might not be accurate. Let's read from the adaptation: earlier it says: "Metis manages the state of RefFS by sending a snapshot backup for each file-system operation, and snapshots are stored in memory".
+
+Alternatively, the answer might be "Metis does not manage the state of RefFS; it simply calls the snapshot APIs to save and restore it. So the choice is A: "Metis uses special API to command RefFS to save its state in the memory. B: 'Metis stores the state of RefFS by creating FS image on each test step." Because the Snapshots are stored in memory, not full FS image. So it would be A.
+
+Let’s reflect: The question "How does Metis manage the state of RefFS?" In the paper, they treat RefFS as a user-space file system to overcome the problem of mapping actual state. They have the internal snapshot API: "ioctl SAVE, ioctl RESTORE, etc." The state change from the memory. So the answer: They use a special API. Option A: "Metis uses special API to command RefFS to save its state in the memory." Option B: "Metis stores the state of RefFS by creating FS image on each test step." Option C: "Metis rewrites state of RefFS in a special-format file." Option D: "Metis unmounts RefFS to avoid state inconsistency." Which is correct? Let's recall that earlier in section 3.2 and "State Tracking”, they said: "To track state of RefFS, we rely on snapshot APIs." So that is A. Indeed, the snapshot pool is stored in memory, and each entry is an entire snapshot that includes superblock, inode table, etc. So Option A is correct. Let's double-check with the text: In A, "Metis uses special API to command RefFS to save its state in the memory." That matches the description: "The snapshot APIs are stored in memory and used by Metis to keep state." The snippet: "The snapshot pool holds snapshots keyed by a key. The snapshot pool holds the snapshots; the snapshot uses memory." So that indicates that state is stored in memory, not saved to disk. Option B.
+
+Thus the options: A is proper. But this in the earlier used "Metis uses special API to command RefFS to save its state in the memory." That is correct.
+
+Wait, the question might be: "How does Metis manage the state of RefFS?" Let's follow the text: "Metis manages the state of RefFS by creating a snapshot. RefFS provides snapshot APIs; Metis uses the snapshot pool to store state." The options: Option A: "Metis uses special API to command RefFS to save its state in the memory." Option B: "Metis stores the state of RefFS by creating FS image on each test step." Option C: "Metis rewrites the state of RefFS in a special-format file." Option D: "Metis unmounts RefFS to avoid state inconsistency." Option A matches that Meta & snapshot in memory. Option B implies that each test step we create an FS image. However, they may backup or snapshot. But the snapshot is not about FS image capture. Option C: rewrites state of RefFS in a special format file. In description, snapshot pool uses memory only, but they also have snapshots for persistent use; maybe they persist to disk? Actually for debugging: "ioctl PICKLE" writes to disk. But not for each step. So that's not the answer.
+
+Hence the correct answer is A? The question: "How does Metis manage the state of RefFS?" The best answer: "Metis uses special API to command RefFS to save its state in memory." That is A. Let's confirm: In the text, there is In Fig. 2: "RefFS snapshot APIs. The snapshot API creates a snapshot of the full RefFS state and stores it in memory. Then it's used by Metis." So yes.
+
+Therefore final answer: A.<|end|><|start|>assistant<|channel|>final<|message|>\boxed{A}

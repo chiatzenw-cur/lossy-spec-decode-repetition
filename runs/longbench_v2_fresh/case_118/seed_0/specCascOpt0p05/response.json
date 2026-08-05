@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-872b612c730f4d47",
+  "object": "text_completion",
+  "created": 1785941616,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to determine how many of listed products can usually be used to treat neurological disease.\n\nGiven some are medicines: BOTOX (used for muscle spasticity, cosmetic, also for cervical dystonia, chronic migraine, etc. It's used for neurological disorders too. Also Botox? For neurological disease? BOTOX for chronic migraine, cervical dystonia, spasticity. So yes.\n\nQULIPTA (atogepant) is a migraine preventive drug for migraine, a neurological condition. Yes.\n\nELAHERE (mirvetuximab) is a cancer drug: ovarian cancer. Not neurological. Likely not used for neurological diseases. So no.\n\nTavapadon? It's a D1/D5 agonist for Parkinson's disease. Parkinson's disease is neurological. So yes.\n\nSKYRIZI: risankizumab for psoriasis, Crohn's, etc. Not neurological. So no.\n\nABBV-951: drug for Parkinson's, a chronic Parkinson's disease use. Actually ABBV-951 is a Parkinson's disease therapy: it's a combination of carbidopa and levodopa prodrugs for Parkinson's. So yes.\n\npegylated liposomal doxorubicin: a chemotherapy agent used for chemotherapy, etc. Not neurological.\n\nRINVOQ: upadacitinib (JAK inhibitor) used for rheumatoid arthritis, Crohn's disease, psoriasis, atopic dermatitis, alopecia, etc. Not neurological. So no.\n\nTelisotuzumab Vedotin: ADC for NSCLC. Not neurological.\n\nDupilumab: approved for atopic dermatitis, asthma, chronic rhinosinusitis, etc. Not neurological. So no.\n\nThus list: BOTOX, QULIPTA, Tavapadon, SKyrIZI, no, ABBV-951, others no.\n\nCalculating: BOTOX (1), QULIPTA (2), Tavapadon (3), SKYRIZI? Actually SKYRIZI is not neurological. So skip. ABBV-951 (4). That's 4 products. So answer B.<|end|><|start|>assistant<|channel|>final<|message|>**B**  \n\n\\[\n\\boxed{B}\n\\]",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 26265,
+    "total_tokens": 26716,
+    "completion_tokens": 451,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

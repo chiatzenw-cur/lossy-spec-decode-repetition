@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8485a95f99d8a165",
+  "object": "text_completion",
+  "created": 1785943886,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to answer based on manual.\n\nError Code E03: sensor failure. We need to resolve without compromising operational requirements. The manual advises that for error Code E03, the action:\n\n- Restart the robot\n- Clean sensors\n- Check connections\n- Professional service if persists\n\nBecause the user cannot compromise operational requirements. Options: A: disable obstacle avoidance and high speed. B: switch to legged mode and reduce speed and recalibrate. C: clean sensors, perform calibration, continue operating in Wheeled Mode at high speed with obstacle avoidance enabled. D: update firmware to latest and lower speed.\n\nGiven step D we need to update firmware and lower speed to reduce sensor errors. However caretaker: manual says Clean sensors and check connections. The quick solution: clean sensors, calibrate, continue operating in Wheeled Mode (max speed). So option C seems best. The question: \"which action should you take to resolve the issue without compromising the operational requirements?\" A: hold high speed in, but disabling obstacle avoidance. B: switch to legged mode, reduces speed, calibrate. C: sensor cleaning and calibration, continue using wheeled mode and obstacle avoidance. D: update firmware and lower speed. The manual indicates that sensor cleaning, calibrate, and restart are recommended. That positive. So choose option C. So final answer: C.<|end|><|start|>assistant<|channel|>final<|message|>C",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 15452,
+    "total_tokens": 15736,
+    "completion_tokens": 284,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}
