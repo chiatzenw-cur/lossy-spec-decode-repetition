@@ -1,0 +1,139 @@
+<|channel|>analysis<|message|>We need to implement function to compute diff array. The constraints n <= 50 small. Approach: compute prefix distinct sets and suffix distinct sets. For each i we can maintain set of distinct elements seen so far. Also suffix distinct counts can be computed by scanning from right: keep set of seen elements and compute suffix count at each i.
+
+But careful: suffix excludes element i. So suffix distinct for i is the distinct set of nums[i+1 .. n-1]. So we compute for each index i the suffix count of elements after index i. So we can compute suffix counts array of size n; for each index i, we need count of distinct elements in suffix starting at i+1. We can compute suffixCount[i] = distinct count of suffix(i+1). For last element i = n-1, suffixCount[n-1] = 0 (empty). Then we can compute prefix counts while iterating.
+
+Algorithm:
+
+- n = len(nums)
+- suffix_counts = [0]*n
+- seen_suffix = set() # distinct elements seen after i. We'll compute from rightwards
+- for i in range(n-1, -1, -1):
+    - suffix_counts[i] = len(seen_suffix) # this is suffix counts after current i
+    - seen_suffix.add(nums[i])
+
+But we need consecutive suffix, so after processing i we add element to seen to be used for earlier positions. Because suffix for i-1 includes nums[i] and beyond.
+
+Now compute prefix distinct:
+
+prefix =0? no. Let's accumulate.
+
+Let result = [0]*n
+seen_prefix = set()
+
+for i in range(n):
+    seen_prefix.add(nums[i])
+    prefix_count = len(seen_prefix)
+    diff=prefix_count - suffix_counts[i]
+    result[i] = diff
+
+Wait the suffix_counts[i] defined as len(seen_suffix) before adding nums[i], so suffix counts that exclude element i. So good.
+
+Let's test example 1: [1,2,3,4,5] n=5. suffix_counts: compute reverse:
+
+i=4: suffix_counts[4] = 0 (seen_suffix empty). seen_suffix.add(5). Now seen=[5]
+i=3: suffix_counts[3] = 1 (seen contains 5). seen_suffix.add(4). seen=[5,4]
+i=2: suffix_counts[2] = 2 (seen contains 5,4). seen_selection add 3. seen=[5,4,3]
+i=1: suffix_counts[1] = 3 (seen contains 5,4,3). add 2. seen=[5,4,3,2]
+i=0: suffix_counts[0] = 4 (seen contains 5,4,3,2). add 1.
+
+Now iterate prefix: seen_prefix empty. i=0: add 1 => {1}. prefix_count=1. diff=1-4 =-3 correct.
+
+i=1: add 2 => {1,2}. prefix_count=2. diff=2-3 = -1. Good.
+
+i=2: add 3 => {1,2,3}. prefix=3 diff=3-2=1.
+
+i=3: add 4 => {1,2,3,4}. prefix=4 diff=4-1=3.
+
+i=4: add 5 => {1,2,3,4,5}. diff=5-0=5.
+
+Matches.
+
+Second example: [3,2,3,4,2].
+
+Compute suffix: reverse:
+
+i=4: suffix_counts[4] = 0 (seen empty). seen add 2.
+i=3: suffix_counts[3] = 1 (seen={2}). seen add 4.
+i=2: suffix_counts[2] = 2 (seen={2,4}). seen add 3 -> seen{2,4,3}
+i=1: suffix_counts[1] = 3 (seen={2,4,3}). seen add 2? Already present. but set remains {2,4,3}. still count 3.
+i=0: suffix_counts[0] = 3 (seen={2,4,3}). add 3? but already. So final: [3,3,2,1,0] ?
+
+Let's compute precisely: At i=4: len=0 -> last element 4. seen={2}. i=3: len=1 suffix_counts[3] = 1. seen includes 4. seen={2,4}. i=2: len=2 suffix_counts[2] = 2. seen add 3. seen={2,4,3}. i=1: len=3 suffix_counts[1] = 3. seen add 2? but it exists. stays {2,3,4}. i=0: len=3 suffix_counts[0] = 3. seen add 3.
+
+So suffix_counts array: [3,3,2,1,0] yep.
+
+Now compute prefix: i=0: add 3 -> len=1 diff=1-3 = -2 correct.
+i=1: add 2 -> len=2 diff=2-3 = -1 correct.
+i=2: add 3 -> set still {3,2} remains 2 diff=2-2=0 correct.
+i=3: add 4 -> {3,2,4} len=3 diff=3-1=2.
+i=4: add 2 -> {3,2,4} still len=3 diff=3-0=3.
+
+Matches.
+
+Edge cases: n=1: suffix_counts[0] is 0. So diff = 1 -0 =1.
+
+Thus solution passes constraints.
+
+Complexity O(n). Implementation detail: we need to import List.
+
+Will provide solution.
+
+Recall that we need to handle potential non-distinct for prefix: using set.
+
+Return result list.
+
+Make sure to annotate with typing.
+
+Also import typing List.
+
+Let's craft final answer.
+
+We may include docstring. Implement within class.
+
+Let's provide python code.<|end|><|start|>assistant<|channel|>final<|message|>Here is a straightforward implementation of the distinct‑difference array.
+
+```python
+from typing import List
+
+class Solution:
+    def distinctDifferenceArray(self, nums: List[int]) -> List[int]:
+        """
+        Compute the distinct difference array for the given list `nums`.
+        For each index i:
+            prefix_distinct = number of distinct elements in nums[0 .. i]
+            suffix_distinct = number of distinct elements in nums[i+1 .. n-1]
+        result[i] = prefix_distinct - suffix_distinct.
+        """
+        n = len(nums)
+        # suffix_counts[i] = |distinct elements in suffix starting at i+1|
+        suffix_counts = [0] * n
+        seen_suffix = set()
+        for i in range(n - 1, -1, -1):
+            # size of the set before adding nums[i] is the distinct count in suffix(i+1)
+            suffix_counts[i] = len(seen_suffix)
+            seen_suffix.add(nums[i])
+
+        # Now compute prefix counts and the differences
+        result = [0] * n
+        seen_prefix = set()
+        for i in range(n):
+            seen_prefix.add(nums[i])
+            prefix_cnt = len(seen_prefix)
+            result[i] = prefix_cnt - suffix_counts[i]
+
+        return result
+```
+
+### Explanation
+
+1. **Suffix counting**  
+   We first run a reverse traversal to build `suffix_counts`.  
+   For every index `i`, we store the number of distinct elements that appear after `i` and then remember `nums[i]` for the next (left) position.  
+   This gives `suffix_counts[i] = |distinct elements in nums[i+1 .. n-1]|`.
+
+2. **Prefix counting and final difference**  
+   We then walk the array from left to right.  
+   At each step we add the current element to a `seen_prefix` set, so its size is the number of distinct elements in the prefix up to `i`.  
+   The difference for that index is simply the prefix size minus the pre‑computed suffix size.
+
+This runs in linear time and uses only a few sets, well within the constraints.

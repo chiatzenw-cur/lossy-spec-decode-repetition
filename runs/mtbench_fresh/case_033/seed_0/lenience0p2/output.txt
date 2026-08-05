@@ -1,0 +1,48 @@
+<|channel|>analysis<|message|>We have a problem: exclusive colors, percentages, overlapping. We need to compute probability that a student likes neither. Let’s define: B = likes blue, G = likes green. Given: P(B)=58%, P(G)=45%, P(B∩G)=22%. Probability that likes neither = 1 - P(B∪G) = 1 - [P(B)+P(G)-P(B∩G)].
+
+Compute: P(B)+P(G)=58%+45%=103%. Subtract P(B∩G)=22% => 103% - 22% = 81%. So P(B∪G)=81%. Hence neither=1-81%=19%. As overlapping and percentages within the 100%? Typically 100% of students. So answer: 19%. Also might mention "underline probability that like neither is 19%".
+
+Hence the answer: 19%. Provide explanation, perhaps using values.
+
+Thus brief solution.<|end|><|start|>assistant<|channel|>final<|message|>**Answer: 19 %**
+
+---
+
+### Step‑by‑step
+
+1. **Define the events**  
+   - \(B\) = student likes **blue**  
+   - \(G\) = student likes **green**
+
+2. **Use the given information**  
+   - \(P(B)=58\%\)  
+   - \(P(G)=45\%\)  
+   - \(P(B\cap G)=22\%\)
+
+3. **Compute the probability that a student likes either blue or green**  
+   \[
+   P(B\cup G)=P(B)+P(G)-P(B\cap G)
+   \]
+   \[
+   = 58\% + 45\% - 22\%
+   = 103\% - 22\%
+   = 81\%
+   \]
+
+4. **Find the complement**  
+   The probability that a student likes *neither* color is the complement of “likes either color”:
+   \[
+   P(\text{neither}) = 1 - P(B\cup G) = 1 - 0.81 = 0.19
+   \]
+
+5. **Convert to a percentage**  
+   Multiply by 100:
+   \[
+   0.19 \times 100\% = 19\%
+   \]
+
+---
+
+\[
+\boxed{19\%}
+\]

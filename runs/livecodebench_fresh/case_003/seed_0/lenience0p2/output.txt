@@ -1,0 +1,299 @@
+<|channel|>analysis<|message|>We need to find minimal number of operations to change all B to W. Operation: choose any contiguous block of length k, set all to white.
+
+This is essentially "covering all B cells with segments of length k" where you can cover any overlapping, but we don't care about coverage but exactly needed number of operations. Since each operation can make all cells in block white regardless of current white status. Equivalent to: we can choose any intervals of length k, each painting all cells in interval. After painting, all cells become W. We need minimal number of operations, meaning that we need to ensure we cover all B cells.
+
+This standard problem: We have to cover all positions of B by intervals of length k. Since intervals may overlap, we have to choose minimal number.
+
+We can consider greedy: iterate over positions from left to right. When we encounter a B, we need to place a block that starts at that position (or later)? Suppose we place a block starting at the current cell i, marking its range [i, i+k-1]. But this may not be optimal if we start later; but the standard greedy is to start at i, because if we don't, we can only move rightwards. Actually we should consider painting each time we encounter a B that is not yet covered. Equivalent to: when we see a B, use one operation: we can cover from i to i+k-1. After we move to next position after i (i+1). Because even if we start earlier, we might shift leftwards but cannot reduce count. Because we can always
+The greedy works for covering all B cells when any interval can be started anywhere.
+
+Proof: Because we process positions sequentially. Suppose at step i, we have a B that has not been covered by previous operations. We must use an operation covering i because positions before i are already fixed. The only operation that can cover i is an interval covering [i-k+1, i] (ending at i). But we could also start earlier. But simplest: we align the block so that its left boundary is at i to be minimal. That ensures coverage. We get minimal counts.
+
+Thus algorithm:
+
+- Scan **s** from left to right.
+- Maintain variable `ans` for number of operations.
+- For each position i (0-indexed). If s[i] == 'B', we increment ans by 1, and set `i` to i + k - 1 (since we will skip this block). But careful: in loop we will increment i by 1 each iteration; we can use `i += k` or `jump` variable. The cleaner:
+
+Pseudo:
+```
+i=0
+while i < n:
+    if s[i] == 'B':
+        ans += 1
+        i += k
+    else:
+        i += 1
+```
+We need to handle overflow, but simple as in Python.
+
+Edge Cases: string length, n up to 2e5.
+
+Complexities O(total n).
+
+Test sample: 8 cases, outputs match.
+
+Let's test with examples.
+
+Case 1: s=WBWWWB, n=6, k=3. i=0 => s[0] = 'W', i=1; i=1 s[1] = 'B' => ans=1, i=1+3=4; i=4 s[4] = 'W', i=5; i=5 s[5] = 'B' => ans=2, i=5+3=8; i=8 end. Works.
+
+Case 2: n=7, k=3, WB? Wait, 7 3, "WWBWBWW".
+
+i=0 W; i=1 W; i=2 B => ans=1; i=5; i=5 W; i=6 W; i=7 end -> ans=1.
+
+Case 3: 5 4, s= BWBWB.
+i=0 B: ans=1, i=4. i=4 s[4] B? Wait string indices: 0 B,1 W,2 B,3 W,4 B. i=4 s[4] B? i=4 B yes; ans=2, i=4+4=8 end. Works.
+
+Case 4: 5 5, s BBBBB.
+i=0 B: ans=1, i=5 end -> ans=1.
+
+Case 5: 8 2, BWBWBBBB.
+i=0 B: ans=1, i=2. i=2 B? Actually string positions: 0 B,1 W,2 B,3 W,4 B,5 B,6 B,7 B. i=2 B: ans=2, i=4. i=4 B: ans=3, i=6. i=6 B: ans=4, i=8. Works.
+
+Case 6: 10 2, WBBWBBWBBW.
+
+positions: 0 W,1 B,2 B,3 W,4 B,5 B,6 B,7 W,8 B,9 B. iterate i=0 W->i=1 B: ans=1, i=3. i=3 W->i=4 B: ans=2, i=6. i=6 B: ans=3, i=8. i=8 B: ans=4, i=10. Works.
+
+Case 7: 4 1, BBBB. i=0 B: ans=1, i=1; i=1 B: ans=2, i=2; i=2 B: ans=3, i=3; i=3 B: ans=4, i=4; ans=4.
+
+Case 8: 3 2, WWW: all whites => ans=0.
+
+Matches sample.
+
+Need to handle large t and input. We should parse with sys.stdin.read splitting.
+
+Edge: small constraints.
+
+Optimization for large: The algorithm is O(n). Use while loops.
+
+Will produce solution.
+
+Recall to convert to int. Implementation:
+
+```
+def solve():
+    import sys
+    data = sys.stdin.read().strip().split()
+    it = iter(data)
+    t = int(next(it))
+    out_lines = []
+    for _ in range(t):
+        n = int(next(it)); k = int(next(it))
+        s = next(it)
+        i = 0
+        ops = 0
+        while i < n:
+            if s[i] == 'B':
+                ops += 1
+                i += k
+            else:
+                i += 1
+        out_lines.append(str(ops))
+    sys.stdout.write("\n".join(out_lines))
+```
+
+Test with given sample.
+
+Edge: For reading blank lines, we used split and newline cleaning.
+
+We may also need to consider reading with sys.stdin.read() and .split() will split on whitespace so tokens are fine.
+
+Edge: when there is k=0? Not allowed. All fine.
+
+Return final answer.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every test case we are given a strip of paper
+
+```
+s[0] … s[n-1]   ( 0 ≤ n ≤ 2·10^5 )
+```
+
+`s[i]` is either **B** (black) or **W** (white).  
+One operation chooses **any** contiguous block of exactly `k` cells and
+makes all of them white.
+
+The task is to erase all black cells using the minimum possible number of
+operations.
+
+
+
+--------------------------------------------------------------------
+
+#### 1.  Observation – Greedy covering
+
+Think of the operation as selecting an interval of length `k` and
+painting it white.
+A black cell must be covered by at least one of these intervals.
+
+We scan the strip from left to right.
+
+* When we find a cell `i` that is **still black** (`s[i] == 'B'`) we
+  must use an operation that covers this position.
+  The best we can do is start the block at `i` and paint the cells
+  `i … i+k-1`.
+  After that the whole block is white, so the next cell we have to examine
+  is `i+k`.
+
+* If the current cell is already white (`s[i] == 'W'`) we just move
+  to `i+1`.
+
+This greedy works because:
+
+* If we reach a black cell that is not already covered, the interval
+  *must* cover it.  
+  All intervals that cover it start at a position `≤ i`.  
+  Starting the block at the *lowest* possible position
+  (`i`) never enlarges the number of required intervals and can only
+  help the rest of the scan.
+
+* The greedy never skips a black cell: it immediately paints it,
+  therefore the greedy process will finish with a cover of all black cells
+  using the minimal number of operations.
+
+Hence the answer is simply the number of times we encounter a black cell
+while scanning and, each time, we jump `k` positions forward.
+
+
+
+--------------------------------------------------------------------
+
+#### 2.  Algorithm
+For each test case
+
+```
+ans  = 0
+i    = 0
+while i < n
+    if s[i] == 'B'
+        ans += 1
+        i   += k           // skip the whole painted block
+    else
+        i   += 1
+output ans
+```
+
+All operations are O(1), the loop runs at most `n` times,
+so the complexity per test case is `O(n)`.
+
+The sum of all `n` over all test cases is ≤ 2·10^5,  
+hence the overall running time `O(total n)` and memory
+`O(1)` are easily satisfied.
+
+
+
+--------------------------------------------------------------------
+
+#### 3.  Correctness Proof  
+
+We prove that the algorithm outputs the minimal possible number of
+operations.
+
+---
+
+##### Lemma 1  
+When the algorithm reaches a black cell at index `i`, the interval
+`[i, i+k-1]` is the only interval that can be chosen without missing a
+black cell to its left.
+
+**Proof.**
+
+All previous cells (`0 … i-1`) have already been processed
+and are white.  
+Any interval that covers `i` must have a start position `≤ i`
+because its length is `k`.  
+If we start at a position `p < i`, then `p` is left of `i`.  
+The only operation we could avoid would be one that starts at `p`
+already.  
+But we have already processed the cells left to `i` and kept a
+minimum number of operations,
+hence the current unpainted block of length `k` starting at `i`
+must be chosen. ∎
+
+
+
+##### Lemma 2  
+After processing a block starting at position `i` the algorithm
+never skips a necessary operation for any part of the remaining
+strip.
+
+**Proof.**
+
+The algorithm jumps to index `i + k` after painting `[i, i+k-1]`.  
+Any cell in `[i, i+k-1]` is now white.  
+All cells left of `i` are also white by earlier steps.  
+Therefore any remaining black cell must be in a position `> i + k - 1`,
+hence the next step has to start at least at `i+k`. ∎
+
+
+
+##### Lemma 3  
+Let `A` be the number of operations performed by the algorithm.
+For any feasible sequence of operations that clears the strip,
+let `F` be the number of operations.
+Then `A ≤ F`.
+
+**Proof.**
+
+Consider the positions where the algorithm performs its operations.
+Every such operation paints a block `B` starting at some index `i`.
+From Lemma&nbsp;1, any feasible solution must cover `i`
+and at least one of the cells in `[i, i+k-1]` must be covered
+by an operation that starts at `i` or earlier.
+Because we paint increasingly left‑to‑right and never overlap
+with a later interval (by Lemma&nbsp;2) the set of blocks used by
+any feasible solution is **at least** as many as the algorithm’s
+blocks.  
+Thus the number of algorithm operations is not larger.
+∎
+
+
+
+##### Theorem  
+For each test case the algorithm outputs the minimum possible number of
+operations.
+
+**Proof.**
+
+The algorithm outputs the number `A` of operations it performs.
+By Lemma&nbsp;3 any feasible solution contains at least `A` operations.
+Therefore `A` is optimal. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4.  Reference Implementation  (Python 3)
+
+```python
+import sys
+
+def solve() -> None:
+    data = sys.stdin.read().strip().split()
+    if not data:
+        return
+    it = iter(data)
+    t = int(next(it))
+    out_lines = []
+    for _ in range(t):
+        n = int(next(it))
+        k = int(next(it))
+        s = next(it)
+        i = 0
+        ans = 0
+        while i < n:
+            if s[i] == 'B':
+                ans += 1
+                i += k
+            else:
+                i += 1
+        out_lines.append(str(ans))
+    sys.stdout.write("\n".join(out_lines))
+
+if __name__ == "__main__":
+    solve()
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required input/output format.

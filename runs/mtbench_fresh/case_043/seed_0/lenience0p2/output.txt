@@ -1,0 +1,64 @@
+<|channel|>analysis<|message|>We need to produce a simple webpage with a button. On click, it shows a random joke. Use plain JavaScript. Use array of jokes, random selection. Should display maybe in a paragraph.
+
+Should output full HTML file. Might include explanation comments.
+
+Should ensure no conflicts. We'll provide single file.
+
+Probably answer should be code block. Use HTML5. Use <button> id. Use <div> id="joke". Use script block.
+
+Ensure no external dependencies. Use <script> to pick random. Use window.onload. Provide jokes.
+
+Let's craft.<|end|><|start|>assistant<|channel|>final<|message|>Here is a self‑contained HTML file that works in any modern browser.  
+Just copy the code into a file named `index.html` and open it in a browser.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Random Joke Generator</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align:center; padding: 2rem; }
+  #joke { margin-top: 2rem; font-size: 1.2rem; }
+  button { padding: 0.6rem 1.2rem; font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<h1>Click the button for a joke</h1>
+
+<button id="jokeBtn">Tell me a joke!</button>
+
+<div id="joke"></div>
+
+<script>
+  // Array of jokes you will read
+  const jokes = [
+    "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "I told my computer I needed a break, and it said 'No problem, I will be on my MacOS …'",
+    "Did you hear about the mathematician who’s afraid of negative numbers? He will stop at nothing to avoid them.",
+    "I’m reading a book on anti‑gravity. It’s impossible to put down!"
+  ];
+
+  // Randomly pick a joke from the array and show it
+  function showRandomJoke() {
+    const randomIndex = Math.floor(Math.random() * jokes.length);
+    const jokeBox = document.getElementById('joke');
+    jokeBox.textContent = jokes[randomIndex];
+  }
+
+  // Wire up the button
+  document.getElementById('jokeBtn').addEventListener('click', showRandomJoke);
+</script>
+
+</body>
+</html>
+```
+
+**How it works**
+
+1. The button with id `jokeBtn` triggers a click event.  
+2. The event calls `showRandomJoke()` which randomly picks a joke from the `jokes` array.  
+3. The chosen joke is placed in the `<div id="joke">`, making it visible to the user.  
+
+Just refresh the page and click the button to keep the jokes rolling!

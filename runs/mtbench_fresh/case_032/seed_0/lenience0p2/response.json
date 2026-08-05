@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-96313b9a1ed566b9",
+  "object": "text_completion",
+  "created": 1785859640,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We have a problem: \"A tech startup invests $8000 in software development in the first year, and then invests half of that amount in software development in the second year. What's the total amount the startup invested in software development over the two years?\"\n\nProblem: simple arithmetic: 8000 + 0.5*8000 = 8000 + 4000 = 12000. So answer 12000. Provide explanation.<|end|><|start|>assistant<|channel|>final<|message|>First year’s investment: $8,000  \nSecond year’s investment: half of the first year = \\(0.5 \\times 8,000 = \\$4,000\\)\n\nTotal over the two years  \n\\[\n8,000 + 4,000 = \\$12,000\n\\]\n\n**Answer: $12,000**.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 112,
+    "total_tokens": 282,
+    "completion_tokens": 170,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

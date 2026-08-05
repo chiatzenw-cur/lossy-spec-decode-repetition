@@ -1,0 +1,404 @@
+<|channel|>analysis<|message|>We need minimal operations to increase elements by 1 to make product divisible by k. Since a_i <=10, we can consider primes.
+
+k between 2 and 5. Let's find its prime factors.
+
+For each a_i, we can consider its value modulo k? But operations add 1 each, so we can change element values.
+
+Observation: For each element, we can change its value to any integer >= original. So we can adjust each element to make product divisible by k. We can choose to increase one element to the next multiple of something. But we need minimal total increments.
+
+Because k is small, we can brute force? Since a_i <=10, but after increments could become larger. But we can consider that to get divisibility, the product must have certain prime factor counts.
+
+Let k = p1^e1 * p2^e2 * ... (since k <=5, primes 2,3,5). k=2-5, possibilities: 2,3,4,5. 4=2^2.
+
+We need product divisible by k. Equivalent to each prime factor count >= required.
+
+Let current total prime counts in product. For each prime, compute necessary remaining. We could raise elements to adjust counts.
+
+We can consider each element individually: its current exponent for each prime. To augment the product, we could increase some element to get additional prime factor.
+
+But we need minimal total increment. Since each increment increases value by 1.
+
+Observation: Increasing an element to get any new prime factor might be expensive. Let's consider small set of possible remaining digits.
+
+Because max a_i <=10, we can precompute for each value remainder modulo k and also prime exponents.
+
+Idea: For each element, the cost to increase it to obtain the next required number that will satisfy constraint maybe any number we can increase. It's hard.
+
+But maybe there is linear property? Wait, we can think of product divisible by k. For small k, the product's remainder mod k matters? Since k is small, product modulo k is what matters. For k=2,3,4,5, we need product mod k==0. So we can think of **mod k**.
+
+So we need to increase elements such that product % k == 0. Equivalent to we need product mod k ==0. Because of small k, we might manipulate via mod. The product is product of each modulo k.
+
+Given a_i, we can change its residue modulo k by increments (since adding 1 each time). So each element's value can be increased to any number >= its current, but their residue modulo k can be changed. Indeed, as we increase x by 1, mod k cycles, so we can transform each element to any residue mod k after some increments. But we can't decrease; but we can increase to any residue that is reachable before some increments, because each increment moves residue 1 step.
+
+Thus if we increase a_i by d, new = (a_i + d) mod k. So we need to pick d_i for each i such that product of new residues mod k == 0.
+
+Goal: minimize sum d_i.
+
+Observation: For k=2 or 3, 4,5, we have small modulus <=5.
+
+We can brute over all possible residue values for each element (which per i can be 0..k-1); but cost is minimal d such that a_i + d ≡ r (mod k). Let rem = a_i % k. We want find r (0..k-1) such that product (r_i) mod k == 0. We can choose d= (r - rem + k) % k. But we need to also keep the exact value: if we choose residue r, we need to increase by d. Then new value is a_i + d; we don't need to exceed mod k for product. So that's minimal d for that residue. However we might also need to increase multiple of k for bigger increments? Not necessary, because we only care about residue mod k; adding multiples of k doesn't change product mod k, but increases total increments, so we wouldn't do that. So minimal change is d as above.
+
+Thus each element has cost to get each residue. Actually only change residue by d<k. But if we need product divisible by k, what if we need r_i=0? but product mod k zero if any factor has residue 0. So we can just make one element's residue zero.
+
+If any element initially r_i=0 (i.e., divisible by k) then cost 0. However the product may not be divisible by k if multiple factors zero? No product is divisible r_i if any factor zero.
+
+So max solution is to set one element's residue to 0. But maybe there is possibility that there exist division of product like none individually zero but product overall divisible? For k=2, 3: no, product modulo k zero only if at least one factor zero. Because group of residues modulo prime: if p divides product then at least one factor is zero mod p. For 4 perhaps not? Actually 4 means k=2^2. Product divisible by 4 requires at least one factor divisible by 4, or two factors each 2 mod 4? Wait 4=2*2. For product divisible by 4, prime factor 2 exponent at least 2. For residues, we can't simply rely on residue mod 4. Example: a_i can be 2,3: 2*2=4? 2*2=4 but 2 mod4=2, 2 mod4=2, product=4 mod4=0, but each individually not zero. So need to consider prime exponents.
+
+Thus for k=4 it's 2^2. We need at least two factors that have at least one factor of 2 each.
+
+Thus we need to consider prime counts.
+
+General approach: For each prime, we can compute potential to increase.
+
+We may think of maintain exponent for each prime from each element.
+
+We can think of each element as variable; we can increase it to get more prime factors.
+
+But small k, we could brute force small sets.
+
+Idea: For each element, we can compute for each possible number from a_i upto a_i+6 (since k <=5, maybe next multiples shift values) but we can compute value decreases? Wait, we can only add. So we can consider as many increments as we want. But we can generate for each element a list of 5 possible states: numbers a_i, a_i+1, a_i+2, a_i+3, a_i+4? But for greater increments we may cycle mod patterns for factors.
+
+But we need to find minimal operations for entire product. This is like we can select for each element a certain number of increments to reach a residue that we can use to reach required prime factor property.
+
+We can treat each element as small. For k=2: product divisible by 2 means at least one element even. So we need to find minimal operations to make some element even. That's minimal to change a_i to the nearest even >= a_i.
+
+For k=3: product divisible by 3 if at least one element divisible by 3. So minimal operations to bring some element into 3. So compute minimal adjust to nearest multiple of 3, e.g., d = (3 - (a_i % 3)) %3.
+
+For k=4: need at least two 2's. So each element has at least 2-exponent count. We can either find two elements with at least 2's, or transform one element to have at least 2's by adding increments. For each element, if current 2-exponent >=2, then 0 needed. Else we need to increase to next number that has at least 2's. So we need to find minimal sum d_i(s) such that maintain >=2 2's. Equivalent to need two elements with enough 2's. So find minimal among: pick two elements and minimally raise to get ≥2 2. Or pick one element, increase it to have at least 2 2's, i.e., increase the exponent of 2 further by 0? Wait, need at least 2 two factors, not all factors. Since product divisible by 4, each element can contribute some 2's. For 4, we could need at least two 2's total, could be 2 from same element or 1 from each.
+
+So we need to find minimal operations to achieve at least two 2's across all elements. That means we can consider each element state as exponent of 2 after increments so far, we can increase at cost d to get exponent of 2.
+
+We can think for each element, it's possible to give up to 3 increments: since a_i <=10, but we could need more increments? But for k=4, may need more increments. Eg, numbers: 1: need 2 times 2's to get 2^2. The minimal increments to 4? Let's check: 1 -> 1+3=4, 4 has 2^2=4 (exponent 2). That is d=3. So at most 3 increments. So bounded.
+
+So we can brute with dp over elements. Since n up to 100k, we need efficient. The property: we need at least 2 ones of 2's. So we can compute minimal d for each element to reach 0,1,2 (enough). That seems heavy.
+
+Simpler: Since we can always add at most 3 steps to each element to get each target for 2-exponent. Actually we just need to consider minimal increments to bring 2-exponent to 2, which we can compute.
+
+But we might also require combination of two exponents of 2. So we consider gold difference between each element's minimal increments to reach the first 2^0, 2^1, 2^2. But may give 2's coverage? Let's compute each element's minimal increments for each prime exponent representation: For we need exponent≥2 for 2. So we can compute the minimal d needed to reach an exponents >=2. That is <=? for a_i at 1: d=3. For a_i=2 -> d=2? Actually 2 has 2^1 -> need 1 more: 2 to 4: d=2? Wait 2->4: 4 difference = +2. That's 2^2. For a_i=3 -> 3->5 (not 4 present), maybe need +1 to 4? 3->4 (d=1). 4 has exponent 2. So that's min.
+
+Edge: a_i=4: 0. So compute minimal d_i for any element to reach at least 2-exponent. For a_i=5: need <=? 5->6 (6=2*3). 6 has 2^1. Not enough. Next 6->7 (7) no change. 7->8 (d=3) -> 8 has 2^3. So d=3. So minimal d=3. Then we just need to find the minimal sum of two such elements, possibly same element can cover 2 times? Wait we need cumulative 2-exponent at least 2. So if an element has exponent≥2 or can get at least 2, we can use that as whole requirement. Observed that we just need at least 2 factors. So if we find one element with min d_i for exponent>=2, that is enough: product divisible by 4. So minimal d is just min d_i. That matches earlier logic. Indeed if we make one element divisible by 4, product divisible. Similarly if we find two elements each divisible by 2, product divisible. So minimal steps is min over: find minimal d where either a single element becomes 4 multiple: dp1, or two elements become 2 multiple: dp2 minimal sum of two smallest d_i such that each element's value after increment has at least 1 factor of 2 (i.e., divisible by 2). But we need to consider that to do that we choose each element we might inc by d_k 1? need to get them to nearest multiple of 2. That's just d= (2 - (a_i % 2)) % 2. So minimal d for each element to become even. Then we need two smallest d_i among these. Then answer is min( dp1, dp2). Wait if dp1=0? e.g., a=4: dp1=0. So we pick 0.
+
+Also for k=5, we need prime 5. So we need at least one element divisible by 5? Yes 5 prime. So minimal is min d for each element to nearest multiple of 5. This similar.
+
+Works for k=2,3,5. For k=4, do as above.
+
+Edge case: Need at least two 2's. Could be achieved by one element with 2^2 -n = 2^2, or two elements each with at least 1 factor. Which is cheaper? Also one element may exceed 2 but we might also provide one extra factor from two elements: we could also consider one element with 2^1 and another element with 2^1. So dp2 min sum of two correct. That we compute. So final answer = min(dp1, dp2). That seems correct.
+
+Let's test with examples.
+
+Test sample: 2 5: 7 3. k=5. For 7: d= (5-7%5)%5=3? 7%5=2, 5-2=3 => d=3. 3%5=3 => d=2. Min=2. (Answer 2). Good.
+
+Second: 3 3: 7 4 1. k=3. For 7: d=2. For 4: d=2. For 1: d=2. Min=2 -> answer 2. Good.
+
+Third: 5 2: 9 7 7 3 9 => k=2. Must be even. 9->10 d=1; 7->8 d=1; 7->8 d=1; 3->4 d=1;9->10 d=1. Min=1 -> answer 1. Good.
+
+Fourth: 5 5: 5 4 1 2 3 => k=5. d for 5: 0. So answer 0. Good.
+
+Fifth: 7 4: 9 5 1 5 9 5 1 => k=4. We need minimal dp1 or dp2. dp1: min d to reach multiple of 4: 9->12 d=3; 5->5 mod4=1 => d=3; 1->1 mod4=1 => d=3; 5->3; 9->3; 5->3; 1->3. min=3. dp2: minimal two elements to become even . For each: 9->10 d=1; 5->6 d=1; 1->2 d=1; 5->6 d=1;9->10 d=1; 5->6 d=1;1->2 d=1. all d=1. min two sums =1+1=2. Answer 2. sample output 2. Good.
+
+Other tests: 3 4: 6 3 6 => k=4. Elements: 6=6 (2*3). 6%2=0; 6%4=2. So d to 4 multiples: 6->8 d=2 ; so dp1=2. e1 each: Even: d=0? Wait 6%2=0 so d=0. So for two elements at even, d=0+0=0 . So answer 0. But sample output 0. Good.
+
+Edge case: 4 4: 1 4 1 1 => k=4. dp1: min d to 4 multiple: 4 already 0. So dp1=0. dp2: need two evens: 1->2 d=1; 4->4 d=0; 1->2 d=1;1->2 d=1. min two sums: 0+1 =>1. So answer min 0. Good.
+
+Edge: 2 5: 10 10 => k=5; 10%5=0, dp1=0.
+
+So algorithm works.
+
+Let's make sure we didn't miss case where k=4, and we might use one element with 2^1 and another element to get 2^2 but not, we only need at least 2 of 2. Our dp2 approach covers two increments (i.e., each 2 factor). For second element with 2^1, we need at least 1 factor each. So both endpoints individually must have at least 1 factor. We compute minimal d for each element to be even (i.e., 2^1). That is enough. That's correct. So dp2 fine.
+
+Does require at least 2 of 2's; but merging two elements with 2^>=1 each. Our algorithm picks minimal d_i among all to be even. So not distinguishing between 2^1 and 2^2. Good.
+
+Edge: Suppose array has one element with 2^2 already: we can use dp1=0. Done.
+
+Thus algorithm seems correct.
+
+We should implement reading t, loops. For each test case, read n,k, array.
+
+Compute answer:
+
+if k == 2: answer = min((0 if a_i % 2==0 else 1) for a_i in a)
+
+if k == 3: answer = min((0 if a_i % 3==0 else 3 - (a_i % 3)) for a_i in a)
+
+if k == 5: answer = min((0 if a_i % 5==0 else 5 - (a_i % 5)) for a_i in a)
+
+if k == 4: compute:
+
+- dp1 = min((0 if a_i % 4==0 else 4 - (a_i % 4)) for a_i in a)
+- For dp2: compute list of d=0 if a_i %2==0 else 1; minimal sum of two smallest. If n==1 but n>=2 so we have at least two. We'll sort first two minimal d. answer = min(dp1, d1+d2)
+
+Edge: k=2,3,5. But k=4 handled too.
+
+Return answer.
+
+Check for k=2 or 3? 3 uses d=3- (a_i%3). That works: e.g., a_i%3=0 => d=3 => but we compute if a_i %3==0 0 else 3 - (a_i % 3) -> not 0. For a_i=1 -> d=2; for a_i=2 -> d=1. Works.
+
+Outputs separate per line.
+
+Let's test quickly with sample.
+
+Works. I'll implement.
+
+Complexities: O(total n) per test. Memory minimal.
+
+Ok done.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every test case we are given
+
+```
+a1 , a2 , … , an        ( 1 ≤ ai ≤ 10 )
+k                        ( 2 ≤ k ≤ 5 )
+```
+
+One operation chooses an index `i` and replaces `ai` by `ai + 1`.
+
+For the whole array we have to obtain
+
+```
+product(a1 , a2 , … , an)
+```
+
+divisible by `k`.  
+The task is to minimise the total number of performed operations.
+
+
+
+--------------------------------------------------------------------
+
+#### 1.  Observations
+
+* `k` is one of 2, 3, 4, 5 – at most 5.
+* For a prime `p` (`p` is 2, 3 or 5)  
+  the product is divisible by `p` **iff** at least one element of the
+  array is divisible by `p`.
+
+* `k = 4` is the special case `2²`.  
+  We need the product to contain at least two factors of `2`.  
+  That is possible in two ways
+
+  * one element becomes a multiple of `4` (contains two factors of `2`)
+  * two elements become even (each contributes at least one factor of `2`)
+
+  For every other value of `k` the existence of one factor of `k`
+  is enough.
+
+
+
+--------------------------------------------------------------------
+
+#### 2.  Cost of turning an element into a desired form  
+
+For a single element `x` let
+
+```
+d(r)   =   the smallest non‑negative integer d   (0 ≤ d < k)
+           with  (x + d) mod k = r
+```
+
+`d(r) = ( r - (x mod k) + k ) mod k`
+
+For `k = 2 , 3 , 5`
+
+* we only need the distance to the nearest multiple of `k`
+  (i.e. `r = 0`).
+
+For `k = 4`
+
+* distance to the next multiple of `4`   –  `d4 = (4 - (x mod 4)) % 4`
+* distance to a *even* number           –  `d2 = (2 - (x mod 2)) % 2`
+
+Both are at most 3.
+
+
+
+--------------------------------------------------------------------
+
+#### 3.  Result for each `k`
+
+```
+k = 2  : answer = min( d2 of each element )   // make one element even
+k = 3  : answer = min( d3 of each element )   // make one element divisible by 3
+k = 5  : answer = min( d5 of each element )   // make one element divisible by 5
+k = 4  : answer = min( d4 of one element ,
+                      d2 of two elements )
+```
+
+* `d4` – the smallest cost to reach a multiple of `4`.
+* `d2 of two elements` – the sum of the two smallest distances that turn an
+  element into even.
+
+We are sure that the two elements are different because the original
+array length is at least `2` (problem guarantees `n ≥ 2`).
+
+The algorithm is linear in `n` per test case – only a few integer
+operations and a single scan of the array.
+
+
+
+--------------------------------------------------------------------
+
+#### 4.  Correctness Proof  
+
+We prove that the algorithm outputs the minimum possible number of
+operations.
+
+---
+
+##### Lemma 1  
+For a prime `p` (2, 3 or 5) a product of integers is divisible by `p`
+iff at least one of the integers is divisible by `p`.
+
+**Proof.**  
+In a prime factorisation a factor `p` appears only if at least one
+factor of the product contains `p`.  
+If all elements are not divisible by `p`, the product has exponent `0`
+for `p`. ∎
+
+
+
+##### Lemma 2  
+If `k = 4`, the product of all numbers is divisible by `4`
+iff **either**
+
+1. there is at least one element divisible by `4`, or  
+2. there are at least two elements each divisible by `2`.
+
+**Proof.**
+
+*If*:  
+*1.* `4 | ai` ⇒ The product is divisible by `4`.  
+*2.* Each `ai` contributes a factor `2`; two of them give `2·2 = 4`.
+
+*Only if*:  
+Assume the product is divisible by `4`.  
+In prime factorisation the exponent of `2` is at least `2`.  
+The exponent can only be increased by an element that has
+at least that many factors of `2`.  
+Hence we must have at least one element with at least two
+`2`‑factors (i.e. divisible by `4`) or
+two different elements with at least one `2`‑factor. ∎
+
+
+
+##### Lemma 3  
+For `k = 2, 3, 5` the minimal number of operations needed equals  
+`min( d(r) )` for all array elements, where `r = 0` (multiple of `k`).
+
+**Proof.**
+
+* The added number of operations is exactly the distance to the next
+  multiple of `k` as defined above.
+* By Lemma&nbsp;1 we need at least one element divisible by `k`.  
+  The cheapest possible way is to choose the element with the smallest
+  distance, i.e. `min d(r)`.
+
+Thus the answer is optimal. ∎
+
+
+
+##### Lemma 4  
+For `k = 4` the minimal number of operations equals  
+`min( d4 of one element ,
+      d2 of two elements )`.
+
+**Proof.**
+
+*Upper bound*:  
+  *Give one element the smallest distance `d4` to reach a multiple of `4`.*  
+  This is feasible by Lemma&nbsp;2 (case&nbsp;1).  
+  *Give two different elements the smallest distances `d2` to become even.*  
+  The product is divisible by `4` (case&nbsp;2) by Lemma&nbsp;2.  
+
+*Lower bound*:  
+  Suppose the product is divisible by `4`.  
+  By Lemma&nbsp;2 either requirement 1 or 2 holds.  
+  *Case 1* – at least one element is a multiple of `4`.  
+          The number of operations performed on that element is at least
+          `d4`.  
+  *Case 2* – at least two elements are even.  
+          Each of them needs at least its distance `d2` to become even.
+          The total number of operations is at least the sum of the two
+          smallest such distances.  
+  Hence the minimal number of operations is at least
+  `min( d4 , d2 of two elements )`.
+
+Thus the algorithm is optimal. ∎
+
+
+
+##### Theorem  
+For every test case the algorithm outputs
+the minimal possible number of operations needed to make the
+product of the array divisible by `k`.
+
+**Proof.**
+
+*If `k = 2, 3, 5`* – follows from Lemma&nbsp;3.  
+*If `k = 4`* – follows from Lemma&nbsp;4.  
+
+All possible values of `k` are covered, therefore the algorithm is
+correct for all test cases. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 5.  Complexity Analysis
+
+For each test case
+
+* one linear scan over the `n` numbers ( `∑ n ≤ 2·10^5` )  
+* constant time work per element
+
+```
+Time   :  O(n)   for the test case
+Memory :  O(1)   (apart from the input array)
+```
+
+The total running time is `O(total n)` over all
+test cases.
+
+
+
+--------------------------------------------------------------------
+
+#### 6.  Reference Implementation  (Python 3)
+
+```python
+import sys
+
+def solve() -> None:
+    it = iter(sys.stdin.read().strip().split())
+    t = int(next(it))
+    out_lines = []
+    for _ in range(t):
+        n = int(next(it))
+        k = int(next(it))
+        arr = [int(next(it)) for _ in range(n)]
+
+        if k == 2:
+            # distance to nearest even
+            ans = min((1 if a & 1 else 0) for a in arr)
+        elif k == 3:
+            ans = min((0 if a % 3 == 0 else 3 - a % 3) for a in arr)
+        elif k == 5:
+            ans = min((0 if a % 5 == 0 else 5 - a % 5) for a in arr)
+        else:  # k == 4
+            # distance to the next multiple of 4
+            d4 = min((4 - (a % 4)) % 4 for a in arr)
+            # distance to an even number
+            d2s = [ (0 if a % 2 == 0 else 1) for a in arr ]
+            d2s.sort()
+            d2_sum = d2s[0] + d2s[1]
+            ans = min(d4, d2_sum)
+
+        out_lines.append(str(ans))
+
+    sys.stdout.write("\n".join(out_lines))
+
+if __name__ == "__main__":
+    solve()
+```
+
+The program follows exactly the algorithm proven correct above
+and conforms to the required input and output format.

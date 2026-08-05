@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a1951fd671212df7",
+  "object": "text_completion",
+  "created": 1785859079,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to produce a simple webpage with a button. On click, it shows a random joke. Use plain JavaScript. Use array of jokes, random selection. Should display maybe in a paragraph.\n\nShould output full HTML file. Might include explanation comments.\n\nShould ensure no conflicts. We'll provide single file.\n\nProbably answer should be code block. Use HTML5. Use <button> id. Use <div> id=\"joke\". Use script block.\n\nEnsure no external dependencies. Use <script> to pick random. Use window.onload. Provide jokes.\n\nLet's craft.<|end|><|start|>assistant<|channel|>final<|message|>Here is a self‑contained HTML file that works in any modern browser.  \nJust copy the code into a file named `index.html` and open it in a browser.\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<title>Random Joke Generator</title>\n<style>\n  body { font-family: Arial, sans-serif; text-align:center; padding: 2rem; }\n  #joke { margin-top: 2rem; font-size: 1.2rem; }\n  button { padding: 0.6rem 1.2rem; font-size: 1rem; }\n</style>\n</head>\n<body>\n\n<h1>Click the button for a joke</h1>\n\n<button id=\"jokeBtn\">Tell me a joke!</button>\n\n<div id=\"joke\"></div>\n\n<script>\n  // Array of jokes you will read\n  const jokes = [\n    \"Why did the scarecrow win an award? Because he was outstanding in his field!\",\n    \"I told my computer I needed a break, and it said 'No problem, I will be on my MacOS …'\",\n    \"Did you hear about the mathematician who’s afraid of negative numbers? He will stop at nothing to avoid them.\",\n    \"I’m reading a book on anti‑gravity. It’s impossible to put down!\"\n  ];\n\n  // Randomly pick a joke from the array and show it\n  function showRandomJoke() {\n    const randomIndex = Math.floor(Math.random() * jokes.length);\n    const jokeBox = document.getElementById('joke');\n    jokeBox.textContent = jokes[randomIndex];\n  }\n\n  // Wire up the button\n  document.getElementById('jokeBtn').addEventListener('click', showRandomJoke);\n</script>\n\n</body>\n</html>\n```\n\n**How it works**\n\n1. The button with id `jokeBtn` triggers a click event.  \n2. The event calls `showRandomJoke()` which randomly picks a joke from the `jokes` array.  \n3. The chosen joke is placed in the `<div id=\"joke\">`, making it visible to the user.  \n\nJust refresh the page and click the button to keep the jokes rolling!",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 94,
+    "total_tokens": 691,
+    "completion_tokens": 597,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

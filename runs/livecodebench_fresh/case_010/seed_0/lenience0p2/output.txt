@@ -1,0 +1,87 @@
+<|channel|>analysis<|message|>We need to implement function countSeniors. The input details: array of strings, each length 15. Characters: first ten digits phone number; next char is gender; next two digits age; last two digits seat. So age string is two characters after gender? Actually positions 11-12 as per 0-index? Wait: They say first ten characters are phone number. The next character denotes gender. The following two characters are used to indicate the age of the person. The last two characters determine the seat. So positions: 0-9 phone; 10 gender; 11-12 age; 13-14 seat. So 0-index plus 1? normal python indexing. So to get age: details[i][11:13] (since python slicing excludes last index) AND age is integer string; we convert to int and compare > 60. Count them. Implementation straightforward.
+
+Edge cases: Provide solution definition and return number.
+
+Check example: details[0] = "7868190130M7522" length 15. Age: details[0][11:13] = "75". >60 => True.
+
+Second: "5303914400F9211": age: "92". >60 => True.
+
+Third: "9273338290F4010": age: "40". >60 => False.
+
+Thus output 2.
+
+Example 2: same as given, code output 0.
+
+We need to include complete solution code.
+
+Also we might need to consider some clarifying: we ignore gender char, but count is based on age. Should all details length 15? The constraints guarantee.
+
+Edge: Should also handle 'O' for other genders. Age two digits: '60'? >60? '60' is 60 >60? no. So 60 is not included. So count for strictly >60. Good.
+
+Potential tricky: age is int? But typical programming: "75" -> 75. Works.
+
+Implementation details in solve: we implement method countSeniors. Use list comprehension. Provide __main__ for demonstration.
+
+But final answer code in python block. Just class Solution.
+
+Also note details.
+
+We need to import List from typing.
+
+Let's craft final solution.
+
+Also we can use but not needed.
+
+Will produce final answer. Let's produce explanation.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every passenger the data string is split into 4 parts:
+
+```
+0‑9  : phone number (10 digits)
+10   : gender (M, F, or O)
+11‑12: age  (2 digits)
+13‑14: seat number (2 digits)
+```
+
+We only have to count how many passengers have an age *strictly* greater than 60.
+
+Because every string is exactly 15 characters long, the age can be extracted with the simple slice  
+`age_str = details[i][11:13]`.  
+(`details[i][11:13]` returns the characters with indices 11 and 12, which are the two digits of the age.)
+
+The algorithm:
+
+1. Initialise `cnt = 0`.
+2. For each string `d` in `details`:
+   - Convert `age_str` to an integer.
+   - If `age > 60`, increment `cnt`.
+3. Return `cnt`.
+
+The overall time complexity is `O(n)` (one pass over the list),  
+and the memory usage is `O(1)` (constant extra space).
+
+---
+
+**Reference Implementation**
+
+```python
+from typing import List
+
+class Solution:
+    def countSeniors(self, details: List[str]) -> int:
+        """
+        Count how many passengers have an age greater than 60.
+        The formatted string is always 15 characters long and the age
+        occupies positions 11 and 12 (0‑based indexing).
+        """
+        cnt = 0
+        for d in details:
+            # Extract the two digit age string.
+            age_str = d[11:13]          # indices 11 and 12
+            age = int(age_str)
+            if age > 60:
+                cnt += 1
+        return cnt
+```
+
+This function satisfies all constraints of the problem and runs in linear time.

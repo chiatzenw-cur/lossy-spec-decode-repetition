@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a076cd09ce4fb514",
+  "object": "text_completion",
+  "created": 1785859283,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to extract from the provided text: the book title, author, main character, year of publication. Output in format: \"main character, book, author, year of publication\", one book per line.\n\nWe have three examples. Provide lines:\n\nHarry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997\nFrodo, The Lord of the Rings: The Fellowship of the Ring, J.R.R. Tolkien, 1954\nZylo, The Prism Galaxy Chronicles: The Awakening of the Starcaster, L.E. Starlighter, 2028\n\nEdge: ensure proper capitalization: \"Harry\", \"Frodo\", \"Zylo\".\n\nThe problem text might be referencing those books. Output accordingly. All good.\n\nLet's produce:\n\nHarry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997\nFrodo, The Lord of the Rings: The Fellowship of the Ring, J.R.R. Tolkien, 1954\nZylo, The Prism Galaxy Chronicles: The Awakening of the Starcaster, L.E. Starlighter, 2028\n\nThat should meet the brief.<|end|><|start|>assistant<|channel|>final<|message|>Harry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997\nFrodo, The Lord of the Rings: The Fellowship of the Ring, J.R.R. Tolkien, 1954\nZylo, The Prism Galaxy Chronicles: The Awakening of the Starcaster, L.E. Starlighter, 2028",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 416,
+    "total_tokens": 741,
+    "completion_tokens": 325,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

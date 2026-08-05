@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8b141786ddf16256",
+  "object": "text_completion",
+  "created": 1785859011,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to produce a C++ program that finds the nth Fibonacci number using recursion. Provide explanation. Ensure to handle large input? Probably just a simple recursive function. Provide a main to read n, compute and print. Might mention that recursion can be slow but okay. Provide code. Use long long to avoid overflow? We can mention tail recursion maybe not needed. Provide iterative version? But requirement: recursion. So just simple recursion. We'll also implement maybe memoization or naive recursion? It says using recursion. Provide sample. Also mention recursion depth. Provide zeros? Let's design. We'll define a function fib(int n) returns long long. Base case n==0: return 0; n==1: return 1. Then fib(n)=fib(n-1)+fib(n-2). That works for n upto maybe 30 in recursion.\n\nWe can also show typical code. Provide safety: handle negative n? Maybe ignore. Provide comment. I'll produce final answer that contains a program code. And possibly explanation, but question likely expects code only. I can provide both. I will provide code. Also include <iostream>. Use <=? The recursion will handle n < 0?\n\nImplement with std::int64_t. Provide sample call. Provide demonstration of using recursion. Provide comment that recursion depth limit. Use (maybe use std::vector<int> for memoization). But recursion is the main requirement. We'll produce code with recursion. Ok.\n\nLet's answer.<|end|><|start|>assistant<|channel|>final<|message|>Here is a minimal, self‑contained C++ program that uses a simple recursive function to compute the *n*-th Fibonacci number.  \nThe implementation follows the classic definition\n\n```\nF(0) = 0\nF(1) = 1\nF(n) = F(n-1) + F(n-2)      for n ≥ 2\n```\n\n```cpp\n#include <iostream>\n#include <cstdint>   // for std::int64_t\n\n// Recursive function to compute F(n)\nstd::int64_t fib(int n)\n{\n    if (n < 0)             // optional: handle negative input\n        return 0;\n    if (n == 0)            // base case\n        return 0;\n    if (n == 1)            // base case\n        return 1;\n    return fib(n - 1) + fib(n - 2);   // recursive step\n}\n\nint main()\n{\n    std::cout << \"Enter n (0‑based): \";\n    int n;\n    if (!(std::cin >> n)) {\n        std::cerr << \"Invalid input\\n\";\n        return 1;\n    }\n\n    if (n < 0) {\n        std::cerr << \"n must be non‑negative.\\n\";\n        return 1;\n    }\n\n    // For large n the recursive version will become impractically slow.\n    // It works well for n up to roughly 30–40 on a typical machine.\n    std::cout << \"F(\" << n << \") = \" << fib(n) << '\\n';\n    return 0;\n}\n```\n\n### What the program does\n\n1. **`fib(int n)`** – The function is purely recursive.  \n   * For `n == 0` or `n == 1` it returns the base values 0 and 1.  \n   * For any other `n`, it computes `fib(n-1)` and `fib(n-2)` and adds them.  \n   This follows the textbook definition and gives the correct result.\n\n2. **`main()`** – Reads an integer `n` from the user, checks that it's non‑negative, and prints the result.\n\n> **Note**  \n> The pure recursive implementation is exponential in time (`O(2ⁿ)`), so it is only feasible for reasonably small `n` (typically `n ≤ 30` or `n ≤ 40`).  \n> For larger values you would want to memoize the results or use an iterative method.\n\nFeel free to copy the code into a file like `fib_recursive.cpp`, compile with `g++ -std=c++17 fib_recursive.cpp -o fib` and run it.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 81,
+    "total_tokens": 948,
+    "completion_tokens": 867,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

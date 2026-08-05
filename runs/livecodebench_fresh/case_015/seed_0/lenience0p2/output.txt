@@ -1,0 +1,187 @@
+<|channel|>analysis<|message|>We need to implement function find leftover money. Essentially we want to minimize sum of two distinct prices <= money. Let two chocolate indices; need to find minimal sum <= money to maximize leftover (i.e., reduce spent) maximize remaining money. So we want minimal sum among all pairs that sum <= money. Then leftover = money - sum. If no pair sum <= money, return money.
+
+Goal: minimize leftover? Actually maximize remaining money == money - largest sum? Wait: The problem says "You would like to minimize the sum of the prices of the two chocolates you buy. Return the amount of money you will have leftover after buying the two chocolates." It says "You would like to minimize the sum of the prices of the two chocolates you buy" which suggests you want to minimize the sum of prices (cheapest). So you have more money left? But initial money minus sum. They want minimal sum. With minimal sum, leftover = money - sum. They want minimal sum to maximize leftover. Actually we want smallest sum among possible pairs, and leftover = money - sum. So just find min sum. But also ensure non-negative leftover: sum <= money. If we couldn't find any pair <= money, return money. That matches problem: choose cheapest pair that still <= money. If there is no pair <= money, return money. So we just need to compute minimal sum among any pair; if exceed money, return money.
+
+Implementation: two loops to sum. Complexity O(n^2). Or we could sort then two pointers to find minimal sum with potential pair <= money? But we actually need minimal sum but must be <= money; So if there is no pair sum <= money, we return money. So all we need to check all pair sums to find minimal sum that <= money. That is simple.
+
+Edge: if there are many pairs minimal sum may exceed money? ex: all prices > money? example: [3,2,3], money=3 -> pair sums: 2+3=5, 3+3=6, etc. None <=3. So return money. No pairs any <=3. So min sum is negative infinite? not exist. We need to handle that.
+
+Now code accordingly. Implementation steps in python.
+
+Complexities: O(n^2) time, O(1) space.
+
+Let's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For the given price list `prices` we must buy **exactly two** chocolates.
+The chosen sum **cannot be larger than `money`** – otherwise we would have
+negative leftover money.  
+We would like to spend as little as possible, i.e. we need the **smallest
+possible sum of two distinct chocolates** that still fits into the budget.
+
+The task is therefore
+
+* find the smallest pair‑sum `z` such that `z <= money` (using two different
+  prices).
+* If no such pair exists, return `money` (we simply buy nothing).
+* Otherwise return `money – z`.
+
+Because the array length is at most 50 we can use a simple quadratic
+enumeration of all pairs – \(O(n^2)\) time and \(O(1)\) extra memory.
+
+
+
+--------------------------------------------------------------------
+
+#### Algorithm
+```
+min_spent = INF
+for i from 0 to len(prices)-1:
+    for j from i+1 to len(prices)-1:
+        s = prices[i] + prices[j]
+        if s <= money:
+            min_spent = min(min_spent, s)
+
+if min_spent is still INF:
+    return money            # no pair possible
+else:
+    return money - min_spent
+```
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the required amount of leftover money.
+
+---
+
+##### Lemma 1  
+For every pair of distinct indices `(i, j)` the algorithm considers
+the sum `s = prices[i] + prices[j]` and updates `min_spent` to the
+smallest such sum that is ≤ `money`.
+
+**Proof.**
+
+*Loop invariant*:  
+Before the outer loop at iteration `i`, `min_spent` equals the minimum
+sum among all pairs `(p, q)` with `0 ≤ p < i` and `p < q` that are ≤ `money`.
+
+*Initialization*:  
+Before the outer loop runs, `min_spent` = `INF`.  
+No pair has been processed, so the invariant holds vacuously.
+
+*Maintenance*:  
+When `i` is fixed, the inner loop iterates over all `j > i`.  
+For each such `j` we compute
+` s = prices[i] + prices[j]`.  
+If `s ≤ money` we update `min_spent` to  
+`min(min_spent, s)` – this keeps the minimal sum among all  pairs
+with `0 ≤ p ≤ i` and `p < q`.  
+Thus after the inner loop finishes, the invariant holds for the next
+outer iteration.
+
+*Termination*:  
+After the outer loop terminates, `invariant` holds for `i = n`
+(where `n = len(prices)`).  
+Therefore `min_spent` equals the minimum sum among all pairs
+(`0 ≤ p < q < n`) that is ≤ `money`. ∎
+
+
+
+##### Lemma 2  
+If `min_spent` remains `INF` after the loops, no pair of chocolates
+can be bought without exceeding `money`.
+
+**Proof.**
+
+By Lemma&nbsp;1, if at least one pair `x + y ≤ money` existed, `min_spent` would have been replaced
+by that minimal sum.  
+Thus `min_spent` staying `INF` indicates that no such pair exists. ∎
+
+
+
+##### Lemma 3  
+If `min_spent` is finite, the algorithm returns the maximum leftover
+possible while buying exactly two chocolates.
+
+**Proof.**
+
+The algorithm returns `money – min_spent`.  
+`min_spent` is the minimum achievable sum of two chocolates that does not
+exceed `money`.  
+Hence any other pair of chocolates costs at least this much, so spending
+more would leave a smaller remainder.  
+Therefore the returned amount is the largest possible leftover under
+the constraint. ∎
+
+
+
+##### Theorem  
+The algorithm always returns the amount of money that will be left after
+buying two chocolates as described in the problem statement.
+
+**Proof.**
+
+*Case 1*:  
+No pair of chocolates can be bought without exceeding `money`.  
+By Lemma&nbsp;2 the algorithm returns `money`.  
+Buying nothing is the only feasible option and thus the correct
+remaining money.
+
+*Case 2*:  
+At least one pair is affordable.  
+From Lemma&nbsp;1 the algorithm finds the smallest affordable sum, and
+Lemma&nbsp;3 shows that this yields the maximum remaining money.  
+Thus the algorithm’s return value is correct. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis
+
+The two nested loops examine every unordered pair once:
+
+```
+Time   :  O(n^2)   (n ≤ 50 → at most 1225 iterations)
+Memory :  O(1)     (constant extra space)
+```
+
+--------------------------------------------------------------------
+
+#### Reference Implementation (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    def buyChoco(self, prices: List[int], money: int) -> int:
+        """
+        Returns the leftover money after buying exactly two chocolates
+        with the minimum possible sum not exceeding the initial budget.
+        """
+        INF = 10 ** 9          # sufficiently large sentinel
+        min_spent = INF
+
+        n = len(prices)
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                s = prices[i] + prices[j]
+                if s <= money:
+                    if s < min_spent:
+                        min_spent = s
+
+        # If no pair is affordable, keep the full money
+        if min_spent == INF:
+            return money
+        return money - min_spent
+
+# Example usage:
+# sol = Solution()
+# print(sol.buyChoco([1,2,2], 3))   # Output: 0
+# print(sol.buyChoco([3,2,3], 3))   # Output: 3
+```
+
+The function follows exactly the algorithm proven correct above and
+conforms to the required signature.
