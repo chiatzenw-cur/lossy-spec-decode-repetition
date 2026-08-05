@@ -37,9 +37,31 @@ GPU_UTIL="${GPU_UTIL:-0.85}"
 #   p(x)/(LENIENCE_FACTOR*q(x)) > u. Needs `bash patches/apply.sh`.
 # LOSSY_RULE=synthetic uses vLLM's stock `synthetic` method, which accepts at a
 #   prescribed rate irrespective of p and q. No patch needed.
+# LOSSY_RULE=spec_casc_opt uses the patched kernel for Speculative Cascades
+#   [OPT] (Narasimhan et al. 2025): defer to the strict p/q test iff
+#   max_u q(u) < max_u p(u) - SPEC_CASC_ALPHA*TV(p,q), else accept unconditionally.
+#   Needs `bash patches/apply_spec_casc_opt.sh`.
+# LOSSY_RULE=cactus uses the patched kernel for CACTUS (Hao & Mou 2026): boost
+#   the drafted token's acceptance via gamma_x = min(p(x) +
+#   sqrt(2*CACTUS_ALPHA*p(x)*(1-p(x))), 1), a function of p(x) alone -- never
+#   q -- unlike every other relaxed rule here. Needs `bash patches/apply_cactus.sh`.
+# All three patched rules (lenience, spec_casc_opt, cactus) are mutually
+# exclusive -- each patches the same pristine file, so only one can be
+# installed at a time; starting the wrong LOSSY_RULE for whichever patch is
+# actually installed is caught by the probe below, not silently run.
 LOSSY_RULE="${LOSSY_RULE:-synthetic}"
 LENIENCE_FACTOR="${LENIENCE_FACTOR:-0.2}"
 SYNTH_LEN="${SYNTH_LEN:-3.0}"
+# Paper's own qualitative example of an MTP drafter collapsing into a
+# repetition loop under spec-casc-opt used alpha=0.05 (arXiv:2607.08690 Fig.
+# 5) -- the same failure mode this repo studies, so that is the default here
+# too, not the paper's own suggested (and found-too-high-for-MTP) alpha=0.
+SPEC_CASC_ALPHA="${SPEC_CASC_ALPHA:-0.05}"
+# CACTUS's alpha bounds a KL divergence (>= 0); 0.25 is mid-range among the
+# values the paper evaluates (0.1, 0.25, 1, 10) rather than a value chosen to
+# reproduce a specific failure, since -- unlike spec_casc_opt -- the paper
+# does not report CACTUS inducing repetition with an MTP drafter.
+CACTUS_ALPHA="${CACTUS_ALPHA:-0.25}"
 
 # The knob used to be called BETA. It is renamed because beta is a *different*
 # parameter in the mentored-decoding literature (fixed at 1 there); this factor
@@ -59,6 +81,13 @@ fi
 # an earlier lossy run, a strict server started afterwards silently picks up the
 # stale factor and the control arm is not a control arm.
 factor_file="/tmp/lossy-spec-decode-lenience-$(id -u)"
+# Same reasoning for spec-casc-opt's alpha, in case that patch (rather than
+# lenience) happens to be the one currently installed: -inf always defers to
+# the strict test, neutralising it regardless of mode.
+spec_casc_alpha_file="/tmp/lossy-spec-decode-spec-casc-alpha-$(id -u)"
+# Same reasoning again for CACTUS's alpha: 0.0 makes gamma_x == p(x) exactly,
+# neutralising it regardless of mode if that patch happens to be installed.
+cactus_alpha_file="/tmp/lossy-spec-decode-cactus-alpha-$(id -u)"
 
 common_args=(
   --model "$MODEL_PATH"
@@ -96,6 +125,8 @@ spec_json() {
 case "$MODE" in
   baseline)
     printf '%s\n' "1.0" > "$factor_file"
+    printf '%s\n' "-inf" > "$spec_casc_alpha_file"
+    printf '%s\n' "0.0" > "$cactus_alpha_file"
     echo "mode=baseline model=$MODEL_PATH port=$PORT seed=$SEED lenience_factor=1.0"
     exec "$PYTHON" -m vllm.entrypoints.openai.api_server "${common_args[@]}"
     ;;
@@ -104,6 +135,8 @@ case "$MODE" in
     # respect to the target distribution. Paired with draft_sample_method, this
     # is the control arm the lossy rules are compared against.
     printf '%s\n' "1.0" > "$factor_file"
+    printf '%s\n' "-inf" > "$spec_casc_alpha_file"
+    printf '%s\n' "0.0" > "$cactus_alpha_file"
     cfg="$(spec_json standard '')"
     echo "mode=strict draft=$DRAFT_MODEL_PATH k=$NUM_SPEC rule=standard draft_sample=$DRAFT_SAMPLE_METHOD port=$PORT seed=$SEED lenience_factor=1.0"
     exec "$PYTHON" -m vllm.entrypoints.openai.api_server "${common_args[@]}" --speculative-config "$cfg"
@@ -111,8 +144,61 @@ case "$MODE" in
   lossy)
     if [[ "$LOSSY_RULE" == "synthetic" ]]; then
       printf '%s\n' "1.0" > "$factor_file"
+      printf '%s\n' "-inf" > "$spec_casc_alpha_file"
+      printf '%s\n' "0.0" > "$cactus_alpha_file"
       cfg="$(spec_json synthetic ",\"synthetic_acceptance_length\":$SYNTH_LEN")"
       echo "mode=lossy rule=synthetic draft=$DRAFT_MODEL_PATH k=$NUM_SPEC accept_len=$SYNTH_LEN port=$PORT seed=$SEED"
+    elif [[ "$LOSSY_RULE" == "spec_casc_opt" ]]; then
+      # spec-casc-opt runs the same `standard` code path as strict/lenience;
+      # only the patched kernel's per-token defer decision differs. Refuse to
+      # start unless the patch is actually present -- without it this
+      # silently becomes the strict arm (or, worse, if the LENIENCE patch is
+      # what's installed instead, silently becomes a differently-mislabelled
+      # arm). Neutralise the lenience factor too, in case that patch happens
+      # to be the one installed: 1.0 makes it a no-op if so.
+      printf '%s\n' "1.0" > "$factor_file"
+      printf '%s\n' "$SPEC_CASC_ALPHA" > "$spec_casc_alpha_file"
+      printf '%s\n' "0.0" > "$cactus_alpha_file"
+      probe="$("$PYTHON" - <<'PY'
+try:
+    import vllm.v1.sample.rejection_sampler as v1
+    ok = hasattr(v1, "_SPEC_CASC_ALPHA")
+    print("yes" if ok else "no")
+except Exception:
+    print("no")
+PY
+)"
+      if ! grep -qx "yes" <<<"$probe"; then
+        echo "LOSSY_RULE=spec_casc_opt needs the patch: run 'bash patches/apply_spec_casc_opt.sh'." >&2
+        echo "Without it this arm silently equals the strict arm (or runs Lenience/CACTUS, if one of those is installed instead)." >&2
+        exit 5
+      fi
+      cfg="$(spec_json standard '')"
+      echo "mode=lossy rule=spec_casc_opt alpha=$SPEC_CASC_ALPHA (via $spec_casc_alpha_file) draft=$DRAFT_MODEL_PATH k=$NUM_SPEC port=$PORT seed=$SEED"
+    elif [[ "$LOSSY_RULE" == "cactus" ]]; then
+      # CACTUS runs the same `standard` code path too; only the patched
+      # kernel's per-token boost differs. Same refuse-if-unpatched discipline
+      # as the other two lossy rules, and the same neutralise-the-others
+      # precaution in case a different patch happens to be installed.
+      printf '%s\n' "1.0" > "$factor_file"
+      printf '%s\n' "-inf" > "$spec_casc_alpha_file"
+      printf '%s\n' "$CACTUS_ALPHA" > "$cactus_alpha_file"
+      probe="$("$PYTHON" - <<'PY'
+try:
+    import vllm.v1.sample.rejection_sampler as v1
+    ok = hasattr(v1, "_CACTUS_ALPHA")
+    print("yes" if ok else "no")
+except Exception:
+    print("no")
+PY
+)"
+      if ! grep -qx "yes" <<<"$probe"; then
+        echo "LOSSY_RULE=cactus needs the patch: run 'bash patches/apply_cactus.sh'." >&2
+        echo "Without it this arm silently equals the strict arm (or runs Lenience/spec-casc-opt, if one of those is installed instead)." >&2
+        exit 5
+      fi
+      cfg="$(spec_json standard '')"
+      echo "mode=lossy rule=cactus alpha=$CACTUS_ALPHA (via $cactus_alpha_file) draft=$DRAFT_MODEL_PATH k=$NUM_SPEC port=$PORT seed=$SEED"
     else
       # Lenience runs the same `standard` code path as the strict arm; the only
       # difference is the factor in the patched kernel, which is exactly the
@@ -126,6 +212,8 @@ case "$MODE" in
       # stderr, which lands in the same log the runner scrapes. Writing after it
       # leaves a stale 1.0 line in a lossy run's log.
       printf '%s\n' "$LENIENCE_FACTOR" > "$factor_file"
+      printf '%s\n' "-inf" > "$spec_casc_alpha_file"
+      printf '%s\n' "0.0" > "$cactus_alpha_file"
       probe="$("$PYTHON" - <<'PY'
 try:
     import vllm.v1.sample.rejection_sampler as v1

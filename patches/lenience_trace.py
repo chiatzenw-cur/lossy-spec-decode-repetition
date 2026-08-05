@@ -1,4 +1,5 @@
-"""Per-proposal-token trace for the lenience-patched rejection sampler.
+"""Per-proposal-token trace, shared by every relaxed-acceptance patch (lenience,
+spec-casc-opt, ...). Not upstream vLLM.
 
 Why per proposal and not per round
 ----------------------------------
@@ -8,15 +9,24 @@ be attributed to an individual emitted token, which means recording every
 proposal: its target and draft probabilities, the uniform draw it was tested
 against, and — critically — whether the strict rule would have rejected it.
 
-`lossy_only` is the whole point. It is computable from a single lossy run,
+`lossy_only` is the whole point. It is computable from a single relaxed run,
 because strict acceptance is a deterministic function of the same (p, q, u) the
-lossy rule already used:
+relaxed rule already used. For lenience, whose relaxation is a single scalar
+multiplier on the same p/q ratio test, this is computed inline here:
 
     strict_accept = (p / q)       >= u
     lossy_accept  = (p / (lam*q)) >= u
     lossy_only    = lossy_accept and not strict_accept
 
-So the strict arm does not need to be instrumented at all; each lossy run
+Methods whose relaxed rule is NOT a scalar multiplier on p/q -- e.g.
+spec-casc-opt, which either runs the strict test unchanged or accepts
+unconditionally depending on a per-token `defer_mask` computed from the full
+vocab distributions -- pass that decision in directly instead: this module
+combines it with the strict test it already computes, rather than
+re-deriving each method's rule here. See rejection_sample() in the relevant
+patch for how defer_mask is derived.
+
+So the strict arm does not need to be instrumented at all; each relaxed run
 carries its own counterfactual.
 
 Phase 1 is observation only. Nothing here alters acceptance, because changing
@@ -101,6 +111,9 @@ class _Tracer:
         cu_num_draft_tokens: torch.Tensor,  # [batch]
         num_draft_tokens: list[int],
         lenience_factor: float,
+        defer_mask: torch.Tensor | None = None,  # [num_tokens] bool; spec-casc-opt et al.
+        cactus_alpha: float | None = None,
+        relaxation_method: str = "lenience",
     ) -> None:
         if not self.enabled:
             return
@@ -123,7 +136,26 @@ class _Tracer:
 
         ratio = torch.where(q > 0, p / q, torch.full_like(p, float("inf")))
         strict_ok = (q > 0) & (ratio >= u)
-        lossy_ok = (q > 0) & (ratio / lenience_factor >= u)
+        if defer_mask is not None:
+            # spec-casc-opt et al.: pi_rej == q (accept unconditionally) at
+            # non-deferred positions; the deferred positions run exactly the
+            # strict test already computed above. The caller's kernel made
+            # this same decision, so this must track it exactly for
+            # `actually_accepted` (from output_token_ids, below) to agree
+            # with `lossy_would_accept` on every row -- a mismatch would mean
+            # the trace and the kernel disagree about what ran.
+            lossy_ok = strict_ok | (~defer_mask.to(torch.bool))
+        elif cactus_alpha is not None:
+            # CACTUS (Hao & Mou 2026): boost the drafted token's own
+            # acceptance via gamma_x = min(p(x) + sqrt(2*alpha*p(x)*(1-p(x))), 1),
+            # then run the ordinary ratio test with gamma_x in place of p(x).
+            # clamp_min guards the sqrt: p*(1-p) is never negative for a valid
+            # probability, but the multiply can dip a hair below 0 in fp32.
+            gamma = (p + (2.0 * cactus_alpha * p * (1.0 - p)).clamp_min(0.0).sqrt()).clamp(max=1.0)
+            gamma_ratio = torch.where(q > 0, gamma / q, torch.full_like(p, float("inf")))
+            lossy_ok = (q > 0) & (gamma_ratio >= u)
+        else:
+            lossy_ok = (q > 0) & (ratio / lenience_factor >= u)
 
         # How far down the target's ranking the drafted token sits, and how
         # peaked the target is there. Rank 0 means the target's own argmax.
@@ -192,7 +224,13 @@ class _Tracer:
                             "q": round(q_l[i], 8),
                             "p_over_q": round(p_l[i] / q_l[i], 6) if q_l[i] > 0 else None,
                             "u": round(u_l[i], 8),
+                            # "lam" predates multi-method support: it holds
+                            # whatever scalar knob this arm's relaxation used
+                            # (lenience's lambda in (0,1], spec-casc-opt's
+                            # alpha over all reals, ...) -- see
+                            # relaxation_method for which one it is.
                             "lam": lenience_factor,
+                            "relaxation_method": relaxation_method,
                             "strict_would_accept": bool(s_l[i]),
                             "lossy_would_accept": bool(l_l[i]),
                             "actually_accepted": bool(accepted),
@@ -226,7 +264,13 @@ class _Tracer:
                             "emitted_token_id": bonus[b] if b < len(bonus) else None,
                             "emission_source": "bonus",
                             "consecutive_accepted_length": run,
+                            # "lam" predates multi-method support: it holds
+                            # whatever scalar knob this arm's relaxation used
+                            # (lenience's lambda in (0,1], spec-casc-opt's
+                            # alpha over all reals, ...) -- see
+                            # relaxation_method for which one it is.
                             "lam": lenience_factor,
+                            "relaxation_method": relaxation_method,
                         }
                     )
                     self._emitted += 1

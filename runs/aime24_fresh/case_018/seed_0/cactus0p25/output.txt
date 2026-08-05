@@ -1,0 +1,2149 @@
+<|channel|>analysis<|message|>We need to find nonnegative integer solutions to a+b+c=300 with sum of squares times something: (a^2b + a^2c + b^2a + b^2c + c^2a + c^2b). That's symmetric: sum of a^2 b over all ordered pairs? Because combination: For distinct pair a,b,b and a, etc. Let's visualize: For each unordered pair (i,j), we have terms i^2 j and j^2 i. That's sum_{i<j} (i^2 j + j^2 i) = (i j)(i + j). So again, we can rewrite: For all i<j, term_i_j = u v (u+v). Let's denote a,b,c. Let us compute expression sum over all i<j: i e j values.
+
+So sum = a b (a + b) + b c (b + c) + c a (c + a) = a b^2 + b^2 a + c a^2 + a c^2 =? Wait carefully: ai^2 j and a j^2 etc.
+
+Let sum T = a b (a+b) + b c (b+c) + c a (c+a). Expand: a b a + a b b = a^2 b + a b^2 ; that matches first two terms. So expression T = a b (a+b) + b c (b+c) + c a (c+a).
+
+Now given a+b+c=300. We want T = 6,000,000, i.e. 6*10^6.
+
+Let’s use algebra. Let max variable set.
+
+We can use approach: Let’s denote p = a+b+c = 300. Sum of the above: T = ab(a-b?) Wait let's compute numeric.
+
+Let’s denote all types:
+
+T = a b (a+b) + b c (b+c) + c a (c+a) = ab(a+b)+bc(b+c)+ca(c+a). We can also write (a b)(a+b) = ab(a+b) = abp - abc? Actually p = a+b+c.
+
+Compute a b (a+b) = ab(a+b) ; **But we can express in terms of symmetric sums:**
+
+- sum of products two element: S2 = ab+bc+ca
+- product of all: S3 = abc
+- sum of squares: n sum?
+
+Consider the identity: (a+b)(b+c)(c+a)= a b (b+c) + (a+c)(b+c) a? Let's recall: (a+b)(b+c)(c+a) = (a b + b c)(c+a) + a(c+b)?? Let's derive more systematically: (a+b)(b+c)(c+a) = (a+b)(bc + b a + c^2 + c a?) Wait compute: (a+b)(b+c)(c+a):
+= (a+b)((b+c)(c+a)).
+
+Compute using information: (b+c)(c+a):
+
+= b*c + b*a + c^2 + c*a = bc + ba + c^2 + ca = ab? It's one bc? Let's check.
+
+(b+c)(c+a) = b*c + b*a + c*c + c*a = bc + ab + c^2 + ca.
+
+Thus multiply by (a+b): (a+b)(bc + ab + c^2 + ca) = (a + b)( (a+b)c + b c )? Not.
+
+Let's check sum: (a+b)(bc + ab + c^2 + ca) =
+
+= a [bc + ab + c^2 + ca] + b [bc + ab + c^2 + ca] =
+
+= a bc + a^2 b + a c^2 + a^2 c + ... + b b c + ab^2 + bc^2 + abc? Wait B = a bc + a^2b + ac^2 + a^2c + b bc + b^2a + bc^2 + pound? Actually we get expression.
+
+But maybe easier: We can rewrite T = (abc) of something? Let's compute expected yield.
+
+T = a b (a+b) + b c (b+c) + c a (c+a) = ab(a+b) + bc(b+c) + ca(c+a).
+
+Alternatively we can express in terms of intermediate sums: a b (a+b) = ab(a+b) = ab(p - c). So:
+
+a b (a+b) = ab(p - c).
+
+Similarly, bc(b+c) = bc(p - a), and ca(c+a) = ca(p - b).
+
+So T = ab(p - c) + bc(p - a) + ca(p - b) = p (ab+bc+ca) - (ab c + bc a + ca b)?? Wait cross terms:
+
+Compute cross contributions:
+
+- ab c (from ab p - a b c?). Actually be careful: ab(p - c) = ab p - ab c (since p-c = a+b). But  we already wrote: ab(p - c) = ab p - ab c.
+
+Similarly, bc(p - a) = c b p - a b c? Wait: gcd: bc(p - a). Multiply: bc p - a b c.
+
+Similarly, ca(p - b) = ca p - a b c.
+
+Thus T = p(ab+bc+ca) - 3 ab c.
+
+Now compute p=300. So T = 300 S2 - 3 abc.
+
+Given T = 6,000,000. So 300 S2 - 3 abc = 6,000,000 => divide by 3: 100 S2 - abc = 2,000,000.
+
+So abc = 100 S2 - 2,000,000.
+
+We need nonnegative integers with sum a+b+c=300 and satisfying.
+
+We also have identity linking: Sum of squares sum: S1^2 = a^2+b^2+c^2 + 2S2. So S2 = (S1^2 - (A^2 + B^2 + C^2))/2? Actually S1=300.
+
+We need unknowns b etc.
+
+We can express a+b+c=300 and abc defined.
+
+We can attempt to find integer solutions perhaps by bounding.
+
+We can use assignment: Let c=300 - a - b.
+
+Given x=a,b≥0. Then
+
+S2 = ab + bc + ca = ab + b c + c a.
+
+We have c = 300 - a - b. Then S2 = ab + b(300-a-b) + a(300-a-b) = ab + 300b - a b - b^2 + 300a - a^2 - a b = 300b - b^2 + 300a - a^2 - ab? Wait 1a3 ?
+
+Let's compose properly:
+
+S2 = ab + b(300-a-b) + a(300-a-b) = ab + 300b - a b - b^2 + 300a - a^2 - a b = ab + 300b - ab - b^2 + 300a - a^2 - ab.
+
+Simplify: ab cancels partially: ab + 300b - ab = 300b, we also have minus a b => -ab. So leftover: 300b - b^2 + 300a - a^2 - ab.
+
+Hence S2 = 300a + 300b - a^2 - b^2 - ab.
+
+Check plug b = 0? If b=0, S2=300a - a^2, and a=300 => a=300? But then c=0, but then product 0 -> ok.
+
+Thus we have S2 = (300a - a^2) + (300b - b^2) - ab.
+
+Similarly define abc symbolic: x = abc = a b (300 - a - b).
+
+Thus equation: 100 S2 - abc = 2,000,000.
+
+Compute 100 S2 - abc = ?
+
+We need satisfy 100(300a +300b - a^2 - b^2 - ab) - a b(300 - a - b) = 2,000,000.
+
+Compute left side:
+
+Compute 100S2: 100(300a +300b - a^2 - b^2 - ab) = 30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 100ab.
+
+Now subtract abc: - a b (300 - a - b) = - a b 300 + a b a + a b b = - e.
+
+Let's compute: -a b (300 - a - b) = -300ab + a^2 b + a b^2. So left side becomes 30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 100 a b - 300 a b + a^2 b + a b^2.
+
+Simplify: Combine ab terms: - 100 a b - 300 a b = -400 a b.
+
+Now a^2 b, a b^2. So final: 30,000 a +30,000 b - 100 a^2 - 100 b^2 - 400 ab + a^2 b + a b^2.
+
+Cross check: 30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 400 ab + a^2 b + a b^2.
+
+Now set equal to 2,000,000.
+
+Now we try to iterate over integer a,b with a,b≥0 and a+b≤300. Since ci>0. We can attempt to find solutions of b variables.
+
+Observation: The expressions are large. Let's attempt divide by some factor maybe 100.
+
+Divide equation by 100: 300 a + 300 b - a^2 - b^2 - 4 ab + a^2 b /100 + a b^2 /100 = 20000? Wait 2,000,000/100 = 20,000? Because 500,000? Wait 2,000,000/100=20,000. Indeed:
+
+So we have 300 a + 300 b - a^2 - b^2 - 4 ab + (a^2 b + a b^2)/100 = 20,000.
+
+We need integer for a,b >=0.
+
+But (a^2 b + a b^2)/100 maybe fractional? not possible because left side should be integer. But we have 20000, the other terms need to be integer. So (a^2 b + a b^2) must be divisible by 100. Which is a and b prime? Let's analyze.
+
+We need 300 a + 300 b - a^2 - b^2 - 4 ab + (a^2 b + a b^2)/100 equals 20,000 exactly.
+
+We can rearrange ints: Let’s denote 100 we sum terms maybe.
+
+Let’s compute 20,000 = 300x + ... Wait we can reduce.
+
+We can express (a^2 b + a b^2)/100 = a b*(a+b)/100 (>0). Since a^2 b + a b^2 = a b (a+b). So expression: 300 a + 300 b - a^2 - b^2 - 4 ab + a b (a+b)/100.
+
+Hence mod = 300y. So set identity.
+
+Alternatively: Multiply by 100: equation becomes:
+
+30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 400 a b + (a^2 b + a b^2) = 2,000,000.
+
+This is exactly what earlier we had. So we must keep.
+
+Now think: we could attempt to find integer solutions by enumeration with bounds. But q! number of possible? but maybe small.
+
+Let's attempt to compute by scanning possibilities maybe symmetrical.
+
+We can attempt to treat possible values as big positive contributions. But notice that the contributions a^2 b + a b^2 are b^2? c?
+
+Consider a,b >=0 all up to 300 (given that c nonnegative). Let's consider brute force reasoning mentally: maybe z a "only solution for integers but we need to count triples".
+
+Let's attempt to compute all solutions.
+
+Consider the digits of a,b.
+
+Let t = c = 300 - a - b >=0.
+
+We can attempt to compute using known approach? This is like that we must satisfy:
+
+abc = 100 S2 - 2,000,000 (Equation 1). Now we can also utilize cubic equation for triple or maybe use that a+b+c=300, s1=300.
+
+But we can maybe express sum of products S2 as 100 S2 = abc + 2,000,000, which gives S2 = (acb + 2,000,000)/100.
+
+Find integer solutions.
+
+But if k = abc, then S2 = (k + 2,000,000)/100 = (k/100)+20,000. Since S2 integer gives k divisible by 100. So 100 = 100 | k.
+
+Thus k must be 100*m. So abc = 100 m.
+
+Then S2 = 20,000 + m. So S2 = 20,000 + m.
+
+Thus we have m, sum of cubes product.
+
+Now need actual values a,b such that a+b+c=300 and other constraints. Let's analyze.
+
+Let’s denote exact equations:
+
+Let cp = abc = 100 m.
+
+Let P2 = ab+bc+ca = 20,000 + m.
+
+Then note that among all triples, we can compute the higher and lower boundaries etc.
+
+Alternative: Since typical product bigger magnitude^3 as factor.
+
+But we proceed.
+
+We can use relation: (a+b+c)^2 = a^2 + b^2 + c^2 + 2P2.
+
+Additionally, we can compute u = a^2 + b^2 + c^2.
+
+But we might not.
+
+Another approach: Use graph to compute all solutions? Since 300 integer small.
+
+Suppose we brute force logically: We'll try to find a,b values with c.
+
+Given constraints, there are about 30^2 loops? Actually 300^2=90000 but maybe large. But okay if we can approximate.
+
+However we can't compute directly but we can approximate reasoning.
+
+Given that each term in the expression sum is sum a^2b + ... Because a,b,c positive.
+
+The expression 6,000,000 is moderate relative to potential maximum at (100,100,100)? For center three equal 100n produce each third: the terms would be (100^2*100) times 6? Wait each ab etc: 100*100*200? Let's compute: If a=b=c=100, then expression: 6 terms each: 100^2*100 + 100^2*100 + etc - basically each addition double will? Let's compute: For a=b=c=100: a^2b + a^2c = 100^2*100 + 100^2*100 = 2*1e6? Wait 100^2=10000, times 100 => 1,000,000. So each term 1,000,000. There are 6 terms:
+3 pairs each triple gives 2. So total 6 expression = 6*1,000,000 = 6,000,000. Good! Indeed the entire sum yields the given value. Let's check: If a=b=c=100, then each sum equals 6,000,000. Check: The expression given y: a^2b + a^2c + b^2a + b^2c + c^2a + c^2b: For a=b=c=100, each term a^2b=100^2*100? Wait a^2b=100^2*100=1,000,000? Actually 100^2=10,000, times 100 => 1,000,000. So yes a^2b=1,000,000 etc. There are 6 terms each 1,000,000, so total 6,000,000. Yes.
+
+Hence (a,b,c) = (100,100,100) is a solution. Are there other solutions? Let's attempt to find positions where the sum equals 6,000,000.
+
+Observation: Since their sum is 6,000,000, for each pair we need each term equal (a^2 b + a^2 c + b^2 a + ...). This sums.
+
+Compute minimal and maximum each term? Actually.
+
+But the expressions can be symmetrical by permutations.
+
+We might try to find other solutions by partitions: Suppose a=0 or b=0. Then expression reduces drastically. Let's test general.
+
+If any variable zero, expression will vanish? Let's compute (0,b,c). Then term: a^2b=0, a^2c=0, b^2a=0, b^2c = b^2 c, c^2a=0, c^2b = c^2 b. Sum = (b^2 c + c^2 b) = b c (b+c). So the total becomes bc(b+c). Since a=0, then b+c=300. So variable reduces to  bc(300). So 6,000,000 factor equals 300 bc => bc = 6,000,000/300=20,000? Because 6,000,000/300=20,000. So bc=20,000. But a=0, so b+c=300, bc=20,000. This is a quadratic with roots: b and c satisfy t^2 - 300t +20,000 =0 => discriminant D = 300^2-4*20000=90,000-80,000=10,000? Wait 300^2=90,000, 4*20000=80,000, difference 10,000. sqrt(D)=? sqrt 10,000=100. So solutions: t=(300±100)/2=400/2=200 and 200/2? Wait (300+100)/2 =200, or (300-100)/2=100. So solutions: (200,100) or (100,200). So solutions with a=0: (10 0, 100, 200) or (0,200,100). In solution, we'd also need other permutations? Example (0,200,100) gives sum=6,000,000? Let's test: we computed bc=20,000; yes 100*200=20k hold? 100*200=20,000 yes.
+
+But before we forced bc=20,000 exactly; we found b+ c=300 and bc=20,000 yields solution.
+
+Thus we have two nonnegative solutions for a=0. But there may also be triple where a=0, b=100? Wait need b, c as earlier.
+
+Now also second set: Suppose a=0, b==0? then (a,b,c) (0,0,300) would reduce to 0? obviously no. So mism.
+
+Now consider a=0, general bc=20,000 we found two solutions. Because b and c symmetrical.
+
+Similarly, a=0, c=-0? there are two possibilities: (0,100,200) and (0,200,100). That's same up to permutations? (0,100,200) and (0,200,100) are same as after renaming; but they'd appear as distinct solutions.
+
+Similarly, if b=0 case but we already considered? Actually other subtle constraints: but when we only cycle a=0, we can treat the permutations of (a,b,c). As we consider all permutations, there are 3 permutations of the two (a,b,c) that yield 0,100,200 etc? Let's compute: distinct (a,b,c). The first: (0,200,100). The second: (0,100,200). The third: (200, 0,100)? Wait let's examine: if we consider (a,b,c) as a,b,c fixed maybe non-leading perm? But we considered a=0 case only because we set ab? Actually we set a=0 arbitrary.
+
+Wait if a=0, we found pair (b,c) solutions. But also there could be solutions where b=0 case. But we can test that. That would be similar: Suppose b=0, we have expression same as a^2c + c^2a = ... so a c (a+c). That leads to X = 6,000,000. Then with a+c=300 and a*c=20,000. same as above. So yield many solutions.
+
+Similarly s=0 etc gives same range.
+
+Hence the triple can have one zero variable and two others 100 & 200. Similarly could be zero and two other combos? Let's check if any other nonzero such combos with a>0 produce all.
+
+We should consider up to 3 zeros.
+
+Also consider nonnegative solutions with exactly one zero and two positive numbers: maybe all pairs with product 20,000 satisfy sum 300. Let's analyze.
+
+Compute bc + sqrt? Actually we found earlier that for a=0, bc=20,000 and b+c=300. But we also saw solutions where b=200 and c=100. Actually solve two distinct solutions:
+
+- a=0, b=200, c=100
+- a=0, b=100, c=200
+
+Thus a+b+c=300.
+
+Thus, plus positions with any variable zero: we know
+
+- (0,100,200)
+- (0,200,100)
+- (100,0,200)
+- (200,0,100)
+- (100,200,0)
+- (200,100,0) ?
+
+Wait, if we permute all variables: If we set any variable zero, the other two must be 200 and 100. Let's compute that.
+
+Case 1: Suppose a=0 -> solutions (b,c) with 0+200=300 => cost? Let's compute: (b,c) = (200,100) or (100,200). Similarly b=0 -> yields pair (a,c) = (200,100) or (100,200). So we get 6 combinations? Actually we had six permutations:
+
+- (0,100,200)
+- (0,200,100)
+- (100,0,200)
+- (200,0,100)
+- (100,200,0)
+- (200,100,0)
+
+These 6 are exactly the permutations of {0,100,200}.
+
+Also check if any zero variable combination with a=0 only leads to that; also check other: Suppose a=0 fails? But we solved.
+
+Now we could find solutions with multiple zeros? If a=0,b=0 => then c=300. Then expression? Evaluate bc(b+c)=0. So no.
+
+Now consider other solutions with positive numbers.
+
+Now we must test whether there exist solutions with all non-zero e.g., a=b=200, c=?? But we already derived one** gave? Let's test if we mis-categorize to get solution: Solve eq. If one variable 3 is 100, we might also have other solutions but we need to find all.
+
+Let's analyze general equation by solving for a,b.
+
+We can treat as earlier, maybe we know for a=100,b=100,c=100. Are there other solutions? Let's try to find integer solutions if one variable > 100 and the other <100. Let's attempt small order.
+
+Because total <4? we have to find if some triple of 300 difference but maybe produce same sum.
+
+Let's attempt to find if there are solutions with "a=200, b=100, c=0" or "200, c=100, b=0" etc.
+
+But maybe these are distinct.
+
+We can also check if there exists solutions with a+b+c=300 and expression 6k but not all equal equal.
+
+Let's compute integral solving inside general formula: Use series expression.
+
+We can attempt iterate all possibilities for a from 0 to 100 and b from 0 to 100 etc to see if there might exist.
+
+But we might produce extremely high complexity.
+
+Let's attempt to analyze such as T = 100S - something maybe.
+
+Could solve via bounding: For each variable, the expression is of form a^2(b+c) + b^2(a+c) + c^2(a+b). This is a sum of symmetrical contributions.
+
+Let's consider given a+b+c=300, one variable cannot exceed 300. Let's suppose constant values.
+
+For a with large distribution, we might have unique solutions.
+
+Case 1: a=100 (or guess) but no.
+
+We can search for pattern: Suppose one variable becomes 300 = 300, others 0, zero sum expression: probability 0.
+
+Thus expression only ~6.000 million for base cases. Think of x values.
+
+Another approach: use substitution technique: Let us define new variables s1=300, s2=20,000+m, s3= coefficient.
+
+But we know sum of products = S2 = ab+bc+ca. The product abc = 100 m. So we know s2 = b? Wait we set.
+
+But s2 = (k+2,000,000)/100 = (100 m + 2,000,000)/100 = m + 20,000. So s2=18,000? Wait ∴ S2=20,000+m. So s2 cannot exceed ???
+
+Wait we can find m (abc/100). For given an even unknown.
+
+But we need to consider that a,b,c integers such that ab+bc+ca = s2 and abc = 100 m. If we only try values that satisfy, maybe there are the choices.
+
+Thus, step: We need to compute all integer triples with sum xyz, product S2; equation (1). But we might consider two cases: trivial equal or something.
+
+Let's analyze variables: Suppose a=100, b=100. Then c=100. Then we computed s2 = (100*100+100*100+100*100)=30,000? Wait 100*100=10,000. Times 3=30,000. That's S2=30,000. Then abc = 1,000,000. Our equation: 100*( n)?? Let's compute S2=30,000; S2=20,000 + m => 30,000 -> m=10000. Wait m=10,000, then abc=10,000*100=1,000,000 => correct. So consistent.
+
+Thus one solution s=10,000 leads to integer.
+
+Now we can attempt to search for other possibilities using symmetrical constraints.
+
+However we need to confirm we found other solutions. Let's check if there exist solutions with triple (200,100,0) forming 100,200,0 earlier. We considered. Let's compute s2 and verify constraints.
+
+Take (200,100,0). Then s2=2*10,000=400,000? Wait compute: ab+bc+ca=200*100 + 100*0 + 200*0 = 20,000. Sim? 200*100=20,000. So s2=20,000. Then c=0. Then a*b*c=0. So S2=20,000; 100 S2 - product = 2,000,000? Let's compute: 100*20,000-0=2,000,000 -> yes we found that solution: indeed it's the same equality.
+
+Thus m=0? Wait compute product from added equation: 100 m. Product zero => m=0, S2=20,000. Indeed.
+
+So we found infinitely many? No, 0 corresponds to product zero. So any triple with one zero and other two produce product 0 and s2=18,000? Let's compute: For a=-? Let c=0 sum=300. Let's choose a and b c. Then S2=ab+0+. So the equation gives 100*ab - 3*0? Wait we want triple: we require semic conditions: T= 6000000.
+
+Fact: if one zero -> subtract m? For triple where a=0, we have C=0. In expression we used: 100 S2 - abc = 2,000,000. So if abc=0, S2 =20,000. So inequality works for any triple with product 0 and sum 300? Wait we need S2 =20,000. Let's check: For a=0, we had sum s2= a b + b c + c a = 0 + b c + 0 = bc. So n must satisfy bc=20,000. And with two sorted like that. So 0, 100, 200 occurs. So indeed two solutions.
+
+Thus for z=0 there is two solutions. For triple (a,b,c) with zero, one forced product 20,000. For that we solved exactly. Hence a,b are not distinct? We need all permutations of two values.
+
+The example: Suppose a=0: Sum=300, so b, c -> 300. Hence half is 250? Wait b+ c=300. For bc=20,000. So solving. That yields root numbers.
+
+Now we found the pair (??). We found that we can differentiate them with sum=300 and bc=20,000. Using quadratic root, we found one real root repeated: 200 and 100 as earlier. So there are only those two solutions. But if we switch p=100? Wait we solved 200 and 100. Since b ± c? Actually polynomial: t^2 - 300t + 20,000 = 0: solutions: t = 300 ± sqrt(90000-80000) /2? Wait t = (300 ± sqrt(10000)) / 2 = (300 ± 100)/2 = (200/2)?? Wait unclear. Let's recompute: t = 300 (??). Let's compute using equation:
+
+t^2 - 300t + 20k? Wait we mis-calc carefully:
+
+Given z=0: b+c = 300. bc=20,000. Solve t by t: t^2 - (300) t +20,000 = 0 => t = (300 ± sqrt(...))/2. Discriminant D = (300)^2 - 4*20000 = 90,000 - 80,000 = 10,000. sqrt = 100. Solutions: t= (300 ± 100)/2 = 400/2=200, 200/2=100. So yes: t=100 or 200. So still get exactly two options. Since we found earlier that for a=0, b, c=100 or 200? Wait we found s2=bc=20k, but we got 200 and 100 indeed. Good.
+
+Thus there are triples with 0 only with one zero: inside (0,100,200), (0,200,100). So indeed we used earlier.
+
+Now for β=0 case also we have other 3! permutations.
+
+Now for c=0? Let's check: consider all permutations. Already considered.
+
+Now provide final answer: We already found one non-zero triple with positive numbers each >0: one solution (100,100,100). Are there any other solutions with a,b,c positive? Let's search.
+
+We need to test integer solutions for a,b,c positive; maybe 0 is necessary, but that yields some solutions.
+
+But we also found solution (100,100,100). Let's see if there might exist other solutions with only nonzero persons but not equal. Let's treat r=s? but we can analyze by generating function? But can produce.
+
+Let's systematically find solutions of integers using only ints.
+
+We can attempt to categorize f.
+
+We can treat a,b,c symmetrical; we can analyze as constraints from a+b+c=300 and compute given formula.
+
+From earlier: abc = 100 S2 - 2,000,000.
+
+But for given a,b,c positive we need product positive.
+
+Compute integer S2: ab+bc+ca; we know this is at most something.
+
+We might also use expression Σ a^2 b + a b^2 and other 3 symmetric polynomials. This may produce values more than 6 million lines? Not.
+
+In fact for each pair (a,b) we can check possibilities.
+
+We found approximate that for (a,b,c) many, expression may vary.
+
+But we can maybe compute using inequality: In general, for nonnegative triple with sum a+b+c=300, the expression attains min when variables vanish? But still.
+
+Let's compute expression numerically to find solutions.
+
+Set T = 100S2 - 3abc.
+
+We know S2 at most? For maximum product P = 100S2 - 3abc conflicts.
+
+Maybe we can compute actual expression for a,b,c positive. But we may search for solutions that may produce zero product obviously.
+
+But we might find solutions with completely positive numbers.
+
+But we found 100,100,100 all x, so there might be any other solutions with nonzero.
+
+Let's attempt to find whether any other solution with same sum with product being 1,000,000? Let's check AB: There might be other combos with product 100*some.
+
+Suppose a=1? c=299? The sum 300.
+
+Compute B symmetrical.
+
+For each divisor maybe.
+
+But we might find existence of integer-of-sum.
+
+Alternatively search for solutions of 'O FO' maybe.
+
+Let's attempt solve via enumeration: Suppose a=100, b=100? Wait 100,100,100. We know.
+
+We can iterate over other possible long positive values. Suppose a=120? Let's consider b=100? We can calculate T.
+
+Better approach: Problem earlier polynomial may be derived from product parity.
+
+We might attempt to build the cubic polynomial in x as variable a: Suppose a is fixed, then we need:
+
+Compute c = 300 - a - b.
+
+Then expression T=100 S2 - 3abc = 6,000,000.
+
+So 100 S2 - 3ab(300-a-b) = 6,000,000 => 100S2 = 6,000,000 + 3ab(300-a-b)
+
+But S2 = ab + b c + a c.
+
+Compute:
+
+b c + a c = b(300-a-b)+a(300-a-b) = 300(a+b) - c^2? Wait compute: b c + a c = (b + a)(300-a-b) = (a+b)(300-a-b). Let’s also compute: Use identity: 300(a+b) - (a+b)^2? Because (a+b)(300-a-b) = ((a+b)*300) - |(a+b)^2? Wait we do (a+b)(300-a-b) = 300(a+b) - (a+b)^2. So S2 = ab + 300(a+b)- (a+b)^2.
+
+Thus ET: 100 S2 = 100ab + 30,000(a+b) - 100 (a+b)^2 . plus 3ab 300 -3a b (a+b) ??? Wait compute 3ab(300-a-b) = 3ab*300 - 3ab(a+b). So expression:
+
++3ab(300-a-b)=900ab -3ab(a+b).
+
+Hence equation becomes:
+
+100 S2 - 3ab(300-a-b) = 6,000,000.
+
+Compute 100 S2 - 3ab(300-a-b) = 100[ab + 300(a+b) - (a+b)^2] - 3ab(300-a-b) = 
+
+= 100ab + 30,000(a+b) - 100(a+b)^2 - 900ab + 3ab(a+b) =
+
+Combine like: 100ab - 900ab = -800ab.
+
+So we get: -800ab + 30,000(a+b) - 100(a+b)^2 + 3ab(a+b).
+
+Set t = a+b. Then ab = something maybe? But a+b = t, ab = ?
+
+We can bound a+b. Since c = 300 - t, and c>=0 -> t <= 300.
+
+Also ab is at most (t/2)^2.
+
+Compute expression: 6,000,000 = -800ab + 30,000 t - 100 t^2 + 3ab t.
+
+Compute group terms with ab:
+
+Let I = ab.
+
+Equation: -800 I + 30,000 t - 100 t^2 + 3 t I = 6,000,000.
+
+That can be rearranged: (-800 I + 3 t I) = I (3t - 800). So:
+
+I (3t - 800) + 30t - 100 t^2 = 6,000,000? Wait multiply both sides? 60?
+
+Hold on: Actually 30,000 t - 100 t^2 is 30,000 t -100,000? Wait 100 t^2 would be 100 t^2? Actually for t term 30,000t -100 t^2.
+
+Hence 6,000,000 = I(3t - 800) + 30,000 t - 100 t^2.
+
+So we need:
+
+I(3 t - 800) = 6,000,000 - 30,000 t + 100 t^2.
+
+So I = (6,000,000 -30,000 t +100t^2) / (3t - 800). Since I must be integer ≥0.
+
+Now compute Y(t) = 6,000,000 -30,000 t +100 t^2.
+
+Check both sides.
+
+Compute denominator: D = 3 t - 800.
+
+We must find t such that 3t - 100(t?) Wait sign digits: (3t -800). For t positive, coefficient possible.
+
+Equation: I = (100 t^2 - 3,000 t + 6,000,000) / (3t -800).
+
+We need to find integer I and integer a,b with minimal.
+
+We can attempt to express t as integer from 0 to 300.
+
+Calculate O(t) for t =? Because c = 300 - t; so c=300 - t. If t > 300, negative.
+
+Now a.
+
+We can attempt listing t values more quickly.
+
+We can try few values:
+
+Row 1: t=300 satisfying c=0 (since 300-300=0). Then denominator D = 3 t - 800 = 900 - 800 = 100. For t=300, numerator: 100*90000 -30,000*300 + 6,000,000 = 9,000,000 - 9,000,000 + 6,000,000 = 6,000,000. So I = 6,000,000 /100 = 60,000. So coefficient need to set B=60,000 when t=300 such that ab=60,000. But this constraint is only possible if a,b positive and sum=300. We have a=0,0? no: ab maximum (t/2)^2 = 225^2 = 50,625? Wait compute with t=300: a+b = 300; maximum ab would be (150)^2 = 22,500. So gcd of 60,000 is impossible 60k > 22,500. So no solution for t=300. This corresponds to case with c=0 but in positive our count of solutions with a=0 produce 200,100 combination. But sum 300 fails? Let's check: For a=b? not x.
+
+But t=300 with I=60000 impossible: but an earlier solution with c=0.
+
+Wait we considered a=0,b=200 and c=100? Actually they got c=100? Wait c=0 gave not.
+
+But compute t=200 + w? Let's analyze.
+
+We might compute t=300 for a= e? Example with a=200, b=100: t=300, min. 200*100=20,000*? Wait compute 200*b=200k? 200*100=20,000. That is I=20000. Would a*b produce 60,000? No.
+
+Hence t=300 gave I=60,000 impossible.
+
+Hence no solutions for t=300.
+
+Now find t value to try produce I that as actual product with sum= t. For each t, maximum possible ab: (t/2)^2 iff t even. So we require I <= [t/2]^2.
+
+Thus we can compute I values as function of t and do search.
+
+Better approach: Since t <=300, we have small possible t such that denominator 3t - 800 positive? Not necessarily; Because 3t-800 can be negative if t<800/3 ~ 266.67 where D negative, M < 0; For t <= 266, 3t-800 negative; For m positive we need smaller? Not necessary; but we need product a >0 integer. Let's find real t range for integer I.
+
+We can group t such that d>0 or r. But let's compute.
+
+Let t range from 0 to 300.
+
+2 t? Let's compute each t from 0 to 300, at most 301 m.
+
+But we might also handle negative denominator of d: negative may produce negative I count? Wait does numerator N maybe also negative? Let's check.
+
+Compute N(t) when t small: Suppose t=0: N(0) = 0 - 0 + 6,000,000 => 6,000,000. But denominator D= -800. R = -7500, N(t) negative? Actually N divisor negative? But we can just compute I = negative of positive. Since magnitude negative may be negative. But I could be positive? For t less than 800/3,   derivative: 3t-800 negative; if numerator positive (since numerator maybe 6,000,000 - 30,000 t + 100t^2) positive; negative over positive gives negative I. So for t small, product not integer positive. So only feasible t such that after giving positive I produce either positive or real positive?
+
+So we need I to be integer and also positive. Let's test for t larger than 800/3 ~266.67; i.e., t=267, 268,.. 300.
+
+Compute quickly. For t=266? numerator ~? A bit below 6M. So for t=266.. maybe not.
+
+Let's enumerate all t where t between 267 and 300 inclusive. Compute I for each T.
+
+We have to compute for each.
+
+Let's treat t = ceil(800/3) = 267. So from 267 to 300.
+
+We can do direct search.
+
+Now we can maybe compute Q value using simplifying integer division.
+
+Alternative approach: We can compute integral of I/(3t-800) for each t.
+
+But we might foresee the solutions might not be efficient.
+
+Let's compute y by using small steps.
+
+Compute for t= 267 to 300.
+
+We can also compute using rational with integer expansions.
+
+We can compute t and compute numerator N = 100 t^2 - 30 t 100? Wait 30,000t? Let's double-check: N had 30,000 times difference but we may need to maintain units? Let's express numerator with factor 500? Let's compute:
+
+N(t) = 100 t^2 - 30,000 t + 6,000,000. dividing by 100? Actually we use N formula accordingly: 100 t^2 - 30,000 t + 6,000,000. Because earlier we had 30,000 t - 100 t^2 where t=... Wait earlier formula: N(t) maybe 100 t^2 - 30 000 t + 6,000,000? Let's check check using derived equation: I = (6,000,000 - 30,000 t + 100 t^2)/ (3t - 800). Actually double-check: We had earlier I = (6,000,000 -30,000 t + 100 t^2) / (3t - 800). Yes.
+
+Thus N(t) = 6,000,000 -30,000 t + 100 t^2 = 100 t^2 -30,000 t + 6,000,000.
+
+Now dividing by D = 3t-800.
+
+We'll compute.
+
+Compute 100 t^2 -30,000 t + 6,000,000 and divide by 3t-800.
+
+Hence we will use integer division. Note that algorithm might produce remainder: N(t) ≡? Let's compute.
+
+Let's compute D as large positive for t≥266.37.
+
+Now compute T in range 267 presumably.
+
+But easier: S is at most 300, t length 34.
+
+We can approximate that each t produce large product and sum.
+
+But n might be large.
+
+Let's do manual enumeration or use trick: Since expression deterministic, maybe only few solutions.
+
+I suspect the most likely solutions are small number of integers and we enumerated some.
+
+We found smallest triple: (100,100,100). When we had one zero. Can we find also triple with two 0? Let's test: Suppose a=0: solutions where b=200,c=100. That's two solutions. So with tot 3! pair arrangement? Only 6.
+
+But we might need to consider negative numbers? But nonnegative.
+
+Thus enumeration: possible solutions: (0,100,200), (0,200,100), (100,0,200), (200,0,100), (100,200,0), (200,100,0) + (100,100,100). Are there any other solutions? Let's test maybe a=150,150,0? That's 300+0? Actually sum 300; 150+150? For a=150,b=150 c=0: bc=150*0=0? Wait compute bc? Wait product c is 0  part. But bc? Wait products = 0? Provide: first expression sum (100,100,0) leads to terms:
+
+Case (150,150,0). Let's compute.
+
+Compute using bc? Actually s = a^2b + a^2c + b^2 a + b^2c + c^2 a + c^2b. With a=150,b=150,c=0. Terms: a^2b = 150^2*150 = 2,250,000e? Actually s? 150^2=22500, times 150=3,375,000; b^2a= same 3,375,000. others 0. Sum = 6,750,000. But we want 6,000,000 due to earlier inequality? Wait compute: a^2b + b^2a = we'll compute: 150^2*150 + 150^2*150 = 6,750,000? Actually compute: 150^2=22500. Multiply by 150 = 3,375,000. Twice = 6,750,000. So definitely not 6,000,000. So no.
+
+Thus only possibly solutions:
+
+(100,100,100), (0,100,200). But must verify with multiple z's.
+
+Let's craft final answer: number of triples: 1 + 6 of zero? Wait we need to compute number of triples of nonnegative integers (a,b,c) satisfying equality.
+
+Large number of permutations: 6? Actually we need to count all distinct triple (a,b,c) sorted by permutation order.
+
+Hence total # of solutions: 1 (for 100,100,100) + 6 = 7? Wait we need to verify pair (a,b,c) with difference 100? Actually the pair (0,100,200) with permutations includes 3! / 2? 180? Wait there are 3 distinct values: {0,100,200}. So there are 3! arrangements? Let's check: Number of permutations of 3 distinct numbers in triple is 3! = 6. Is there any duplicates? If (a,b,c) with duplicates? But we require distinct numbers so 6 permutations. Oops for 0,100,200 distinct.
+
+Also 100,100,100 is a triple with 3 identical numbers; it's one.
+
+Similarly for (a,b,c) where a=0,b=100,c=200 but we already ded 6 though. So 1 + 6 = 7.
+
+But we also might consider maybe solutions with (a,b,c) values not necessarily distinct symmetrical, giving 6 permutations? But let's verify.
+
+Consider (0,100,200), 6 permutations of {0,100,200}. But we might also have solutions with zeros? Wait we have pair (0,100,200) = c giv?). Wait but check pair (0,200,100) assignment yields same triple ... but we had 3. permutations counted 6.
+
+But some other value maybe we find more.
+
+But there are other solutions? Let's check if both 0 and 200 etc produce, but we already counted.
+
+Now check if there are solutions with B=200 and C=100, x=20? Wait maybe we had triple (0,100,200) as only.
+
+If a=0,b=200,c=100, good.
+
+Now check if a=0,b=200,c=100? We had pair solutions.
+
+Now systematically compute S2 value we found: For (0,100,200): s2 = 100*200? Actually 100*200=20,000. And 300 a + b + c? No.
+
+Let's test to verify compile formula 6,000,000 constant. Let's compute T for sorted (0,100,200):
+
+Compute explicitly: a=0,b=100,c=200:
+
+  a^2 b = 0
+  a^2 c = 0
+  b^2 a = 10000*0=0
+  b^2 c = 10,000*200 = 2,000,000
+  c^2 a = 0
+  c^2 b = 40,000*100=4,000,000? Wait 40000*100=4,000,000.
+
+Sum = 3,? Wait 2,000,000+4,000,000=6,000,000.
+
+Yes constant.
+
+Now sum (100,100,100):
+
+- 14? Let's compute: 
+a^2b=1e6, a^2c=1e6, b^2a=1e6, b^2c=1e6, c^2a=1e6, c^2b=1e6 => sum=6e6.
+
+Check also = 6.
+
+Therefore all 900 combos? Wait 12? But we can check.
+
+Now question: Are there any other solutions with a,b,c such that a+b+c=300 and a+b=2? Not.
+
+But we may find that there might be solutions with two other numbers >0 or 0 but not zero.
+
+If we consider two solutions with 10 and 110 and 180? Let's test quickly: maybe (10,100,190). type.
+
+But let's test by scanning low technology: Perhaps we can search for any integer solution for t=230? Let's compute:
+
+Let  a=b=?? hold.
+
+But we can compute general triple via solving pseudo-equ.
+
+For fixed t ≈ 200 and a+b = s. Then k = ab? Let's compute using our method.
+
+But easier: Maybe consider if (a,b,c) equal to 100 + d, 100 - d, 100? It's possible.
+
+Let's try symmetrical: set a = 100 + x, b = 100 - x, c = 100. Then sum=300. With such we have a^2b + a^2c + ...; The factor maybe symmetrical: product formula gives 6,000,000. Let's test sum amplitude:
+
+a^2b = (100+x)^2*(100-x). Combine with a^2c etc. Let's compute approximate.
+
+Let’s compute using pattern: Let a = 100 + x, b = 100 - x, c = 100. Then:
+
+Compute a^2b = (100+x)^2(100 - x). Expand: (100^2 + 200x + x^2)(100 - x). Expand: (10,000+200x+x^2)(100-x). Too.
+
+Simplify: Expand 1 e large?
+
+Alternatively compute numeric sum itself:
+
+Use symmetry: Because expression is symmetric: For numbers (a,b,c) with a+b+c fixed, and s = (a-b)^2?
+
+But we can compute T as sum of contributions: For a,b around 100.
+
+We expect how the expression changes: For a,b equal, T = 6,000,000; For a and b difference, T is increased? Wait we computed earlier with 0,100,200? Determine difference with total 6,000,000.
+
+Compute a=120, b=80, c=100? Compute a^2b + a^2c + b^2a + b^2c + c^2a + c^2b.
+
+Let's compute quickly using earlier formula: 100S2 - 3abc. If a=b? Actually 120 and 80. we can compute.
+
+Compute S2: a b + b c + c a = 120*80 + 80*100 + 100*120 = 9600 + 8000 + 12000 = 29,600? Wait 1200? Let's compute: 120*80=9,600.
+
+80*100=8,000.
+
+100*120=12,000.
+
+Sum = 29,600.
+
+Now compute product abc = 120*80*100 = 960,000? Actually 120*80=9600, plus times 100 = 960000.
+
+Now compute 100 S2 - 3 abc = (100*29,600=2,960,000) - 3*960,000 = 2,960,000 - 2,880,000 = 80,000.
+
+Thus if all equal 30,000? Hmm 80,000 vs 6,000,000. But we need 6,000,000? Actually 80,000 not 6,000,000. So not match.
+
+After multiplying? Wait if we don't compute 100S2 - 3abc? Wait that formula's result maybe not 6,000,000? Let's compute elegantly: 100S2 - 3abc = 6,000,000? Wait earlier we equated: 100S2 - 3abc = 6,000,000. Indeed for a=100,100,100 we gave S2=30,000, abc=1,000,000. So 100S2 - 3abc = 3,000,000 - 3,000,000 = 0? Wait no equal. Let's check earlier: Did we set incorrect? Let's check earlier.
+
+We mis-identified earlier formula: T = 100 S2 - 3abc? Let's confirm.
+
+From formula: T = 3 * (a b (a + b) + ...?) Wait we had earlier that T is 300 S2 - 3abc? Let's re-evaluate.
+
+We have expression T = 60 sum of symmetrical? Let's check.
+
+To compute T: we had:
+
+Sum: a^2b + ab^2 = ab (a + b).
+
+Thus T = ab(a+b) + bc(b+c) + ca(c+a).
+
+Substituting p = a+b+c = 300.
+
+Let’s compute expression for each pair:
+
+ab(a+b) = ab(p - c) = ab p - ab c.
+
+Similarly cd? Actually (b + c) = p - a.
+
+So bc(b+c) = bc p - bc a.
+
+Therefore T = p (ab + bc + ca) - (ab c + bc a + ca b) = p S2 - abc * (??). Wait we might have mistaken sum of three ab c = 3abc (since a,b,c symmetric? Wait check: ab c + bc a + ca b = abc(a + a + a?) Wait we compute each:
+
+ab c = a b c.
+
+Exactly bc*a = abc. And ca*b = a b c.
+
+Thus sum = a b c + ab c + a b c = 3a b c. So we get:
+
+T = p S2 - 3abc.
+
+Hold: p = a+b+c = 300.
+
+Thus T = 300 S2 - 3abc = 6,000,000. So that earlier we had constants 300 and 3. Let's confirm earlier formula gave 100 * sum 200? Actually earlier we found 300 S2 - 3abc = 6,000,000. Let's check: 300S2 - 3abc = 6,000,000.
+
+Plugging (100,100,100): S2=30,000, abc=1,000,000.
+
+So LHS = 300*30,000  - 3*1,000,000 = 9,000,000 - 3,000,000 = 6,000,000. Good. So F formula correct.
+
+So we need to solve 300S2 - 3abc = 6,000,000.
+
+Divide 3:
+
+100S2 - abc = 2,000,000.
+
+Now we solve for integer triple.
+
+A made eq: 100S2 - abc = 2,000,000.
+
+Then abc = 100S2 - 2,000,000
+
+So earlier we earlier saw 100S2 - 3abc.
+
+Thus we have solved.
+
+Now we test:
+
+Observe for y=100, t= etc. But we need to get to integer.
+
+Let's compute a from earlier scenario.
+
+Now we compute minimal sum:
+
+We need equation.
+
+We want to find integer solutions for (a,b,c). Expand: 100S2 - abc = 2,000,000.
+
+Given a+b+c=300.
+
+Now we recast S2 = ab+bc+ca. One may express this in terms of c: B.
+
+Better produce expression: 100 (ab+bc+ca) - abc = 2,000,000.
+
+We have earlier s2 = ab+cb. If using coordinates a,b,c integer.
+
+Now we search for all solutions.
+
+But maybe we set that we only need a,b,c integer.
+
+We can use substitution: c = 300 - a - b.
+
+Compute S2 = ab + bc + ca = ab + b(300-a-b) + a(300-a-b) = ab + 300(a+b)- 2ab - a^2 - b^2? Wait compute by parts:
+
+Simplify: ab + bc + ca = ab + 300b - a b - b^2 + 300a - a^2 - a b = 300a + 300b - a^2 - b^2 - a b. Because 2ab coefficient). Good.
+
+Then product: abc = a(300-a-b)b. So part 3: sum expression reduces to:
+
+100(300a+300b - a^2 - b^2 - a b) - a (300-a-b) b = 2,000,000.
+
+Simplify:
+
+= 30,000a + 30,000b - 100a^2 - 100b^2 - 100ab - a b (300 - a - b). Expand: a b (300 - a - b) = 300a b - a^2 b - a b^2. So subtracting that: - 300a b + a^2 b + a b^2.
+
+Compute entire RHS: 30 a100? Let's rewrite properly:
+
+Left = 30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 100a b - 300a b + a^2 b + a b^2.
+
+Thus:
+
+Left = 30,000 a + 30,000 b - 100 a^2 - 100 b^2 - 400 a b + a^2 b + a b^2.
+
+Setting equals 2,000,000.
+
+Thus 100 transformation: we can write as:
+
+a^2 b + a b^2 - 100a^2 - 100b^2 - 400 a b + 30,000 a + 30,000 b = 2,000,000. That we had earlier.
+
+Thus indeed I computed earlier.
+
+Now we have difference.
+
+Now we can find integer solutions. Let's calculate derivative simpler.
+
+We'll attempt to find solutions by enumerating with constant b from 0 to 300.
+
+But t must be small.
+
+For each a, b integer, we have total subcases.
+
+But we can also attempt to solve for a,b by equation.
+
+We can run T manually.
+
+Let's produce 99? But we can decide to restrict due to special property: 100S2 = abc + 2,000,000. This is fixed: For sum a+b+c=300, that yields integer S2 maybe require like a*bc negative? Actually S2 and abc defined.
+
+But we can consider using algebra:
+
+Let s = a+b+c = 300.
+
+Let p = ab + bc + ca = S2. Let q = abc.
+
+We know:
+
+From Newton's 22y: etc.
+
+But we earlier said 300 p - 3 q = 6,000,000.
+
+Now given that p = 100p' ??? Wait we can set q = 100p - 2,000,000 but 100**? Actually need to find integer solutions.
+
+But maybe we can rely on simple enumeration to find all pairs.
+
+We earlier found that perfect solution values for cent is (100,100,100). Are there others.
+
+Combining numbers: We found small solutions with v=0? Not necessary.
+
+But due to factor of 100 t - etc.
+
+If t = 210? Let's find.
+
+Given t=206? Not.
+
+But evaluation may produce large b.
+
+Let's evaluate for t=300? not.
+
+Try small t 200? Let's test with t=200: denominator D = 3t - 800 = 600 - 800 = -200. Numerator N: 100 t^2 - 3,000 t -? Wait: 100 t^2 = 100*40,000 = 4,000,000; 3,000 t? Actually 30,000 t? Wait earlier is 30,000 t; each step: 100 * t^2 -30,000 t + 6,000,000. Compute: N=4,000,000 - 30,000*200 + 6,000,000 = 4,000,000 - 6,000,000 + 6,000,000 = 4,000,000. So N(200) = 4,000,000.
+
+D=200t - 800? Actually t=200, D = 600 - 800 = -200. So I = 4,000,000 / -200 = -20,000. So still (neg) invalid.
+
+Thus I can't be negative. So we need t>800/3 (approx 267). So minimal t such that both numerator and numerator have same sign? Let's compute:
+
+Compute N(t) for t=200 gives 100*200^2 -30,000*200 + 6,000,000 = 4,000,000 - 6,000,000 + 6,000,000 = 4,000,000: positive.
+
+Thus I negative for t <= 800/3 because denominator is negative. But product positive. So we set (-775) maybe not possible.
+
+Thus no t in [0,266]  produce positive I.
+
+But we can compute when t= 333? Wait but t <=300. So only t > 267: 268..300.
+
+Check t=268 gives full.
+
+Compute:
+
+t=268: D = 804-800=4. I = {100*268^2 - 30,000*268 + 6,000,000} / 4.
+
+Compute 268^2 = 71,824? Wait 268^2=68? Wait 268^2= (260+8)^2 = 67600 + 4160 + 64 = 717? Wait compute: 260^2=67600; 2*260*8= 4160; plus other term 8^2 = 64 => sum 71775? Let's compute: 67600+4160=717,? Actually 67600+4160 = 71760; plus 64 = 71824. Wait 136*? No.
+
+Better compute as 268^2.
+
+Compute 270^2=72,900. So 268^2= 269*? Eh.
+
+Let's compute precisely: 268^2. 268*268:
+
+260*268= (200*268=53,600? Wait 200*268 = 53,600? Wait 200*268=53,600; Actually 200*268 = 53,600; 60*268 = 16,080; remainder 8*268=2,144; sum =53,600+16,080+2,144=71,? Wait 53,600 + 16,080 = 69,680; + 2,144 = 71,824.
+
+Yes 71,824.
+
+Now compute numerator: 100*71,824=7,182,400. Then minus 30,000*268 = 8,040,000? Wait 30,000*268 = 8,040,000. So after subtract: 7,182,400 - 8,040,000 = -857,600. plus 6,000,000 = 5,142,400. Wait 3 step? Let's compute: 7,182,400 - 8,040,000 = -857,600. +6,000,000 = 5,142,400.
+
+Thus numerator = 5,142,400.
+
+Now divide by 4: I = 1,285,600 ~ 5%? Not.
+
+This indicates ab >1,285,600 etc. But ab max for t=268: 268^2/4 = 278? Wait choose a,b close to 134 each? Actually product maximum ~27k? Wait if a=100,b=168? Actually product larger but not distributed. Let's compute quickly: with t=268: maximum ab any product with first two such that a+b=268.
+
+Given a+b fixed <=300.
+
+For pair sum 268, use b = 268 - a. So it's a(268-a) <=? The maximum occurs at a = (268)/2 = 134; with product=134*134=17,956. Not 1,285,600.
+
+Thus impossible. So we can find that t only works for d>0? The number I is far bigger than negative difference.
+
+Hence we might have no right solutions for t=268. But maybe we mis-simplified.
+
+Let's check for t=300 -> product is 60k.
+
+But we previously concluded there is no solutions for t=300 except maybe other values.
+
+But let's test t=300: product 60k <= (300/2)^2=150^2=22500, so impossible.
+
+Thus my earlier assumption that solving equation gave > 22k but we need to ensure the equation yields >100? Wait.
+
+Since product is far bigger. So we discovered that our formula yields unrealistic product.
+
+Hence need to determine s where the computed I is within the plausible upper bound but maybe reduce to 68? Wait.
+
+We can compute approximate rationalization: For p = a+ (300-a)?? Wait each ratio.
+
+But we can test for t=470? not possible.
+
+Let's compute general root. Let's just compute maybe we mis-solved for x earlier: Let’s open up quickly.
+
+Compute equation as derived using earlier patterns: 100S2 - abc = 2,000,000. Here earlier S2 = ab+bc+ca=(300a+300b- a^2 - b^2 - ab). So 100S2 - abc = 100(300a+300b - a^2 - b^2 - ab) - a(300-a-b)b. Thus we derived that equation yields product a*b (a+b) etc.
+
+Set D = (a+b...). Actually plugging a+b= t.
+
+Thus we have a+b = t.
+
+Then we have ab = I.
+
+Now compute abc = (a+b)a b? Actually a*(300- a - b)*b? Wait compute abc = a b (300 - a - b). So identity: a b (300 - t). Good.
+
+Now we have 100S2 - abc = 100 (300a +300b - a^2 - b^2 - a b) - a b (300 - a - b). Fine.
+
+Thus we set indefinite.
+
+But we can solve for I as earlier.
+
+But we also have that S2 = (300a + 300b - a^2 - b^2 - ab). Input computation.
+
+But we can still find t such that the equation produce large integer product.
+
+E.g., for t=250. compute B, etc.
+
+We maybe easier to compute the value incorrectly: Let's re-evaluate.
+
+Let's adopt new variables.
+
+Let proper symmetry: Let a, b, c = x,y,z.
+
+Define t = x+y ≠?
+
+3σ1 etc.
+
+But we can also derive the condition as (Let x, y, z be positive integers). We can compute the expression 100 might be character of product.
+
+Alternatively, maybe we circumvent earlier by enumerating physically:
+
+For a,b,c positive, we can use integer a,b from 0 to 300 and compute c.
+
+But check n possibilities for enumeration; might not be trivial due to complexity hard.
+
+But we can summarizing with a little but still.
+
+Maybe we can find integer solutions by analyzing the "Triple" such that the sum is 300 and sum of squares products are 6,000,000. That can be equivalently expressed as 6,000,000 + (a-b)(... ) ?
+
+But then we might get zero all 0 ?
+
+Ok maybe we compute all solutions. Let's attempt enumeration manually for small t.
+
+We'll treat a,b: we can compute maybe using alignment.
+
+But maybe we can observe that the equation reduces to (a+b_c)*(a+b)? Actually using earlier equation relating to left side.
+
+We can compute unknown.
+
+Let us attempt to find integer solutions by exploring possible variables: Because a,b,c are integers with sum 300; Because other combinations may produce smaller product.
+
+We can attempt enumerating using integer root test: For each a from 0 to 300, and b from 0 to 300-a.
+
+Compute c, compute expression: we want to solve 100S2 - abc=2,000,000.
+
+But we've found earlier that only solutions for . but any other possibilities? Let's search a computational style: Since T ≈ 300 He.
+
+We might look for infinite solutions? The equation is polynomial; but maybe there are only a few positive solutions.
+
+We can attempt to find entire solutions: Suppose a=0 or b=0 or c=0 we found.
+
+Now suppose all three >0. For a* b +  etc. Might rely on something about product mod.
+
+However the equation produce we derived.
+
+Let's try to find exact solutions by analyzing t sets.
+
+Set t = x+y+c? Actually t=??? For a+b = t. So c=300-t.
+
+Now compute S2 = ab + bc + ca = ab plus (300 - t)(ab? Wait 300 - t). Maybe also ab pair increase.
+
+Let's compute s2 = ab + (300 - t)(a + b). But t=a+b. So now ab + (300 - t) t = ab+ t(300-t). Actually bc+ca = (300 - t) (a + b). Since b*(300-t)=c*(??). But we might want to compute this earlier.
+
+But confusion due to dimension. Let's identify:
+
+b c = b * (300 - t) ; c a = a*(300 - t) ; so q = a*(300 - t is same). So sum = ab + (300 - t)(a + b. ) ab + (300 - t) t = ab + (300 - t) t. Already holds earlier.
+
+So S2 = ab + (300 - t)t = ab + t(300 - t). That's basically 3 symmetrical arguments.
+
+Thus we can compute expression: 100S2 - abc = 100 [ab + t(300 - t)] - ab * (300 - t) = 100 ab + 100 t (300 - t) - ab (300 - t) = 100 ab + 30000 t - 100 t^2 - ab (300 - t).
+
+Thus we need:
+
+100AB + 30000 t - 100 t^2 - ab (300 - t) = 2,000,000.
+
+But earlier we used right.
+
+Now let ab=I. In solutions with integer addition.
+
+Thus we can write as:
+
+I (100 - (300 - t)) + 30000 t - 100 t^2 = 2,000,000.
+
+Simplify: 100-(300 - t) = 100 - 300 + t = t -200. So we have:
+
+I (t -200) + 30000 t - 100 t^2 = 2,000,000.
+
+Thus I (t -200) = 2,000,000 - 30000 t + 100 t^2.
+
+Now equation earlier had denominator 3t-800? Wait compute: (t-200) is not 3 t < ???
+
+Let's check: t = a+b. The equation gives I.
+
+So I =  [2,000,000 - 30,000 t + 100 t^2] / (t -200). That's consistent? But earlier we had X = (2,000,000 - 30,000 t + 100 t^2) divided by (t-200). But yes because earlier we had discriminant 3t-800? Wait earlier we had 3t-800 dividing. Let's re-evaluate this.
+
+We previously had mismatch, maybe due to earlier expression 100S2 - abc cannot be (t-200). Let's double: Are we using variable t? t is a+b. Then (300 - t) = c. So we have earlier expression 100S2 - abc = 2,000,000: from earlier I wrote earlier.
+
+In our exhaustive calculation earlier we solved for equation: 100S2 - abc = 1,? But we had earlier we used that 100S2 - abc = 1,000,000... Wait 30? Let's find: Suppose a=b=c=100: S2=30,000, abc=1,000,000. Then 100S2 - abc = 3,000,000 - 1,000,000 = 2,000,000. Good. So holds earlier.
+
+Thus final equation: (2,000,000) = 100S2 - abc.
+
+Now we found formula:
+
+S2 = ab + t(300 - t). So 100S2 - abc = 100[ab + t(300 - t)] - ab (300 - t) = 100ab + 30000 t - 100 t^2 - ab (300 - t) = 100ab + p - ab 300 + ab t. So we can factor: 100ab -300ab = -200ab. So we have: -200ab + 30000 t - 100 t^2 + ab t = -200ab + (t). We'll plug with 200? Wait A=ab.
+
+Equation to solve: 100ab - ab (300 - t) = 100ab - 300ab + a b t = -200ab + a b t.
+
+But we had earlier a b t. So indeed (A t -200 A) = A (t-200). Good.
+
+Thus equation: A (t-200) + 30000 t - 100 t^2 = 2,000,000.
+
+Thus A (t-200) = 2,000,000 - 30000 t + 100 t^2.
+
+Now A = ab must be integer. Maybe easier to compute at t=267..300.
+
+Actually we need A * (t-200) = 4,000,000 - 30000 t + 100 t^2 -4? Wait I'm used 50? Wait 100 each. Actually 4,000,000 for? Let's compute 2,000,000.
+
+We had 100 S2 - abc = 2,000,000.
+
+Now we compute 2,000,000 - 30000 t + 100 t^2 means product at.
+
+We can compute numerator = 100 t^2 - 30000 t + 2,000,000.
+
+But earlier we computed N(t) = 100t^2 - 30,000 t + 6,000,000? Wait earlier we used 6M  maybe due to mis-scaling but ours constant.
+
+But for t=300 we computed as 100*90,000 - 9,000,000 + 2,000,000? Let's recompute: 100*90,000=9,000,000. -30,000 t = 30,000*300=9,000,000; So 9,000,000 - 9,000,000=0. +2,000,000=2,000,000. So numerator N = 2,000,000 for t=300.
+
+Now A(t-200) = 0? Wait compute (t-200) = 100. So 0. Good.
+
+Thus at t=300: A(100) = 2,000,000 => A=20,000. So ab=20k.
+
+But we earlier found for t=300: a0=300? Actually we need to compute a and b such that a+b=300, ab=20,000 -> a,b = 200 and 150? Wait 200*150=30,000, so not; Actually if a+b=300, product ab 20,000 -> AB 100? Solve using discriminant: (a+b)=300, product=20,000. That gives same: a,b=115. 100. Another pair? We'll compute: b = a? Sorry.
+
+Solve (a,b) solutions: we need a*b = 20,000. For a, b. Let's find: 20,000 factorization: 20,000 = 2^5 * 5^4? But earlier we found pairs same as (100,200). Wait check: 100*200=20,000. Indeed 101 etc.
+
+But which solutions with sum=300 would not hold.
+
+Check again.
+
+Equation: a+b=300; so a=300-b, ab=20k. So equation: b(300-b)=20k. Solve b(300 - b) = 20000. So equation: -b^2 + 300b - 20000 = 0 => b^2 - 300 b + 20000 = 0. r^2 +40? Let's compute discriminant: D = 300^2 - 4*20000 = 90,000 - 80,000 = 10,000. sqrt 100. So choose b = (300 ± 100)/2 => b=100 or 200. So a=200 -> [100,200] as expected.
+
+Hence a,b=200 & 100 we had earlier unique pair.
+
+Thus again we have two solutions when sorted with product=20000.
+
+Now we also find that if one positive; but we said variable had zero exists.
+
+Now symmetric? If t=300 and product of AB=20k.
+
+But we considered case where t=300 -> meaning x,y+p=300. That suggests c=0. But earlier we have a=200 and b=100 as c=0. So case has c=0. So previously formula yields but we counted earlier as part of permutations with a zero.
+
+Thus we considered 3 values (0,100,200).
+
+Now careful check: maybe t=300 occurs if c=0. And we found a,b=100 if we consider set? If we choose different one zero we produce solution (a,b,c) with one zero. So the case might have at least solutions as above.
+
+But we need to check if t=a+b=300. Then c=0; but find a,b=100,200: fits.
+
+Thus for a zero, t=300 -> seems indeed leading to a=200, b=100 etc.
+
+Thus we have all solutions belong to "t=300+??" Wait if t=300, we needed 2 solutions? Actually we found a,b=100,200. The other pair with a=200, b=100. So they are defined.
+
+Similarly for any other variable zero maybe leads to other pairs.
+
+Thus each we have 3 solutions per unique triple.
+
+Thus we enumerated 6 results:
+
+We found 6 solutions for p=0: cube.
+
+Now for t=3? Not.
+
+Now we need to test if other t values produce right value of ab <0? Wait but we need to check for integer solutions between t=200? Actually we already found that for t=3 maybe nonexistent.
+
+But some t values inside [76?] Something.
+
+Also we can test t≥0 and b=0.
+
+But we may find triple with a=0,b not c maybe produce max product 20k. So for t=300, we earlier found.
+
+Now also consider t=300 for each variable zero.
+
+Now for t=200? no t=200? Wait m=200 is not 200. Indeed.
+
+Now maybe we find other t values (t with t-200 divides something). Provide table.
+
+Let's solve for t variable: 200? Already we saw t=200 -> B(200) = 200-200=0 yields to infinite? Actually can't we had denominator 0.
+
+Hence we must exclude t=200 as we want dividing by 0.
+
+5. So t=200 no solution.
+
+Now we require a,b such that a*b = expr.
+
+Since d is positive integer > 0. Compute b = something. So above we found two solutions for t=300: a=200, b=100. But we also might test other sums: t=240? Wait t=240 => t-200=40. Compute numerator:
+
+N = 25,000 t^2? Let's compute numeric: N= 100 t^2 - 30000 t + 2,000,000. Because t=200 gave N= 100*40000-400?? Wait compute precisely: 100*240^2=100*57,600=5,760,000. 30,000*240= 7,200,000. Then 5,760,000 - 7,200,000 = -1,440,000. +2,000,000 -> 1,560,000. So N=1,560,000. Dividing by m=40 > 0 which we used: Now a*b = (1,560,000)/(40) = 39,000. So ab=39,000. Substituting a+b=240 (t). So we need to solve quadratic: a(240 - a) = 39,000. Expand a*(240 - a) = -a^2 + 240a = 39,000; rearrange: a^2 - 240a + 39,000 = 0.
+
+Solving: discriminant: D = 240^2 - 4*39,000: 57,600 - 156,000 = -98,400? Wait D negative => no real solutions. Wait but product formula produce a negative? Actually compute again: 240^2 = 57,600. 4*39,000=156,000. So difference is -98,400 < 0. So no solution. Means no solution for t=240. So p.
+
+Therefore only t for which larger a*b. For t=300, we have (a,b =12, 200? But we found pair produce 20,000; but we can test.
+
+Now we need to check for t less than 200 maybe numerator negative (since t-200 negative) but numbers become negative? Actually we must have product a*b positive. So we need to ensure sign. Since s>0. We might have not positive side.
+
+But maybe there might be t between 200 and 300? Wait S = t > p? Let's test t=200: we had denominator 0, expression indefinite.
+
+But there may exist t <200 by some sign that'll produce negative? But we can't have negative a*b. So t must contribute to sign positive.
+
+Case t maybe 0? But denominators negative maybe 0 leads to negative product A? Let's compute.
+
+For given t, t-200 negative; N must also not negative? Wait if a*b ≠ zero: A positive. We need (t-200)*A = N.
+
+Thus if t-200 negative, N must be negative. So numerator must be negative: N(t) = 100 t^2 - 30,000 t + 2,000,000. Since N(t) is quadratic upward? Let's check: N(t) >0 for all t? Wait N(t) at t=300: compute earlier 100*90k - 9k + 2M = 95k? Actually compute: 100*90,000 - 300*30k = 9,000,000 - 9,000,000 = 0, plus 2,000,000 => 2,000,000 > 0. So N(t) positive. Actually maybe N(t). So always positive for t≥0, let's evaluate N(t) at t=0: 0 - 0 + 2,000,000 positive. So N(t) always positive for t. So N(t) >0. So if t-200 negative, then we must solve A = positive/n negative? Wait product negative product if t-200 negative. That gives negative positive? Actually product ab = (N) / (t-200). Since numerator >0, denominator negative for t<200 => negative output -> positive? Actually we cross: P = AB. T = - product.
+
+Thus if t<200, product ab negative, but ab doesn't matter for a,b >=0. So no solutions.
+
+Therefore need t-200 >0. Contradicts? Wait t-200>0 => t>200. So actual t must satisfy t>200. So t <= 300 obviously.
+
+So we already determined.
+
+Now confirm we found t=300 only gives difference? But we might find t >200 gives two solutions maybe (t between 300 and 200). But t=300 gave solution 100 t^2 + ... but we can test t=260.
+
+Compute t=260: t-200=60. Numerically:
+
+N = 100*260^2 - 30,000*260 + 2,000,000.
+
+Compute 260^2 = 67,600. 100* = 6,760,000.
+
+30,000*t = 30,000*260=7,800,000.
+
+So N = 6,760,000 - 7,800,000 + 2,000,000 = 960,000.
+
+Now need to find a*b = 960,000 / 60 = 16,000.
+
+Thus I'd = 960,000? Wait let's compute product: 960,000 /60 = 16,000.
+
+Thus a*b = 16,000. Is it possible with a+b=260? Not necessary.
+
+Hence t=260=  260 ~? Actually maybe 260 we find solving z^2-260z.
+
+We compute at t=260; we need to solve (a+b) = 260, product a*b = 16,000.
+
+Quadratic: b^2 -260b + 16,000 = 0.
+
+Compute discriminant D = 260^2 - 4*16000 = 67,600 - 64,000 = 3,600. sqrt 3,600 = 60.
+
+Hence solutions: b = (260 ± 60)/2. So b = (260+60)/2=70 and (260-60)/2=100. Wait compute: (260+60)/2 = 280/2=140. For other, (260-60)/2 = 200/2 = 100.
+
+Hold on: we used sign including 5? Wait.
+
+Compute (260+60)/2 = 4? Let's compute:
+
+b = (t + sqrt(D))/2 = (260 + 60)/2 = 160. Suppose we invert: d = 60. So solve polynomial: b = (260 - 60)/2 = 100 or 160? Let's compute precisely:
+
+b = (260 ± 60)/2 = 320/2=360? No 320? Actually 260+60=320, /2 =160.
+
+260-60=200; /2=100.
+
+So b could be 100 or 80? Wait we have 160. But we can also test b=160. Let's compute  a= t - b or 260? Actually set a = 260 - b.
+
+For b=160: a = 260-160 = 100. So pair (100,160). For b=100: a = 260-100 = 160.
+
+Thus 100*(160) = 16,000? Wait compute: 100*160=16000 yes.
+
+Thus a,b pair = 100,160.
+
+Hence c=300 - t = 300-260 = 40 => triple solution: (100,160,40). Let's check if positive?
+
+Check each variable: Let data: 100,110,? Wait 100+160+40=300.
+
+But also we need to consider that a,b must be nonnegative or under 0?
+
+Test: 100,160,40: sum 300. Evaluate product formula as above:
+
+Constant? Let's compute T=?
+
+We earlier basically used polymer formula. Let's verify fails because any combination might produce same sum.
+
+But check if A=100, B=160; c = 40. Then T=?
+
+Because we used formula to determine.
+
+Thus indeed a triple (100,160,40) is a solution.
+
+Compute S2 earlier: ab + bc + ca = 100*160 + 100*80? Wait 200? Actually compute 100*160=16000.5? Wait compute all using cross product: c = 40.
+
+b*c = 160*40 = 6400. a*c = 100*40 = 4000.
+
+Thus S2 = 16000 +6400 +4000 = 27,000? Wait 16000+6400=22400? Actually 16,000+ 6,400 = 22,400 ; + 4,000 = 26,400.
+
+Now M = 100 S2 - 3abc = 100*26,400 - 3*100*160*40 = 2,640,000 - 3*640,000? Wait 3*100*160 * 40 = 12,000? Actually 200*? Wait compute 100 a*b? Let's compute: ab * c = 100*160*40 = 680,000. Then 3abc = 3 * 680,000 = 2,040,000.
+
+Now 100 S2 = 2,640,000. Subtract 3abc = 2,640,000 - 2,040,000 = 600,000, not 6,000,000? Wait we mis-calc.
+
+Hold on: We start with A=100, B=160, C=40.
+
+Now derived from formula yield if "X=6000000," there will be 3*? Wait we derived incorrectly.
+
+Let's compute again with compute earlier 150? But we compute 30 000??? We must check if indeed triple satisfies sum 6,000,000.
+
+Let's compute directly: a^2b + a^2c + b^2a + b^2c + c^2a + c^2b:
+
+For a=100, b=160, c=40.
+
+Compute a^2b = e? 100^2=10,000 => 10,000*160=1,600,000.
+
+a^2c = 10,000*40=400,000.
+
+b^2a = 160^2=25600*100=2,560,000.
+
+b^2c = 25600*40=$∼1,024,000. Because 25600*40=1,024,000.
+
+c^2a = 40^2 (1,600)*100 = 160,000.
+
+c^2b = 1600 *160= 1,280,000.
+
+Now sum: 1,600,000+400,000=2,000,000. handle when adding b^2a etc: 2,560,000+1,024,000=3,584,000. c^2a =160,000; c^2b = 1,280,000.
+
+Now sum sum: 2,000,000 + 3,584,000 = 5,584,000. Pre-check. Add p 160,000, get 5,744,000. Add 1,280,000 = 7,024,000. Are we double? Wait we got 7,024,000; So it's not 6,000,000. Let's attempt to compute again: maybe we mis compute due to mis calculation.
+
+But maybe we mis compute earlier; maybe 120? Wait maybe compute each.
+
+We can do quickly: 100^2=10,000 performing 10,000*160 = 1,600,000. correct. We had 100^2*40=400,000. So a part covered: 2,000,000. Good.
+
+Now b^2 = 160^2=25600. So 25600 * 100 = 2,560,000. 25600*40=1,024,000. So b part? Actually we need b^2 * a + b^2 * c. So 2,560,000 + 1,024,000 = 3,584,000. Good.
+
+Now c^2 = 40^2=1,600. Good. So 1,600 distributed to a and b: 1,600*100 = 160,000; 1,600*160 = 256,000; but we earlier counted 1,280,000 but we must compute: 1,600*160 = 256,000. Wait earlier we mis they said 1,280,000 for c^2b. But correct: c^2b=1600*160=256,000. So residual:
+
+Compute p: 1,600,000 then 400,000. Then b: p=2,560,000 + 1,024,000 so done.
+
+Now c^2 part for a': 1,600*100 = 160,000. Combined with 1,024,000? Wait earlier we already.
+
+Now c^2b: 1,600*160 = 256,000. So sum from c^2 part: 160,000 + 256,000 = 416,000.
+
+Now compute all sums: 2,000,000 + 3,584,000 + 416,000 = 6,000,000.
+
+Let's recompute:
+
+2,000,000 + 3,584,000 = 5,584,000.
+
+And plus 416,000 = 6,000,000. Yes indeed.
+
+Great! So we found the correct set: (100,160,40). Actually 300-260=40.
+
+All sums 6,000,000.
+
+Check symmetrical duplicates maybe for b=100, a=160; but still same set of numbers. Suppose all permutations? 20,000.
+
+Now we can find other solutions by deducing t=260 gave 100a,b=100*160? but caution because a and b same? Not symmetrical. We can just treat conj.
+
+Now consider triple (160,100,40). So need other permutations.
+
+From earlier compute exactly one positive pair. For each (a,b) that produce one unique triple; we must ensure all unordered pairs produce triple.
+
+Now attempt to find other 2 more possibilities? e.
+
+Let's compute t= 280,... We'll compute.
+
+Now we need some x for t=200? Not allowed.
+
+We can check t values.
+
+We need  T= t -200 >0 => t in [201, 300]. But we might also be not an integer.
+
+Let's produce table:
+
+Let t = 201. Compute N (201):
+
+Compute t^2= 201^2=40401.
+A^2 part times 100 pts: 100*40401=4,040,100.
+30,000 t = 6,030,000.
+3t? Wait earlier constant - 30,000? 30,000 t = 6,030,000; So subtract (4,040,100)?? Let's compute: N = 4,040,100 - 30,000* 201? Actually 30,000*201 = 6,030,000. That's bigger than 4,040,100. So N= 160? not.
+
+Thus compute R = 100*201^2 - 30,000*201 +2,000,000.
+
+Compute 100*201^2=4,040,100.
+
+Now 30,000 t = 6,030,000. So 4,000,100 - 6,030,000 = -2,089,900.
+
+But we need to do -1? Actually 4,040,100 - 6,030,000 = -1,989,900.
+
+Then +2,000,000 => 10,100? Wait compute precisely: N = 4,040,100 - 6,030,000 + 2,000,000 = 10,100. So N=10,100.
+
+Now t-200 = 1. So ab = 10,100 across? Actually a*ab=?
+
+Wait we had d = t -200 = 1. So ab = 10,100.
+
+Now a+b=201. We have ab = 10,100.
+
+But a,b integers with product 10,100 and sum 201. Must compute discriminant d = sum^2 - 4*product = 201^2 - 4*10,100 = 40,401 - 40,400 = 1. So D=1. Then sqrt=1. So we have solutions:
+
+a,b = (201 ±1)/2 = 100 and 101.
+
+Compute p's: 100*101=10,100. But product computed above 10,100; fine.
+
+So pair (100,101). Then c = 300 - 201 = 99. And c >0? Actually 99. So solutions: (100,101,99). Let's check: (a,b,c). Let's compute sums: 100*101 + 101*99 + 100*99? Let's compute: (100*101)=10,100, (101*99)=9999, (100*99)= 9,900. Sum = 210,? Wait compute 10,100+9,999+9,900=20,? Actually sum of pair: 10,100+9,9?? Wait 9,999? Let's check char: 101*99: 100*99=9900; 1*99= 99 difference = 1000, no, compute: 101*99= (100+1)*99=99*100 + 99 = 9900 + 99 = 9,999. Good.
+
+Now we need to verify m? Let's compute sum of product results: For a=100,b=101,c=99. And 100S2 - abc = ?
+
+For (1) multiply? We'll treat formula.
+
+But maybe it satisfies indeed.
+
+Let's compute the product abc: 100*101*99=100*9999=999,900? Wait 101*99=9999. So product abc = 100 * 9,999 = 999,900.
+
+Now compute sum of products: 100 * S2^? But we can compute.
+
+But we got exactly solves T; we had found from equation; we can trust they produce solution.
+
+But let's double-check with direct calculation: Evaluate block-check earlier expression suffice.
+
+Let's compute for a=100,b=101,c=99.
+
+Compute:
+
+a^2b = 100^2 *101 = 1,000,000 *101? compute 100 -> 100,000? Actually 1000 times? Let's compute: 100^2=10,000. 10,000*101=1,010,000? Wait 10,000*101=1,010,000. That's 1,010,000.
+
+a^2c = 10,000*99 = 990,000.
+
+b^2a + b^2c + c^2a + c^2b because maybe.
+
+b^2=101^2 = 10,201. Multiply with 100: 1,020,100. Multiply with 99: 1,010,? Wait.
+
+Compute 10,201*99= 10,201*100 -10,201=1,020,100 -10,201=1,009,899. So net b^2 contribution: 1,020,100 + 1,009,899 = 2,030, - plus early others: but not 6,000,000 else?
+
+But we computed using s2 formula still yields A=20000? Actually compute S2 = ab + bc + ca = 100*101 + 101*99 + 100*99 = 10,100 + 9,999 + 9,900 = 30,? Check first: 10,100 + 9,999 = 20,099. + 9,900 = 29,999. So S2 = 29,999. Good.
+
+Now compute 100S2 = 2,999,900. And abc = 999,900. Then 3a b c = 2,999,700? Wait 3ab c = 3*999,900 = 2,999,700. Let's compute 3*abc = 2,999,700.
+
+Now 100S2 - abc = 2,999,900 - 999,900 = 2,000,000. But we computed T = 3*(100S2 - abc) -> 6,000,000. So matches up.
+
+Hence we just realized they are consistent.
+
+Thus solving for T = 6,000,000.
+
+Thus there are t=201 produce solutions.
+
+Now we found triple (100,101,99). That's twice? difference between pair {a,b} produce 100 and 101.
+
+Now we also might have other symmetrical solutions? For t=201, we have product 10,100; a/c? Actually we produce pair: (100,101). Good.
+
+But there might also be other pairs where ab = 25 t - 160? Wait not.
+
+But we should produce t values; we must enumerate t where t-200 divides N.
+
+But we also computed t=200 yields 0? So t-200 to e zero not possible.
+
+Now continue.
+
+Now produce table for t such that product t-200 divides E.
+
+We need produce 5 are possible t values.
+
+We already processed t=201 produce 10,100.
+
+But also (some symmetrical like produce v = 100?) The equation maybe produce A=0? But we already considered.
+
+But we should satisfy that a < t, product candidate for a even.
+
+Similarly because t - 200  divides? We can compute n(t) for t=200-> denominator 0; but integer S2 integer.
+
+But we cannot pass.
+
+Now we need to produce f for each t with a+b fixed and produce a,b integer.
+
+But we found this earlier similar as t=201 to 360 but 300 maybe.
+
+Let's compute t=199? Would be negative? We had r negative unrealistic.
+
+Now we search for t=201 gives solution.
+
+We also saw t=260 provides product but we must check order of a and b. Our product 16,000 with y=480? Wait check.
+
+But we can replicate T=260 produce product 16,000; condition y=100+160 or 400? Actually we compare with p: product of a and b = 160: oh we had a,b=100,160 grow.
+
+Now compute a,b, z not two distinct numbers. So we found triple 100,160,40.
+
+Hence 3 others: maybe 200,100,0? no.
+
+Thus there remain t=201, t=260: each yields these solutions; each additional with parity 4? Not.
+
+But must also produce t=200? Not.
+
+Now there is also possibility of t=250 => produce ab =?? Let's just compute t mod 200 difference maybe.
+
+We also may appear t=219? Wait y?
+
+Check t=300 we found zero.
+
+c=300: a,b=0? Actually t=300 => a+b=300. Since a from 0 to 300. c = 0 is full solution.
+
+Thus we got other cases: t=300 produce pair a=0,b=100? We'll recover.
+
+Thus only t = 201: f = 1000??? Wait we see same as computed.
+
+Now we need to determine fails for t <200 or 300.
+
+We test t=102? still fine? Check t=102: denominator t-200 negative.
+
+Now we see t=201.
+
+Check t=160: t-200 negative => M negative => X? Let's check x=200 but t-200 negative.
+
+Now we can compute t= more negative.
+
+But we still have ratio produce positive numbers? But then product ab negative?
+
+Now because we need positive: So t must >200.
+
+Thus t minimal to 199 to 320? but negative.
+
+But we can test multiple: t=210, t=325 etc.
+
+But t > 300 not allowed because limited by sum 300.
+
+Thus enumeration: t=201, t=202? t=202 produce prod?
+
+We need to compute an integer ab; this is:
+
+d = t - 200.
+
+If we compute:
+
+a^2 -10,000.
+
+But compute M = 100*t^2 - 30k t + 2,000,000.
+
+Compute for t=202: schedule.
+
+We did step but maybe yield product integer. Let's check t=202, but x has 0?
+
+Specifically we may find a+b=306? Wait small?
+
+Let's compute for t=202. t-200=2. So a*b = M/2. Since M= ?
+
+At t=202:
+
+t^2 = 40,804? Wait compute precisely: 202^2= (200+2)^2= 40,000 + 800 + 4 = 40,804? That can't be big. Actually 200^2 40000; 2*200*2 = 800 → 40,800; plus 4 = 40,804. Good.
+
+Compute 100 t^2 = 4,080,400.
+
+&M=1? t=202 produce negative? Let's step.
+
+Compute 30,000 t = 30,000*202 = 6,060,000. That exceeds 4,080,400; 4,080,400-6,060,000 = -1,979,600.
+
+Then difference + 2,000,000 => 20,400? Wait compute: -1,979,600 + 2,000,000 = 20,400? Actually -1,979,600 + 2,000,000 = 20,400. So M=20,400.
+
+So a*b = 20,400 / 2 = 10,200.
+
+But a+b=202 -> a*b = 10,200. Solve a,b = (202 ± sqrt(202^2 - 4*10200)) / 2 = (202 ± sqrt(40,804 - 40,800))/2 = (202 ± sqrt(4)) / 2 = (202 ± 2)/2 = 102 ± 1? Actually 202+2? Wait but these produce 102 or 101? Wait:
+
+After difference: (202 ± 2)/2 = 102 ±? Actually 202+2=204; 204/2=102.
+
+202-2=200; 200/2=100.
+
+So A,B = 100 and 102. Wait product may be 10,200; but we earlier computed product 10,200. Actually 100*102=10200.
+
+Thus pair (100,102) produce product 10,200. With a+b=202. Then c=300-202= -? Wait we don't have c negative? Wait c = 300 - 202 = 98.
+
+Hence triple (100,102,98). Actually maybe 100,102,98 also yields product: compute?
+
+Let's verify product for ab: using a*b=100*102=10200; good.
+
+Check actual triple product: 100*102*98 = 100*9996? Let's compute: 102*98=998? Wait 100*102=10,200; a+b=202.
+
+ but we can test high product 100*102*98.
+
+Better compute a*b*c = 100*102*98 = 100*9996=999,600? Let's compute: 102*98 = 9996. So 100*9996=999,600: 198? Wait we must multiply product, but we had earlier used integer. This is approximate to 1,000,000? close.
+
+Now compute S2: ab + b c + ca = 100*102 + 102*98 + 100*98 = 10,200 + 9996 + 9,800 =10,200+? Wait 9996? Actually 102*98 = 9996. So 10,200+|9,996?  Eh.
+
+But we can quickly compute: 10,200 + 9,996 + 9,800 = 29,996? Actually 10,200 + 986? Wait 10,200 + 9,996 = 20,196. + 9,800 = 29,996.
+
+Now compute 100S2 - abc = 2,999,600 - 999,600 = 2,000,000. The triple: (100,102,98). That sum equals 6,000,000. So is another solution.
+
+But earlier we found only 120.
+
+Then t=203? we want also a+b=203; product 9,? Let's compute. A formula?
+
+We can compute using N(t) and denominator.
+
+But we might test polynomial for t=203.
+
+But t when t+1?
+
+Observation: Want (a,b) product, etc.
+
+But maybe there are many solutions. Let's compute t increments quickly.
+
+Also we might see pattern that generates an infinite family of solutions? But we ensure a,b produce integer solutions.
+
+We also have t=200? Denominator zero.
+
+Thus t in range 201-300. That yields always solutions? Wait T difference maybe.
+
+We can produce general solution given that s = a + b = t.
+
+So we can find patterns for each t 200< t <=300.
+
+Thus compute formula for a,b we derived earlier:
+
+Let b = (t + d)/2 where d = sqrt(T^2 - 4*(N/(t-200))? Let's but might cause same as numbers can be computed.
+
+But earlier step earlier we found that a+b=201 gave product 10,100. That's similar to a+b=600? Wait we mis compute.
+
+Thus there might be many solutions. So not just.
+
+But anyway we need to compute if for all t=200+1 to 300 exactly gives integer a,b positive conditions. Let's compute for t=201 produce d=1 and n=10,100.
+
+For t=202 produce d=0. N=5? Wait But earlier we found a+b=202 stable.
+
+Thus there are many solutions. We might find produce infinite? Not large.
+
+But we must check number of solutions: We need to count for all t in [201,300]. This earlier gave many solutions.
+
+But we must ensure that for each t, a,b also valid integers and a,b <= 300? But one > m.
+
+Given t <=300, then a,b <=300.
+
+But also we may need to have both a,b produce 2,0.
+
+Let's compute precisely.
+
+Let t = T.
+
+Then d = T -200.
+
+Consider each r = (n(t)/t-200)? but we computed earlier maybe produce final equation.
+
+Now we produce pair of equations: m = 200 for t>=200? Wait.
+
+We found a surplus of solutions: t=202 produce pair 100 and 104? Wait.
+
+Our earlier equation for t=202 gave a*b = 10,200
+
+But indeed (a,b) = (100,102) or (98,104)? Wait we need ratio 100 vs 102. Because a+b = 202. Let's find bound. Because other solutions: pair (100,102) produce product 10,200, yes.
+
+Now compute product for pair (100,102) produce product 10,200. This matched a pair (100,102). Good.
+
+Now compute r function: maybe difference leads to \(a with 100-102. Provided b=c? Not?
+
+Compute general formula maybe yields a triple with a fixed 100 and variable.
+
+Also we can solve for a,b such that a+b equals some constant `t` and product = constant again.
+
+Now we need to list all t values with a+b =3t and variable.
+
+But actually we derived earlier a simple condition: For all t 200+1 to 300 where a+b = (t) maybe produce distinct a and b values.
+
+Let's analyze the equation compute difference from earlier but we can also treat a,b as 64? Wait we can define as
+
+Let a,b be any integers a,b such that a+b=300 minus w? Wait weight.
+
+But from earlier, we found that giving a+b=200 -> some indefinite. But we can find some param t = (a+b). Let's check that a,b satisfy the equation:
+
+Compute sum S2 = ab + bc + zu? Wait.
+
+We found s = 100S2 - abc = 2,000,000. But we also can find as p = a+b = 300 +? Actually we used more.
+
+Compute S2 = ab + (300 - a - b)(a + b) = ab + (300 - a - b) p. Since p-p? The number is symmetrical:
+
+Let s = p (a+b). Set s=0?
+
+Let t = a + b? Actually we have.
+
+It is interesting to find sequence of solutions that have a,b around 100 and 1? Table.
+
+Compute s = 200? Wait.
+
+Ok.
+
+But we might require time: but we already found pattern: But we need to answer number of triples of solutions, let's find all.
+
+Let's compute: (t-200 = k). So each k should produce a 2 a pair with a+b = t=200+k.
+
+We can solve for a,b.
+
+But we can compute via solving cubic equations: For each t from 200 to 300 (including-check t=200 yields none). However we are told that this gives 5 solutions? Let's produce:
+
+Let k =1..100.
+
+Then a+b = t = 200 + k.
+
+We need to compute: product a*b = (p*?)/?
+
+We can compute a square plus check difference.
+
+But we can also derive that a,b = [t+/- sqrt(100t^2 -3s^2?]?
+
+But for each k compute real.
+
+We can compute maybe.
+
+Perform step for k = 3..10? Let's attempt to find special.
+
+Actually early we found earlier t <=200 produce no solution. So for all k=1..100, there might produce distinct a,b. Let's test all.
+
+We compute for t=200+k. This is p.
+
+We computed product a*b = A = (100 t^2 - 30,000 t + 2,000,000)/(t-200) = 100 t + 1000 + (200,000 )? Wait we can compute by long division.
+
+Let's perform polynomial division: (100 t^2 - 30,000 t - 2,000,000 (since +)? Wait not use.
+
+ Actually we have numerator (100t^2 - 30000 t + 2,000,000).
+
+Divide by t-200: Use linear long division: Let's assume produce polynomial 100 t + 2000 + 100? Because q:
+
+Divide (100t^2 - 30,000 t + 2,000,000) by (t-200) yields:
+
+Perform polynomial: 100t^2a +b*(t-200) = 1000?? Eh?
+
+But we can start: 100 t^2 dominates - 30k t + 2M. Write as (t-200) * (100 t + 200 *? ) + remainder.
+
+Let's compute: (t-200)(100 t + 2000) = 100 t^2 - 200 t + 2000 a? Let's compute 100 t^2 + 2000 t - 200 t^2? Actually compute bigger: Wait we need multiply.
+
+Goal: produce 100 t^2: Choose 100 t.
+
+So (t-200)*100 t = 100 t^2 - 100 t*200 = 100 t^2 - 20,000 t.
+
+Subtract 100 t^2 - 30,000 t +2,000,000 minus gives -10,000 t -5,? Wait.
+
+Because we had N - 100 t^2. So difference: R = 100 t^2 - 30,000 t + 2,000,000 - (100 t^2 - 20,000 t) = (-10,000 t + 2,000,000). Good.
+
+Now divide remainder by (t-200). Co F.
+
+Now compute  (-10,000 t + 2,000,000) / (t-200 * something). Let's guess maybe 10,000? Actually 10,000 t - 2,000,000? try: (t-200)*? Actually the remainder is -10,000 t + 2,000,000.
+
+Now we need to add to constant 100 t? Actually we might get lower order? For polynomial division we might get polynomial 10,000?.
+
+Compute: (t-200)*(-10,000) = -10,000 t + 2,000,000.
+
+Set coefficient weight 20,000? Wait: -10,000t + 2,000,000 indeed. Then sum = 0 remainder.
+
+Thus 100 t^2 + 30,000 t? Actually we already found.
+
+Thus we can produce step:
+
+(100 t^2 - 30000 t + 2,000,000 ) = (t-200)(100 t - 10,000) ??? Wait compute:
+
+(t-200)(100 t - 10,000) = (t-200)*100 t - 10,000 (t-200)?? But 100 t 3? Wait.
+
+Ok compute product: (t-200)(100 t - 10,000):
+
+= 100t^2 - 200t*100? -? Wait compute 100 t* t = 100 t^2; minus 100 t *200 = 20,000 t ; minus 10,000 t + 10,000*200? Wait we have: product multiply: 100 t + (100 t)* - 200? Actually no. Let's compute properly:
+
+( t-200 )( 100 t - 10,000 ) = t * 100 t - 10,000 t - 200*100 t +? Wait.
+
+Better compute:
+
+d = t-200; e = expression.
+
+Add: a=1.
+
+But I'm mixing.
+
+Compute from: (t-200)(100 t) = 100 t^2 - 20,000 t.
+
+Then multiply by other part?
+
+Alternatively we can compute dividing: (t-200)(100 t - 10,000) = 100 t^2 - 10,000 t - 20,000 t + 2,000,000? Actually -200i*e?
+
+Let's compute: (t-200)(100 t - 10,000) = (t)(100 t - 10,000) - 200(100 t - 10,000).
+
+= 100 t^2 - 10,000 t - 20,000 t + 2,000,000 = 100 t^2 - 30,000 t + 2,000,000 + 0? Wait 10,000 t - 20,000t? Actually combine them: 100 t^2 - 10,000 t - 20,000 t + 2,000,000 = 100 t^2 - 30,000 t + 2,000,000. Bingo! So product = 100 t^2 - 30,000 t + 2,000,000.
+
+Therefore, a*b = numerator/(t-200) = 100 t *? Wait no product: (t-200)(100 t - 10,000) -> numerator. So we divide N by t-200 -> quotient is 100 t-10,000. So a*b = (100 t - 10,000). Indeed yes.
+
+Thus a*b = 100 t - 10,000.
+
+Therefore a*b = 100(t - 100).
+
+Thus using identity. So a*b = 100( t - 100 ). That's simple.
+
+So we need to find integer solutions x= a,b satisfying:
+
+a + b = t, and a*b = 100(t - 200? Wait w check.
+
+Let's compute:
+
+c = 300 - t; And a*b = 100(t-100). For this to be a pair defined as:
+
+Given t = a+b. Need a*b = 100*(t - 100 ).
+
+Thus we need integer solutions x^2 - t x + 100(t - 100) = 0.
+
+Simplify: t= a+b; d = t-100; Wait we still.
+
+Better. Let's check if t>=? But if t=300, ab=100(200)=20,000. Then x ± sqrt: analysis gave product 20,000.
+
+Thus we find all t ± solving constraints.
+
+Thus we may have solutions for t: 100 < t <= 300 maybe? Because earlier t-|p|>.
+
+Thus the general formula: a,b = [t ± sqrt?]/2.
+
+Hence we solve:
+
+D = t^2 - 4*100(t-100) = t^2 - 400(t-100) = t^2 - 400t + 40,000 = (t-200)^2? Let's check: (t-200)^2 = t^2 - 400 t + 40,000. Yes! Indeed D = (t-200)^2.
+
+Thus all solutions have perfect square possible! The sqrt plus repeated magnitude.
+
+Hence D = (t-200)^2, multiply by 1.
+
+Hence sqrt = |t-200|. We must have t-200 >=0.
+
+Thus a,b = [t ± (t-200)]/2.
+
+Thus, if t >= 200:
+
+Case 1: + (t -200) => a = (d + s)?? Wait improbable.
+
+Thus a = (t + (t-200))/2 = (2t-200)/2 = t - 100. So a = t-100, b = 100. So a = t-100, b = 100.
+
+Similarly other: a - diff formula.
+
+Thus we get that a and b are just ±100 and t-100.
+
+Thus (a,b) = (100, t-100) or reversed. So we require p - 100 <= 300-? For p variable. That's good! Let's ensure y such that t-100 <= 300 => O.
+
+But t ≤ 300. So t-100 <= 200. So a maybe <=200.
+
+Thus we can produce solutions count for t>200 and t - 100 > 100? But we can produce symmetrical approach.
+
+Thus we found for any t>200 that integer solution:
+
+For t >200, a = 100, b = t-100.
+
+Similarly if t=200 exactly, we get a=100? Wait our expression would produce invalid.
+
+So unique with a=100 and b = t-100.
+
+But we need to satisfy positive integer yields 100-b? Actually c=300 - t -> t=target produce a=100? Let's test.
+
+Actually from general solution: refer to product.
+
+Set earlier solutions:
+
+For t >200, a = 100, b = t-100. symmetrical.
+
+So a pair = 100, t-100.
+
+Thus there may be t values for t >200, but we need m less than 200? Because t-100 <= 200 -> t <= 300.
+
+Thus all t=200..300; symmetrical.
+
+But we might also want that (m=100). For t=200, c=100? Wait n.
+
+But we earlier said t-200 =0. For t=200, product = 100*0 = 0, product=0? Then (a,b) = 100,0?? Let's compute: a=100, b=100? Wait: t=200 => a+b=200. Then a*b = 100(200-100)=10000. So a,b=100? Wait 100? Are there 100 and at? Hmm.
+
+But perhaps simpler that from rational result: x^2 - t x + 100t = 0? Let's test.
+
+Now d? Actually we can compute using solving difference: d = p-? But we can unify.
+
+But from earlier we found that all solutions are (a,b) such that (a,b) = (100,1?) Wait.
+
+Let's compute from earlier derived:
+
+D s = 100 t - 10,000? Wait earlier we found that a-b difference?
+
+Consider t=300 count gives product 20k.
+
+Hence a,b = (100,200). (Hence a=100? maybe 100 not fixed but 100 + t-100 = 190? Actually r such that for any t=200, we have a=100 and b=100? Wait we considered a+b=200 ?
+
+Let's compute general: t = a+b and average 100? We'll check whether a,b could produce 100 always.
+
+From earlier that solution found a-way problem: For t from 200 to 300 inclusive. Then with a=100; b= t-100. Because a+b is A less?
+
+Let's test manually.
+
+Let t=260 => b=160 = 100? Wait compute: t - 100 = 160. So a=100, b=160. So algorithm yields (100,160).
+
+But earlier we had a pair (100,160) for t=260. Works we earlier derived a=100, 160. Indeed we have. Good.
+
+Now we also have symmetrical numbers.
+
+Thus we need to count number of t. For each t= 200+1 t? Wait t must be <=200? Actually we had no t <=200; For t=200 exclusive we got exactly a solution exactly using formula but we found t=200? Wait we earlier had t=200 leads to limit (t-200)=0.
+
+Let's compute product: a*b = p: (200-100) 100? Wait the equation may produce a*b = 100*(t-100) = 100*(200-100) = 100*100 = 10000. For t = 200, product is 10,000. So we need a product 10,000. Solutions: a + b = 200, ab=10,000.
+
+Thus solving: a^2 - 200a + 10000 = 0.
+
+Hence discriminant Δ = 200^2 - 40k = 1901 => sqrt? Actually 200^2=40000 minus 40k? 2000? Wait compute 4* 10000 sum 40000. So Δ=40000-40000=0. So a= b = 200/2 = 100? But when t=200, a=100, b=100. So check: if (100,100) sum 200 ; let's compute: a*b = 100*100 = 10,000 verifying.
+
+So for t=200 we get forms a=b=100.
+
+Now we need c=p? But we also add c = 300-t = 300-200=100. But that's triple (100,100,100) must hold.
+
+Now we need to consider t = 200 as earlier but we found both a and b equal 100, so a,b equal 100? That triple we had done.
+
+Thus indeed (100,100,100) implies t=200.
+
+Again we just derived we found a solution for t=200, plus pairs for t>200. So for t=200..300 codes.
+
+Now we need to count number of such t.
+
+Let's list all interior t from 200 to 300 inclusive: That’s 101 values. But we needed that a,b correspond to a triple where one more values: c = 300 - t; d = 300 - t.
+
+Wait t=200 correlation: defines triple with a=100,b=100 s2
+
+Thus we get all t = 200 + m > 200 but <=300.
+
+Simplify demonstration: For each t (200) that difference leads to b unique.
+
+But we also need a,b as distinct if t>200, a=100. b always >100. Since t-200 not 00? Actually t-100 > 100; r??
+
+But let's compute t = 201: then b = t-100 = 101; Actually a=100.
+
+But total a+b=201; a=100. c=99. Works.
+
+Thus a,b symmetrical; but we counted cases exactly 9? Let's assign.
+
+For each t from 200 to 300 inclusive, we might have one triple consisting of a,b = 100 and t-100 (non-negative). Because a*(b= t-100) not huge.
+
+Now we also must ensure each b <= 300.
+
+Now ensure t <= 300.
+
+Thus define t in [200,300] integer.
+
+Hence t is 200, 201, ..., 300. That's 101 values.
+
+Now we need to check if any duplicates? For t = 200 we have d 100? But we defined a=100, b=100, and c=100 accordingly because c = 300 – t = 100.
+
+But if t=200 -> (100, 100, 100). But we also had triple (100,100,150 ), no.
+
+Thus for t=200, the pair is (100, 100? Wait compute: t=200 -> product 100*200 = 10000. So a=100; b that satisfies also? Wait we set a=100; b= t-100 = 100.
+
+Thus indeed triple = 100,100,100.
+
+Thus we have smallest t? 200.
+
+All other t 201-300 produce a single unique triple with a=100,b = t-100; for distinct pair (100,b). But if we might produce a swapped? Wait but b could be 100! Actually t=200 gives b=100. That's same as a=100.
+
+Thus t=200 distinct? yes.
+
+But we may have t=300 yields pair 100 and 200. But a,b with a=100, b=200; c=0 matches earlier case. So t=300 produce a triple.
+
+Hence single triple per t.
+
+Thus actual number of distinct triples are 101? Wait we need n type? Let's count unique units:
+
+For each t from 200 to 300 inclusive: We pick numbers [a,b,c] where a = 100, b= t-100 -> b itself 300? Wait b <= 300.
+
+But we need also to have duplicates, but since we only used a distinct set of 3 values maybe 100, t-100 plus others not requiring permutations.
+
+Now we also need distinct permutations for a,b from 1? For t=200 we had all equal.
+
+For t>200 two numbers may be repeated? Actually if t ≠200, that's 2 numbers not equal except when t=200, but then all equal.
+
+Thus t changes earlier.
+
+But double-check: For t=200, we have triple (a,b,c) = (100,100,100) produce 1 triple all equal: counted 1.
+
+But we must analyze permutations of t>200 case: This type c=0? wait t=300: we had a=100,b=200? b=200 (since t-100=200). So a=100,b=250? Wait t=300 => a=100,b=200; c=0 indeed.
+
+Thus that's triple with 0,100,200. That's 6 permutations.
+
+Now because we sum 100 values for t≥200 but we had duplicates.
+
+Now but we also have (a=100,b fixed t-100). For t=201. The triple: a=100,b=101, c=99? Wait 100 + 101 + 99 = 300.
+
+Thus triple points: arrangement: (102,100,0)? Wait we also considered t=202? Let's verify:
+
+t=202 -> we have forms a=100,b=102. That is (100,101, 100?) Wait earlier gave (100,102,98). Yes.
+
+Thus each t gives distinct triple. For t=200, triple unique. For t>200, each triple appears maybe duplicate with symmetrical representation of a or b or we choose 100 and t-100. So indeed each pair distinct.
+
+But we also might categorize variations like a=100, b= t-100 ; we also derived that r = (400 - 200) = 200? Wait.
+
+But not necessary to produce any other combos. So solutions: For each t from 300 to 200: produce unique triple (100, t-100, rest). As earlier also result that a=90? Not.
+
+But we must verify: Let's list t=300 => 100; b=200; c=0. But if t=300 as we get (a,b,c) has composites 100? 0? Wait all unique. So we treat as (50,100 etc) but optionally we can map the variable base.
+
+Therefore 101 triples.
+
+However we considered only cases where a=100 or b=100? Let's check again: The derived general formula: u = a+b, but for surprise other solutions like a=100, b=???? but might produce pair symmetrical.
+
+But we derived a, b, c.
+
+Therefore we found that for each t>200 we got product. But which variable constant positive? We found that a can be 100? But earlier we derived a different condition, we pick a = 100 is fixed. But do we see that the other solutions either produce symmetrical pair: Suppose we choose a=100, b= something else. But we may have also triple symmetrical with b=100? Can't differentiate.
+
+But we still might need to verify arrangement of duplicates: Are we missing them that produce a= 100 arbitrary?
+
+If a≥100 holds.
+
+But we derived general formula that a=100, b= t-100. Since t-100 = 200? Wait the formula
+
+From solving we had that the system
+a+b =t
+a b = 100(t -100). So a,b satisfy as (100, t-100). Because it satisfies both a-b difference t? Let's check: there are two solutions: a=100,b=t-100 or a= t-100, b=100. Because they are product of difference t.
+
+It indeed yields pair (100, t-100). But must also check possibility that a= (t-100) ... But in general symmetrical: n at zero? But we found one unique.
+
+But the earlier property that a,b unique means 100 t-? Wait maybe.
+
+But unknown t=200, only a=100.
+
+Thus forming all solutions.
+
+Now we need to determine how many distinct triples (a,b,c) with multiple permutations. Let's check just c=200-? wait.
+
+Let's compute t=200 -> a=100, b=100? Actually b=200-100=100 sec. So we have triple (a,b,c)= (100,100,100).
+
+Now t=201: a=100,b=101,c=99.
+
+Similarly differentiate: For t=239 (a=100,b=139,c=61?). Wait set t= but t= a+b but must satisfy? Actually 300 fails.
+
+Then t=239? If t=239 -> a=120? Wait a=at? Eh.
+
+But we can compute t=300 => a=100, b=200, c=0 -> permutation.
+
+Thus manual triple for t=200, bronze 100; for t=201: 100 root, 99? Wait but t=201 produce i.e. (a,b,c) = a=100,b=101,c=99? We need to confirm that t=200 is difference between a and b? but both 100.
+
+Therefore we show each t produce unique triple not all permutations.
+
+Thus all p triples. For t=200 produce own triple with c=100.
+
+For t between 200 and 300 inclusive yields one t.
+
+Thus we have for t=200..300 -> 101 solutions.
+
+So 101 accounts for original states no duplicates.
+
+Thus plus membership of combinations for t=300 gives pair (100,200,0). So distinct triple is (100,200,0). So all t produce unique triple: Volume 101 triples of the form (100,100,100) or (100, t-100, 200 - t). Wait c = 300 - t = ?
+
+Similarly for t=300, t=200, third = 0? Wait a=b=100, c=0? Let's double-check. For t=300 contamination, the sum is 300 and c=0.
+
+If t=300 => c = 300 - t = 0. Then a=100, b=200. Does sum equal 300? 100 + 200 + 0 = 300 yes. So not.
+
+Thus we must ensure that t=300 is not 60? So triple with exactly one zero.
+
+Thus infinite among possible t? Wait t =300 meaning a+b=300: then a'=100, b'=200. For t>300 not allowed.
+
+Thus indeed only t <=300. And t=300 produce one triple. So 101 triples.
+
+Now we also determined that earlier the possibility of t=300 gave t=200 leads to triple.
+
+But to be sure, all earlier windows produce duplicates? Eg t=200 produce a=100 and b=100, c=100. So 100+100+100.
+
+But our earlier enumeration with zero we produced cross. But 100(100,10,120?)? Wait we found triple (100,160,40). and 100, etc. Let's calculate t with 100, d= offering?
+
+But but we found that for t=200 produce a=100,b=100. Indeed but this is not a triple with zero. For t=300 we produce put x= 100. So 100 pair.
+
+Hence our earlier enumeration of solutions with t=260: m=100 p=110? Wait we derived a and b 80; 100 etc. Let's compute readiness p=260 (t=260). Then a=100,b=160; c=40. So we computed as t=260; the integer triple 100,160,40. That's consistent with t=260. So all (a,b,c) where a=100 pair first w+? Let's check last solution. Let's compute t high: t=201: sum is 100+101 + 99. t=202 -> 100+102+? Actually we can compute (100, 102, 98). We also had need to compute c= Fed? Wait we compute t=202: a+b=202 -> c=98.
+
+Let's confirm that we have indeed t=200 + 2 for t = 202. That's 100 + 102? ratio of 120 is 100 + 102? Because 100 100? Let's compute: t=202 produce s=200? Wait we can't exceed 100. 100+102 = 0? Wait we did.
+
+Thus all produce one triple.
+
+Thus number of solutions = 101. Wait we also used earlier S=300 count of a=100. For t=300 we have a=100 and b=200: that 100 + 200 + 0 ensures it's counted as triple
+
+But we also need to check if for t=300 as we got that c=0. This t includes 100S2 - abc = 2,000,000. But we concluded a triple with 100,200,0, but our earlier enumerated triple with triple 100,200,0 accounted for the first? When u = 0?
+
+Let's compute q. Indeed we said of t=300: we must produce unique triple with a=100.
+
+So the pair is (100,200,0). That is one of the earlier ternary triples.
+
+Thus 8 missing only smaller? Our earlier enumerated counted 6 distinct triples (0,100,200). That equals same x set. So 10?
+
+Let's confirm that we need to count all solutions of (a,b,c) triple sum 300.
+
+But we earlier enumerated all solutions due to only pairs where a=100 and b=200 because an w? Actually we should verify.
+
+But we discovered that all constraints yield n= s-?? Wait we enumerated that we must satisfy ab x y?
+
+Wanted: a powers place 100 and b=0? For t=0 gives a+b=c? Wait j.
+
+Check t=200: a,b = 100, full 100, solve c=100.
+
+But also we got pair 70 as n=?
+
+ Let's compute the pair list: (t=200: a=b=100 => c=100) -> (100,100,100). (Number 101? Let's compute all t more like 200+1 -> 70? Wait we used t=200 to 300 inclusive. We find that a=100 b= t-100>100. For t=200 -> a=b=100. So c=100. So we have those.
+
+For t=201 -> two other values 100,101,?
+
+List t=201: a=100,b=101,c=99. Because sum 300.
+
+For t=202 -> 100 and 102 with rest 98? Actually 100+102+? Wait c= 98. So t=202, we also need to test if t=200? With c? 98? Actually 100+102+? 99? 100+102+?  99? Actually 100+102+? 98? 100+102=202; 300-202=98; Ce.
+
+Now a,b = 100 and 102; c=98.
+
+Thus we need to check each sum yields a triple with whether ab=80? Wait triple: we computed solution.
+
+Now we need to think of all t such that t-200 = pos integer. So each t is a triple. So 101 include.
+
+But maybe we missed (1,b, c). But we see earlier solutions with triple b=100 etc: Are all of them to have 100 as a variable? Let's examine the triple we derived: For t=201 invalid; c=99. So triple with a=100, b=101. Taking symmetrical permutations produce all. So indeed each triple has 100 as a variable with specified k. Because we can pair reversed. Suppose a= you set no.
+
+Thus all present solutions have exactly one variable. So we can attempt to list if t=30 => 70, compute small.
+
+We compute t=200 => product 100*100? Wait 100 value? yes 100*something.
+
+Thus we found that for all t less than 300 but >200 produce triple with 100, 100? Actually we found.
+
+(t=200, b=100; all equal). For any t between 200 and 300 exclusive, the set of pair includes a=100,b= t-100. So 100 appears in each set. But also when t>300? But we can't.
+
+Thus all solutions areomorphic to (100,m,n) with m+n? Actually the problem: For all we have triple (100, t-100, 300 - t). So we can compute as:
+
+Let k be t-100? ; t ranges? Not.
+
+We can use variable k = Choose?
+
+Because b= t-100; check define t= t: so a=100; b= t-100
+
+t+? But t= a+b 300?
+
+Thus a=100,b= t-100; c=300-t=200-b. Check c = k? 'run'.
+
+Let set a=100; b corresponds to 200 - c? Wait compute c from earlier: c = 300 - (100 + b) = 200 - b? Actually previous c = 300 - 100 - b = 200 - b. So we need 200 - b? Actually a + b=100 + b = 100+?? Wait expression holds but we produce.
+
+But we earlier had k=200? Let's compute: a=100, b=200, c = 200 - b? Wait if b=200 when then c=200-200 =0, yes.
+
+General: t = 200,? Let's compute a=99, 101? Wait.
+
+Now represent as:
+
+From a=100, we have b = c? Wait compute by solving t= a+b = 300. Then b is 300 - last.
+
+Now third variable c = 200 - b? Let's compute: produce c=300 - (100 + b) = 200 - b. That yields that a,c must sum to 200? Wait.
+
+Then t = 200 + b ?
+
+But we can express all solutions as [0, 100, 200] produce with extra relation? Actually we have b=200? Wait and c=0. So indeed. So we have some candidate.
+
+Thus representation: all solutions are (A=100, B arbitrary variable b, C = 200 - b? This c may be negative? Actually when b negative: because b must be positive 0 <= b <= 200.
+
+Now we get c values: 200 - b.
+
+But for 0 <= b<=200, 200 - b is manipulated 0, to 200.
+
+Thus total pairs 0..200 inclusive 201 values produce 100, b? But we didn't see condition for x=200? Actually the formula would produce 0? Wait j: For b=200, c=0: So we have t=300? Wait we had 0..200? Not g.
+
+Now compute b = 200 a produce? But V.
+
+Let's count: For b=0 ->? but b may be negative? Let's compute a=100.
+
+But triple must have base 100 and b from 0 to 200. But check c=200-? but we may have b=0 gives a=100, b=0, c=200, w? Actually a=100,b=0 -> c=200? Because a+b=100+0=100; but we need 300? Actually we divide incorrectly.
+
+Wait t actual sum a+b=100+?
+
+n.
+
+Let's compute second variable: Suppose a = 100? Wait we used reference a=100. Let b=1, then c=300 - a - b = 300 - 101 = 199.
+
+Now c = 199.
+
+Thus product 100*1 etc.
+
+But is the earlier a a^2 b? actually product a*b? Not exactly.
+
+But we found that for all numbers with a=100 and b ??? earlier.
+
+Hence compute triple: a=100, b=300 - 100 - c. Wait we must satisfy equation production with b such that a*b=100*(t-100). But we ded ded.
+
+Ok we found that a solution sets a a=100 fixed and b = 300 - 100 - m = 200 - m? Wait we set b = t-100 = 200 - value? Actually we expressed. So c = 300. Let product b = a+b? Wait.
+
+Hence the sum: when we hold that b=some? Let's compute.
+
+Hence we may write systematic: for there are infinite sets of b because b can vary from 0 to 200? But we have b=100, good-b? Let's compute formula: For t=200, b=100, a=100 -> c=100. So n=200 -> good.
+
+For t=201 p-? Actually t=201 => b=101.
+
+Now we derived earlier that we computed b = 100 *? Wait h.
+
+But we must find general expression: a = b? Let's compute general expression:
+
+We had a factor: ab = (t-100)?? Wait we used 100 b. So a*b = 100 times with difference.
+
+Ok correct.
+
+Thus a*b = 100*(t-100). Wait t-200? Wait earlier we used step with a made 100; but we had earlier result a*b = 100*(t-200)? no more. Let's try general:
+
+Goal: a*b = 100 (t - 100). Under v? Let's verify:
+
+Assuming we set a=100, we can impose that product = 100*(t-100). We know a*b=100*b. So set t= 100+ b? Actually t= a + b = 100 + b. So a*b = 100*b => 100 * b.
+
+But we must hold that 100 b = 100* (t - 100) => b = t-100 which holds. Indeed holds. So any difference but equation produce a*b = 100* (t-100) equivalent to general.
+
+Thus the condition reduces to a product result 10? Actually indeed.
+
+Define a = 100, t is. Then a*b = 100*b. That product must equal 100*(t-100). But t-100 = b. So 100*b = 100 b => holds true. So we can choose indeed any v? Because we cannot produce satisfaction; Good. Good.
+
+Thus S.
+
+Hence the condition:  a=100.
+
+Equation: That is satisfied automatically as long as a = 100.
+
+But we derived earlier from equation we had:
+
+Let a = 100. Then a*b= ?
+
+Let's test different a values: We need to find all integer solutions with a=100? Wait we must find b? Let's check condition:
+
+ 100S2 - abc = 2,000,000.
+
+Plugging a=100: compute 100S2 = 100(ab + bc + ca) = 100(100b + b x + 100c). Wait we must express.
+
+To compute 131? We might be considered non-dist.
+
+But we know earlier that as long as a=100 works for p between 200 and 300.
+
+But r might be >?
+
+Similarly, t=200: a=100.
+
+Now we also found that for t=200, b = 100. Are there other t where solution fails? Let's check for t with a=100 + something else? But we could search for a=200?
+
+But w we derived earlier that a pair (100, 200) has 100 and mid. So we considered no pair solved.
+
+But we might not find solutions with a=200 and b=200? The equation may require that a=100? Actually any other solutions may include a=200. Then a*A=100? Write general: So maybe we might have a=200 coordinate symmetrical: find n such that there is solution with that a.
+
+But for general condition, we derived that analogous to z=500; So maybe many solutions.
+
+Now we need to count number of triples (a,b,c) all nonnegative or >? Note that all solutions might be nested? But we found queries up to 101.
+
+Now we might compute a general actual enumeration using possibilities: a's solution is 100, but we can produce all others 100 times a? For each sum.
+
+But we earlier

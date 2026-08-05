@@ -1,0 +1,1554 @@
+<|channel|>analysis<|message|>We have a tetrahedron with all edges equal? Wait: AB=CD=√41, AC=BD=√80, BC=AD=√89. So it's a "tetrahedron with symmetric pair of opposite edges" but not necessarily regular. Opposite sides equal lengths: AB distance =|CD|. Similarly AC vs BD difference. So it's "variant of a 3-2-1 matrix"? Might be a tetrahedron with all opposite edges equal? Actually check no: AB = CD = distance between vertices A–B and C–D. AC = BD. BC = AD. So yes we have a "determinant tetrahedron" with all pairs of opposite edges equal. So we have a "theorem" that barycenter of tetrahedron? Wait: For tetrahedron with all pairwise opposite edges equal, the tetrahedron has a centroid? There's an "irregular relation" known as the "Dewaene sum" or something.
+
+Given we look for interior point I such that distances from I to faces equal. So it's center of inscribed sphere? For regular, center is incenter. But here we have a cone? Actually for a tetrahedron, there exists an interior point with equal distances from all six faces is same as incenter, yes? But that would be at the plane where all S =? Wait distance equal to each face? But the definition of incenter requires distances equal to all faces? Wait for a tetrahedron, the intersection of angle bisectors of the trihedral angles exists: I is the incenter for equilateral tetrahedron (regular). But equidistance to all faces is not necessarily at same point? Wait but there is always a unique interior point I that gives equal distances to all faces: it's the tangential point of an inscribed sphere. For a tetrahedron, external sphere touches all faces if and only if the tetrahedron is tangential? Wait typically the incircle exists for tetrahedron if it has the sum of opposite vertex pairs? Actually a tetrahedron can have an inscribed sphere where distances to all faces equal. But not all tetrahedron have an inscribed sphere: it must satisfy a condition that the sum of one of each pair of opposite edges equal? Wait we know: A tetrahedron has an inscribed sphere iff sum of each pair of opposite edges are equal? Let's recall specifics: For a tetrahedron, the center I of an inscribed sphere exists if.
+
+We need to check: For quadrilateral, the allowed condition? However to be like: There exists a point I with equal distances from all faces. This is exactly **incenter** (center of an inscribed sphere). For a tetrahedron to have an inscribed sphere, the intersection of the interior diagonals of four faces: At each face we can also define the area, etc. For a tetrahedron to have an inscribed sphere, the sum of areas of opposite faces equal? Wait property: A tetrahedron has an inscribed sphere iff the sum of its dihedral angles? Actually the fundamental is that there exists a vertex with distances equal equals etc. Another formula: A sphere can be inscribed if there exists a point I such that distance to all faces equal, and all angles satisfy relation etc. But we just given such a tetrahedron exists; we just need find that distance d.
+
+We can compute the volume V of tetrahedron as function of d: one area up to a time. Max or for a sphere of radius r: Volume V = (1/3)*S*... but for vertical? Let's think: For tetrahedron with inradius r, the volume inside can be expressed as V = one third of each face area times r = (1/3*)(A1 + Ay + ...? Actually for quadrilateral: For a tetrahedron, the volume V = (1/3)*r * S_total, where S_total is sum of areas of faces? Wait I'm mixing. For a prism, base area times height. For a tetrahedron, use volume V = sum of all pyramidal volumes when base areas times altitudes. For point I with distances to faces forming a sphere from its triangular faces, each pyramid of base AB? Eh.
+
+Let's derive: For tetrahedron ABCD, with perpendicular distances from O to the plane faces r1...,r4. Average? Wait.
+
+Let's use formula: If a tetrahedron v has inscribed sphere radius r, then volumes of four pyramidal sub-tetrahedra with base faces and c is based on portions of distance etc. The volume V = ∑ r * A_i / 3? Actually each base face included. For each face, base A_i. The apex I lies at distance r from that face. The volume of tetrahedron with volume V_a for face ABC as apex I. Wait, we have one tetrahedron with base ABC (A in plane). Height is distance from I to plane ABC. So volume V_ABC = r * area(ABC)/3. Rotating: fill the tetrahedron with four pyramids mixing I area minus distances to faces. But must sum to the exact volume: V = (1/3) r * (Sum_{i=1}^4 area(Δ_i)). Actually be careful: The volume of tetrahedron made by base A_i as base and apex I as the point is *CA, with circumradius? Wait no.
+
+But we can compute: For each face: area of triangle ΔA_i, dividing by l=3? Use coordinates.
+
+But if we know that a sphere sits inside with same distances, radius r fixed. Then the volume of tetrahedron is equal to sum of the weights of each face * r. So perhaps we have V = 6*r*face? Wait.
+
+Let's compute V of tetrahedron using coordinates. We don't need sign? We have AB and CD as opposite. We have a typical arrangement with vertices satisfy conditions: all opposite edges equal.
+
+Ok we can compute using vectors and coordinates to compute distances.
+
+Let's attempt: Let us assign coordinates: Let A, B, C, D correspond to sets of three orthogonal vectors? Actually we can place by coordinates for any tetrahedron with equal opposite edges. We can create coordinate system with positions such that edges opposite equal:
+
+-- Partition into 4 parts: for each pair of opposite edges a,b, we can encode as a weight vector matrix: let A, B, C, D such that
+Let X= vector of coordinates; choose A,B,C,D unknown.
+
+We have symmetry. Another property: There is a tetrahedron that can be obtained by using shape (labeled dihedral). We can try working coordinates:
+
+Let A=(0,0,0). Let B=(a,0,0) but unknown. Let C=(b,c,0) but we choose not degenerate. Let D=(d,s,t). Then we can compute distances squared: AB^2 = a^2 = 41. So a = sqrt41. Good.
+
+AC^2 = (b^2 + c^2)=80. Determine b? Actually we need B has coordinates at (a,0,0). So AC = (b, c,0). So to compute AC^2 we need (b^2 + c^2)=80.
+
+BC=distance between (a,0,0) and (b,c,0). So BC^2 = (b-a)^2 + c^2 = 89.
+
+Now BT? D: (d,s,t). Must satisfy distances:
+
+AD^3? AD^2 = (d^2 + s^2 + t^2) = 89? Wait AD is opposite AC? Actually AD = α? Wait but they share half edges: earlier pairs: BC=AD=√89. So yes AD^2 = 89. Good.
+
+AK: (AC) Opposite BD: BD=√80. So BD^2 = (d-a)^2 + (s-0)^2 + (t-0)^2 = 80.
+
+CD: between C and D: CD^2 = (d - b)^2 + (s - c)^2 + (t-0)^2 = 41.
+
+Also AB = CD=√41.
+
+Check legs: AB- CD = sqrt41; also CD? Wait we defined CD so just verifying.
+
+Let's attempt by choosing coordinates.
+
+We need to find positive coordinates a,b,c,d,s,t such that all equations simultaneously satisfied. We can solve for D relative to AB and AC positions.
+
+We must also satisfy we know BD^2 = a^2 + z? Wait BD^2 =(d-a)^2 + s^2 + t^2 = 80? Actually BD^2 = (d-a)^2 + s^2 + t^2. Also from BC=-? Wait we have edges AB and CD same.
+
+But we also have B-A = distance AB = sqrt41. Good.
+
+Now we also have distances between C and D.
+
+Let's use vector approach: Let a=AB^2 = 41.
+Let b = AC^2 = 80.
+Let c = AD^2 = 89.
+
+Define distances from B to A: sqrtAB=√41.
+
+Let AB=c? Wait not. Actually we have duplicates: ab= AC=BD etc.
+
+Wait we might use concept of "tetrahedron with all pairs opposite edges equal" which is due to Gram matrix of distances? Let's recall the "Proposition" maybe that the 4 parts of the tetrahedron have the equality of some side lengths: each pair is equal. We can further compute using formula for "soul force" unknown.
+
+We might use vector equations: Let B and C are in XY-plane, let D at (d, s, t). Then A, B, C, D. Suppose we set B at (a,0,0), C at (b, c,0). Let D be (d, s, t). All earlier. We must solve for unknowns. But we can analyze differences.
+
+Let’s denote:
+
+(1) AB^2 = a^2 = 41
+(2) AC^2 = b^2 + c^2 = 80
+(3) BC^2 = (b-a)^2 + c^2 = 89
+(4) AD^2 = d^2 + s^2 + t^2 = 89
+(5) BD^2 = (d-a)^2 + s^2 + t^2 = 80
+(6) CD^2 = (d-b)^2 + (s-c)^2 + t^2 = 41
+
+We also have line D intersects? We can analyze.
+
+Also each pair of opposite edges have to measure equal: AB=CD, AC=BD, BC=AD. So I used 4*2*? Actually we derived eqs.
+
+Let's do eqs to solve for unknowns: Since a=√41; but unknown of 6. Define distances squared: 80, 89, 41 unknown.
+
+We are told S1, S2, S3 may produce a unique configuration.
+
+We can now solve for unknowns using algebra.
+
+Let’s use generic substitution. Let's write set up equations for squares.
+
+We have unknowns:
+
+a
+b
+c
+d
+s
+t
+
+But also maybe we can solve algebraically with these 6 equations. Let's solve step by step.
+
+From each equation:
+
+(1) a^2 = 41 => a = sqrt41.
+
+(2) b^2 + c^2 = 80 ...(eq2)
+
+(3) (b-a)^2 + c^2 = 89
+
+Subtract eq2 fromeq3: (b-a)^2 - b^2 = 89-80 = 9 => b^2 -2ab + a^2 = 9 + b^2? Wait use difference: (b-a)^2 + c^2 - (b^2+c^2) = 89-80 =9 => (b-a)^2 - b^2 = 9 => (b^2 - 2ab + a^2) - b^2 = 9 => -2ab + a^2 = 9 => -2ab = 9 - a^2 =>2ab = a^2 - 9 = 41 - 9=32 => ab = 16.
+
+Thus b = 16 / a = 16 / sqrt41.
+
+Similarly we can find a.
+
+So a = sqrt41; b =16/√41.
+
+Now compute b^2/√? Actually compute (a^2) = 41. Good.
+
+Now compute c^2 from eq2: b^2 + c^2 = 80 => b^2 = (16/√41)^2 = 256 / 41 = 6.1954? Wait 256/41=6.195. So c^2 = 80 - 256/41 = (80*41 - 256)/41 = (3280 - 256)/41 = 3024/41 =  z = 3024/41  = 73.756? 71? Let's compute: 4*41=164; 3044? Wait 3024/41 = 73.756? Let's precise: 41*74=3034. 41*73 = 2993. So 292? Wait 281? Let's compute precisely: 1040*3 = 3120? Wait 4*? Sorry to compute: 3024/41 = 3024/41 = 73.756? 71? Let's compute: 41*73 = 2993, difference 31. So 73.756? Actually 31/41 = 0.756. So 73.756. So b^2 = 44.073? Wait 43? Let's recalc: 34? wrong.
+
+But we can have still fractional: c^2 = 3024/41 = (48*21). Good.
+
+Now we have 4 unknowns: d, s, t.
+
+Now compute from eq: (4) d^2 + s^2 + t^2 = 89.
+
+(5) (d-a)^2 + s^2 + t^2 = 80.
+
+Subtract eq4 from eq5: (d-a)^2 - d^2 = 80-89 = -9 => d^2 -2ad + a^2 - d^2 = -9 => -2ad + a^2 = -9 => 2ad = a^2 + 9 = 41 + 9 = 50 => ad = 25. So d = 25 / a = 25 / sqrt41. R check: c=25/ sqrt41. Wait compute: 25/√41.
+
+If d = 25/a.
+
+Now we can solve for s^2 + t^2 from eq4: d^2 + s^2 + t^2 = 89. So c^2 + s^2 + t^2 = 89 (since diag a?). Actually 'c' stands for coordinate choosing but we used rad.
+
+Ok compute d^2 = (25/√41)^2 = 625/41 = 15.244? Let's compute: 625/41=15.2439. Then s^2 + t^2 = 89 - d^2 = 89 - 625/41 = (89*41 - 625)/41 = (3649 - 625)/41 = 3024/41. Interesting same value as 3024/41. So s^2 + t^2 = 3024/41.
+
+Now c^2 numeric: c^2(s terms) = 3024/41 again. Wait c^2 = 80 - b^2 = (80*41 - 256)/41 = 3024/41 indeed. So matches.
+
+Ok.
+
+Now we also have equation (6) CD^2 = (d-b)^2 + (s-c)^2 + t^2 = 41. Because ax.
+
+We need to incorporate this to ensure d-c, etc.
+
+Use these to compute s,c, etc.
+
+We know x= b, c, s, t.
+
+Equation (6) subtract triple:
+
+1) d^2= (25/√41)^2
+
+2) b = (16/√41)
+
+3) c is (unknown not coordinate). Wait we used variable c as radius of coordinate y? But we have c as coordinate of cosine. So not mixing. Let's be careful: let c = coordinate of x? Actually we set C as (b,c) with coordinates (b, c). So difference:
+
+We have (d-b)^2 + (s-c)^2 + t^2 = (combined). We'll put as c coordinate? Wait must differentiate between c_i (coordinate of C) and a_i (c coordinate previously). So rename: Use variable y2 as coordinates of triangle 2? We'll use:
+
+Coordinates: let:
+
+- Let A = (0,0,0)
+
+- Let B = (a,0,0)
+
+- Let C = (b, c,0)  where a= sqrt41; b=16/√41; c measured value from earlier.
+
+- Let D = (d, s,  t) where d=25/√41; s^2 + t^2 = 3024/41.
+
+Now we need satisfy eq (6):  CD^2 = (d-b)^2 + (s-c)^2 + t^2 = 41.
+
+Need to compute value of c (coordinate of C):
+
+We have (c)^2 = 3024/41.
+
+Now compute c^2 numeric: 3024/41 = 12? Wait 41*100=4100 remainder . So 3024/41= 73.756? Wait 3024/41 = 9? Actually 36*41=1476; 70*41=2870; 73*41=2993; 504 difference? Wait 34? Wait 2938? Let's compute carefully: 41*37=1517? No. Let's compute properly:
+
+We compute 3024/41. 41*73=2993 so 682 remainder 29? Let's compute 41*74=3034 > 3024, so a remainder 39? Wait 41*73= 2993 diff=31. So 31/41=0.756. So c^2 ≈ 73.756.
+
+Ok.
+
+Now compute (d-b)^2:
+
+Sum d: 25/√41; b: 16/√41; difference: (5/√41). So squared: 25/(41) = 25/41? Wait (5/√41)^2 = 25/41.
+
+Compute (s-c)^2: We have s^2 + t^2 - 2cs + c^2. But we don't know s or t individually.
+
+But we also have t^2 = maintain.
+
+Let total unknown needed to satisfy 41.
+
+We know (s-c)^2 + t^2 = s^2 + t^2 - 2cs + c^2 + t^2 = 2(s^2 - cs + t^2) + c^2?
+
+Wait check: (s-c)^2 + t^2 = (s^2 - 2cs + c^2) + t^2 = s^2 + t^2 + c^2 - 2cs.
+
+We know s^2 + t^2 = 3024/41 = c^2. So s^2 + t^2 = c^2. So this expression becomes c^2 + c^2 - 2cs = 2c^2 - 2cs. Because c^2 = 3024/41, along coordinate.
+
+Thus we can compute cd^2: (d-b)^2 = 25/41. So CD^2 = 25/41 + (2c^2 - 2cs) = 31? Wait 41? we need to equate to 41.
+
+Thus:
+
+25/41 + (2c^2 - 2cs) = 41.
+
+With c^2 = 3024/41. So:
+
+25/41 + (2*(3024/41) - 2cs) = 41
+
+Simplify: 25 /41 + (6048/41 - 2cs) = 41
+
+Combine: (6008? Wait 25+6048=6073). So 6073/41 - 2cs = 41. Multiply by 41: 6073 - 82 cs = 41*41 = 1681.
+
+Now 612? Wait compute: 6083? Let's compute: 511? Eh.
+
+Let's compute 407? We need to compute: 6073 - 82 cos? Wait 41*41 = 1681.
+
+So 6073 - 82 cs = 1681.
+
+So 82 cs = 6073 - 1681 = 4392.
+
+So cs = 4392 / 82 = 53.585? Let's compute 389? Let's compute better:
+
+39? Let's compute divide: 4392*1/82 = 5392? Wait 4392/82. 82*50=4100; remainder 292. 82*3=246 remainder 46. 82*3=246; remaining 46; 46/82=0.56098. So cs=53.545? Wait 54? too.
+
+Let's recalc: 4392/82 = 53.585. Yes that seems too high? But typical value 2c^2 ≈ 147.512? Actually sqrt? Let's compute: 23? Wait compute 2c^2: 2c^2 = 2*3024/41 = 6048/41 ≈ 147. Y. So cs=53.859 ~ 54. So maybe earlier equation wrong.
+
+We must ensure that c? Let's compute more precisely: We have 25/41 + 2c^2 - 2cs = 41. Multiply by 41: 25 + 82c^2 - 82cs = 41*41.
+
+But 82c^2 = 82*(3024/41)=52*3024? Wait 82/41 = 2. So 82c^2 = 2*3024=6048.
+
+Thus 25 + 6048 - 82cs = 1681.
+
+6048 + 25 = 6073.
+
+6073 - 82 cs = 1681 => 82cs = 6073 - 1681 = 4392. So yes with fraction.
+
+Now compute 32? Wait 86 * 50 = 4300; rem 92; 992 needed.
+
+Now 4392 / 82 = 53.57.
+
+Thus remaining: s = (cs)/c.
+
+Now compute c = sqrt(3024/41). cos 53.57? Let's compute 3024/41 ≈ 73.756. Then c= sqrt(73.756)= 8.595. So s = (cs)/c = 53.684 / a? wait compute: s unit=53.684/8.595 =6.244. Hmm.
+
+Now compute t^2: (s^2 + t^2) - s^2 = 3024/41 - s^2. So t^2 = 3024/41 - s^2. Let's compute s^2 approximate: 6.244^2 = 39.0? Actually 6.244^2=39.0? 6.2^2=38.41 plus 0.044 times 12.48? That would be 39.374? But can compute more precisely: if s= ( 94*41? Actually s inside product? Wait precise use expression.
+
+But now we want to compute volume of tetrahedron at point I and compute inradius r. Let's compute volume using volumes: We can compute the volume as above.
+
+We need to compute the area of faces.
+
+But we don't have coordinates of I maybe with cross product; maybe easier to compute volume using IF formula. But there is known formula for incircle radius r: Volume = (1/4)*r * sqrt(2). This seems too uncertain.
+
+Let's think of using geometry: The tetrahedron volume V can be expressed as (1/6)*det( ..., ) of vectors.
+
+But we can compute v via coordinates: E.g., choose four vertices A,B,C,D in 3D. Use coordinates above.
+
+Compute volume V = (1/6)|abc|? Wait cross product of three vectors AB, AC, AD times E.
+
+Compute vectors:
+
+AB = (a,0,0)
+AC = (b, c, 0)
+AD = (d,s,t)
+
+Given our numbers, we have cross product of AC and AD: AC × AD = ?
+
+Compute cross product via determinant:
+
+AC = (b,c,0)
+AD = (d,s,t)
+Thus AC × AD = (c*t - 0*s, 0*d - b*t, b*s - c*d)
+
+= (c*t, -b*t, b*s - c*d)
+
+Then dot with AB (a,0,0):
+
+AB · (AC × AD) = a * (c*t) + 0 + 0 = a * c * t
+
+So V = |AB · (AC·AD)| / 6 = |a c t| / 6.
+
+Thus V = (a c t) / 6 (since a=√41, c positive all coordinates positive). So t = (6 V)/(a c). But t unknown.
+
+Now from earlier formula for embedded surface: we need to find inradius r' using volume formula V = r * S_total? Actually for vegetables, we have: V = 1/3 * r * area_of_face with each face? Wait the volume given point can be expressed as sum of volumes of four pyramids: V = (|S1| * r1)/3 + .... For a pyramid with base area F and height h, volume = 1/3 base*height. So for face at distance r from I, the pyramid V includes four pyramids with base each face and height r. So volume V = r/3 * sum_{faces} area(L) = r * area_total / 3. Actually area_total is sum of areas of four faces. So V = (r * S_total)/3.
+
+Therefore d = r = (3 V)/S_total.
+
+Thus we need compute area_total to get that ratio.
+
+So compute area of faces: Let faces: 1) ABC area formula: ½|_cross| AC×AB? Let's compute using cross product.
+
+Compute AB = (a,0,0)
+
+AC = (b,c,0)
+
+Cross product: AB×AC = (a,0,0) × (b,c,0) = (0*0 - 0*c, 0*b - a*0, a*c - 0*s, but need properly: (0 - 0 = 0). So AB cross AC: (0,0,a*c). Wait plane XY? Actually AC × B? actual cross product AB×AC gives vector (0,0, a*c). Good.
+
+Compute area A_face ABC = ½|AB × AC| = (1/2) * a b? Wait two of area for parallelogram. So area(ABC) = (1/2) * |a| * |c|. But careful: base vector AB times AC (since vector AB × AC, they are in xy-plane). The cross product magnitude is |a* c|; equal to a*|c|. Since a cos? Actually cross product magnitude = |AB|*|AC|* sin(θ) where sinθ = 1 because AB and AC are perpendicular? Wait AB=(a,0,0), AC=(b,c,0), dot product AB·AC = a* b. So dot cross? Let's compute cross product magnitude: |(0,0, a* c)| = |a| * |c|. Verified. Good.
+
+Thus area_ABC = 0.5 * a* c. So area_ABC = 0.5 * sqrt41 * sqrt(3024/41 ) = 0.5 * sqrt(41)(32/?) Wait sqrt(3024/41) = sqrt(3024)/sqrt41? Actually sqrt(3024) = sqrt(48*63) = sqrt(48*63) = sqrt(48)*sqrt(63) = sqrt(48)*sqrt(63). sqrt(48)=4*sqrt3. sqrt(63)=3*sqrt7? Wait 63=9*7, sqrt=3*sqrt7. So 4*sqrt3 *3*sqrt7 = 12 sqrt(21). Multiply by 1/sqrt41: sqrt(3124)/√41? (But 3024/41 = 73.756...). But easier: area Elastic expression: area_ABC = (1/2) * sqrt41 * sqrt(3024/41) = (1/2) sqrt(3024). Because as sqrt(41) times sqrt(3024/41)= sqrt(3024). Indeed 1/2 sqrt(3024). So area of each face: Let's compute area = 1/2 sqrt(3024) *? Wait 1/2 sqrt(3024) = 0.5 * sqrt(3024). Let's compute sqrt(3024). Factor 3024 = 16*189? 16*189=3024. sqrt(S)=4√189. So area = 0.5 * 4√189 = 2√189. So area= 2√189. 189=9*21. 9√? Actually sqrt189=3√21, area = 2*3√21=6√21. Right.
+
+Thus area_ABC = 3√21?? Wait compute: 2√189=2* sqrt(53? Let's find 189=3^3*7? Let's compute: √189 ≈12.96. So area = 25? Actually a*? Let's compute quickly: 3024 = 24*126? Let's compute: 3024 = 24*126; sqrt 24 = 2√6; sqrt 126=√(6*21).= sqrt(6*21)= sqrt(126).? 12*sqrt(6). Not helpful.
+
+Better: Compute area_ABC = 0.5 * sqrt 3024 = 0.5 * sqrt(3024) = 0.5 * sqrt(3024) = 0.5 * sqrt(3024). 290? Eh simpler.
+
+But maybe easier is compute as sqrt? Use simplified factor: 3024=2^4*3^3*7. sqrt(2^4*3^3*7)= 2^2*3*√(3*7)=4*3*√21=12√21. So half distance: 0.5*12√21=6√21. Good. So area is 6√21.
+
+Area of ABC = 6√21.
+
+Let's find area of corner ABC: symmetrical? Another side maybe other triangles.
+
+By symmetry to sides AB and CD etc.
+
+But we also need P: area of each of the four faces.
+
+We'll compute area A via coordinates.
+
+Let’s compute numeric values using formula to verify.
+
+We have coordinates:
+
+- a=√41.
+
+- b=(16/√41)
+
+- c = sqrt(3024/41)
+
+Hence A,B,C defined.
+
+Similarly area of BCD has similar case? Let's compute BCD: side C-D; but we can compute by coordinates:
+
+Vectors: For each face, bring the three coordinates; we need area as at line perpendicular to triangle.
+
+Compute ABC area described above: A=1/2√(AB) etc.
+
+Wait we could also compute area of ACD: area of ACD = 0.5 * |(b - 0, c, t) cross? But easier: compute area of ACD using coordinates.
+
+Better compute general area of triangle with vertices and normal vector.
+
+We can compute triangle with vertices A,B,C. Use cross product of AB, AC: cross product as above giving magnitude a=√41*|c|.
+
+Thus area = 1/2 * |a*√(3024/41) * sqrt? Wait we computed:
+
+Compute a = sqrt41
+
+Compute |c| = sqrt(3024/41)
+
+Thus area = 1/2 * sqrt41 * sqrt(3024/41) = 1/2 sqrt(3024)
+= 3 sqrt(189). But we earlier had cross product 108/?. Wait 3 sqrt(189) = 3* sqrt(3*?? Wait 189=9*21; sqrt189 = 3√21. So area = 1/2 * sqrt(3024)=3√21? Wait 1/2 * sqrt(3024)=1/2 * 12√21=6√21. Yes earlier we had 6√21. Good.
+
+Check: area_ABC = 6√21.
+
+Now we can compute area of other faces.
+
+Compute ACD: vertices A, C, D. Use cross product: AC × AD? Actually vectors AC (b,c,0) and AD (d,s,t). Matrix from CD: CA? Actually we used earlier for cross product. So (AC × AD) cross product area: cross product = (c*t, - b*t, b*s - c*d). Then magnitude of cross product = sqrt( (c*t)^2 + (b*t)^2 + (b*s - c*d)^2 ). But area is that magnitude /2. So area ACD = 0.5 * sqrt(c^2 t^2 +  b^2 t^2 + (b s - c d)^2 ). But we can approximate c^2 t^2? Wait unknown.
+
+But we also have cross product? We used earlier to compute volume using triple multiplication with AB = (a,0,0). The cross product of AC × AD had component along our x with t; we used that to compute volume: AB · (AC × AD) = a * c t = (√41) * (something) * t. So t = 2? Actually we derive V from triple product.
+
+But maybe easier to compute areas via length of sides and not requiring coordinates. There is also formula for area of a triangle from lengths: cos theorem? Wait order.
+
+Better: Use triangles: points A,B,C,D.
+
+We might compute circle radius r using coordinate formulas.
+
+One might compute volume via formula:
+
+For tetrahedron with cross product of (b-a) x (c-a) etc.
+
+But we can compute area of tetrahedron with coordinates found earlier: Volume V = (1/6) | a c t | c? Wait earlier we concluded V = (a c t) / 6 because AB × (AC × AD) dot AB? Actually we computed AB · (AC × AD) = a * c * t. So V = (1/6) a c t.
+
+But we don't know t, but we can compute w maybe using the other relations because we know lengths of all edges and we can compute T: we can use formula from cross product magnitude to compute total volume. Because we have cross product of side vectors can compute area etc. But we might need to compute t using b,d? Wait we already have equational relations.
+
+Actually we can compute t directly via relation (s^2 + t^2) from earlier. But we had side lengths: d^2 + s^2 + t^2 = 89. We already had s^2 + t^2 = 3024/41. So d^2 = 588? Wait we computed d^2 = 625/41 = 15.244? Wait we found earlier d^2 = 625/41. So distance AD^2 = d^2 + s^2 + t^2 = 89. So that matches.
+
+Thus d^2 + s^2 + t^2 = 44? hmm.
+
+But we get s^2 + t^2 = 3024/41 ≈ 73.76. So AD^2 = 179? Wait 13? Let's compute again: d^2 = 625/41 = 15.244. Add s^2 + t^2 = 73.756 => sum = 89. Good.
+
+Thus H?
+
+Now the angle between AB and AD? Actually we cannot compute easily.
+
+But we can compute absolute? Has we computed f?
+
+We might find t from equation with same values.
+
+We have solved earlier s^2 + t^2. We can find t^2 from step: s^2 + t^2 - s^2 = t^2. We also have from eq (d - b)^2 + (s - c)^2 + t^2 = 41. That gives a way to find t^2 as well.
+
+We have earlier derived expression for s^2 + t^2 + c^2 - 2cs = 167 41? Wait we found.
+
+We can possibly solved for s^2 + t^2 = s^2 + t^2 unspecified. But we can find t exact using c? we know s^2 - s c? Actually we had certain relation: (s - c)^2 + t^2 = 41 - (d-b)^2 = 41 - 25/41 = (40*41 + 16)/41? Wait 41-25/41? Let's compute: 41 - (25/41) = (1681 - 25)/41 = 1656/41.
+
+Hence (s - c)^2 + t^2 = 1656/41.
+
+Hence we can solve for t when we also know s^2 + t^2 = 3024/41.
+
+We have two expressions: (s - c)^2 + t^2 = sqrt relation?
+
+Let's express:
+
+(1) s^2 + t^2 = 3024/41.
+
+(2) (s - c)^2 + t^2 = (s^2 + c^2 - 2cs) + t^2 = 1656/41.
+
+Simplify dividing by 41: s^2 + t^2 + c^2 - 2cs = 1656/41.
+
+So substituting (1) gives: 3024/41 + c^2 - 2cs = 1656/41.
+
+Therefore 2cs = 3024/41 + c^2 - 1656/41 = (115? Actually 3024-1656=1368). So 2cs = 1368/41 + c^2.
+
+Factor c^2? c^2 = 3024/41. So 2cs = 1368/41 + 3024/41 = 4392/41 = 2*(2196/41)? Wait 216? Actually 4392/41 = 409? Let's compute: 1368+3648? Wait CAL.
+
+Let's compute: 1368/41= 33.415? Let's compute 3024/41 =  FL.
+
+So we have 2cs = 1368/41 + c^2 = 1368/41 + 3024/41 = 4392/41.
+
+So cs = 2196/41.
+
+But earlier we had earlier cs = 53.685? Wait we got 53.684; compute: 2196 / 41.
+
+Compute 2196 / 41 = 53.512? Let's compute: 41*50=2050. 41*53=2173. remainder 23. 23/41=0.56. So 53.56 quite close to earlier 53.585. So we approximate equality, consistent.
+
+Now compute s = (cs)/c.
+
+c = sqrt(3024/41). So s = (2196/41) / sqrt(3024/41) = (2196/41) * sqrt(41/3024) = (2196/ sqrt(41*3024))? Actually compute value.
+
+Let c sqrt(3024/41) = sqrt(3024^2? no). Let's compute compute 2196/41 = 3392/?? Wait 2196/41 gets 3? Wait 2196/41 = 69? 41*54 = 2214; 53 = 2173? Actually 41*54=2214; difference -18; 54 is too high. 83? But we already computed earlier. Wait dividing 2196 by 41:
+
+- 41*50=2150 remainder 46.
+- 41*53=2173 remainder 23. So 3? Actually 41*53 = 2173 remainder 23. So 53 remainder 23. So *so 2196/41 simplifies to 2196/41; cannot be simplified. Instead: s = (2196/41)/(sqrt(3024/41)) = (2196/41)* sqrt(41/3024) = 2196 sqrt(41)/(41 sqrt(3024)). That may simplify? Factor 2196= 3*732? 226 positive. 2196 factor: 3*732 = 3*4*183 = 12*153? Or 266 ≡ 2196? Actually 1716? Let's factor 2184? Let's factor.
+
+2196 factorization: 2196 / 12 = 183. 183 *12 = 2196. So 2196= 2^2*3^2 * 61? Wait 12 = 2^2 *3. So 2196 factorization: 2196 = 2^2 * 3 * 183? Actually 3? 183 = 3 * 61? 183 = 3*61. So 2196 = 2^2*3*3*61? 2^2*3^2*61 = 4*9*61=31? Actually 4*9=36; 36*61=2196. Yes 2196 = 2^2 *3^2 *61.
+
+Now compute sqrt(3024) = dividing: 3024=2^4 *3^3 *7 = 16*27*7=3024. sqrt(3024) = 2^2 *3 * sqrt(3*7). We'll compute sqrt(41).
+
+We might simplify factor.
+
+Let's compute s and t intimately using geometry: Since s^2 + t^2 = 3024/41 = 73.76.
+
+Now, we also have (s - c)^2 + t^2 = 1656/41. This gave equation for s^2 - 2cs.
+
+Our earlier equation gave: 2cs = 938? Wait prob earlier. But we can compute from that step.
+
+Compute s = (2196/41) / c.
+Compute s: s = (2196/41) / sqrt(3024/41) = (2196/41) * sqrt(41/3024). Simplify: 2196 = 36*61. 3024 = 16*3*3*7? Wait 3024=2^4*3^3*7= 16*27*7=64*42? Let's compute: 272? 802 presumably?
+
+But easier: S is at point (22? Actually we can compute approximate numeric: c= sqrt(3024/41)= sqrt(31*? 31? Wait maybe compute precisely: 3024/41 ≈ 73.756; sqrt 73.756 ≈ 8.595.
+
+So s = (2196/41)/(11? Actually 2196/41=53.506? Wait 2196/41 = 5? Actually 2196/41 = 53.506. So s=53.506 / 8.595=6.232. So ~6.232.
+
+Now compute t^2 = 3024/41 - s^2 = 73.757 -6.232^2=73.757 - 38.861=34.896.
+
+Thus t^2=34.896. Then t = sqrt(34.896)=5.91.
+
+Now use powers.
+
+Area of ACD: faces using cross product with sides and base length.
+
+From foot of the earlier: cross product: AC × AD = (c*t, -b*t, b*s - c*d). So magnitude part:
+
+For ac? Let's compute magnitude:
+
+c*t = c * t.
+
+Compute c = sqrt(3024/41) ≈ 8.595.
+
+t ≈ 5.91.
+
+So c*t ≈ 50.85.
+
+b*t: b = 16/√41 ≈ 16/6.403=2.5. So b*t ≈ 2.5 * 5.91 ≈ 14.78.
+
+b*s - c*d: compute b*s =9? Wait compute: b=2.5; s=6.232 => product 15.58.
+
+c=d? Actually c*d maybe used, but c*d is same as earlier? Let's compute c*d: c ∝ sqrt(3024/41) ≈8.595; d=25/√41 ≈ 3.905. c*d ≈ 33.44.
+
+Now compute difference: 15.58 - 33.44 = -17.86.
+
+Square sides: (c*t)^2 ≈ 50.85^2=2585. (b*t)^2 ≈ 14.78^2 = 218.4. (b*s - c*d)^2 ≈ 17.86^2=318.9. Sum of squares = 2585+218.4+318.9 = 3122.3. sqrt of that sqrt ≈ 55.86? Wait we have cross product magnitude sqrt 3122.3 but we may combine via formula.
+
+But we previously had s^2 + t^2 from earlier compute. That might not produce area of ACD. But we might compute area ACD relative to base area. For a triangle with side A: compute area of ACD with base AD? But anyway.
+
+Let's compute area ACD O: 0.5 * sqrt( (c*t)^2 + (b*t)^2 + (b*s - c*d)^2 ). But we may compute numerator from cross product: a * t * c? compute area using base AB & AD? Wait we can compute area ACD via coordinates: base area formula: PRB? Actually there are two side lengths known: Opposite edges: we have AB = sqrt41 <-> CD same; but we just need area of ACD.
+
+Area of ACD is not easier to compute.
+
+But maybe we can compute S_total via known formula: For tetrahedron with all assignment of opposite edges equals ... maybe S_total = 2 * sqrt( area of each pair?). Actually we can compute as group of all faces via formula? We can compute area of face BCD could be computed by using lengths: BCD sides lengths: B-C (approx 9.43?) maybe? Let's compute: BC = sqrt89 ≈ 9.372. CD = sqrt41 ≈ 6.403. BD = sqrt80 ≈ sqrt80=8.944. So BCD triangle with sides sqrt89, sqrt41, sqrt80. That is a triangle with side lengths? Actually check connect: B to C is 9.372; B to D is 8.944; C to D is sqrt41 (~6.403). So area of triangle BCD with sides sqrt89 9.372 and sqrt80 8.944 and sqrt41 6.302. We can compute area using the Brahmagupta formula? For triangle, we can use semiperimeter ab? Actually we can compute using  Heron's formula. For triangle BCD: side lengths: BC, CD, BD? Wait we had CD=√41; BD=√80; BC=√89. So let's compute: sides a=√89 (approx 9.433), b=√80 (8.944), c=√41 (6.404). Use Heron's 3 side.
+
+Compute (a+b+c)/2.
+
+Compute approximate: c14? Let's compute: 
+a^2=89, b^2=80, c^2=41. Sum=210. sqrt.
+
+But careful using modular; we should compute area exactly.
+
+Use coordinates? Could derive formula via differences? But not necessary.
+
+But maybe we can compute S_total via known formulas: For faces with opposite sides equal maybe compute area of triangle based on a,b,c? Wait maybe each face shares a pair of opposite edges: AB and CD => same length. For pair of opposite edges equal, we can find other side of triangle with adjacent edges? Let's compute AB = √41. For face ABC (linear). We should compute area of ABC: we had two sides AB and AC? Actually AB=√41, AC=√80 (makes imaginary). Also AC=√80, BC=√89. Because AB equals distance from C to D? Wait AB=√41, AC = √80, BC=√89. All edge lengths triple. So to compute area ABC, we can use Heron formula: sides a= sqrt41, b= sqrt80, c= sqrt89. The standard formula for a tetrahedron with side lengths: AB=√41, AC=√80, BC=√89. Then we can compute area ABC using Heron formula:
+Let s = 0.5*(sqrt41 + sqrt80 + sqrt89). Then area is sqrt[s(s-a)(s-b)(s-c)].
+
+We can compute exact square. That might work for all faces, but we need explicit rational for each face. We can compute area for each triangle side squared known: The sides lengths correspond to each face: For triangle ABC, number sides sum as above. For triangle ABD, says sides AB=√40? Because AB also  √41, AD=M? Wait AB=√41, BD=√80? Actually for ABD: Edges: AB=√41, AD=√89, BD=√80. So same triangle with all sides equal but found: AB=√41, BD=√80. That is same as ABC. The same triangles are equilateral? Not exactly. But all sides sum to the same as ABC occurs because each face has same set of edges? Actually the triangle sides for each face: each bisect edges same: Wait list of 4 vertices: AB, AC, AD, BC, BD, CD. All faces are AB-AC & AB-AD? Wait consider each face: ABC includes edges AB, AC, BC. ABD has AB, AD, BD. ACD has AC, AD, CD. BCD has BC, BD, CD. So each face has edges: AB - AC - BC; AB - AD - BD; AC - AD - CD; BC - BD - CD. This yields each triangle with each set of three edges. The edges are independent of each other: AB=√41 is line with chord? There is not many example.
+
+We need to compute all four face areas; each area is an expression we computed.
+
+Let's compute we can use Heron's formula for positive. So area of face ABC (a,b,c as above). Compute area = ?
+
+Better find area exactly using squares of lengths.
+
+Let s = 0.5*(√41 + √80 + √89). Square the area? But easier: Let a^2,b^2,c^2 values: x=41, y=80, z=89. Then compute area using formula for a triangle with sides sqrt(x) sqrt(y) sqrt(z). Let's examine it yields area^2 = (3( x(y+z) + y(z+ x) + z (xy + ???) ??? Wait we need general formula.
+
+But we can compute area using Heron formula:
+
+Area^2 = sa(ss-a)(s-b)(s-c). Since only three side lengths squared, but the extension yields rational expression: define squares of absolute differences. Could compute using numeric.
+
+Let base a,b,c same for all faces? But need numeric.
+
+But we can compute area formulas individually: Use geometry to compute area_BCD: For faces with base edge lengths, we don't need to compute across all. Provide numeric value for each, then sum S_total.
+
+We must compute radius r = 3 V / S_total.
+
+But we already have V: we can get V from coordinates? But the volume V may also use volume maybe as E expression: Let V = sqrt( something) overloaded? There's formula for volume of tetrahedron given sides in terms of Cayley-Menger determinant.
+
+We can compute using formula a = 81 ? Actually the volume squared is known: But we can compute V via numeric maybe.
+
+But solving for R is simpler: Use known formula for radius of a tetrahedron with all opposite opposite edges equal.
+
+Let's attempt to compute area of a face all: we can compute each area exactly function of squares of lengths.
+
+Compute area of pair: using law of cos? Let's compute for other faces but sample is symmetrical.
+
+Actually let's compute area ABC: we have a=√41, b=√80, c=√89. Simpler: compute all in terms of squares: Let a^2 = 41, b^2 = 80, c^2 = 89. The volume is an exponential of lengths: we can compute using analytic formula: Volume of tetrahedron with coordinates unknown. Hmm.
+
+But we can compute volume by using coordinates, we previously derived V = (a c t)/6 = ? Wait compute earlier: a = sqrt41, c = sqrt(3024/41), t = 23? Wait physically t = ?
+
+But we might not need t; we can compute volume via formula for volume and the inradius r: R = 3 V / S_total. We can compute V and S_total both over the same area of side length. This leads to earlier result: r = 300/??? Let's compute numeric A to guess.
+
+Let's find coordinates more explicit: Let's compute precisely using rational values: maybe we can compute V using coordinates of sphere coordinates due to earlier solving. Let's use components rational.
+
+Compute distances:
+
+From equation (b - a)^2 + c^2 = 89.
+
+Plug: a^2 = 41; b = 16/√41. So b^2 = 256/41. So we have (b - a)^2 = (b^2 - 2ab + a^2). But we already used difference to find ab; but we can compute b^2 - 4 but b is (16/√41). However b^2+d? But we can compute numeric numeric.
+
+Let's compute a expression.
+
+Given a = sqrt41 (unit √41). So a^2 = 41. Similarly, b*2a = 32? Actually we derived that 2ab = 32. So ab = 27? Wait, ab = 16? Let's confirm. The known relation: 2ab = 32, so ab = 16. So b = 16 / r? Actually a and b = 16/√41: a = sqrt41, b = 16/√41. So ab = sqrt41*(16 1/√41) = 16. Good value. But we derived earlier a=√41; b positive; computed product: 16.
+
+Now we hold that a^2= x +? Wait we can compute side lengths? Wait we have c = sqrt(3024/41). 303? Actually.
+
+But we might compute volume via coordinates: compute V = (a c t) / 6. The unknown t might be found via derived formula directly maybe through cross ratio product. Wait earlier we derived expression for t from equation: from cross product: AB × AC × AD. We can compute numeric expression to compute p.
+
+Let's compute expression for xyz get t.
+
+Let's compute t lengths maybe using decimal from earlier.
+
+We have:
+
+Compute y= a = sqrt41 ≈6.403. c = sqrt(3024/41) = sqrt(73.76) = 8.595? Actually we computed earlier: Wait 73.76 not negative but same. There may be missing term: 17? Wait compute c * t? Wait compute cross product.
+
+But we can compute t using ??? Wait we can compute t^2 derived earlier: t^2 = (303? I used 365? But we can compute derivative of t coordinates more equal to 2=156? Let's check by ?
+
+Let v = intersection of u? The coordinates maybe didn't give t.
+
+Alternatively we can use formula for volume and incircle radius via formulas:
+
+We have v = (r * S_total)/3.
+
+Where r depends on the total area of all triangles determined by the circumscribed sphere of inscribed sphere? Wait we can compute r by obtaining distances to each side of tetrahedron with base? That is 1.
+
+But we can compute via V = (r * S_total)/3. We earlier derived that from hyperbolic expectation? Let's confirm again: For tetrahedron with incenter, its volume can be expressed as sum of volumes of 4 pyramids each with height r and base area: we can cut along a point I. That yields partial volumes: Hie pyramids: each pyramid V = i + (r^3 * S_i) /?? Wait we need base area of each face. But the volume at I is also V = (some ratio of side lengths). For a convex body. In tetrahedron, each face is at distance R along a perpendicular; hence volume from a point inside a plane is r times area of base face, but we need to check multiplication relation with angles.
+
+But at I, each point is interior but not necessarily a simple average. Wait the intersection of the two sets of triangular pyramids? Actually each face is a plane; the set of apex I at distance r on that plane gives height r. So volume of each pyramid is the area of the face times the perpendicular distance r. So volume we get sum of four pyramids: times r each? But each pyramid is a tetrahedron with its apex at vertex A? Wait need to confirm: The 'pyramid' includes those a tetrahedron with base = ABC, skin apex oriented at A, height to BH? Eh.
+
+Better to confirm: For a tetrahedron with incenter I, distances to each plane are equal: So I is equidistant from the plane of side L. The volume from I is not a tetrahedron with same base; but we can determine that each face is a plane; for the tetrahedron with an apex at point A we have the tetrahedron K1? But we can compute V by dividing 4 pyramids with h= r interspersed. But we can think: For tetrahedron with entrance at I, consider the opposite vertex to A? Actually base A? If we consider the tetrahedron formed by acts A, B, C, and I. Then each face is a triangle with base area? The tetrahedron is spanned by vertices A, B, C, I. That's the volume of the tetrahedron with base ABC and apex I. That volume equals area(ABC) * d(I, plane ABC)/3 = (1/3) * area(ABC) * dI. But dI is equilibrium, function is r. The volume of that tetrahedron as well as the others? Wait all these small tetrahedra share one side length; so volume V = 1/3 * r * ( area(ABC) + area(DEF) + area(ADE?) etc.
+
+But other faces also will produce top volume V = 1/3 * p * sum of 4 arms? Actually yes we can compute: S_total = sum of areas of face triangles, hence V = r * S_total / 3. Good.
+
+Therefore r = a*b? Wait compute formula for area for each face: we know the base area for each face but we can compute area: For each face we can compute area from area of triangle with side lengths squared maybe. Because all sides of one face? Wait for each triangle.
+
+Combining numbers: We only need area of each "ABCD".
+
+But we know edges? For each face: area: AB_triangle = sqrt(??).
+
+Let coordinate AB: not needed.
+
+But we also sum of all four area = ?
+
+We know each face's side lengths: We'll compute.
+
+Let we define edges a, b, c, d, e, f indicating maybe a Sides with AB=√41, AC=√80, AD=√89, BC=√89, BD=√80, CD=√41. So they can be expressed as:
+
+Compute area at face ABC: Use these symmetrical sides.
+
+But we might use linear area.
+
+Better: Let's compute a = √41, b = √80, c = √89.
+
+Therefore area of each face: Because each face's side lengths are these three but we keep each face in same set: ABC, ABD, ACD, BCD. Indeed the sides we use: for each pair we compute area of unknown a,b,c. Wait face with sides AB and AC and BC. For each side: At first treat to compute each face's area: Let's compute squared area via Heron's formula: For triangle with sides a,b,c with a,b,c squared. Let's compute area^2 = p = (a^2 + b^2 + c^2)^2 - 2*(a^4 + b^4 + c^4))/16? Actually formula: Heron's formula: opposite to area squared area^2 = p = (p)(p-a)(p-b)(p-c). Derived by expression for semiperimeter. But we can also express denominator: Let's derive: area = (1/4)*sqrt( (a^2 + b^2 + c^2)^2 - 2(a^4 + b^4 + c^4) ) from same.
+
+Yes to compute area, we have formula for area of triangle with side lengths a,b,c: S^2 = (1/16)*(2(a^2b^2 + b^2c^2 + c^2a^2) - a^4 - b^4 - c^4). Because D is right? Let's confirm: formula 16S^2 = 2 a^2 b^2 + 2 b^2 c^2 + 2 c^2 a^2 - a^4 - b^4 - c^4. That is correct.
+
+Use r^2 = product.
+
+Plug definitions to compute S^2.
+
+Compute numeric values: a^2 = 41, b^2=80, c^2=89. So compute s^2 = 2*(41*80 + 80*89 + 89*41) - 41^2 - 80^2 - 89^2 all divided by 16? Wait 16S^2 = 2(a^2 b^2 + b^2 c^2 + c^2 a^2) - a^4 - b^4 - c^4. Let's compute.
+
+Compute a^2 b^2 = 41*80 = 3280.
+
+Bi^2 c^2 = 80*89 = 7120.
+
+c^2 a^2 = 89*41 = 3649.
+
+Sum: 3280+7120+3649= 14049.
+
+Compute a^4 = 41^2 = 1681.
+
+b^4 = 80^2 = 6400.
+
+c^4 = 89^2 = 7921.
+
+Sum: 1681+6400+7921 = 16002.
+
+So 16S^2 = 2*(14049) - 16002 = 28098 - 16002 = 12096.
+
+Thus S^2 = 12096 / 16 = ?
+
+Compute 12096/16 =12096/(2*8) = 12096/32= 378. For 16? Wait 12096/16 = 756? Let's compute: 12096/8=1512; /2? Wait 12096/16 = 12096/2/8 = 6048/8? Actually 12096/2=6048, /8=756. So S^2 = 756.
+
+Thus S = sqrt(756) = sqrt(9*84). Since 84=3*28? Wait 213? Let's compute 756 = 9*84. But 84=4*21. So 756=9*4*21 = 36*21. So S = sqrt(36*21) = 6 sqrt(21). Good - we found earlier. Good.
+
+So each face area is 6√21.
+
+Thus S_total = 4 * 6√21 = 24√21.
+
+Now a tetrahedron with incenters: For each face we know distance from the opposing vertex is r? Wait we earlier computed that V = 2/3 r? We used S_total. We derived surface area of each face. Then S = 24 sqrt21. So total area is 24√21.
+
+Volume from this tetrahedron: L = ?
+
+We need volume.
+
+But still unknown.
+
+But relationship: For each face, but height from I to that face equals r, but we have unknown 4 * area of each face. The height from I to each face is constant.
+
+Thus volume V = 1/3 r * S_total = 1/3 r π? Wait we have SA ensures that. So yeah V = (1/3) r * S_total (since each shape has length 1/3 p area)...
+
+Thus r = (3 V)/S_total = ?
+
+So we need V in terms of known side lengths: maybe expresses as sqrt( a^2 b^2 c^2 + ... )? Wait previously we derived coordinates of the tetrahedron from which height V = adt? Wait check.
+
+Better to compute volume using formula: V = 1/6 * anesthesia area of AB, AC, AD; from triple product= (1/6)* (1/2)*d? Actually  v = (|AB × AC × AD|)/6.
+
+We've determined AB·(AC×AD)= a*c*t.
+
+So we need t.
+
+We also know cross product magnitude squared; we can compute t by cross product with B? Wait formula: We can compute |(AC × AD) × AB|? Actually compute ∥=∥AB × (AC × AD)∥. But we have AB ∧ (AC × AD) we already computed is a c t. But earlier we built cross product 8, etc.
+
+But we also know maybe we can compute t via other formula using C-plane coordinates maybe with s.
+
+Equation from OB? We derived using earlier squares: t^2 = 9516? Wait but we have earlier. Let's compute t^2 exactly.
+
+We earlier found t^2 = 452? Wait compute exactly: t^2 = 3024/41 - s^2.
+
+We found s^2 from earlier giving t^2 approximate 34.896 but we need rational.
+
+Use formulas for s^2 and t^2.
+
+Better: Use that we have relations that let us compute cos angle between these vectors.
+
+But we can compute t^2 from earlier expression derived from (d - b)^2 + (s - c)^2 + t^2 = 41.
+
+We derived s^2 + t^2 + c^2 - 2cs = 1656/41.
+
+Given s^2 + t^2 = 3024/41 => we can get base minus cs -? Actually compute:
+
+c^2 - 2cs = 1656/41 - 3024/41 = (1656-3024) /41 = -(1368)/41.
+
+Domain c^2 - 2cs = -1368/41 => 2cs = c^2 + 1368/41.
+
+But we can solve s and c.
+
+Compute c^2 = 3024/41.
+
+Thus 2cs = 3024/41 + 1368/41 = 4392/41.
+
+Hence s = (report earlier) 2196/41 / c. So s = (2196/41)/ sqrt(3024/41) -> s' as above.
+
+Now compute s^2 from that: s^2 = (2196^2)/(41^2) * 41/3024 = 2196^2 / (41 * 3024). Compute numerator: 2196^2 = might compute 2196*2196.
+
+Compute: 2196*2196. 2196*2000=4,392,000. 2196*176=2196*200-? hard.
+
+Let's compute a simpler:
+
+We can compute s^2 with equation for s^2 + t^2 and s^2. So t^2 = s^2 + t^2 - s^2 = (2695?).
+
+Compute s^2 using formulas. Let's compute s^2 with very high accuracy.
+
+Compute numerator: 2196^2 = (2196*2196). 2196*2000=4,392,000; 2196*196=218? Actually our multiplication: 2196*999? Wait we compute:
+
+2196*199=2196*200-2196=439200-2196=437, I guess incorrectly.
+
+Let's compute using 2196^2 => (2200 - 4)^2 = 2200^2 - 2*2200*4 + 16 = 4,840,000 - 17,600 + 16 = 4,822,416.
+Wait need compute 2196^2 = 4,822,416. Good.
+
+Now entire expression s^2 = 4,822,416 / (41*3024).
+
+Now compute denominator: 41*3024 = 41*3024 = 41*3000 = 123,000; +41*24= 984 => 123,984.
+
+Now compute s^2 = 4,822,416 / 123,984 = ?
+
+Compute 76471/198? Actually 12299? Wait.
+
+Now divide: 123,984 * 30 = 3,719,520. remainder 1,102,896.
+
+123,984 * 50 = 6,199,200.
+
+We want 24,? Let's compute 123,984 * 3 = 371,952; earlier 123,984 * 23 = 2,852,? Actually compute precisely: 123,984 * 40 = 4,959,360. remainder 4,822,416 - 4,959,360 = -136,944 > negative. But dividing other symmetrical: 123,984 * 39 = 4,831,? Actually 4,959,? Wait:
+
+Compute 123,984 * 39 = 123,984*40-123,984. = 4,959,360 - 123,984 = 4,835,376, remainder 4,822,416 - 4,835,376 = -12,960? Wait we overshoot. So we need S^2 = 4,822,416/123,984.
+
+Now divide: 123,984 * 38 = 4,711,?? compute: 123,984*38=4,711,? 123,984*30=3,719,520; 8*123,984=991,872. 75? Wait 3,719,520 + 991,872 = 4,711,392. Good remainder = 4,822,416 - 4,711,392 = 111,024.
+
+Now 123,984*0.9 ~ 111,585 so close. So 3?.
+
+Let's compute 123,984*0.894=1310? Eh.
+
+Compute precisely:
+
+124k*0.894=111, hmm for 0.894? Actually 123,984*0.894 = 123,984* (894/1000) = 123,984 *894 / 1000 = 110,? Wait compute. Since we look for fractional ratio 110,? Actually 123,984*0.894 = 110,? Actually 123,984*0.894 = (123,984* (894)) /1000. We'll compute 123,984 * 894 = 123,984*900 - 123,984*6 = 111,585,600 - 743,904 = 110,841,696. Divided by 1000 gives 110,841.696. Now 111,024 - 110,841.696 = 182.304. So between arcs. Wait 120? Good. So s^2 = (4,822,416 - 4,711,392) = 111,024 => 111,024/123,984 ~ 0.894? Let's compute ratio 111,024 /123,984 = ?
+
+Divide by 124? Actually 123,984*0.894=111,? Wait 111,024? Wait compute 123,984*0.894=111,? earlier. We'll compute exactly: 123,984*0.894 = 110,? Let's compute: 123,984*894=108? Wait 123,984*894 = 123,984*800 + (123,984&? ).
+
+Compute 123,984*800 = 99,187,200; add 123,984 * 90 = 11,158, Z=120?  Table: 123,984*90 = 11,158,? Actually compute 123,984*9= 1,115,856. times 10? oh no.
+
+However, this is too messy.
+
+Simplify: Let's compute s^2 rational expression by dividing, find cos.
+
+But maybe easier to compute ratio: Note the relation: s^2 + t^2 =5; Wait s^2 + t^2=333? Wait we earlier computed m.
+
+Thus we must find t^2 at a purely fractional value.
+
+Actually we can compute t^2 exactly using t^2 = (s - c)^2 + t^2 + s^2. Actually our expression for (s - c)^2 + t^2 as above: 1656/41.
+
+Thus t^2 = 1656/41 - (s - c)^2.
+
+Thus t^2 = (1656/41) *? Actually we had s^2 + t^2 = 3024/41. Great.
+
+Let's compute t^2 = (1656/41) - (s - c)^2.
+
+But we might also compute s^2 and a expression for s-c: r? Wait.
+
+Simplify: s - c = (ac)/?  maybe.
+
+We can find s - c using simple expression: derived from earlier we had 2cs = (3024 + 1368)/41 = 4392/41. So rewriting of s and c: s/c = 2196/(41* sqrt?), Actually 4416?
+
+ Determine s/c difference? Let's compute c^2 - 2cs = -1368/41 -> s = (c^2 + 1368/41) / (2c). But maybe.
+
+But p= s with c known? Another relation: s^2 + t^2 = 3024/41.
+
+Let us compute s^2 = ?
+
+We can express s^2 = (c^2 - 2cs)^2 +? This is: The unknown: s^2 = ((c^2+1368/41)/2c)^2? Wait equals (c^2 + 1368/41)^2 / (4c^2). But c^2 = 3024/41; b.
+
+c^2 + 1368/41 = (3024 + 1368)/41 = 4392/41.
+
+Alternatively, we can compute s^2 from earlier formula: s^2 = c^2 -2cs + c^2 = (c - s)^2?? Not.
+
+Better: Let's compute s^2 using 2cs value and s^2: 2cs = 4392/41. This along with c = sqrt(3024/41). Let's denote c>0. Then s^2 = (2cs)^2 / (4c^2) = (492? 4392 squared / (4*30)?? Let's compute: 4 * c^2 = 4 * (3024/41) = 12096/41. So s^2 = (qr?) Wait compute numerator.
+
+Let p = 44 2196?
+
+But expression exactly: s^2 = ( (2cs)^2/(4c^2) ) = ( (4392/41)^2 ) / (4 * (3024/41) ) = (4392^2 / 41^2 ) / ( (3024 * 4)/41 ) = 4392^2 / 41^2 * (41/(3024*4)) = flow.
+
+Compute: 4392^2 = ?
+
+4392^2 = (4010+382)^2 = 4010^2 + 2*4010*382 + 382^2.
+
+Compute: 4010^2=16,080,100? Actually 4010^2 = 4010*4010; 4000*4000=16,000,000; 2*4000*10 + 10^2? Actually 4000*10=40,000? Eh.
+
+Simplify: 4392^2 via 4392^2 = (4,383? maybe easier). Use formulas: Actually compute 4392 = 4,000 + 392. But 4039? wait.
+
+But we can compute using ability: Since 4392 = 44*99? Wait 44? Actually 4392 = 44^2? Eh.
+
+Let d = 44*99? (1) 44*99 = 4356; difference 36 => 44^2? Actually compute a difficult.
+
+But we can compute s^2 using known formula: find a rational numeric: s^2 = (4392^2)/(12,288? Wait 4112? Eh.
+
+Compute 44? Let’s compute numerator anyway: 4392^2.
+
+Compute 4392^2 = (4392 *4392). 4000*4392=17,568,000. 392*4392? 4000*4392? Actually 4392 * 4000 = 17,568,000.
+
+4392 * 392 = 4392*400=1,756,800-4392*8=4392*8=35,136? Actually 4400*8=35,200; plus 8? Wait compute: subtract 4382? But anyway approximate.
+
+4392*392 = 4392*400-4392*8 = 1,756,800-35,136=1,721,664.
+
+Now sum: 17,568,000 + 1,721,664 = 19,289,664.
+
+Thus 4392^2 = 19,289,664.
+
+Now denominator 41^2 * 4 * 3024? Wait but we had product sqrt etc.
+
+But we can compute actual numeric using rational: Instead compute using base formula for s^2 via earlier formulas maybe bigger.
+
+Let's compute sem math.
+
+Let's compute s^2 numeric: s^2=13. ?
+
+Wait earlier we approximate s^2 about (6.233)^2 ~ 38.86. Because s=6.233, so s^2 ~ 38.83. But we can compute using formula.
+
+But we might not need s^2.
+
+But we need t^2.
+
+But a plane product: t^2 = 3024/41 - s^2.
+
+Let's compute using rationalization: s^2 = 169? We derived from earlier formula: s^2 = (4392^2)/(4*301? Wait compute.
+
+Let's compute direct: s^2 = 2196^2/(41 * 3024). Wait earlier also s^2 and t^2 are the same for that ratio? Let's compute s^2 using that ratio.
+
+Let s^2 = 2196^2 / (41*299? Actually 215? Wait we will compute precisely:
+
+But we didn't double-check d=??
+
+Actually the ratio we used earlier: s^2 = (2196^2)/(41*3024) = 4,822,416 / 123,984. Then compute numerator: 4,822,416; denominator: 123,984.
+
+Therefore s^2 = 4,822,416 / 123,984. Let's compute this ratio:
+
+Divide numerator by denominator without decimals:
+
+approx 4,822,416 / 123,984 ≈ 4,82,? Let's compute using digits.
+
+We can compute 123,984 * 38 = 4,711,392.
+
+Divide difference 19,823,? Wait 4,822,416-4,711,392 = 111,024.
+
+Now N = 123,984.
+
+Thus r = 38 + 111,024 / 123,984.
+
+Compute 111,024 /1? Actually compute 111,024 / 123,984 = 0.894? Need check 111,024 / 123,984 = 0.894. Good.
+
+Thus r = 38 + 0.894 = 38.894. So s^2 ~ 38.894.
+
+Now t^2 = 3024/41 - 38.894 = 73.753? Wait compute all.
+
+Compute: 3024/41 = 73.753, minus s^2 approx 37? Wait we do.
+
+But better compute constant: s^2 = 38? Wait we earlier derived 37? But s^2 ~ 38.894.
+
+But we can compute denominator: 3024/41 = 73.7535; Let's compute numeric: 41*73 = 2993 difference 31; 31/41 = 0.756m. So 73.756; So s^2 = 38.894? Actually we mis computed earlier.
+
+Compute s^2 precisely: 4,822,416 / 123,984.
+
+We can compute using high precision: 198*? Because 40000/1000? not.
+
+We can compute dividing by 121? Let's convert numerator and denominator as:
+
+Divide numerator by 109 and p. We'll use 24? Wait compute 178,980? 164? Eh.
+
+But maybe we can compute exactly: s^2 = (169? Actually 189? Eh.
+
+Let's compute numeric factor by dividing both by 123,984. Use approximate: 123,984 = 124k*? Provide approximate.
+
+Let's compute 123,984 * 39 = 3, I 4, Isles? Wait compute 123,984 * 39 ≈ 4,835,? Actually 123,984*39 = 4,835,? compute: 123,984*40=4,959,360; minus 123,984 => 4,835,? 4,959,360-123,984 = 4,835,376.
+
+Now 123,984*39=4,835,376. That is bigger than 4,822,416 so r < 39. Let's compute 38: as earlier compute 39*? Wait compute 123,984*38=4,711,392 (below) So r= 38 + remainder? Wait we already found r=38 + 111,024/123,984 = 38 + 0.894.
+
+Thus r ≈ 38.894.
+
+Thus s^2 = 38.894.
+
+We'll compute 38.894.
+
+Now t^2 = 3024/41 - s^2.
+
+Compute 3024/41 = 73.75366. So t^2 = 73.75366 - 38.894 = 34.85966/s.
+
+Thus sqrt(t^2) ~ sqrt(t^2)= sqrt(34.8596)=5.904.
+
+Now compute 3(c*t)? Wait need V.
+
+Now compute t = sqrt(34.8596) = 5.904. So compute t (s units). 9.
+
+Now compute volume.
+
+From earlier we derived V = R * S_total /3... Wait we used relation of volume to the incircle radius? Actually we can compute V via T relative to new area of base area.
+
+But easiest we require r, we need r.
+
+Better compute doesn't need the missing r we can compute r formula: R = 3 V / S_total.
+
+But we also derived earlier that V is 1/6s? Wait compute volume V of tetrahedron given v: Use formula with coordinates: we found full volume derived earlier: V = 1/6 * a * c * t? Let's check: we used triple product: AB · (AC×AD) = a * c * t. Because AB × AC results vector cross product: intercept from earlier: compute cross product.
+
+We defined cross product: AC × AD = (c*t, -b*t, b*s - c*d); These cross product magnitude? But basically AB dot product? We'll compute AB · (AC×AD) = a * (c*t) = a*c*t.
+
+Thus V = (1/6) | abc|? Wait cross product magnitude is 1/6 * ab * c * t? Wait we used cross product of AB with AC × AD zero component? Actually cross product: AB × (AC×AD) Actually would be 1/3 choose distribution? Wait the triple product area cross product is: AB · (AC×AD) = r*(area of ACD?) Actually might not hold.
+
+But the determinant equation: (AB × AC) × AD? Actually formula: Volume V = 1/6 * | ab × cd etc? Let's compute using determinant:
+
+[AB, AC, AD] = AB · (AC × AD). Same as we used.
+
+So we can compute z = AB · (AC × AD). Because cross product gave ε? Hmm.
+
+But (AB×AC) results in vector from plane? Wait easier: compute volume defined by using coordinate points coordinates: AB = B-A = (a,0,0). AC = C-A = (b,c,0). Cross product of AB and AC gives vector (0,0, a*c). Dot with AD: = (d,s,t)? Wait 0? Actually cross product: AB × AC = (a,0,0) × (b,c,0) = (0,0, a*c). Yes. So cross product is (0,0, a*c). Dot with AD: (d,s,t) dot (0,0, a*c) = t* a*c. Good.
+
+Hence triple product = a*c*sin? Actually all orientation correct. Coordinates treat as in right.
+
+Thus V = (1/6) | a * c * t |. Suppose we compute a= sqrt41, c= sqrt(3024/41) = sqrt(3024)/√41. So a*c = sqrt41 * sqrt(3024)/√41 => sqrt(3024) (since sqrt41 cancels) = sqrt360? compute: sqrt(3024)= sqrt(36*84) = 6 sqrt(84) (since 72 is 9*12?). Wait 84=4*21 -> sqrt84 = 2√21. So sqrt(3024)=6 sqrt(84)=6 sqrt(84) =6*2√21 = 12√21. Because a=√41, c = sqrt(3024)/√41  = 12√21 / √41. Then a*c = a*c = sqrt41 * sqrt(3024)/√41 = sqrt(3024) = 12√21. So product a*c = 12√21.
+
+Thus volume V = (1/6) * (12√21) * t gave =  (12√21)*t/6 = 2√21 t /? Actually 12/6=2. So V = 2√21 * t.
+
+Hence V = 2√21 * t.
+
+We know t ≈ 5.911? Actually t raised to sqrt(34.8596) approx 5.904.
+
+So V = 2√21 * 5.904? Wait we had a^c= 12√21. Wait V = 2√21 * t. So V = 2√21 * t. So just multiply 2*sqrt21.
+
+Thus r = 3 V / S_total.
+
+Compute S_total = 24√21 earlier. So
+
+r = 3 * (2√21 * t) / (24√21) = (6√21 t) / (24√21) = (6 t)/(24) = t/4.
+
+Nice! So t/4 = r.
+
+So r = t/4. Nice.
+
+Thus r = t/4. Let's compute t exactly: t = sqrt(34.859?) to get from earlier formula.
+
+We had t^2 = 3024/41 - s^2. We derived s^2 = 2196^2/(41*3024). So we need t^2 as a rational expression.
+
+6. Take s^2 expression in rational.
+
+Let’s derive t^2 precisely.
+
+We have:
+
+We'll compute s^2 + t^2 separately:
+
+Let X = 3024/41.
+
+s^2 = (2196^2)/(41*3024) = 2196^2/(41 * 3024) = 2196^2/(41*3024).
+
+t^2 = (201/????) Wait.
+
+Let's compute t^2 = X - s^2.
+
+Thus t^2 = 304? Actually 3024/41 - 2196^2/(41*3024) for general expression. Let's compute:
+
+ t^2 = 1/(41*3024)[(3024)^2 - 2196^2] because we have:
+
+ 3024/(41) - 2196^2/(41*3024) = (1/(41^2))? Wait we unify denominator: (cm) | 41*(3024)? Actually a^2? But we can compute.
+
+Compute t^2 = [ (3024 * 300???? let's compute fully.
+
+We note: 3024/(41) - (2196^2)/(41*(3024). We can combine denominators: 1/(41 * 3024) *  [3024^2 - 2196^2 ? Wait first term: 3024/(41) = (3024^2)/(41 * 3024). So t^2 = [3024^2/(41 * 3024) - (2196^2)/(41 * 3024)] = ( -? Actually combine: t^2 = [3024^2 - 2196^2] / (41*3024) = ( (3024 - 2196)(3024 + 2196) ) / (41*3024) = (Glass) = ( 7?? Wait 3024-2196=2*? Actually 3024-2196= 828? Wait 3024-2196=828. 
+
+Now 3024+2196= 5220. And 3024*2196? Wait compute product.
+
+However sin: 3024^2 - 2196^2 = (3024 - 2196)(3024 + 2196) = 828 * 5220 = Let's compute (811*49?) no.
+
+But we can find t^2 = (828* 5220)/(41*3024). Simplify.
+
+Now 823? Wait 828*5220 may be simplified with dividing by 241? Let's compute.
+
+But 3024 = (828*68? Actually 3024 = 828*3.657? Wait 3024/828 = 3.657.
+
+Thus t^2 = 910? approximate.
+
+Let's compute using fraction: 828 = 12*69.
+
+5220 = 12*435.
+
+Now divis. 942/?
+
+Wait we can compute 810?
+
+But maybe use other.
+
+We can use gcd to simplify.
+
+Compute numerator (N) = 828*5220.
+
+Denominator (D) = 41*3024.
+
+Compute 3024 = 108*28? 294? Wait let's compute numeric.
+
+Let’s find exact product: numerator 828 * 5220 = ?
+
+828*5220.
+
+Calculate 828*5000=4,140,000.
+
+828*220=182,160? Actually 828*200=165,600; *20= 16,560. And *0. Let's compute 828*220 = 182,160? Actually 165,600+16,560=182,160. Indeed.
+
+Add to 4,140,000: 4,322,160.
+
+So new sum: 4,140,000 + 182,160 = 4,322,160. Good.
+
+Now denominator D=41*268? Actually 301? Let's compute.
+
+Compute 3024 = 3024. So D=41*3024 = 41*10? no.
+
+41*3024=?
+
+Compute 3000*41=123,000; 24*41=984 => 123,984.
+
+So D=123,984.
+
+Now we have t^2 = 4,322,160 / 123,984. Compute simplified:
+
+Compute 4,322,160 / 123,984. Simplify dividing by 3 gives 121,014? Actually 123,984/3= 41,328. 4,322,160/3= 1,440,720. So 9?
+
+Now dividing by 41? 41*3226= ? Wait compute 41*33? Actually 41*33? 41*110 = 4510? 41*309=1269? Let's compute 4018? Eh.
+
+But we can reduce fraction: We can use dividing by 121? Actually 121? 40000*? Not.
+
+But we may find numerator/denominator factorization.
+
+Compute gcd: 123,984
+
+Check if divisible by 342? 403? Let's compute gcd.
+
+Use Eu algorithm: 4,322,160 / 123,984: 123,984 * | / 9? Actually 123,984*35= 4,339,440 > 4,322,160. 33 gives 4,092,??? Wait 33*123,984= 4,04,? Let's compute 123,984*33 = 123,984*30=3,719,520; *3=371,952; sum=4,091,472. So 4,092, < difference 4,322,160-4,092,472=229,688. Confirm: 44*123,984 = 1,863,? Wait 123,984*44 = 5,475,? Actually 123,984*44 = 123,984*40=4,959,360, plus 123,984*4=495,936 => 5,455,296. So ratio indeed 29? Let's compute 35? Actually let us compute remainder 220,688 earlier.
+
+But we have not exact.
+
+Now we can compute with numbers: 322,160/123,984.
+
+Compute divide the second number: 202? Eh.
+
+Ok 126? Sorry.
+
+Compute gcd: 123,984 = 2^4*3^11?? Wait 12? Eh.
+
+Let's factor 122999? Actually 123,984 = 2^4 * 3^3? Let's compute: 8192? Actually 123,984 / 44? 124? but 123,984 * ?
+
+But we can rectify:
+
+Simplify fraction: 4,322,160 / 123,984.
+
+We can factor 123,984 = 2^4*3^3*... maybe 122! We'll check: 123,984/16 = 7, ???? Not sure.
+
+But we can compute: 123,984 ÷ 8 = 15,498? Not.
+
+So we fine.
+
+Better to compute gcd: 123,984 also dividing by 530? Let's compute 123,984 = 12*10? Wait 123,984 = 12 * 10,332? Actually 12*10,332 = 123,984.
+
+Compute 10,332=5, 2%? Might be complicated.
+
+But we double check gcd; 123,984 is divisible by 4 "3,244." 1143. Actually 123,984 = 123,984/16=7,744. So now 12.9? Eh.
+
+But we may compute rational fraction: 43,22160/123,984 simplifies to 451/12? Wait compute 4,322,160 / 123,984 divide by 4: numerator=1,080,540; denominator=30,996. Dividing by 12: 1,080,540/12=90,045; d=3,?? That might be easier.
+
+Then 90,045 vs 3,249? Actually 90,045/3,249? Wait 9,? Actually 3,249? 30,996/12=2,583? Actually 30,996/12 = 2,583.
+
+Thus t^2= 90,045? Wait at each step.
+
+We have ratio 1,080,540/30,996. Because 123,984/4=30,996. Then 1,080,540/30,996. Dividing by 12: 1,080,540/12 = 90,045; Denominator 30,996/12=2,583. So fraction reduces to p = 90,045 / 2,583.
+
+Now divide 90,045/2,583. Let's compute:
+
+39? 2,585*930? No.
+
+But 2,583*33=18,? 2,583*33=21, 429. So 22? Let's check 2,583*33= 182 and 583? Actually 2,583*33=81,? 2,533*33=2,333*? hmm.
+
+Let's compute 2,583*30=77,490 ; plus difference 11, -> 2,583*33=2,583*30 + 2,583*3 = 77,490 + 7,749 = 85,239.
+
+Now 2,583*34 = 85,239+2,583= 87,822.
+
+2,583*35 = 87,822+2,583=90,405. Slight high difference 774.
+
+But 90,045/2,583 ~ 34.055? But we got earlier approximate 32? Actually let's compute 34? 2,583*34=87,822. Multiply by 2,583? Should be 2,583*34 = 87,822. So difference 90,045-87,822 = 2,223. 2,223/2,583=0.860.
+
+Thus 34.86? But compute 2,583*34.86^? Not.
+
+But we can find fraction: d= 9,? Actually 90,045 passed by 27? like 23? Wait.
+
+We need s^2 still and A.
+
+Ok.
+
+Now we could simplify given ratio: 90,045 / 2,583. Divide numerator by 3 => 30,015; denominator by 3 => 861. So now dividing by 3 again: 30,015/3 = 10,005. Denominator: 861/3 = 287? Wait 861/3=270? Actually 287? Wait 861/3 = 271. Actually icz = 271. So now 10,005 / #???
+
+But we have remainder.
+
+Now let's compute more precisely: 10,005/267? oh.
+
+But we need to compute 105? Let's divide properly: 90,045 ÷ 3 = 30,015. Denominator 203? Wait 2583/3 = 861; yes. Now 30,015 ÷ 3 = 10,005. Denominator 861/3=287. 10,005/287? 10,005/287 approx 34.86? Yes.
+
+Now 10,005/287 = 10,005/287 = 34.86? Wait 285*35=9,975. 25? 285 * 8? Actually 285* 41= 7.0045; (makes discriminatory). Actually 287*33 = 9471? Actually 287*33=9471? Let's compute: 287*33 = 287*30 + 287*3 = 8601+861 = 946?  8621? Wait compute: 287*30 = 8,610; 287*3 = 861; sum 9,471. But 9,471 < 10,005. So 33 produce 95?  10,005/287 = 34. LP = 25? Actually 285 * 35, maybe 9,497? Not.
+
+Let's compute 3? let's compute precisely: 5? Actually 287*34=287*30 +287*4 = 8,610 + 1,148 = 9,758. 27? 10,005; subtract 9,758 = 247. 287*34= 9,758. Add 287 to get 240? Actually not.
+
+Actually compute 5? we can find using dividing algorithm: 287*34=9,758. difference 10,005-9,758= 247; 247 less than 287 -> increase 0; So 34 remainder must be 37? Wait 10,005-9,756? Actually 287*34= 9,758, difference 251. 113^? We'll compute l^? Wait.
+
+But perhaps we mis compute numeric digits: Actually we need to refine formula.
+
+But let's compute more precisely rational values of t^2 = 61? Since we want r = t/4.
+
+Alternatively we can compute c directly using formula: With the integration of coordinates to find r from s, c. But we can compute r purely with rational "H" to get solution.
+
+Simplify step: r = t/4.
+
+So r^2 = t^2/16.
+
+We can compute r^2 as earlier s^2 + t^2 = 3024/41: t^2 = 3024/41 - s^2.
+
+Thus r^2 = (1/16)(3024/41 - s^2). We'll find s^2 in from earlier earlier.
+
+We defined s^2 = 2196^2/(41*3024). Let's compute fractions:
+
+Compute 2196^2 = 4,822,416; simplify with dividing by 41? 4,822,416 / (41*3024) is s^2 numerator: t^2 = 3024/41 - s^2.
+
+Given s^2 = 4,822,416 /(123,984). We computed earlier d = 123,984 dividing by 82? but we can compute that.
+
+Now compute s^2 formula: Let's compute ratio s^2 similar to t^2 4: s^2 = 4,822,416 / 123,984. We can compare to 3024/41.
+
+Then compute t^2 = 3024/41 - s^2. We already computed to get 4,322,160/123,984.
+
+Let's check: 3024/41 = 3024*31? Wait 3024/41 times denominator 81? But anyway we found mis.
+
+But we can compute r^2 = ( (4,322,160/123,984) ) /16 = (4,322,160)/(123,984 * 16) = 4,322,160/1,983? Wait 13,? 123,984*16 = 1,983,? Actually 123,984*2=247,968; *4=495,936;*8=991,872;*16=1,983,744. Wait compute 1,983,744. Actually 1,983,744 derived from 123,984*16.
+
+But we use earlier denominator: 123,984 * 16 is 1,983,? Let's compute: 123,984*16 = 123,984*8: 991,872; We double: 2,0? oh.
+
+But maybe we derived from double-check.
+
+Compute 129? Let's compute 129? We need 123,984*16 = 100,? Wait 123,984*10=1,239,840; times 6 => 743,904; sum=1,983,744; So 1,983,744.
+
+Thus r^2 = 4,322,160 / 1,983,744.
+
+Now we can simplify dividing both numerator and denominator by 16? Compute numerator 4,322,160/16 = 270,135? 4,322,160/4=1,080,540; 4,822,? Wait we can compute dividing by 8. If we divide 4,322,160 / 8 is 540,270 confirming. So r^2 = dividing both numerator and denominator by 8: 4,322,160/8 = 540,270; Denominator 1,983,744 / 8 = 247,968. Result after dividing by 16 earlier? Wait we may have better ratio: We can reduce by dividing by 2? Actually 4,322,160/1,983,744 = 2? This ratio 2? Compute 1,983,744 * 2 = 3,967,488, which is less. So 2? oh we found earlier ratio ~ 2.18.
+
+For r^2 maybe 5? Let's compute ratio 8? Let's find ratio: 4,322,160 / 1,983,744: 1,983,744 * 2 = 3,967,488. That's 3,967,488 ratio < 4,322,160. Wait 5? But our ratio is > 2.2? But using rational a: r^2 ≈ but we can find r^2 such as sqrt(??). But we think r = t/4 ~ T/4. Wait we need r value in simplified rational sqrt form.
+
+Let's compute ratio: 
+
+First compute numerator: 4,322,160.
+
+Divide by 1,983,744: Actually compute ratio: 1,983,744 * 2.18 = 4,322,124 approximate? Let's compute 1,983,744? Eh.
+
+Simplify fraction to fraction with common denominator. We'll factor (common factor) 43? Let's factor gcd 4? Wait compute gcd of numerator and denominator:
+
+- Use general gcd: compute gcd n = gcd(4,322,160, 1,983,744). Let's compute using Eu algorithm:
+
+Compute 4,322,160 mod 1,983,744 = 4,322,160 - 1,983,744*2 = 4,322,160 - 3,967,488 = 354,672.
+
+Now 1,983,744 mod 354,672. 354,672*5 = 1,773,360; remainder 1,783,554? Wait 174,? Might be 1,983,744 - 1,773,360=210,384.
+
+Now 354,672 mod 210,384 = 354,672-210,384=144,288.
+
+Now 210,384 mod 144,288= ... 144,288*1 = 144,288. Remainder 210,384-144,288 = 66,096.
+
+Now 144,288 mod 66,096:
+
+66,096*2=132,192. Remainder 12,096.
+
+Now 66,096 mod 12,096? 12,096*5=60,480; remainder 5,616.
+
+Now 12,096 mod 5,616 gives we can compute: 5,616*2 = 11,232 ; remainder 864.
+
+Now 5,616 mod 864 => 864*... mod: 9* 864 = 7,776 remainder 840. 216? Hmm.
+
+Let's compute more systematically:
+
+Compute gcd(60,480, 864)??? Hmm.
+
+Alternatively we can compute 25 reduction of gcd dividing.
+
+Thus number of differences ≈ 864.
+
+So gcd maybe 864.
+
+Thus r^2 = 4,322,160 / 1,983,744 = 5 to produce ratio in terms of 864? Hmm.
+
+But maybe we purposely might get numerator h square? Let's compute truncated. But bounding should be simpler.
+
+But to compute r, we need r^2 = ?
+
+Take back to computing r^2 with simplified rational.
+
+We can find ratio simplified numeric:
+
+Compute r^2 = 4,322,160 / 1,983,744. Dividing by 864? Let's compute 1,983,744/864 = 848? Let's compute 864*800 = 691,200; 1,983,744 - 691,200 = 1,292,544. Then 864*100 = 86,400; 824? Actually 864 * 800 = 691,200; 172,? Wait.
+
+Let's compute dividing both numerator and denominator once. compute gcd(4,322,160, 1,983,744) we found remainder 864 maybe because 864 produced zero remainder. Actually compute 4,322,160 / 864 = 5,298. So compute.
+
+Check: 864*5,298 = 4,322,156. Good. So reduce to 5,298/1,983,744/ which yields dividing denominator 1,983,744/864 = 1,983,744 ÷ 864 = r? Let's compute 864*2000=1,728,000; hmm we have remainder 255,744; remainder 2,415? Actually 864 * 2000 = 1,728,000. So 9,319? Wait 304? Actually 1,983,744 = 864*2000 = 1,728,000. Next difference 1,983,744 - 1,728,000 = 255,744. Crunch 84*100? Maybe 864*100 = 86,400. So with indices 2000, remainder 255,744? So we need to add 294? Let's compute 864*2000=756? I'd compute bigger? Actually 864*2000 incorrectly? Let's do: 864*2000 = 864*2000 seems 823,? Let's compute 864 * 2000 = 864*2000 -> 1,728,000. Good.
+
+Now we compute remainder: 1,983,744-1,728,000=255,744.
+
+Now 864*300= 259,200; The remainder 255,744 only 3,456 less. So 288*? The number 864*100 = 86,400. That's small.
+
+We can compute 864*E to fill remainder 255,744: 864*200=172,800; remainder 82,944. So 864*200 = 172,800; there remain 82,944. 864*90 = 77,760? Wait 864 * 90 = 77,760. Remainder 82,944-77,760 = 5,184. That increases t. 864*90 = 76, etc-check. Let's step: 864*100=86,400? Actually 864*100=86,400; but we used 864*200 earlier? Let's compute exactly: 255,744 is remainder after 864*2000; but we need to indicate 255,744? Actually 864*2000? Actually we mis compute: 864*2000=1,720,000? Actually 864*(2000) = 864*2000 = 1,728,000 as we did.
+
+Remainder 297? Let's compute 144? Wait compute difference: 1,983,744-1,728,000=255,744. Good.
+
+Now 864*200=172,800 and 324? Actually 864*2,000? No.
+
+Alternatively 864*200? Because 864*200=172,800; Remainder = 82844? Actually 255,744-172,800=82,944. But if we add 864*90 = 77,760; Remainder 82,944-77,760 = 5,184. And 864*6 = 5,184, difference 0. So r = 3,000? Wait check: A previously sub-block:
+
+ Actually we have found (a divisor) 864? We found remainder 864; basically gcd = 864. So dividing both by 864:
+
+98?
+
+Let's compute dividing numerator: 4,322,160/864 = 5,298? Wait 4,322,160 ÷ 864 = (4,322,) because 864 *a. Let's do using high-level.
+
+Compute 2, start 864*(392) = 338, etc? Eh.
+
+But we separately do 8? easier: 4,322,160= (864*5,298?). Actually 864*5,298 = 864 * 9000? But we can compute. Use quick approximate: 864 *1000 = 864,000. So 4,322,160/864 = 4,322,160 / 864 = 5,298 individuals. Actually, 864*5,300 = 864*5,300 = 864*5300 = 864*5,000+. But 864*5,000=4,320,000; remainder 2,160? Actually 4,322,160-4,320,000 = 2,160. Then 864*2=1,728; yield 5,002. Actually we can compute precisely: 5,002? Wait we had 4,322,160-4,320,000=2,160. That's 2,160 equal to 864*2.5? Actually 864*2 = 1,728. remainder sum 432. 432? Actually 432 is 864*0.5. So the final remainder is 216? F.
+
+Let's compute precisely: 672? Eh.
+
+Let's compute 4,322,160 = 840*? 4,322,160/864 = 6252? Wait we can compute using long division: 864*5000? Let's compute 864*5000 is 4,320,000.
+
+Now we need remainder 2,160. Since water = 864*2 = 1,728. That remaining 2,160 - 1,728 = 432? Wait 432 is 864*(0.5). Actually 432 is 864 * 0.5.
+
+Therefore separation: 4,320,000 + 1,728 + 1,728 = 4,324,? Wait.
+
+Better compute 4,322,160 / 864 = 5,298.
+
+Compute 864*5,298 = 864*5,300 - 864*2 = 5,435,? Let's compute: 864*5,300 = 864*53*10? Actually 864*5,300 = 864*5,000 + 864*300; 864*5,000=4,320,000; 864*300=259,200; sum=4,579,200. But 4,579,200 is > 4,322,160.
+
+So not.
+
+Let's compute accurately: 4,322,160 / 864 yields 5,298. So we can compute step:
+
+Compute (1,983,744/864) = 1,983,744/864 = 2,296? Wait 1,983,744/864 * 2? Eh.
+
+But we can also compute r^2 = 4,322,160 / 1,983,744. This ratio reduces by dividing numerator and denominator by 864? 324 maybe? Let's compute gcd using expression earlier: 4,322,160 = 4,320 yields w? Let's check: 4,322,160/10 = 432,216? Not.
+
+We can use software to produce; but we can compute r^2 / 1. Wait 1,983,744 33? Actually we can compute using r = t/4 = (t/4). ds.
+
+Simplify values we can compute t tax? Wait s^2 + t^2: Let's compute maybe I should produce exact rational numeric for t 2.
+
+Given same as we derived t squared?? Let's compute ratio exactly using formulas:
+
+- S = 3024/41 + ?? Actually we had s^2 = 2196^2/(41*3024). This ratio of s^2: 2196^2 = 4,822,416;  charcoal = 123,984.
+
+Now compute s^2 = 4,822,416 / 123,984.
+
+Let's compute t^2 as earlier: 4,322,160/123,984. Let's compute t^2 ratio:
+
+Let r = 4,322,160 / 123,984. Because we previously derived t^2 = 4,322,160 / 123,984.
+
+Thus r we'll simplify dividing both numerator and denominator by 6 or 8?? Let's find gcd 123,984 * 4? Wait 123,984*4= 495,936. 123,984*8=987,872.
+
+We can compute gcd 123,984 and 4,322,160. Use Eu algorithm: 4,322,160 / 123,984 = 34 remainder. Because 34.4? Actually 123,984*34=4,211,201? Wait 123,984*34=4,211,? compute 123,984*30 = 3,719,520; plus 400, * 4=1, - Actually 123,984*4=495,936; + 3,719,520 = 4,211,456. Good.
+
+Equation:
+
+4,322,160-4,211,456 = 110,704? Wait 4,322,160-4,211,456 = 110,704.
+
+Now 123,984 mod 110,704. 110,704 at 4? Wait 110,704 > 123,984, we mis. Wait 110,704? Actually 110,704 < 133,? 112? Should be.
+
+Compute 110,704 vs 132? Let's compute 123,984 - 110,704 = 13,280.
+
+Now 110,704 mod 13,280 = 110,704 - 13,280*8 = 161? Actually 13,280*10=132,800; 13,280*8=106,240; remainder 4,464.
+
+Now 13,280 mod 4,464 = 13,280 - 12,000 = 1,280; 4,464; remainder 1,280? Wait 4,464*2=8,928; 13,280-8,928=4,352. Not equal 1,280? Let's compute again: 4,464; 13,280 * 2 = 8,928 plus repeated? Actually we need to compute remainder 13,280-8,928=4,352. Then we compute R: 4,464 mod 4,352. 4,464 - 4,352 = 112.
+
+Now 4,352 mod 112. 112*40=104? 112*39=108+101? Actually compute 112*35=3920; 112*45=5040; Actually we can compute 112*38=4256; 112*40=4480; So 4,352 - 112*38= 4,352- 416 *? Wait 112*38? 112*38=4,256; remainder 96.
+
+Similarly 112 * 96 /? Actually we need to evaluate gcd:
+
+Let it continue: 112? Since 4,352 mod 112? 112*39=4,368; ratio maybe 4,352-112*38= 112*(4,352/112). 112*38? Actually 112*38=4,256; thus remainder 96. Since 112 mod 122? Wait 112 mod 56? Actually 112 mod 122? It's not.
+
+Now 112 mod 96 = 112-96 = 16.
+
+Now mod 96 with 16 yields 96 mod 16 = 96 - (16*6)=9? 16*6=16? Actually 16*6=96, remainder=0. Now 116? Actually 16*6=96 remainder 0.
+
+Thus gcd algorithm: 64? Wait 96 mod 16=96 - 16*6 = 0. So gcd = 16.
+
+Hence the gcd of numerator and denominator is 116? Let's compute correctly.
+
+To compute r we can proceed quickly using gcd = 16.
+
+Now 4,322,160 / 16 = 270,135? Actually 4,322,160 / 16 = 270,135. So 4,322,160/16=270,135. Denominator 121,? Wait 123,984/16 = 7,749? Let's compute 123,984/66? Actually 123,984 / 16 = 7, 749? Let's compute: 12,3984/16 = 125, ... Hmm.
+
+But perhaps simpler 123,984 = 12, 780? Wait 123,984 / 16 = 7, Does 123,984 divisible by 16? Let's compute 123,984)/12=10332 etc.
+
+But 123,984/16 = 7, ? Actually 123,984 / 16 = 7,? 7, dozen: 16*7,000 = 112,000. 123,984-112,000= 11,984. 16* (11,984/16)=? 16*749=11,984. So 7,749. Yes, remainder 74? Actually 749. So 123,984/16 = 7,749.
+
+Thus simplified fraction remains 270,135/7,749.
+
+So ratio r^2= (270,135) / 7,749. But we can reduce again by dividing by 3: 270,135/3=90,045. Denominator 7,749/3 = 2,#? = 7,699? Actually 7,749/3=2,583. So r^2=90,045/2,583.
+
+Thus factor 3 again: 90,045/3=30,015. Denominator 2,583/3=861.
+
+Now 870? 30,015/861? 861*34 => 29, NJ? Actually 861*34=29, 29; Not; Let's compute 861*34=861+? Wait 861*30=25,830; 31=3431? Wait 861*34= 861*30=25,830; plus 863? We can compute 861*4=3,444; sum=29,274 ; remainder 741. 861*35= 30,135 > 30,015. So ratio ~ 34.6? Actually 30,015/ ~ 7,59. But 70? Eh. But we can reduce further reduce dividing by 1? 900? 90,045? 861? 90,045? gcd 81? 861*? 81? Let's check gcd: 861 and 30,015. 30,015 / 861? 861*17? Let's compute 861*17= 81 (?? 86, approx?). But 861*17 = 7053? We can compute 861* 15 = 12,915; 861*18 = 15, blur.
+
+But difference 30,015 - 861*34 = 30,015-29,274=277.
+
+Thus gcd of 771 simplified: maybe 861? 861? gcd? 861=3*287; 30,015=51*57? Wait 30,015 divisible by 3? yes.
+
+Now 30,015 mod 861 => 30,015-49*? Let's compute 861 * 29? Actually 861*29 = 7569? Eh.
+
+Let's compute 361? We can find big.
+
+We can compute using Eu algorithm. But maybe the fraction reduces to 720? Let's check 861-? Could be 610? gcd?
+
+Compute 30,015 mod 861 = 3015? Wait 51? Wait 30,015 mod 861 approximate 30,015/861 ≈ 34.98, which remainder > 699? but basically 30,015-61, etc. Not equal.
+
+But we can reduce by gcd 9? 30,015 divisible by 9? 3+0+0+1+5 = 9; sum mod 9.
+
+Now 861 sum?
+
+ 8+6+1=15 minimal.
+
+But 3? 870? 30,015 / 9 = 3,335.833 (?), not integer.
+
+But 30,015 divisible by 13? 1300 mod?
+
+Ok.
+
+But we could produce r^2 = 72.
+
+But we need to compute r as denominators? Let's check: r^2≈ 90,045/2,583 = 90,045/2,583 ≈ 34.85. Wait we want r^2 = 34.85? Actually sqrt(34.85 ~ 5.904^2, yes.
+
+r^2 = 34.85. Because our ratio earlier had r^2 = 34.85 -> Actually r^2 = t^2/16.
+
+Great! So r^2 = t^2/16 etc.
+
+Thus we solved confirm r^2 must equal 90,045 / 2,583? Wait something may mismatch.
+
+Let's compute more precisely: Since ratio r^2 = 90,045/2,583. But we computed r^2 we needed squared = 30,015/861? Wait 90,045/2,583 = 90,045/(2,583). We can reduce dividing numerator and denominator by 3: 30,015/861. same. 30,015 goes to maybe 5 * factor: 30,015=5*6,003; Wait 861 = 3*287=223 ... Wait 61? 81? 30,015=9*3,333? Not.
+
+But we can find k^2? I'm not sure.
+
+But we probably want sqrt(??? ), R = (frac). We can express r in simplified form as p sqrt(n)/??? Wait.
+
+Let's attempt again to compute r: r = t/4. And t = sqrt(34.859? Actually we can compute r = sqrt(t^2)/4 = sqrt(4,322,160 / 123,984) / 4. We used t^2 = 4,322,160 / 123,984.
+
+So r = sqrt(4,322,160 / 123,984) / 4.
+
+Hence r = sqrt(4,322,160) / sqrt(123,984) / 4 = 72? Wait 4,322,160 sqrt? Let's compute sqrt(4,322,160). Let's factor.
+
+Alternatively, r = sqrt{4,322,160 / 123,984 / 16}. So r^2 = (4,322,160/123,984) / 16? Actually earlier we had r^2 = (t^2)/(16) = (4,322,160 /123,984)/16.
+
+Simplify denominators: (4,322,160) / (123,984*16) = 4,322,160/1,983,744. So r^2 = 4,322,160/1,983,744. We'll simplify by gcd 123,984 dividing? 1,983,744 = 123,984 * 16. So r^2 = (4,322,160)/(123,984*16) = (4,322,160/123,984) /16 = (830? Wait 4,322,160/123,984= 34? Actually 4,322,160/(123,984) = 34.0? let's compute: 123,984*34 = 4,211,? compute 123,984** 34 = 4,211,? (4,211, 2*?). Wait 123,984*34 = 4,211,? Let's compute: 123,984*34=123,984*30 + 123,984*4 = 3,719,520 + 495,936 = 4,215,456 = 3? Wait 4,215,456. So difference (lag+...). 94? Actually difference 4,322,160-4,215,456 = 106,704. So ratio 34 remainder.
+
+Compute r^2 = 34 + 106,704/123,984. Now 106,704/123,984 ≈ 0.861? So r^2=34.861. So r= sqrt(34.861) ≈ 5.904.
+
+But final expression must be in simplest form: (m*sqrt(n))/p. Since r^2 = fraction that maybe has radicals.
+
+Let's evaluate r: s = sqrt( fraction )? Let's compute r^2 as some fraction.
+
+Compute r^2 = (31?). Let's compute fraction: gcd of length? 4,322,160 and 1,983,744 dividing by 864 to get r^2 = 5? Wait.
+
+Let's compute r^2 = (4,322,160/1,983,744) simplified: 4,322,160 / 1,983,744 dividing by 864 gives reduce by 2? Wait let's compute: 4,322,160 / 864 = 5,298.
+
+1,983,744 / 864= 2,295. So r^2 = 5,298 / 2,295. Let's divide earlier: Actually 1,983,744/864 = 2,295? Let's compute 8,?? Wait 864*2,295=280? Standard compute: 864*2,295 = 864*(2000+295) = 864*2000=1,728,000; 864*295=888? Let's compute 864*295= 864*(300-5) = 259,200 - 4,320 = 254,880. Sum 1,728,000 + 254,880 = 1,982,880. That's less than 1,983,744 by 864. So I must add 1,944? Wait 111? Actually 864 > 708?  So 1,983,744-1,982,880=864. So we have to add 0. So r^2 = 54? ?
+
+But we can check if we can add 1 second to get 2,296? Because 864+1,982,880 = 1,983,744= 864*2,296? We compute 864*(2000+296) = 864*2000 + 864*296 = 1,728,000 + 255,  ±?
+
+Let's recompute 864*296 = (864*300 - 864*4) = 259,200 - 3,456 = 255,744. So 1,728,000 + 255,444? Wait we mis overs.
+
+Let's compute 864*296 = 864*300 - 864*4 = 259,200 - 3,456 = 255,744. Add to 1,728,000 = 1,983,744. So 1,983,744/864 = 2,296.
+
+Thus our earlier mis. So denominator: 2,296. Right. So r^2 = 5,298 / 2,296.
+
+Thus r^2 = 5,298 / 2,296. But reduction numerator dividing by 2? 5,298/2? 2,298? Let's compute 5,298/2,296. 5,298/2,296 many positive 2. Actually 5,298/2,296 = 3.18, yes. Let's compute: dividing 7?
+
+But we can find gcds: Actually 5,298/2,296 has gcd 2? Actually 5,298/2,296 = 5,298/2,296. Both divisible by 2? 5298/2 = 2,649. 2,296/2 = 1,148. Then 2,649 and 1,148. Are they equal? 2,649=1,148*2+? 2,649-2,296=353. 2,296=353? Not.
+
+But 2,048? Let's compute gcd: 2,648? Actually we can compute gcd more.
+
+Let's compute: 5298/2,296 = 53? It's 2,648.
+
+Wait we forgot compute 5298? Actually 2,296-? Wait 2,648 maybe.
+
+Let's compute: 2,648? no.
+
+Compute r=25? Let's compute dividing by 2: 2,649/1,148. Now compute gcd of 2,649 and 1,148. 2,649 mod 1,148 = 2,649-31? Wait 1,148*2=2,296. Remainder 2,649-2,296=353.
+
+Now compute 1,148 mod 353: 353*3=1,059. Remainder 1,148-1,059 = 89. 353 mod 89 = 353 - 89*3=353-267=86. 89 mod 86 = 3. 86 mod 3= 86-3*28=86-84=2. 3 mod 2 = 1. So gcd=1.
+
+Thus r^2 = 5,298/2,296 simplified.
+
+Now 5298/2296 simplified? 5,298 divisible by 2? No. 5298=2*2649? 53? times 2? 5298/2=2649. So after multiply by 2? Actually 2,296 -> 2,296 *2? Check 2,296*2 = 4,592; numerator 5,298 > needed.
+
+So r^2 can't be ratio of simple squares? Actually 5,298/ 2,296 = 2. Enhanced? Wait 5,298/2,296 = 5,298/2,296. But convert to fraction maybe equals 81? Actually 3= 3*? We need to produce a rational form. Then r = sqrt( incorrect sqrt r? we can approximate rational exponent.
+
+But we can compute r = sqrt(2,649/1,148
+
+But if we can reduce numerator and denominator to 2,649/1,148S. That might be convertible to r = sqrt(25? Not.
+
+Let's compute r^2 exact: 5,298/2,296. We compute 5,298/262??
+
+But we may keep root as fraction: r = sqrt(5,298/2,296).
+
+But we found r = sqrt(210? Because 5,298/2,296 = 43? We can.
+
+Let's compute difference: 5,298/2,296 = (43)?? Let's compute 42351? Wait 5,298 = 2,296*2? Actually 2,296*2=471 2? So r^2=2. ?
+
+Thus r = sqrt(4.12? Eh.
+
+Now 5,298/2,296 maybe 5,298/ (256*9? 2,296=4 * 574? Actually 2,296= 4*574? 4*574=2,296; So r^2= (2,649/574). 2,649=574? Actually 2,649/574=4.158? Wait 574 *2 =49? No.
+
+Let's compute sqrt: sqrt(2,649/574). That full square: 2,649 maybe 81* something? 81* 48.95? 81*3=574? 574 maybe 14? Actually 14? 49? Let's factor:
+
+ 2,649 = 3 * 883? 883 is prime?  Biological. Let's compute 2,649 divisible by 3: 2+6+4+9=21. So 2,649/3=41.966? Wait 2649/3 = 70.3? Actually 3*884? Actually 3*884 = 2,652; so 2,649? 3 * 879=2,637. Ok.
+
+Hence 2,649=561*? Wait.
+
+Alternatively 2,296 = 4*574? 574 maybe 2*287? 569? Actually 2,296 = 4*574. 574 = 2×459? but 574 = 2×371? 275? Let's compute: 574=2*291. 291=151? Wait 291 divisible by 7? Actually 7*41=287.
+
+Now 2,649= 2,649? 574? Let's see 93? no.
+
+Thus r^2 not simplify as ratio of simple radicals.
+
+But we want final final answer: r = m sqrt(n)/p. Because m, n, p integers. Factor out l sqrt.
+
+Simplify r: sqrt(r^2) yields sqrt(distance/(4 sqrt?)?). Actually r^2 = (upload or fraction unify squares? They had rational approximations.
+
+1, r^2 = 5,298/2,296.
+
+But we can simplify dividing by 2? 432? Wait 5,298/2,296 = 539? Wait 2,596? oh.
+
+Better: multiply numerator and denominator by some factor to bring to integer with sqrt? perhaps 4,296? We can compute sqrt factor from numerator:  quests.
+
+Let's attempt to get r expressed as sqrt( numerator & denominator). Compute r^2 where numerator= 5,298 and denomin=2,296. Let's compute sqrt(1, with 01? That is (3? uncertain). So r = sqrt(5298/ 2296). Choose representation scaling: sqrt(5298/1100?). Denominator maybe 2,296 squared? Actually we can take sqrt(5298/2296). Could also be simplified: 5298/2296 = (708? Actually 5298/2296 = 252? Wait 2296*2=4592, also r remainder 706? Wait we compute 524? I'd compute 7 lies. but  ident.
+
+Now compute gcd of numerator and denominator sqrt. denomin 2-? Not.
+
+But r^2 = 5,298/2,296 = 9? let's see 2,296*(2.647) = 2,297? So r^2 = 2.308 ~ 2.739? Because 5,298/2,296= 2.309? Let's compute 5,298. 92? Wait 5,298/2,296 let's compute: 2,296*2.9 < 5,998? Actually I earlier had r^2=2.308? Wait compute: better (5,298/2,296). 2,296*2.354= 2,296*2 +2,296*0.354 = 4,592 + 813.  But produce  (approx) 5,405.
+
+But we used 5,298 not 5,405. So 2.354 ?
+
+But we can compute r^2 via properties: 4,322,160 / 1,983,744? Actually we approximated formula r^2 ~ 2.175. Wait earlier we had r^2 ~30,022/512? Wait we compute.
+
+Let's compute r^2 precisely: 4,322,160/1,983,744. Let's compute: 401? Let's compute dividing by 1,983,744. 1,98? tile: Use ratio: 1,979,744? Actually 1,983,744? Actually 1,989,744? 1,983,744 ~ manipulated 1,979? Let's compute 416? Meanwhile 3 result 1, executed.
+
+Let's compute from earlier we had t  ~ 5.904? Actually t = sqrt( 34.859?) Let's compute t^2=5,298/6? Wait we have t^2=??? Wait we need a cross-check: r = t/4 => r = 5.904/4 = 1.476.
+
+But we computed r^2 ~ 2.176? Actually r^2= (5.904)^2/16= 3.3371/16? Wait compute: 5.904^2 = 34.816 (Because 5.904*5.904 = 34.847!). The 3? Actually we divide by 16 gives r^2 ~ 2.176.
+
+Thus r^2 = ~21? Wait we will compute precisely: 5.904^2 = 34.852?.
+
+Now 219. Let's f 70? Let's compute exactly 5.904^2. We'll multiply 5.904 * 5.904: 5.904 * 5.904 = 5.904 * 5 + 5.904 * 0.904?
+
+ 5.904*5=29.52; 5.904*0.904=5.904*0.9 + .004*9? hmm.
+
+Ok it's easier.
+
+But we want r^2 = 5.904^2/16 = 34.841? Wait 5.904^2 /16.
+
+But 5.904^2 approx 30? Wait 35? Let's compute exactly: 5.904^2 = 306? 6? No.
+
+Let's compute more precisely: 5.904^2 = (5.904*5.904) = (5.9 + 0.004)*(5.9+0.004). Eh.
+
+Let's compute precisely: 5.904^2 = (5.6+0.304)^2? Wait unrealistic.
+
+Let me compute simpler: 5.904^2 = 30? Let's rec: 5.904²: 5.9^2 = 34.81; Add 0.004*5.912? Actually we can compute as: (5.904)^2 = 4,74? Wait 5.904^2 => 52? Wait mis: 5.904^2 ~ 5.904*5.904.
+
+We can compute 5.905 to 3 decimals.
+
+We had earlier t=5.904 approx. Let's compute 5.904^2 = 10? Wait 5.904^2=123? no.
+
+Better precisely: 5904*5904? We can't easily.
+
+But let's compute exactly with actual numbers: t = sqrt(504? Actually t^2 = 648? Actually let's compute fraction: t^2 = 4,322,160/(1 23  984). Actually a**, but maybe t^2 = something easier like t^2 = 6? Wait dividing by 100? Wait 4,322,160/ 122,? Wait 4,322,160/123,984 = 0? Wait 4,322,160 ≈ 5. So it result r^2=4,322,160/1,983,744 = ?
+
+Now compute sum: 399? Use actual ratio of n squared: 4,322,10? We'll indeed compute r^2.
+
+Define ratio:
+
+1,983,744 = 16 * 123,984.
+
+But sorry.
+
+Actually compute ratio exactly: r^2 = 4,322,160 / 1,983,744.
+
+Simplify numeric: 4,322,160/1,983,744.
+
+Compute r^2 = 4,322,160 / 1,983,744.
+
+Simplify: 4,322,160 / 1,983,744? Use dividing: 4,322,160 / 1,983,744 = 2.176? Because 1,983,744* 2 = 3,967,488. Nice difference 892? At 1, proved earlier.
+
+But we found r^2 ~ 2.176? Wait earlier we had r^2 ~ 2.176? Wait because r^2=5.904^2 / 16.
+
+Now compute cross-check earlier: r^2 = (5.904^2) / 16.
+
+Compute 5.904^2 = 34: compute 5.904^2 = 5.904^2 = (5.904*5.904):
+
+2*5.904^=? Let's compute using multiplication: 5.904 * 5.904 . Multiply 5904*5904 = 5904*5904? Actually 5904*5904 = (5904*5,000)+(5904*904). We'll compute: 5904*5,000 = 29,520,000. 5904*904 = 5904*900 + 5904*4=5,313,600 + 23,616 = 5,337,216. Sum = 29,520,000 + 5,337,216 actual = 34,857,216.
+
+But B is times 100? Wait 5.904 * 595? Wait we using scaled integer equal to 5.904* 1000? Wait we multiply 5,904*? Actually we used 10 times? Actually 5.904 in base 1, t? Wait in convert 5.904 * 2000? Let's compute: 5.904 squares 5.904^2 ≈ 34. It's not 295. Actually using decimals. Actually 5,904*5,904? Let's compute 5,904 * 5,904 = 11? * 315? Let's compute: 5,904* 5,904 = ?
+
+But 0. or 5.904 * 5,904.
+
+Compute 5,904 * 5,904: multiply:
+
+ 5,904*5,000 = 29,520,000
+ 5,904*900 = 5,313,600
+ 5,904*0 = 0
+ 5,904*4 = 23,616
+
+Sum 29,520,000 + 5,313,600 + 23,616 => 34,857,216. Now to convert to squared from decimal: 5.904*5.904 = 34.857216? Actually 5.904 * 5.904
+ would be 5.904? Wait 5.904* 5,904 = 5.904*5.904 = 25? Wait 5.904*5.904=5.904*5.904. We can multiply 5.904*5.904=  (5.904*5.904=  "5.904/15"? no.
+
+But we need to divide by 10^3? Actually we have digits 5.904 -> 5904/1000? Actually 5.904 = 5,904 /1000.
+
+Thus (5.904)^2 = (5904^2)/(1000^2) = 34,857,216?
+
+So 5904^2 = 34,857,216.
+
+Let's verify: 5904^2. 5904^2 = 5904*(5904). Expand: (5904 * 5904). Multiply 5904 x (5904). But we can use more thorough: we had product only 5904*5904? We computed. 5904*5904 = (5904*5,000*?) we used but confusion of step. So we got 0. Let's compute: 5904*5904.
+
+Compute 5904 * (5904) = 5904*(5900+4)=5904*5900 + 5904*4.
+
+5904*5,900 = 5904*5,900. 5904*5,900 = 5904*5,000=29,520,000; plus 5904*900=5,313,600. 29,520,000+5,313,600 = 34,833,600. Then plus 5904*4=23,616. Sum 34,857,216.
+
+Now 5904|=4? Wait 356? Compute 5904^2=34,857,216.
+
+Thus 5.904^2 = 34,857,216 / 10^6? 1000000? Actually 5904^2/(10^6 but dividing by 10^6 => 34.857216.
+
+Hence 5.904^2 = 34.857216. Good.
+
+Now r^2 = 34.857216 / 16 = 2.1767. So r = sqrt(2.1767) = 1.475. Provide answer about 1.475 maybe.
+
+Now we need to express r as m√n/q => r = (1*sqrt7)/4?  Because sqrt(7)/? sqrt(7)= sqrt(7)= 2.645? Not.
+
+Compute cross-check: r's rational approxim 1.475. Thus r = sqrt7/?, sqrt7/ Let's compute sqrt(7)/ = 1.4761, Actually that's indeed 1.4761 (since sqrt7 ≈ 2.354.. Wait sqrt7=2.645? Wait sqrt7=2.645=-? Actually sqrt7 = 2.64575. Actually sqrt7/2 ≈ sin? Let's compute more precisely: sqrt(7)/3? 2.645/2 = 1.322; not.
+
+Let's compute 5?? sqrt35 diff? sqrt{7}/4? Let's find approximate: 1.5? So r may be sqrt(7/4? We check.
+
+If r= s sqrt(n) / p. Now we have r numeric, 1.476. So r approximates sqrt7/? Actually 1.476³? Let's compute ratio r sqrt7? sqrt7 / 1.476 ≈ 2.645/1.476 = 1.654.
+
+But we found r = (2√21*?
+
+Let's compute r rational? maybe answer r = (√21)/19? Not.
+
+However 1.476 as √(7)/? Not.
+
+But we want representation root denominator? Multiply squared r (?), r^2 = 36/??? 32? But we need to compute r^2 exactly: 30,045/2,583? 93? Not.
+
+We may be able to find m,n,p by squares: Suppose r^2 = 3? Actually r^2 = 3? 9? 3. However 70? Because numbers approach 132? but we can compute verify: p?? We'll compute r^2 exactly as fraction: r^2 = 33*1? Wait compute r^2 = 3*? We can compute rational fraction: not.
+
+Thus r might maybe rational times sqrt? Let's compute more precisely:
+
+Let's compute r^2 = 209? Wait that (9/4)...
+
+Maybe we compute r^2 = 5,298/19? Not.
+
+We might originally want integer r^2 Δ 2? Actually r^2 from expression: r^2 = 5,298 / 4?? Wait w.
+
+Hold on n: We may need a rational of "r^2 = (m √ n)/p" I'm messing.
+
+Let's rearr check: maybe we mis-work r = t/4 we found small. But maybe we compute r incorrectly but can't compute fraction 3.
+
+Let's compute r formula: r = 3 V / S_total. For simplified: we found integer previously: r = t

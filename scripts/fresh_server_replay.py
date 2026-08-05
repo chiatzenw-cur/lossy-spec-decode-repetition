@@ -42,12 +42,33 @@ def parse_args() -> argparse.Namespace:
         "--arms",
         nargs="+",
         default=["strict", "lossy"],
-        choices=("strict", "lossy", "baseline"),
+        choices=("strict", "lossy", "baseline", "spec_casc_opt", "cactus"),
         help="Arms to replay. Each (arm, case, seed) gets its own server.",
     )
     parser.add_argument("--cases", nargs="+", required=True)
     parser.add_argument("--seeds", nargs="+", type=int, default=[0])
     parser.add_argument("--lenience-factor", type=float, default=0.2)
+    parser.add_argument(
+        "--spec-casc-alpha",
+        type=float,
+        default=0.05,
+        help=(
+            "spec-casc-opt's relaxation knob (Narasimhan et al. 2025). 0.05 matches the "
+            "value that produced a repetition-loop failure with an MTP drafter in the "
+            "reproduction paper (arXiv:2607.08690 Fig. 5) -- the same failure mode this "
+            "repo studies, with a comparable EAGLE3 MTP-style drafter."
+        ),
+    )
+    parser.add_argument(
+        "--cactus-alpha",
+        type=float,
+        default=0.25,
+        help=(
+            "CACTUS's relaxation knob (Hao & Mou 2026), >= 0. Boosts the drafted token's "
+            "acceptance as a function of p(x) and alpha only, never q -- unlike every other "
+            "relaxed rule here. 0.25 is mid-range among the values arXiv:2607.08690 evaluates."
+        ),
+    )
     parser.add_argument("--prompt-root", type=pathlib.Path, default=pathlib.Path("prompts/aime24"))
     parser.add_argument("--runs-root", type=pathlib.Path, default=pathlib.Path("runs/fresh"))
     parser.add_argument("--log-root", type=pathlib.Path, default=pathlib.Path("logs/fresh"))
@@ -77,10 +98,20 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def tag_for(arm: str, factor: float, suffix: str) -> str:
-    base = "strict" if arm == "strict" else "baseline" if arm == "baseline" else (
-        f"lenience{factor:g}".replace(".", "p")
-    )
+def tag_for(
+    arm: str, factor: float, suffix: str,
+    spec_casc_alpha: float | None = None, cactus_alpha: float | None = None,
+) -> str:
+    if arm == "strict":
+        base = "strict"
+    elif arm == "baseline":
+        base = "baseline"
+    elif arm == "spec_casc_opt":
+        base = f"specCascOpt{spec_casc_alpha:g}".replace(".", "p")
+    elif arm == "cactus":
+        base = f"cactus{cactus_alpha:g}".replace(".", "p")
+    else:
+        base = f"lenience{factor:g}".replace(".", "p")
     return base + suffix
 
 
@@ -126,10 +157,16 @@ def start_server(args: argparse.Namespace, arm: str, log_path: pathlib.Path):
     env["PYTHON"] = args.python
     env["PORT"] = str(args.port)
     env["SEED"] = str(args.server_seed)
-    mode = arm
+    mode = "lossy" if arm in ("spec_casc_opt", "cactus") else arm
     if arm == "lossy":
         env["LOSSY_RULE"] = "lenience"
         env["LENIENCE_FACTOR"] = f"{args.lenience_factor:g}"
+    elif arm == "spec_casc_opt":
+        env["LOSSY_RULE"] = "spec_casc_opt"
+        env["SPEC_CASC_ALPHA"] = f"{args.spec_casc_alpha:g}"
+    elif arm == "cactus":
+        env["LOSSY_RULE"] = "cactus"
+        env["CACTUS_ALPHA"] = f"{args.cactus_alpha:g}"
 
     log_path.parent.mkdir(parents=True, exist_ok=True)
     handle = log_path.open("w", encoding="utf-8")
@@ -163,7 +200,7 @@ def request_once(
     command = [
         args.python,
         str(REPO_ROOT / "scripts" / "run_experiment_vllm.py"),
-        "--mode", "lossy" if arm == "lossy" else arm,
+        "--mode", "lossy" if arm in ("lossy", "spec_casc_opt", "cactus") else arm,
         "--prompt-root", str(args.prompt_root),
         "--runs-root", str(args.runs_root),
         "--cases", case,
@@ -179,6 +216,10 @@ def request_once(
     ]
     if arm == "lossy":
         command += ["--lossy-method", "lenience", "--lenience-factor", f"{args.lenience_factor:g}"]
+    elif arm == "spec_casc_opt":
+        command += ["--lossy-method", "spec_casc_opt", "--spec-casc-alpha", f"{args.spec_casc_alpha:g}"]
+    elif arm == "cactus":
+        command += ["--lossy-method", "cactus", "--cactus-alpha", f"{args.cactus_alpha:g}"]
     if args.overwrite:
         command.append("--overwrite")
     return subprocess.run(command, cwd=REPO_ROOT, check=False)
@@ -192,7 +233,7 @@ def main() -> int:
         return 2
 
     plan = [
-        (case, seed, arm, tag_for(arm, args.lenience_factor, args.tag_suffix))
+        (case, seed, arm, tag_for(arm, args.lenience_factor, args.tag_suffix, args.spec_casc_alpha, args.cactus_alpha))
         for case in args.cases
         for seed in args.seeds
         for arm in args.arms

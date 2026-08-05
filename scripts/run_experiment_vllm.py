@@ -29,6 +29,8 @@ DEFAULT_PROMPT_ROOT = pathlib.Path("prompts/leval_9k_11k")
 # repo-relative path here (as an earlier version did) desynchronises writer and
 # reader for anyone whose clone is not the one the patch was generated from.
 LENIENCE_FACTOR_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-lenience-{os.getuid()}")
+SPEC_CASC_ALPHA_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-spec-casc-alpha-{os.getuid()}")
+CACTUS_ALPHA_FILE = pathlib.Path(f"/tmp/lossy-spec-decode-cactus-alpha-{os.getuid()}")
 
 # Files the Lenience patch touches, with the sha256 of the patched form. The
 # hashes go into every config.json so a run directory alone proves which
@@ -42,13 +44,31 @@ PATCHED_FILES = {
     ),
 }
 
+# spec-casc-opt touches only the V1 file (mutually exclusive with the
+# Lenience patch above -- both start from the same pristine file). The other
+# file must be pristine when this arm runs, so its expected hash here is the
+# UPSTREAM one, not a patched one, and verified accordingly.
+SPEC_CASC_OPT_PATCHED_FILES = {
+    "vllm/v1/sample/rejection_sampler.py": (
+        "de32559fa494f8b4b88df34874793001d066492cd034f88e046fcd63af0de85d"
+    ),
+}
+
+# CACTUS is the third patch mutually exclusive with the two above, from the
+# same pristine file.
+CACTUS_PATCHED_FILES = {
+    "vllm/v1/sample/rejection_sampler.py": (
+        "02492f03bdf90c9442bb4bca81c61b82c06ad34b733a295f9305326941a93068"
+    ),
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", required=True, choices=("baseline", "strict", "lossy"))
     parser.add_argument(
         "--lossy-method",
-        choices=("lenience", "synthetic_acceptance"),
+        choices=("lenience", "synthetic_acceptance", "spec_casc_opt", "cactus"),
         default=None,
         help="Required in lossy mode. Must match the server's LOSSY_RULE.",
     )
@@ -66,6 +86,26 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=None,
         help="Required for --lossy-method synthetic_acceptance; must match SYNTH_LEN.",
+    )
+    parser.add_argument(
+        "--spec-casc-alpha",
+        type=float,
+        default=None,
+        help=(
+            "Required for --lossy-method spec_casc_opt (Narasimhan et al. 2025). Defer to "
+            "the strict test iff max_u q(u) < max_u p(u) - alpha*TV(p,q), else accept "
+            "unconditionally. Checked against the value the server actually loaded."
+        ),
+    )
+    parser.add_argument(
+        "--cactus-alpha",
+        type=float,
+        default=None,
+        help=(
+            "Required for --lossy-method cactus (Hao & Mou 2026). Boost the drafted "
+            "token's acceptance via gamma_x=min(p(x)+sqrt(2*alpha*p(x)*(1-p(x))),1), "
+            "alpha>=0. Checked against the value the server actually loaded."
+        ),
     )
     parser.add_argument("--tag", help="Output directory label; defaults to a name built from the arm.")
     parser.add_argument("--server-url", default="http://127.0.0.1:30000")
@@ -266,6 +306,25 @@ def vllm_install_info() -> dict[str, Any]:
     info["lenience_patch_applied"] = all(
         entry["matches_lenience_patch"] for entry in files.values()
     )
+    # Mutually exclusive with the above: spec-casc-opt patches only the V1
+    # file, from the same pristine source the Lenience patch starts from, so
+    # its sha256 is checked separately here rather than folded into `files`.
+    spec_casc_files: dict[str, Any] = {}
+    for rel, expected in SPEC_CASC_OPT_PATCHED_FILES.items():
+        got = sha256_of(purelib / rel)
+        spec_casc_files[rel] = {"sha256": got, "matches_spec_casc_opt_patch": got == expected}
+    info["spec_casc_opt_verifier_files"] = spec_casc_files
+    info["spec_casc_opt_patch_applied"] = all(
+        entry["matches_spec_casc_opt_patch"] for entry in spec_casc_files.values()
+    )
+    cactus_files: dict[str, Any] = {}
+    for rel, expected in CACTUS_PATCHED_FILES.items():
+        got = sha256_of(purelib / rel)
+        cactus_files[rel] = {"sha256": got, "matches_cactus_patch": got == expected}
+    info["cactus_verifier_files"] = cactus_files
+    info["cactus_patch_applied"] = all(
+        entry["matches_cactus_patch"] for entry in cactus_files.values()
+    )
     return info
 
 
@@ -284,6 +343,94 @@ def lenience_in_force() -> dict[str, Any]:
         ).isoformat()
     except (OSError, ValueError) as exc:
         record["error"] = f"{type(exc).__name__}: {exc}"
+    return record
+
+
+def spec_casc_alpha_in_force() -> dict[str, Any]:
+    """The alpha the patched sampler would load, read from its own channel.
+
+    Mirrors lenience_in_force(): the server writes this file before starting
+    and the sampler reads it at import, so agreement with --spec-casc-alpha
+    is what makes a run directory self-describing.
+    """
+    record: dict[str, Any] = {"path": str(SPEC_CASC_ALPHA_FILE), "value": None}
+    try:
+        record["value"] = float(SPEC_CASC_ALPHA_FILE.read_text().strip())
+        record["mtime_utc"] = dt.datetime.fromtimestamp(
+            SPEC_CASC_ALPHA_FILE.stat().st_mtime, dt.timezone.utc
+        ).isoformat()
+    except (OSError, ValueError) as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+    return record
+
+
+def server_log_spec_casc_alpha(path: pathlib.Path | None) -> dict[str, Any] | None:
+    """The alpha the sampler actually announced, scraped from the server log.
+
+    Mirrors server_log_lenience(): the file check above can only say what the
+    file held when the client looked; this says what the engine loaded at
+    import, which is the value that ran.
+    """
+    if path is None:
+        return None
+    record: dict[str, Any] = {"path": str(path), "lines": [], "alphas": []}
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+        return record
+    for line in text.splitlines():
+        if "[SPEC-CASC-OPT PATCH" not in line:
+            continue
+        record["lines"].append(line.strip())
+        match = re.search(r"alpha=(-?inf|nan|[0-9.eE+-]+)", line)
+        if match:
+            try:
+                record["alphas"].append(float(match.group(1)))
+            except ValueError:
+                pass
+    record["distinct_alphas"] = sorted(set(record["alphas"]))
+    return record
+
+
+def cactus_alpha_in_force() -> dict[str, Any]:
+    """The alpha the CACTUS-patched sampler would load, read from its own channel.
+
+    Mirrors lenience_in_force() / spec_casc_alpha_in_force().
+    """
+    record: dict[str, Any] = {"path": str(CACTUS_ALPHA_FILE), "value": None}
+    try:
+        record["value"] = float(CACTUS_ALPHA_FILE.read_text().strip())
+        record["mtime_utc"] = dt.datetime.fromtimestamp(
+            CACTUS_ALPHA_FILE.stat().st_mtime, dt.timezone.utc
+        ).isoformat()
+    except (OSError, ValueError) as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+    return record
+
+
+def server_log_cactus_alpha(path: pathlib.Path | None) -> dict[str, Any] | None:
+    """The alpha the CACTUS-patched sampler actually announced, scraped from the
+    server log. Mirrors server_log_spec_casc_alpha()."""
+    if path is None:
+        return None
+    record: dict[str, Any] = {"path": str(path), "lines": [], "alphas": []}
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        record["error"] = f"{type(exc).__name__}: {exc}"
+        return record
+    for line in text.splitlines():
+        if "[CACTUS PATCH" not in line:
+            continue
+        record["lines"].append(line.strip())
+        match = re.search(r"alpha=(-?inf|nan|[0-9.eE+-]+)", line)
+        if match:
+            try:
+                record["alphas"].append(float(match.group(1)))
+            except ValueError:
+                pass
+    record["distinct_alphas"] = sorted(set(record["alphas"]))
     return record
 
 
@@ -336,6 +483,12 @@ def safe_tag(args: argparse.Namespace) -> str:
         tag = args.mode
     elif args.lossy_method == "lenience":
         tag = f"lenience{args.lenience_factor:g}".replace(".", "p")
+    elif args.lossy_method == "spec_casc_opt":
+        # "-" is in the allowed charset below, so a negative alpha (e.g.
+        # -0.1) needs no further escaping to stay a safe tag/directory name.
+        tag = f"specCascOpt{args.spec_casc_alpha:g}".replace(".", "p")
+    elif args.lossy_method == "cactus":
+        tag = f"cactus{args.cactus_alpha:g}".replace(".", "p")
     else:
         tag = f"synthetic{args.synthetic_acceptance_length:g}".replace(".", "p")
     allowed = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
@@ -353,34 +506,48 @@ def validate_args(args: argparse.Namespace) -> None:
     if args.max_new_tokens < 1:
         raise ValueError("--max-new-tokens must be positive")
 
+    ALL_METHOD_PARAMS = (
+        ("--lenience-factor", "lenience_factor"),
+        ("--synthetic-acceptance-length", "synthetic_acceptance_length"),
+        ("--spec-casc-alpha", "spec_casc_alpha"),
+        ("--cactus-alpha", "cactus_alpha"),
+    )
+
+    def require_only(required_flag: str, required_attr: str) -> None:
+        for flag, attr in ALL_METHOD_PARAMS:
+            value = getattr(args, attr)
+            if attr == required_attr:
+                if value is None:
+                    raise ValueError(f"--lossy-method {args.lossy_method} requires {required_flag}")
+            elif value is not None:
+                raise ValueError(f"{flag} is not used by --lossy-method {args.lossy_method}")
+
     if args.mode == "lossy":
         if args.lossy_method is None:
-            raise ValueError("lossy mode requires --lossy-method {lenience,synthetic_acceptance}")
+            raise ValueError(
+                "lossy mode requires --lossy-method {lenience,synthetic_acceptance,spec_casc_opt,cactus}"
+            )
         if args.lossy_method == "lenience":
-            if args.lenience_factor is None:
-                raise ValueError("--lossy-method lenience requires --lenience-factor")
+            require_only("--lenience-factor", "lenience_factor")
             if not 0.0 < args.lenience_factor < 1.0:
                 raise ValueError(
                     f"--lenience-factor must be in (0, 1) to be lossy; got {args.lenience_factor} "
                     "(1.0 is the lossless rule: run it as --mode strict)"
                 )
-            if args.synthetic_acceptance_length is not None:
-                raise ValueError("--synthetic-acceptance-length is not used by --lossy-method lenience")
+        elif args.lossy_method == "spec_casc_opt":
+            require_only("--spec-casc-alpha", "spec_casc_alpha")
+        elif args.lossy_method == "cactus":
+            require_only("--cactus-alpha", "cactus_alpha")
+            if args.cactus_alpha < 0.0:
+                raise ValueError(f"--cactus-alpha must be >= 0 (it bounds a KL divergence); got {args.cactus_alpha}")
         else:
-            if args.synthetic_acceptance_length is None:
-                raise ValueError(
-                    "--lossy-method synthetic_acceptance requires --synthetic-acceptance-length"
-                )
-            if args.lenience_factor is not None:
-                raise ValueError("--lenience-factor is not used by --lossy-method synthetic_acceptance")
+            require_only("--synthetic-acceptance-length", "synthetic_acceptance_length")
     else:
-        for name, value in (
-            ("--lossy-method", args.lossy_method),
-            ("--lenience-factor", args.lenience_factor),
-            ("--synthetic-acceptance-length", args.synthetic_acceptance_length),
-        ):
-            if value is not None:
-                raise ValueError(f"{name} is only valid with --mode lossy")
+        for flag, attr in ALL_METHOD_PARAMS:
+            if getattr(args, attr) is not None:
+                raise ValueError(f"{flag} is only valid with --mode lossy")
+        if args.lossy_method is not None:
+            raise ValueError("--lossy-method is only valid with --mode lossy")
 
 
 def acceptance_rule_record(args: argparse.Namespace) -> dict[str, Any]:
@@ -411,6 +578,39 @@ def acceptance_rule_record(args: argparse.Namespace) -> dict[str, Any]:
             "lambda": factor,
             "alpha_equivalent": round(1.0 - factor, 12),
             "note": "lambda = 1 - alpha; residual and bonus sampling are unchanged from stock",
+        }
+    elif args.mode == "lossy" and args.lossy_method == "spec_casc_opt":
+        alpha = args.spec_casc_alpha
+        record["lossy_parameters"] = {"spec_casc_alpha": alpha}
+        record["acceptance_rule"] = (
+            f"defer to strict p/q test iff max_u q(u) < max_u p(u) - {alpha:g}*TV(p,q), "
+            "else accept unconditionally"
+        )
+        record["taxonomy"] = {
+            "family": "speculative cascades [OPT] (Narasimhan et al. 2025)",
+            "alpha": alpha,
+            "note": (
+                "training-free relaxed target distribution; see arXiv:2607.08690 "
+                "for a practical comparison against mentored decoding / lenience"
+            ),
+        }
+    elif args.mode == "lossy" and args.lossy_method == "cactus":
+        alpha = args.cactus_alpha
+        record["lossy_parameters"] = {"cactus_alpha": alpha}
+        record["acceptance_rule"] = (
+            f"accept iff gamma_x / q(x) >= u, where "
+            f"gamma_x = min(p(x) + sqrt(2*{alpha:g}*p(x)*(1-p(x))), 1)"
+        )
+        record["taxonomy"] = {
+            "family": "CACTUS (Hao & Mou 2026)",
+            "alpha": alpha,
+            "note": (
+                "training-free relaxed target distribution, boost depends only on p(x) and "
+                "alpha, never on q -- see arXiv:2607.08690 Finding 1 for why this behaves "
+                "similarly to mentored decoding / lenience. Residual (post-rejection) sampling "
+                "is left as unmodified strict p, not CACTUS's own pi_res == pi_rej, matching "
+                "this repo's existing lenience patch's beta=1 simplification precedent."
+            ),
         }
     elif args.mode == "lossy":
         record["lossy_parameters"] = {
@@ -452,6 +652,64 @@ def acceptance_rule_record(args: argparse.Namespace) -> dict[str, Any]:
                 raise ValueError(
                     f"server log {args.server_log} announces lenience factor(s) "
                     f"{announced['distinct_factors']}, run was invoked for {expected:g}"
+                )
+
+    # Parallel check for spec-casc-opt's own knob -- only this arm's alpha is
+    # verified here; every other arm leaves it at the neutral -inf the server
+    # writes for exactly this reason (see run_server_vllm.sh).
+    if args.mode == "lossy" and args.lossy_method == "spec_casc_opt":
+        alpha_expected = args.spec_casc_alpha
+        alpha_in_force = spec_casc_alpha_in_force()
+        record["spec_casc_alpha_in_force"] = alpha_in_force
+        alpha_announced = server_log_spec_casc_alpha(args.server_log)
+        if alpha_announced is not None:
+            record["spec_casc_alpha_announced_by_server"] = alpha_announced
+
+        alpha_got = alpha_in_force["value"]
+        if alpha_got is None:
+            raise ValueError(
+                f"expected spec-casc-opt alpha {alpha_expected:g} but {SPEC_CASC_ALPHA_FILE} is "
+                f"unreadable ({alpha_in_force.get('error')}). Start the server with "
+                "remote/run_server_vllm.sh, which writes it for every mode."
+            )
+        if abs(alpha_got - alpha_expected) > 1e-12:
+            raise ValueError(
+                f"server loaded spec-casc-opt alpha {alpha_got:g}, run was invoked for "
+                f"{alpha_expected:g}. Refusing to write a mislabelled run directory."
+            )
+        if alpha_announced is not None and alpha_announced.get("distinct_alphas"):
+            if any(abs(a - alpha_expected) > 1e-12 for a in alpha_announced["distinct_alphas"]):
+                raise ValueError(
+                    f"server log {args.server_log} announces spec-casc-opt alpha(s) "
+                    f"{alpha_announced['distinct_alphas']}, run was invoked for {alpha_expected:g}"
+                )
+
+    # Same pattern again for CACTUS's own knob.
+    if args.mode == "lossy" and args.lossy_method == "cactus":
+        cactus_expected = args.cactus_alpha
+        cactus_in_force = cactus_alpha_in_force()
+        record["cactus_alpha_in_force"] = cactus_in_force
+        cactus_announced = server_log_cactus_alpha(args.server_log)
+        if cactus_announced is not None:
+            record["cactus_alpha_announced_by_server"] = cactus_announced
+
+        cactus_got = cactus_in_force["value"]
+        if cactus_got is None:
+            raise ValueError(
+                f"expected CACTUS alpha {cactus_expected:g} but {CACTUS_ALPHA_FILE} is "
+                f"unreadable ({cactus_in_force.get('error')}). Start the server with "
+                "remote/run_server_vllm.sh, which writes it for every mode."
+            )
+        if abs(cactus_got - cactus_expected) > 1e-12:
+            raise ValueError(
+                f"server loaded CACTUS alpha {cactus_got:g}, run was invoked for "
+                f"{cactus_expected:g}. Refusing to write a mislabelled run directory."
+            )
+        if cactus_announced is not None and cactus_announced.get("distinct_alphas"):
+            if any(abs(a - cactus_expected) > 1e-12 for a in cactus_announced["distinct_alphas"]):
+                raise ValueError(
+                    f"server log {args.server_log} announces CACTUS alpha(s) "
+                    f"{cactus_announced['distinct_alphas']}, run was invoked for {cactus_expected:g}"
                 )
     return record
 
@@ -633,6 +891,22 @@ def main() -> int:
             print(
                 "configuration error: the Lenience patch is not applied to "
                 f"{provenance['vllm'].get('site_packages')}; run bash patches/apply.sh",
+                file=sys.stderr,
+            )
+            return 2
+    if args.mode == "lossy" and args.lossy_method == "spec_casc_opt":
+        if not provenance["vllm"].get("spec_casc_opt_patch_applied"):
+            print(
+                "configuration error: the spec-casc-opt patch is not applied to "
+                f"{provenance['vllm'].get('site_packages')}; run bash patches/apply_spec_casc_opt.sh",
+                file=sys.stderr,
+            )
+            return 2
+    if args.mode == "lossy" and args.lossy_method == "cactus":
+        if not provenance["vllm"].get("cactus_patch_applied"):
+            print(
+                "configuration error: the CACTUS patch is not applied to "
+                f"{provenance['vllm'].get('site_packages')}; run bash patches/apply_cactus.sh",
                 file=sys.stderr,
             )
             return 2
