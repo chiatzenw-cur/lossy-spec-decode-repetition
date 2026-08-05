@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b32865d49e98a307",
+  "object": "text_completion",
+  "created": 1785931494,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to determine which method the repository uses for consistency. Based on code: The description seems to describe \"StoryMaker\" as let's review. The doc includes \"storymaker\", \"StoryMaker preserves consistency not only self-consistent face but also clothing, hairstyles, and body and uses capacity.  In code, we see load_storymaker_adapter: it uses face encoder with CLIP ViT and IPAdapter? The repo has IPAdaper style with LoRAIPAttnProcessor. The use of oc: PPR (Position-Aware Perceiver Resampler). The model uses a DGP? Let's look deeper. The question: the repository has multiple methods. Which method this repository uses? The options:\n\nA: A face recognition method to extract facial features and clothing features via image recognition model and uses SDXL with IP-Adapter enabled. That mentions leading both: \"It uses a face recognition method to extract the facial features, and image recognition model to describe the clothing. SDXL model and IP-Adapter enables consistency.\" This seems fairly generic.\n\nB: Talks about multi-attention mechanisms and the attention processors and the IP-Adapter. It says \"This code snippet is to add control of image prompts on basis of attention mechanisms.\"\n\nC: Flows differently: describes the use of Face extraction, then using ImageRecognition model to generate descriptive prompts. Doesn’t align with code. The file uses face detection and uses CLIP ViT to encode features but basically uses IP-adapter usage with per-list of tokens. It doesn't mention Flux. It adds control of image prompts, but not shape.\n\nD: The approach uses attribute: \"StoryMaker merges conditional information based on facial identity and cropped character images (including clothing, hairstyles, and bodies). Specifically, we utilize a Position-Aware Perceiver Resampler (PPR) to integrate facial identity info with cropped character images, enabling the acquisition of diverse character features.\" Option D mentions PPR- The relevant code mentions cross-attention: PPR (Position-aware Perceiver Resampler). The code uses a Position-Aware Perceiver Resampler: there is a PPR implemented in the code: `faceid_plus` has a private 'pos_embed' of shape 3 20 2048 etc. Wait that is but not PPR? Let's inspect: 'faceid_plus' has a \"pos_embed\" and a \"bg_embed\" but it seems not PPR. The actual code: `faceid_plus` functions: Each time, a 'pos_embed' of values for max person. Actually inside the same code: It has 'pos_embed' small. It also uses \"self.resample\"? Wait there's a another and a head model? I see 'FacePerceiverResampler', 'Resampler' but also the 'faceid_plus' might use a pos-embedding. They mention 'position aware'.\n\nThe code might unify PPR: \"FaceIDPlus\" uses: `PPR` probably involves \"Pos-Aware Perceiver Resampler\" and \"Pos-Aware Perceiver Resampler\". The design / stack? The code class definitions: `FacePerceiverResampler` and `Pos-Aware Perceiver Resampling? Let's check: At earlier code: the part \"class FacePerceiverResampler\" includes \"self.proj_in\", \"self.proj_out\" etc. The code? They might also call \"faceid_plus\", that uses \"faceid_plus\" and a Pos-Aware Perceiver Resampler. The architecture provides 'faceid_plus' and a 'Perceiver' stuff per 'face'. The model uses \"os==\"? The face of \"faceid_plus\" uses a `self.perceiver_resampler` for id embeddings plus `self.resample` for clip embeddings. They use `Pos_Aware`. So indeed D.\n\nLet's see the design: \"StoryMaker\" new integration from official A. The considered for building: \"position aware perceiver resampler\" providing pattern. For \"Story Maker reliability,\" the repository uses the \"PPR\" and adaptation: The \"PPR\" steps? it's \"use Memory or? Using PPR\" appears. Option D states \"Text-based????\" Actually we analyze service: \"StoryMaker merges conditional information based on facial identity and cropped character images** (including clothing, hairstyles, and bodies). It uses Position-Aware Perceiver Resampler (PPR) to integrate Facial identity information with cropped character images, enabling unique character features. \"\n\nTherefore D. So choose the D. The short. Use d.<|end|><|start|>assistant<|channel|>final<|message|>The repository’s new method is **“StoryMaker merges conditional information based on facial identity and cropped character images (including clothing, hairstyles, and bodies) by using a Position‑Aware Perceiver Resampler (PPR) to incorporate face and image information into the SDXL prompt.”**  \n\nHence the correct choice is **D**.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 30488,
+    "total_tokens": 31487,
+    "completion_tokens": 999,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

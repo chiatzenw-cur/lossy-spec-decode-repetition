@@ -1,0 +1,124 @@
+{
+  "timestamp_utc": "2026-08-05T11:52:42.787482+00:00",
+  "backend": "vllm",
+  "tag": "lenience0p05",
+  "mode": "lossy",
+  "lossy_method": "lenience",
+  "lossy_parameters": {
+    "lenience_factor": 0.05
+  },
+  "lenience_factor_in_force": {
+    "path": "/tmp/lossy-spec-decode-lenience-1003",
+    "value": 0.05,
+    "mtime_utc": "2026-08-05T11:51:36.657650+00:00"
+  },
+  "acceptance_rule": "accept iff p(x) / (0.05 * q(x)) >= u",
+  "taxonomy": {
+    "family": "mentored decoding (Xia et al.)",
+    "lambda": 0.05,
+    "alpha_equivalent": 0.95,
+    "note": "lambda = 1 - alpha; residual and bonus sampling are unchanged from stock"
+  },
+  "lenience_factor_expected": 0.05,
+  "lenience_factor_announced_by_server": {
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_longbench_v2/lenience0p05_case_034_seed0_20260805T115136Z.log",
+    "lines": [
+      "[LENIENCE PATCH v1] pid=895998 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)",
+      "[LENIENCE PATCH] pid=895998 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
+      "(EngineCore pid=896219) [LENIENCE PATCH] pid=896219 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
+      "(EngineCore pid=896219) [LENIENCE PATCH v1] pid=896219 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)"
+    ],
+    "factors": [
+      0.05,
+      0.05,
+      0.05,
+      0.05
+    ],
+    "distinct_factors": [
+      0.05
+    ]
+  },
+  "model": "gpt-oss-20b",
+  "draft_model": "nebius/EAGLE3-gpt-oss-20b",
+  "seed": 0,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_new_tokens": 18000,
+  "input_tokens_archived": 29884,
+  "prompt_case": "case_034",
+  "prompt_source_id": "zai-org/LongBench-v2:train:671b3fa1bb02136c067d5353",
+  "reference_answer": "C",
+  "endpoint": "http://127.0.0.1:30000/v1/completions",
+  "server_request_ordinal": 1,
+  "fresh_server_asserted": true,
+  "engine_totals_before_first_request": {
+    "vllm:spec_decode_num_drafts_total": 0.0,
+    "vllm:prompt_tokens_total": 0.0,
+    "vllm:generation_tokens_total": 0.0,
+    "vllm:request_success_total": 0.0
+  },
+  "vllm": {
+    "version": "0.26.0",
+    "commit_id": "g568afb3a1",
+    "site_packages": "/home/chiatzen/lossy-spec-decode-repetition/.venv-vllm/lib/python3.12/site-packages",
+    "verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d",
+        "matches_lenience_patch": true
+      },
+      "vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": {
+        "sha256": "0ad55a1cb39f2306c78a170fdb6468a36b55643c6610c85cd46c908e0d313112",
+        "matches_lenience_patch": true
+      }
+    },
+    "lenience_patch_applied": true,
+    "spec_casc_opt_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d",
+        "matches_spec_casc_opt_patch": false
+      }
+    },
+    "spec_casc_opt_patch_applied": false,
+    "cactus_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d",
+        "matches_cactus_patch": false
+      }
+    },
+    "cactus_patch_applied": false
+  },
+  "git_commit": "0778b89837888e819a0bd342493a31aca771ea4a",
+  "git_dirty": true,
+  "command": [
+    "/home/chiatzen/lossy-spec-decode-repetition/scripts/run_experiment_vllm.py",
+    "--mode",
+    "lossy",
+    "--prompt-root",
+    "prompts/longbench_v2",
+    "--runs-root",
+    "runs/longbench_v2_fresh",
+    "--cases",
+    "case_034",
+    "--seeds",
+    "0",
+    "--tag",
+    "lenience0p05",
+    "--temperature",
+    "1.0",
+    "--top-p",
+    "1.0",
+    "--max-new-tokens",
+    "18000",
+    "--timeout",
+    "7200.0",
+    "--server-url",
+    "http://127.0.0.1:30000",
+    "--server-log",
+    "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_longbench_v2/lenience0p05_case_034_seed0_20260805T115136Z.log",
+    "--assert-fresh-server",
+    "--lossy-method",
+    "lenience",
+    "--lenience-factor",
+    "0.05"
+  ]
+}
