@@ -2177,6 +2177,45 @@
           "server_log": "logs/fresh_lenience_radical_greedy/lenience0p05Greedy12k_case_030_seed0_20260806T114115Z.log"
         }
       ]
+    },
+    {
+      "timestamp_utc": "2026-08-06T16:26:14.841156+00:00",
+      "arms": [
+        "spec_casc_opt"
+      ],
+      "lenience_factor": 0.2,
+      "command": [
+        "scripts/fresh_server_replay.py",
+        "--arms",
+        "spec_casc_opt",
+        "--spec-casc-alpha",
+        "0.5",
+        "--prompt-root",
+        "prompts/aime24",
+        "--runs-root",
+        "runs/aime24_fresh",
+        "--log-root",
+        "logs/fresh_verify_identical",
+        "--max-new-tokens",
+        "12000",
+        "--tag-suffix",
+        "Verify",
+        "--cases",
+        "case_001",
+        "--trace-proposals",
+        "--overwrite"
+      ],
+      "runs": [
+        {
+          "case": "case_001",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5Verify",
+          "status": "ok",
+          "wall_time_seconds": 77.0,
+          "server_log": "logs/fresh_verify_identical/specCascOpt0p5Verify_case_001_seed0_20260806T162457Z.log"
+        }
+      ]
     }
   ]
 }
