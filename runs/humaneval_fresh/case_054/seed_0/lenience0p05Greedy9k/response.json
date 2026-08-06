@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-ac84713df55142a7",
+  "object": "text_completion",
+  "created": 1786020291,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function add(x: int, y: int) that returns int sum. The function signature: def add(x: int, y: int): ... The docstring already includes examples. The function body: return x + y. Should we type hint? The function signature already has type hints. Should we return int? The function body: return x + y. Also maybe add type checking? But not necessary. Provide full function. Also maybe add type hints? The function body: return x + y. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef add(x: int, y: int) -> int:\n    \"\"\"Add two numbers x and y\n\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n    return x + y\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 165,
+    "total_tokens": 345,
+    "completion_tokens": 180,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,62 @@
+<|channel|>analysis<|message|>We need to complete the function body for greatest_common_divisor. The spec: take two ints a and b, return their GCD. Could use Euclidean algorithm. Must handle negative numbers, zero. Also need to implement using iterative loop. Provide docstring.
+
+Important: function signature already has docstring opener. Need to fill entire function definition. Should handle negative ints: GCD defined as non-negative; we can return abs(gcd). Zero: gcd(a,0)=abs(a). If both zero: return 0? Usually gcd(0,0)=0. Implementation: while b != 0: a, b = b, a % b; return abs(a).
+
+Also note: the docstring hasn't ended properly? Provided docstring includes triple quotes at start then code example but not closing triple quotes in snippet. We'll include proper triple-quoted docstring plus examples and closing quotes.
+
+We need to replicate the full function with signature and docstring and implementation.
+
+Also might include type hints.
+
+We'll show function:
+
+def greatest_common_divisor(a: int, b: int) -> int:
+    """Return a greatest common divisor of two integers a and b.
+
+    >>> greatest_common_divisor(3, 5)
+    1
+    >>> greatest_common_divisor(25, 15)
+    5
+    """
+    # Ensure inputs are integers.
+    # Use Euclidean algorithm.
+    a, b = abs(a), abs(b)
+    if a == 0 and b == 0:
+        return 0
+    while b:
+        a, b = b, a % b
+    return a
+
+ Provide in code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def greatest_common_divisor(a: int, b: int) -> int:
+    """Return a greatest common divisor of two integers a and b.
+
+    The function implements the Euclidean algorithm and always
+    returns a non‑negative integer.  For the special case where
+    both arguments are zero the function returns 0, which is the
+    convention used in most programming libraries.
+
+    >>> greatest_common_divisor(3, 5)
+    1
+    >>> greatest_common_divisor(25, 15)
+    5
+    >>> greatest_common_divisor(-12, 30)
+    6
+    >>> greatest_common_divisor(0, 7)
+    7
+    >>> greatest_common_divisor(0, 0)
+    0
+    """
+    # Work with absolute values for consistency
+    a, b = abs(a), abs(b)
+
+    # Handle the (0, 0) case explicitly
+    if a == 0 and b == 0:
+        return 0
+
+    # Euclidean algorithm
+    while b != 0:
+        a, b = b, a % b
+
+    return a
+```

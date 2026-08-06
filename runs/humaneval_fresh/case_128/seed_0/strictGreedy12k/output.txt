@@ -1,0 +1,76 @@
+<|channel|>analysis<|message|>We need to implement intersection length calculation, check prime. Handling edge cases: intervals may be closed endpoints, intersection length includes endpoints as [start, end] inclusive. The length of intersection as number of integer points? The problem examples: example intersection of (1,3),(2,4) is (2,3) which its length is 1, which not a prime number. Wait, (2,3) has length 1? If length measured as difference between extremes? Usually length continuous would be 1. Yes difference 3-2=1. For intervals (1,2),(2,3) intersection (2,2) length 0? Actually difference 2-2=0. They say return "NO". Intersection length 0 not prime. For (-1,1),(0,4) intersection (0,1) length 1 => NO. For (-3,-1),(-5,5) intersection (-3,-1) length 2 => prime? 2 is prime => "YES". Yes difference = -1 - (-3) = 2. Good.
+
+So we calculate intersect_start = max(start1, start2), intersect_end = min(end1, end2). If intersect_start > intersect_end, no intersection => "NO". Else length = intersect_end - intersect_start. Check if prime. If prime => "YES" else "NO". Also length could be 0 => not prime. Manage negative lengths? Already validated. Overlaps values as given int.
+
+Prime check up to maybe big difference. The difference can be up to maybe around 2*10^9? maybe. But prime check simple sqrt: for n <=1 not prime. For 2 prime. For even >2 not prime. Then test odd up to sqrt.
+
+Implement function.
+
+Also docstring probably inside.
+
+Let's craft full function.
+
+Also note we need to return string "YES" or "NO".
+
+Edge: length can be negative? Not if intersection exists.
+
+Ok. Let's produce.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+def intersection(interval1, interval2):
+    """Return "YES" if the length of the intersection of two closed integer intervals
+    is a prime number, otherwise return "NO".
+
+    Parameters
+    ----------
+    interval1 : tuple(int, int)
+        Closed interval of form (start1, end1). Assumes start1 <= end1.
+    interval2 : tuple(int, int)
+        Closed interval of form (start2, end2). Assumes start2 <= end2.
+
+    Returns
+    -------
+    str
+        "YES" if the length (end - start) of the overlapping part is a prime number,
+        "NO" otherwise (including the case when the intervals do not intersect).
+
+    Examples
+    --------
+    >>> intersection((1, 2), (2, 3))
+    'NO'
+    >>> intersection((-1, 1), (0, 4))
+    'NO'
+    >>> intersection((-3, -1), (-5, 5))
+    'YES'
+    """
+    start1, end1 = interval1
+    start2, end2 = interval2
+
+    # Compute intersection bounds
+    inter_start = max(start1, start2)
+    inter_end = min(end1, end2)
+
+    # No overlap
+    if inter_start > inter_end:
+        return "NO"
+
+    # Length of intersection
+    length = inter_end - inter_start
+
+    # Helper to test primality
+    def is_prime(n: int) -> bool:
+        if n <= 1:
+            return False
+        if n == 2:
+            return True
+        if n % 2 == 0:
+            return False
+        i = 3
+        while i * i <= n:
+            if n % i == 0:
+                return False
+            i += 2
+        return True
+
+    return "YES" if is_prime(length) else "NO"
+```

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a85131a38962ea64",
+  "object": "text_completion",
+  "created": 1786020500,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function that checks if a string of \"<\" and \">\" is correctly balanced. Equivalent to checking if parentheses () match. The function returns True if every opening bracket has a corresponding closing bracket. The examples: \"<\" -> False, \"<>\" -> True, \"<<><>>\" -> True, \"><<>\" -> False. So we need to check if there is a matching sequence where each opening bracket is matched by a closing bracket later in the string, and the stack is balanced. Equivalent to valid parentheses: count of opener must be zero at end, and no negative count during traversal.\n\nWe need to implement function. Provide docstring, maybe include examples. Provide function body. Use python.\n\nEdge cases: empty string? Should return True? The spec: \"return True if every opening bracket has a corresponding closing bracket.\" For empty string, no opening, so vacuously true. So return True.\n\nAlso need to handle potential other characters? Not needed.\n\nImplementation: \n\n```\ndef correct_bracketing(brackets: str):\n    \"\"\"brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n    count = 0\n    for ch in brackets:\n        if ch == \"<\":\n            count += 1\n        elif ch == \">\":\n            count -= 1\n            if count < 0:\n                return False\n        else:\n            raise ValueError(\"Invalid character: only '<' and '>' allowed\")\n    return count == 0\n```\n\nBut we might not need to raise ValueError. The spec didn't mention. But we can be safe. But to be safe, we can just ignore. But it's fine.\n\nWe can also just use a stack: count variable.\n\nReturn True if count==0.\n\nOk.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef correct_bracketing(brackets: str):\n    \"\"\"brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n    count = 0\n    for ch in brackets:\n        if ch == \"<\":\n            count += 1\n        elif ch == \">\":\n            count -= 1\n            if count < 0:          # a closing bracket before a matching opening\n                return False\n        else:\n            raise ValueError(\"Invalid character: only '<' and '>' allowed\")\n    return count == 0\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 205,
+    "total_tokens": 816,
+    "completion_tokens": 611,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

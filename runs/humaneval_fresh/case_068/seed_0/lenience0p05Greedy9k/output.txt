@@ -1,0 +1,60 @@
+<|channel|>analysis<|message|>We need to parse a string containing number of apples and oranges. The string format: "5 apples and 6 oranges", "0 apples and 1 oranges", etc. We need to extract the numbers. We need to compute total - apples - oranges. The function should return the number of mango fruits. Should handle negative? Probably not. Should handle other formats? The description says "this basket contains apples, oranges, and mango fruits". So we can parse digits. The function should return integer. We can use regex. let's implement:
+
+def fruit_distribution(s,n):
+    # find numbers
+    # There are two numbers: first for apples, second for oranges. We'll parse using regex.
+    # Might also use split by whitespace.
+    # Use re.findall(r'\d+', s) to get numbers.
+    # There should be two numbers. If not, raise ValueError.
+    # compute mango = n - apples - oranges
+    # return mango
+
+Edge cases: negative? Not needed.
+
+Return integer.
+
+Also, docstring: already given. We'll keep.
+
+Implement.
+
+Also, we might need to handle negative numbers? Not needed.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+import re
+
+def fruit_distribution(s, n):
+    """
+    In this task, you will be given a string that represents a number of apples and oranges
+    that are distributed in a basket of fruit this basket contains
+    apples, oranges, and mango fruits. Given the string that represents the total number of
+    the oranges and apples and an integer that represent the total number of the fruits
+    in the basket return the number of the mango fruits in the basket.
+
+    for example:
+        fruit_distribution("5 apples and 6 oranges", 19) ->19 - 5 - 6 = 8
+        fruit_distribution("0 apples and 1 oranges",3) -> 3 - 0 - 1 = 2
+        fruit_distribution("2 apples and 3 oranges", 100) -> 100 - 2 - 3 = 95
+        fruit_distribution("100 apples and 1 oranges",120) -> 120 - 100 - 1 = 19
+    """
+    # Find all integer sequences in the string
+    numbers = re.findall(r'\d+', s)
+    if len(numbers) != 2:
+        raise ValueError(f"Expected two numbers in the string, got {len(numbers)}: {numbers}")
+
+    # Convert the first two numbers to integers
+    apples = int(numbers[0])
+    oranges = int(numbers[1])
+
+    # Compute the number of mangoes
+    mangoes = n - apples - oranges
+
+    return mangoes
+```
+
+**Explanation**
+
+1. **Extract the numbers** – `re.findall(r'\d+', s)` returns a list of all integer strings in the input.  
+2. **Validate** – The function expects exactly two numbers (apples and oranges).  
+3. **Convert** – Convert the extracted values to integers.  
+4. **Compute** – Subtract the two numbers from the total number of fruits (`n`) to get the number of mangoes.  
+5. **Return** – Return the computed number.

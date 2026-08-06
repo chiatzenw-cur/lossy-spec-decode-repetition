@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b225e445da305cef",
+  "object": "text_completion",
+  "created": 1786005840,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement sum_to_n that sums numbers from 1 to n inclusive. There's no explicit requirement about negative numbers but mostly positive. Should handle n <= 0? Possibly return 0. Should use formula n*(n+1)//2. Implementation simple. But also might ask to sum by loop. But we need to implement function body only: \"Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\"\n\nSo final answer: provide full function with docstring unchanged? Might keep docstring as in snippet. Provide implementation: return n*(n+1)//2 if n>0 else 0.\n\nEdge cases: if n is negative? Could raise ValueError. But typical simple function just calculates. We'll implement robust: if n < 1: return 0 (maybe return n*(n+1)//2 yields 0 for n=0? 0*1//2=0. For negative n, -1*0//2=0. So fine but may not be correct. We can just compute formula. So we just return n*(n+1)//2.\n\nThus final. Need to output code block with function.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef sum_to_n(n: int):\n    \"\"\"sum_to_n is a function that sums numbers from 1 to n.\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n    # Use the arithmetic series formula n*(n+1)/2.\n    # Since we're dealing with integers, integer division is safe.\n    return n * (n + 1) // 2\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 206,
+    "total_tokens": 594,
+    "completion_tokens": 388,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

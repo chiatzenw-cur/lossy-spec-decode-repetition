@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-85216f91115b68fe",
+  "object": "text_completion",
+  "created": 1786005777,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function to return largest prime factor. We must consider n > 1 and is not a prime. But we may handle prime too? The docstring says assume n>1 and is not a prime, but we can still handle general. Implementation: while let's factor out small divisors. Standard algorithm: divide out 2, then loop from 3 to sqrt(n) step 2. Keep track of max factor. After loop, if n > 2: n is prime and larger than previous, return n. Approach: n_local = n, factor= -1. While n%2==0: factor=2; n//=2. For i in range(3, int(math.sqrt(n))+1, 2): while n%i==0: factor=i; n//=i. After loop, if n>2: factor=n. Return factor. Complexity O(sqrt(n)). We'll import math.\n\nEdge cases: n may be small like 2? But assume >1 not prime, ex 2048 -> repeated 2's. We will get factor=2, n becomes 1 after dividing by 2. After loop, n <= 1, so return factor 2. That works.\n\nTest: 13195 factorization 5*7*13*29 => algorithm: remove 5, factor values will update, etc. Should return 29.\n\nWe must produce full function. Include import math. But we can inside function maybe use math.isqrt in Python 3.8+: isqrt(n) Quick.\n\nWe should also allow for n huge, but fine.\n\nDocstring includes doctests.\n\nLet's produce final function:\n\n```\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    import math\n    if n <= 3:\n        return n  # only 2 or 3 if prime, but assumption not prime\n    largest = None\n    while n % 2 == 0:\n        largest = 2\n        n //= 2\n    factor = 3\n    # Use math.isqrt for upper bound\n    while factor <= math.isqrt(n):\n        while n % factor == 0:\n            largest = factor\n            n //= factor\n        factor += 2\n    if n > 2:\n        largest = n\n    return largest\n```\n\nBut if input prime (e.g., 13) our algorithm returns 13. That's fine.\n\nReturn type int.\n\nEdge: if n originally >3 but had no factors found in loop and n may still be remaining? Eg n=9? n=9: while 2 divides? no. factor loop up to sqrt 9=3: while n%3==0 will produce largest=3. n becomes 1. returns 3. good.\n\nEdge: n=49? returns 7.\n\nEdge: n=2? lte 3 returns n => 2.\n\nBut doc says not prime; but returning same is fine.\n\nAlternatively we can raise ValueError if no factor found? Not necessary.\n\nOk produce.\n\nLet's output.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    import math\n\n    if n <= 3:          # 2 or 3 (prime) – return as the only factor\n        return n\n\n    largest = None\n\n    # Remove factor 2\n    while n % 2 == 0:\n        largest = 2\n        n //= 2\n\n    # Test odd factors from 3 upwards\n    factor = 3\n    while factor <= math.isqrt(n):\n        while n % factor == 0:\n            largest = factor\n            n //= factor\n        factor += 2\n\n    # If n is now greater than 2, it itself is a prime factor\n    if n > 2:\n        largest = n\n\n    return largest\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 175,
+    "total_tokens": 1079,
+    "completion_tokens": 904,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

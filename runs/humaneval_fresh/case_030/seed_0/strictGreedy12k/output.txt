@@ -1,0 +1,50 @@
+<|channel|>analysis<|message|>We need to complete the function filter_by_prefix that takes a list of strings and prefix, returns a list of strings that start with the given prefix. It's straightforward: iterate, check str.startswith(prefix), return list. Also need to maintain order. The docstring shows examples; let's return list comprehension.
+
+But it's a test; we need to fully implement the function body.
+
+Also, we need to consider prefix could be empty string: then all strings should be returned? Probably yes. test not included, but typical semantics: all strings start with empty prefix. So return strings as is.
+
+Additionally, we might want to handle None input? Not necessary.
+
+Thus implement:
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]: return [s for s in strings if s.startswith(prefix)]
+
+But ensure types import is fine.
+
+Additionally, maybe include use of filter function? All good.
+
+Also: keep typing.
+
+the docstring indicates filter by prefix.
+
+Therefore final output:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+Make sure to import List at the top (already imported). That’s all.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """Filter an input list of strings only for ones that start with a given prefix.
+
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    # List comprehension keeps the original ordering.
+    return [s for s in strings if s.startswith(prefix)]
+```

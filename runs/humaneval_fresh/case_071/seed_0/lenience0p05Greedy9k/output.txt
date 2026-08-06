@@ -1,0 +1,63 @@
+<|channel|>analysis<|message|>We need to implement a function that returns a list in strange order: start with min, then max of remaining, then min of remaining, then max of remaining, etc. Equivalent to: take sorted list, then take two pointers: left, right. But we need to start with min, then max. So we can sort list, then iterate. But careful: if we have duplicates, no problem. Example: [5,5,5,5] -> [5,5,5,5] same.
+
+Edge cases: empty list -> [].
+
+We must return new list. Implementation: sort list, then use two pointers: left=0, right=n-1, while left <= right: output sorted[left], then if left==right: break; else output sorted[right], then left++ and right--. But careful: the order: start with min, then max, then min, then max. So we need to produce [min, max, next min, next max, ...]. That is exactly the described algorithm.
+
+But we might need to handle duplicates: if all equal, the order is same.
+
+Edge: if list length 1, output [min]. Works.
+
+Implementation: use list.sort() or sorted. But we need to return a new list. So we can create sorted_list = sorted(lst). Then iterate.
+
+Return new list.
+
+Docstring: as given.
+
+We need to ensure we don't modify the original list. Sorted does not modify original.
+
+Return new list.
+
+Let's produce final code.
+
+But we also need to consider that list may be other than ints? The problem says "list of integers". So fine.
+
+Complexities: O(n log n).
+
+Edge: if list already sorted, we can use sorted.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def strange_sort_list(lst):
+    '''
+    Given list of integers, return list in strange order.
+    Strange sorting, is when you start with the minimum value,
+    then maximum of the remaining integers, then minimum and so on.
+
+    Examples:
+    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]
+    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]
+    strange_sort_list([]) == []
+    '''
+    # Sort the list in ascending order
+    sorted_lst = sorted(lst)
+
+    # Two pointers: one at the left (min) and one at the right (max)
+    left, right = 0, len(sorted_lst) - 1
+    result = []
+
+    while left <= right:
+        # Append the current minimum
+        result.append(sorted_lst[left])
+        if left == right:          # no more elements left
+            break
+        # Append the current maximum
+        result.append(sorted_lst[right])
+        left += 1
+        right -= 1
+
+    return result
+```
+
+This function preserves the original list, sorts the input, and then alternates between the smallest and largest remaining elements, resulting in the “strange” order.

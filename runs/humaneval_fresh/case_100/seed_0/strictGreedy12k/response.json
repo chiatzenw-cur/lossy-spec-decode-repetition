@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bff2c9b065f7f04b",
+  "object": "text_completion",
+  "created": 1786008331,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that takes string value, parse it as number, find closest integer. It's similar to math.ceil, floor, round. The default round in Python rounds ties away from zero? Actually round uses nearest even; also it returns float. We need to handle rounding ties away from zero. So algorithm: parse to float; if integer part absolute value? Actually we need to handle decimal numbers and negative.\n\nSimpler: compute floor and ceil: lower = math.floor(num), upper = math.ceil(num). Then compute diff1 = abs(num - lower), diff2 = abs(upper - num). If diff1 < diff2 -> lower. If diff2 < diff1 -> upper. If equal -> choose the one with larger magnitude (further from zero). For positive numbers, upper>0. lower>=0, but lower<upper. For num>=0, upper is always >= lower. So tie: choose upper. For negative numbers: lower <= num <= upper. For negative numbers, upper is closer to zero? Example num=-14.5: floor(-14.5) -> -15, ceil -> -14. So diff both 0.5. We need to choose the one farthest from zero: -15 (larger magnitude). So pick lower. So tie: if num>=0: choose upper else choose lower.\n\nAlso if the input string may have other formats: e.g., leading/trailing spaces, maybe . or decimal part optional. Use float(value). But for large numbers maybe use Decimal. We'll implement with float.\n\nReturn int type.\n\nEdge cases: if value is integer string \"10\" => 10.\n\nWe could also consider if the string is something like \"2e3\" but spec says representing a number. We'll just parse with float anyway.\n\nMake docstring as question? Provide full function.\n\nImplementation: import math\n\nAdd error handling? Not required.\n\nLet's craft.\n\nNote: The problem says \"closest integer\" implies nearest integer. Example given 15.3 => 15. 10 => 10.\n\nLet's write.\n\nPotential pitfalls: For large numbers above sys.maxsize or float limitations, but not required.\n\nAlso we need rounding away from zero for tie. Another way: use math.copysign? But tie case solved above.\n\nEdge case: input \"-0.5\": floor returns -1, ceil resolves 0. diff both 0.5. Choose \"furthest from zero\": -1. Good.\n\nNow produce final function.\n\nWe should import math at top of file? Implementation inside function can import math.\n\nReturn as int.\n\nOk. Let's write.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\nimport math\n\ndef closest_integer(value):\n    '''\n    Create a function that takes a value (string) representing a number\n    and returns the closest integer to it. If the number is equidistant\n    from two integers, round it away from zero.\n\n    Examples\n    >>> closest_integer(\"10\")\n    10\n    >>> closest_integer(\"15.3\")\n    15\n\n    Note:\n    Rounding away from zero means that if the given number is equidistant\n    from two integers, the one you should return is the one that is the\n    farthest from zero. For example closest_integer(\"14.5\") should\n    return 15 and closest_integer(\"-14.5\") should return -15.\n    '''\n    # Convert string to float\n    num = float(value)\n\n    # Handle exact integer values directly\n    if num.is_integer():\n        return int(num)\n\n    # Compute the two neighbouring integers\n    lower = math.floor(num)   # largest integer <= num\n    upper = math.ceil(num)    # smallest integer >= num\n\n    # Distances to each neighbour\n    dist_lower = abs(num - lower)\n    dist_upper = abs(upper - num)\n\n    if dist_lower < dist_upper:\n        return int(lower)\n    elif dist_upper < dist_lower:\n        return int(upper)\n    else:\n        # Distances equal — tie: choose the one farthest from zero\n        # (i.e., with larger absolute value)\n        if num >= 0:\n            return int(upper)\n        else:\n            return int(lower)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 268,
+    "total_tokens": 1144,
+    "completion_tokens": 876,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

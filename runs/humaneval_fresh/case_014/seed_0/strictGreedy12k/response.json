@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-88a03cfa09d082fc",
+  "object": "text_completion",
+  "created": 1786002900,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function body for greatest_common_divisor. The spec: take two ints a and b, return their GCD. Could use Euclidean algorithm. Must handle negative numbers, zero. Also need to implement using iterative loop. Provide docstring.\n\nImportant: function signature already has docstring opener. Need to fill entire function definition. Should handle negative ints: GCD defined as non-negative; we can return abs(gcd). Zero: gcd(a,0)=abs(a). If both zero: return 0? Usually gcd(0,0)=0. Implementation: while b != 0: a, b = b, a % b; return abs(a).\n\nAlso note: the docstring hasn't ended properly? Provided docstring includes triple quotes at start then code example but not closing triple quotes in snippet. We'll include proper triple-quoted docstring plus examples and closing quotes.\n\nWe need to replicate the full function with signature and docstring and implementation.\n\nAlso might include type hints.\n\nWe'll show function:\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\"Return a greatest common divisor of two integers a and b.\n\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n    # Ensure inputs are integers.\n    # Use Euclidean algorithm.\n    a, b = abs(a), abs(b)\n    if a == 0 and b == 0:\n        return 0\n    while b:\n        a, b = b, a % b\n    return a\n\n Provide in code block.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\"Return a greatest common divisor of two integers a and b.\n\n    The function implements the Euclidean algorithm and always\n    returns a non‑negative integer.  For the special case where\n    both arguments are zero the function returns 0, which is the\n    convention used in most programming libraries.\n\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    >>> greatest_common_divisor(-12, 30)\n    6\n    >>> greatest_common_divisor(0, 7)\n    7\n    >>> greatest_common_divisor(0, 0)\n    0\n    \"\"\"\n    # Work with absolute values for consistency\n    a, b = abs(a), abs(b)\n\n    # Handle the (0, 0) case explicitly\n    if a == 0 and b == 0:\n        return 0\n\n    # Euclidean algorithm\n    while b != 0:\n        a, b = b, a % b\n\n    return a\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 182,
+    "total_tokens": 771,
+    "completion_tokens": 589,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

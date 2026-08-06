@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-906893f9d7dfefae",
+  "object": "text_completion",
+  "created": 1786028016,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function string_to_md5. Provide docstring, signature, and implementation. Should handle empty string: return None. Should compute MD5 hash of string. Use hashlib. Ensure encoding. Use text.encode('utf-8').\n\nReturn hex string. Use .hexdigest().\n\nReturn None if ''.\n\nEdge cases: maybe input is None. Should raise? But spec says if text empty string return None. So I'll implement accordingly.\n\nReturn None if not string? Not specified. But we can assume input is string. But let's add check: if not isinstance(text, str) or not text: return None.\n\nReturn '3e25960a79dbc69b674cd4ec67a72c62' for 'Hello world'.\n\nLet's test mentally: 'Hello world' hashed: '3e25960a79dbc69b674cd4ec67a72c62' matches.\n\nReturn hex string.\n\nAlso maybe include docstring.\n\nReturn None if empty.\n\nReturn else.\n\nOk. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef string_to_md5(text: str) -> str | None:\n    \"\"\"\n    Return the MD5 hash of a string.\n\n    Parameters\n    ----------\n    text : str\n        The string to hash.  If the string is empty, the function\n        returns ``None``.\n\n    Returns\n    -------\n    str | None\n        The MD5 hash represented as a 32‑character hexadecimal string\n        (or ``None`` if the input is empty).\n\n    Notes\n    -----\n    The function uses UTF‑8 encoding to convert the string to bytes\n    before hashing.  The ``hashlib`` module is used to generate the\n    MD5 digest.\n\n    Examples\n    --------\n    >>> string_to_md5('Hello world')\n    '3e25960a79dbc69b674cd4ec67a72c62'\n    >>> string_to_md5('')\n    None\n    \"\"\"\n    # Return None if the input is empty or not a string\n    if not isinstance(text, str) or not text:\n        return None\n\n    import hashlib\n    return hashlib.md5(text.encode('utf-8')).hexdigest()\n```\n\nThis function uses the standard `hashlib` module to compute the MD5 hash of the supplied string, handling the empty‑string case by returning `None`.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 188,
+    "total_tokens": 680,
+    "completion_tokens": 492,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

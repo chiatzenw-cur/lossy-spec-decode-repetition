@@ -1,0 +1,90 @@
+<|channel|>analysis<|message|>We need to compute number of collisions between two sets of n cars moving opposite directions. Each car moves left to right (LR) and right to left (RL). They are initially very far from each other. They presumably all start at same time? They are moving same speed. They are placed along a line? The problem: "n cars are driving left to right; simultaneously, a different set of n cars are driving right to left." So we have 2n cars moving in opposite directions. They are initially far apart. They all move at same speed. They will eventually collide. But collisions happen when a car from LR group meets a car from RL group. Since all cars move in same speed, they will collide at the same time as they cross each other's positions? But we need to consider number of collisions. The problem likely is like: There are 2n cars, each with a distance from left to right. They start at same time, but we don't know their relative positions. But "they are very far from each other" means they are initially far apart, but maybe they start at some positions? Actually, might be that they are initially far such that they are at same time their positions are not overlapping. But collisions happen when a car from one side passes a car from the other. Since all cars move in same speed and the path is infinite, the only way to collide is when they cross each other. But if they are initially far apart, they will never meet. So maybe they are not far apart but they are initially at positions such that they are at same starting point? Wait, maybe the two sets are moving in opposite directions, but they are spaced in the same line? Let's consider typical problem: "There are n cars on left to right, and n cars on right to left, all moving in same direction. They start at same time, but they are initially far apart. They will eventually collide. But the problem might be about counting the number of collisions echoing the number of pairs? Suppose each car from LR group will cross each car from RL group. So number of collisions is n * n. But maybe they are not arranged in a line? But the cars are on a line, so they are all in a line. If they are all moving in same direction, they will cross each other at some point. But if they are on a line, the positions are along a line. If they are moving in same direction, they will never meet unless they are at same position. But if they are moving in opposite directions, they will cross each other. So number of collisions is n * n. But do we need to consider that they can collide multiple times? The problem states: "They continue moving in their trajectory as if they did not collide." So each pair of cars will cross exactly once. So number of collisions is n * n. But maybe they are not all in same line? But the statement: "Imagine a road that's a perfectly straight infinitely long line." So all cars on a line. Starting far from each other: they are far apart. So the two sets of cars are far apart. So the first left-to-right car will cross each right-to-left car. But if we have 2n cars, the first LR will cross each RL: that's n collisions. Similarly, the second LR will cross each RL: that's another n. But the first LR will cross each RL, but the second LR will cross each RL, but the first LR will cross each RL only once. So total collisions = n * n. But maybe they can cross each other at some point. But the problem might be a typical combinatorics problem: "Given n cars in each direction, how many collisions?" The answer is n * n.
+
+But maybe the problem is a trick: The number of collisions is n * n. But maybe they want to consider that the cars are equal and the collisions happen at the same time as they cross each other. But the collisions happen at the same time as they cross each other. So the number of collisions is n * n (n from left to right, n from right to left). So answer is n * n.
+
+But maybe the number of collisions is n * n? Let's test: Suppose n=1. Then we have one car from left to right and one car from right to left. They will cross each other once. So 1 collision. 1*1=1. Good.
+
+n=2. Two cars from LR and 2 from RL. They cross each other. The number of collisions: each LR car will cross each RL car: 2*2=4. But is there any scenario where they could cross each other only once? Yes. So 4 collisions. So answer is n*n.
+
+But maybe the problem expects us to compute the number of collisions is n * n. But maybe there is a twist: The groups are moving in opposite directions, but they are initially far apart. So the cars will cross each other as they move. But the number of collisions is n * n. But maybe there is a twist: The cars are identical, but they are moving in same direction, so they will not collide. But question says "two cars are said to collide when a car that's moving left to right hits a car that's moving right to left." So they are traveling in opposite directions. So each pair of opposite cars will cross each other. So number of collisions is n * n.
+
+But maybe the problem expects something else: "The number of collisions is n * n" or "n * n"? But maybe they want to compute the number of collisions as n * n. But could there be a pattern of collisions? The cars are moving in opposite directions, but they are not colliding. They are "infinite" but they will collide. But the problem might be a trick: The number of collisions is n^2. But maybe the problem is a trick: The number of collisions is n * n. But also the problem might be a trick akin to "The number of collisions is n * n" but they might want to compute the number of collisions as n * n. But the problem might be a trick: Are we supposed to compute the number of collisions as n * n? Because the problem might be a trick in the sense that the number of collisions is n * n. But the problem might be a trick: People might think that the number of collisions is n * n because each car from left to right collides with each car from right to left. But maybe the answer is n * n. But maybe the problem is actually something else: The number of collisions depends on the number of cars that cross each other. But the problem says "They are infinitely sturdy and strong; as a result, they continue moving in their trajectory as if they did not collide." So each pair of cars will cross exactly once. So the number of collisions is n * n. So answer: n * n.
+
+Ok, let's implement function:
+
+def car_race_collision(n: int):
+    """
+    ... docstring ...
+    """
+    return n * n
+
+But we need to consider that the function might be defined as int. It returns integer. So we can just return n * n.
+
+But maybe the problem expects a more general approach: The number of collisions is n * n. But we can compute it as n * n.
+
+But maybe the problem expects a more interesting approach: The number of collisions is n * n. But maybe we need to handle negative numbers? n is non-negative. So we can return n * n.
+
+But maybe the function expects to compute the number of collisions for each pair of cars that cross. But we can just compute accordingly.
+
+But the problem might be trivial: The number of collisions is n * n. But we can produce a function that returns n * n.
+
+But we might need to consider that the number of collisions is n * n. But we can also compute the number of collisions as n * n.
+
+But perhaps the problem expects a function that calculates the number of collisions as n * n. But we can also handle negative n.
+
+But the problem suggests that the function should be generic: "car_race_collision(n: int)". So we can implement:
+
+def car_race_collision(n: int):
+    """
+    Compute the number of collisions between two sets of n cars moving in opposite directions.
+    """
+    if n < 0:
+        raise ValueError("Number of cars must be non-negative")
+    return n * n
+
+But we might also want to handle negative n: return 0.
+
+But the problem might be simpler: The number of collisions is n * n.
+
+Ok.
+
+We should produce the function with proper docstring. Provide the function body. The function body: return n * n.
+
+We can also add type hints.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def car_race_collision(n: int) -> int:
+    """
+    Compute the number of collisions between two sets of n cars moving in opposite directions.
+
+    The road is a perfectly straight infinite line.  There are n cars moving left to right
+    (LR) and a distinct set of n cars moving right to left (RL).  All cars move
+    at the same speed and are initially far apart.  When an LR car meets an RL car
+    they are considered to collide, but the collisions are perfectly elastic
+    and do not alter the trajectory of the cars.
+
+    Because all cars move in the same direction and each pair of cars from the
+    two sets will cross exactly once, the number of collisions is simply the
+    number of pairs of cars, i.e. n * n.
+
+    Parameters
+    ----------
+    n : int
+        Number of cars in each direction.  Must be non‑negative.
+
+    Returns
+    -------
+    int
+        The total number of collisions.
+
+    Raises
+    ------
+    ValueError
+        If `n` is negative.
+    """
+    if n < 0:
+        raise ValueError("Number of cars must be non‑negative")
+    return n * n
+```

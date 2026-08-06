@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-83b0fd0f7d9f2aa9",
+  "object": "text_completion",
+  "created": 1786017112,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement filter_by_substring. The function signature: def filter_by_substring(strings: List[str], substring: str) -> List[str]: It returns list of strings that contain substring. Straightforward. Should handle empty list, empty substring? The docstring says \"contains given substring\". For empty substring, we can treat it as all strings contain substring? In Python, ''. in string returns True. So filter returns original list. But we can implement straightforward.\n\nEdge cases: None. Should be simple.\n\nReturn [s for s in strings if substring in s].\n\nPotential improvement: use list comprehension. Return list.\n\nWe can also use filter function.\n\nDocstring: Provide example.\n\nImplementation: def filter_by_substring(strings: List[str], substring: str) -> List[str]: return [s for s in strings if substring in s].\n\nWe can also add docstring.\n\nLet's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\"\n    Return a list of strings that contain the specified substring.\n\n    Parameters\n    ----------\n    strings : List[str]\n        The list of strings to search.\n    substring : str\n        The substring to look for.\n\n    Returns\n    -------\n    List[str]\n        A new list containing only those strings that contain the substring.\n\n    Examples\n    --------\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n    # Using a simple list comprehension keeps the code concise and readable.\n    return [s for s in strings if substring in s]\n```\n\n---",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 205,
+    "total_tokens": 575,
+    "completion_tokens": 370,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

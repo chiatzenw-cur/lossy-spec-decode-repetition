@@ -1,0 +1,552 @@
+<|channel|>analysis<|message|>We need find largest 4-digit integer N such that if any one digit replaced with 1, resulting 4-digit number divisible by 7. Let's denote digits a,b,c,d (hundreds thousands? 4-digit N = 1000a+100b+10c+d with a=1-9, others 0-9). Condition: For each position i, if you change that digit to 1, the new number is divisible by 7.
+
+So define numbers:
+
+N_a: set a to 1: 1000*1 + 100b + 10c + d = 1000 + 100b +10c + d = N - (1000a - 1000) = N - 1000(a-1).
+
+Similarly N_b: 1000a + 100*1 + 10c + d = N - 100(b-1). etc.
+
+We require each divisible by 7.
+
+Thus we need N ≡ 1000(a-1) (mod 7); also ≡ 100(b-1) (mod 7); also ≡ 10(c-1) (mod 7); also ≡ (d-1) (mod 7). Since N is an integer, those congruences must all hold simultaneously.
+
+So N mod 7 must equal all those residues. So all 1000(a-1), 100(b-1), 10(c-1), (d-1) must be congruent modulo 7. So they must be equal mod 7.
+
+Thus:
+
+1000(a-1) ≡ 100(b-1) ≡ 10(c-1) ≡ (d-1) (mod 7).
+
+We can compute residues of powers:
+
+1000 mod 7: 1000 = 7*142 +6, so 1000 ≡ 6 mod7.
+
+100 mod 7: 100 = 7*14 +2, => 2 mod7.
+
+10 mod 7: 3 mod7.
+
+1 mod 7: 1.
+
+So we need:
+
+6(a-1) ≡ 2(b-1) ≡ 3(c-1) ≡ (d-1) mod7.
+
+Let's denote each equal to some x mod7.
+
+Thus we have congruences:
+
+6(a-1) ≡ x
+2(b-1) ≡ x
+3(c-1) ≡ x
+(d-1) ≡ x
+
+We can solve for each digit in terms of x modulo 7. Need digits 0-9 for b,c,d; a 1-9.
+
+Compute multiplicative inverses mod7: inverse of 6 is 6 (since 6*6=36≡1). Inverse of 2 is 4. Inverse of 3 is 5. Inverse of 1 is 1.
+
+Thus:
+
+a-1 ≡ 6x (since multiply both sides by 6^(-1)=6? Wait 6(a-1)≡x => a-1 ≡ 6*x mod7? Actually multiply by inverse of 6 which is 6: a-1 ≡ 6x mod7.
+
+Similarly, b-1 ≡ 4x mod7
+c-1 ≡ 5x mod7
+d-1 ≡ x mod7
+
+Then digits themselves:
+
+a = 1 + (6x mod7). Need a between 1 and 9.
+
+But a-1 can be 0 to 8. Represent value mod7, but actual a-1 could be that residue or that residue plus multiple of 7? Wait a-1 is between 0 and 8. The congruence only gives residue mod7. So possible values of a-1 are candidates r such that r ≡ 6x (mod7). So r could be 6x mod7 or 6x mod7 + 7, if within 0-8. Similarly for others.
+
+We can brute force search over x =0..6, compute digits candidates and find feasible N largest.
+
+We'll compute systematically.
+
+Let a-1 = r_a with r_a ∈ {0,1,...,8} satisfying r_a ≡ 6x (mod7).
+Same for b-1 ∈{0,...,8} with r_b ≡ 4x.
+c-1: r_c ≡ 5x
+d-1: r_d ≡ x (0..8). But d-1 max 8 so r_d = x if x≤8; else if x>8 impossible because x mod7 between 0-6. So r_d = x.
+
+Since x in 0..6, r_d = x. So d = 1 + x.
+
+Now we need digits in range: a (1-9) => a-1 0-8. So r_a must be in 0-8; r_a = 6x mod7 or 6x mod7 + 7 if <=8.
+
+Compute 6x mod7: values: x=0 →0;1→6;2→5;3→4;4→3;5→2;6→1.
+
+Then possible r_a: For each, if r_a≤8, we can also add 7: Next values: each plus7 gives 7,13,12,11,10,9,8. But some exceed 8 except maybe 7,8. So r_a can be either primary residue or residue+7 if ≤8.
+
+Let's evaluate for each x:
+
+x=0: 6x mod7=0. r_a options 0 or 7. 7 within ≤8. So r_a ∈ {0,7}. 
+
+x=1: 6 mod7=6. r_a options 6 (≤8), 6+7=13>8 no. So r_a=6.
+
+x=2: 5. Options 5 or 12>8. So 5.
+
+x=3: 4. Option 4.
+
+x=4: 3.
+
+x=5: 2.
+
+x=6: 1.
+
+Thus a-1 values for each x: if x=0: 0 or 7; else unique.
+
+Now compute b-1: r_b = 4x mod7 plus maybe +7.
+
+Compute 4x mod7: x=0->0;1->4;2->1;3->5;4->2;5->6;6->3.
+
+Options: plus7 if ≤8.
+
+x=0: 0 or 7? 0+7=7 ≤8 -> options 0,7.
+
+x=1:4 ->4 or 11>8 ->4.
+
+x=2:1 ->1 or 8? 1+7=8 <=8 → options 1,8.
+
+x=3:5 ->5 or 12>8 ->5.
+
+x=4:2 ->2 or 9>8 ->2.
+
+x=5:6 ->6 or 13>8 ->6.
+
+x=6:3 ->3 or 10>8 ->3.
+
+Now c-1: r_c =5x mod7. Compute 5x mod7: x=0→0;1→5;2→3;3→1;4→6;5→4;6→2.
+
+Add7 if <=8:
+
+x=0: 0 or7? --> {0,7}
+
+x=1:5 ->5 or 12>8 ->5
+
+x=2:3 ->3 or 10>8->3
+
+x=3:1 ->1 or 8? 1+7=8<=8 -> options 1,8
+
+x=4:6 ->6 or 13>8->6
+
+x=5:4 ->4 or 11>8->4
+
+x=6:2 ->2 or 9>8->2
+
+Now d-1 = x directly (0-6). So d = 1 + x ranges 1-7.
+
+Now we need digits to be consistent? No further constraints except each to be a digit 0-9, and a must be at least 1.
+
+But also we want N largest. So we want to choose digits a,b,c,d to maximize N=1000a+100b+10c+d subject to congruences.
+
+We could choose for each x the maximum possible digits respecting ranges (0-9) but also each may have two options. We need a consistent selection across digits for a given x, but no cross-digit constraints aside from each individually satisfies congruence. So we can pick individually the highest possible from available options for each.
+
+Thus for given x, choose a-1 maximum <=8: for each x, candidate a-1: if options listed, choose largest.
+
+Similarly b-1 choose largest, etc. That will produce max N for that x.
+
+Compute for each x:
+
+x=0:
+- a-1 options {0,7} → choose 7 -> a=8.
+- b-1 options {0,7}→ choose7 -> b=8.
+- c-1 options {0,7}→ choose7 -> c=8.
+- d-1=0 → d=1.
+N= 1000*8+100*8+10*8+1 = 8000+800+80+1=8881.
+
+Check digits 8 8 8 1. Is it valid? Let's test by brute: Changing digit to 1 at each position should give numbers divisible by 7. For N=8881:
+- Change thousand digit to 1: 1881; 1881/7? 7*269=1883; actually 1881 not divisible by 7? Let's test 1881 ÷7 = 268.714 no. Wait but our derivation assumed property from congruences? Let's verify: N≡1000(a-1) mod7 etc. For N=8881, compute N mod7. 8881 mod7: 7*1268=8776; remainder 105? Actually 7*1268=8876; remainder=5. Let's compute: 8881- 7*1268=8881-8876=5. So N≡5 mod7.
+
+Now 1000(a-1)=1000*(8-1)=1000*7=7000; 7000 mod7=0? Wait 7000=7*1000 -> remainder 0. Not equal to 5. Hmm miscalc. Wait our congruence: N ≡ 1000(a-1) mod7. Let's compute 1000(a-1) = 7000; 7000 mod7=0. So N mod7 must be 0, but N=8881 mod7=5, contradiction.
+
+So something wrong. Did we set congruence incorrectly? Let's re-evaluate: N_a: change digit a to 1. The new number = 1000*1 + 100b +10c + d = 1000 + (N - 1000a) because N=1000a+... So N_a = N - 1000a + 1000 = N - 1000(a-1). Yes.
+
+We require N_a divisible by 7. That is N - 1000(a-1) ≡ 0 mod7 => N ≡ 1000(a-1) mod7. That right.
+
+So for x=0 example, N=8881 has a=8, so a-1=7. So RHS 1000*7 mod7 = 0. So we need N mod7 = 0. But 8881 mod7 = 5. So fails. So our selection of a-1=7 from options may be inconsistent with others maybe? However we didn't consider that for x=0, we set N mod7 to some value that must match. Wait x defined such that d-1 = x =0, so d=1. For our chosen digits, d=1 matches. Now N mod7 must equal x? Let's check. For d-1=x, we derived congruence: d-1 ≡ x mod7. But that just means d-1 equals x (since 0-6 matches). So that holds. But we also need N≡ (d-1) mod7? From earlier all equal to each other modulo 7. So N ≡ d-1 ≡ x mod7. But we didn't incorporate that earlier. Let's verify: We had N ≡ d-1 mod7. Because of last congruence. So for x=0, N ≡ 0 mod7. So N must be divisible by 7. But 8881 isn't. So our derived digits produce N not divisible by 7, thus invalid.
+
+What did I miss? We had equivalence: 6(a-1) ≡ 2(b-1) ≡ 3(c-1) ≡ (d-1) (mod7). Then we set x = that common residue. Then we solved for digits: a-1 ≡ 6x mod7, etc. That ensures 6(a-1) ≡ x; but the congruence needed 6(a-1) ≡ x? Wait we set x to the common residue of the left sides. So 6(a-1) ≡ x etc. Means the value of 6(a-1) mod7 equals x. But that ensures 6(a-1) ≡ x. But the common residue is 6(a-1) modulo 7.
+
+Then N ≡ 1000(a-1) mod7 = 6(a-1) mod7 (since 1000 ≡6). So N ≡ 6(a-1) mod7. But 6(a-1) mod7 equals x. So N ≡ x mod7. But also d-1 ≡ x. So N ≡ d-1 mod7. N ≡ x and d-1 = x. But our derived digits further must satisfy that N's computed value equals that. But we didn't enforce that N mod7 equals x from digits directly? Wait from above, once we choose digits that satisfy the congruence constraints, automatically N mod7 =d-1? But maybe not; because each congruence ensures that each modified number divisible by 7, but that doesn't guarantee N mod7 equals d-1? Wait let's compute:
+
+Let N be digits. For a modification to 1 at position a, we required N ≡ 1000(a-1) mod7. Similarly for b: N ≡ 100(b-1) mod7. Thus N must satisfy all these mod7 equalities simultaneously. Since the residues 1000(a-1) etc may differ if digits not consistent. For N to satisfy all, those residues must be equal mod7. That's exactly the congruences we had. So if digits satisfy that, then all four equal residues, and N ≡ that residue. So N mod7 equals that residue r = 1000(a-1) mod7. But that r is also equal to (d-1) because equivalence. So N mod7 equals (d-1). So indeed N mod7 must equal d-1. Therefore in our selection, we must ensure that N computed from digits indeed has mod7 equal to d-1. Our selection might not guarantee that due to that constraint? Wait we selected digits such that each satisfied congruence individually, but maybe we mis-solved the congruence equations incorrectly because we used only equivalence 6(a-1) ≡ ... but not that N as a number equals that residue? Let's re-express:
+
+We have system:
+
+N ≡ 6(a-1) (mod7)  ...(1)
+
+N ≡ 2(b-1) (mod7)  ...(2)
+
+N ≡ 3(c-1) (mod7)  ...(3)
+
+N ≡ (d-1) (mod7)  ...(4)
+
+We deduced that the right sides must all equal each other. So define x such that:
+
+6(a-1) ≡ x
+2(b-1) ≡ x
+3(c-1) ≡ x
+(d-1) ≡ x
+
+Thus N ≡ x mod7.
+
+Also from earlier, x = d-1. So N ≡ d-1 mod7, which is natural.
+
+Now we solved digits individually from that: a-1 ≡ 6x mod7? Wait from 6(a-1) ≡ x => multiply by inverse of 6 => a-1 ≡ 6x. Yes.
+
+Similarly, b-1 ≡ 4x, c-1 ≡5x, d-1≡x.
+
+Now we used these congruences to generate candidate values for a-1, etc. But we also must ensure that N mod7 actually equals x. But when digits satisfy congruences, should be automatically true? Not unless we ensure the actual N computed from digits gives same residue as d-1. Wait but N mod7 is determined by digits: N=1000a+100b+10c+d; compute this modulo 7. It should equal (6a+2b+3c+d) mod7 because 1000≡6, 100≡2, 10≡3, 1≡1. So N mod7 = (6a+2b+3c+d) mod7. So we need (6a+2b+3c+d) mod7 = d-1 (since x=d-1). This is an extra equation that might not hold automatically.
+
+Let's derive: 6a+2b+3c+d ≡ d-1 mod7 => 6a+2b+3c ≡ -1 mod7 => 6a+2b+3c ≡ 6 mod7. This is another constraint linking a,b,c. So besides the modular relations we already used, we also need that to hold. Actually this follows from x = common residue and earlier N ≡ x: but N ≡ something computed from digits. Let's plug: N mod7 =6a+2b+3c+d mod7. Setting equal to x = d-1 (since x = d-1). So:
+
+6a+2b+3c+d ≡ d-1 (mod7) => 6a+2b+3c ≡ -1 (mod7) => 6a+2b+3c ≡ 6 (mod7).
+
+Additionally, from earlier congruences, we have:
+
+x = d-1, and also 6(a-1)≡x => 6a-6 ≡ d-1 mod7 => 6a ≡ d-1+6 = d+5 mod7.
+
+But also x could be expressed in terms of a. Let's see if that leads to same condition.
+
+Compute 6a ≡ d+5 (mod7). Rearranged: 6a -d ≡ 5 mod7. Also we have 2b ≡ d-1+? Wait from 2(b-1)≡x = d-1 => 2b-2 ≡ d-1 => 2b ≡ d+1 mod7. So 2b - d ≡ 1 mod7.
+
+Similarly, 3(c-1)≡d-1 =>3c-3 ≡ d-1 =>3c ≡ d+2 mod7 => 3c - d ≡ 2 mod7.
+
+Maybe these linear congruences between digits are all we need.
+
+Thus we require:
+
+6a - d ≡ 5 mod7      (A)
+2b - d ≡ 1 mod7      (B)
+3c - d ≡ 2 mod7      (C)
+
+And digits 0-9 etc. Also N must be 4-digit: a≠0.
+
+Goal find largest 4-digit integer N satisfying these. We need to produce maximal N=1000a+100b+10c+d; a as high as possible 9 maybe, etc.
+
+Let's search systematically using above equations.
+
+We can iterate through possible a from 9 downwards, and try to find b,c,d that satisfy.
+
+But also note d is digit 1-9? Wait d can be 0-9? N is 4-digit, d can be 0-9 includes 0. But given earlier property, after replacing d with 1, the result must be divisible by 7. If d was already 1 it's trivial? Well we treat any digit replaced by 1. If d already 1, replacing it with 1 doesn't change number, which would have to be divisible by 7? That imposes strong condition: N itself would need to be divisible by 7 when d is 1 and we replace last digit with 1? Wait property: "whenever one of its digits is changed to 1, the resulting number is divisible by 7." This includes if the digit already is 1? Changing to 1 leaves same number, so that number must be divisible by 7. That would force N divisible by 7 if any digit equals 1. But digits could be anything. So to avoid extra restriction, number must be divisible by 7 if any digit is 1. But we don't know if N has any 1 digits. We'll just treat condition that for each digit position, when replaced with 1, it's divisible by 7. This includes when digit already 1 -> same number must be divisible by 7. So N must be divisible by 7 if any digit equals 1. Could be that N doesn't have any digit 1. But d could be 1 because we require 1; but we don't require any other digit be 1. Actually d is not forced to be 1; but when we modify d to 1, the new number will have last digit 1; but that new number may be divisible by 7 regardless of previous d.
+
+Thus d can be any 0-9; same for others.
+
+Now we have congruences.
+
+Let's look at d variable. We can try to maximize N. To maximize N, we likely need a=9 (max thousands). Next, we try maximize b then c then d.
+
+But not all digits independent. Let's handle modulo constraints.
+
+We have equations:
+
+2b ≡ d+1 (mod7)
+3c ≡ d+2 (mod7)
+6a ≡ d+5 (mod7)
+
+Thus given a,d we can find restrictions on b and c; also given d,b we get limit for a.
+
+But we can iterate over a and d values high to find maximal N.
+
+Because we want maximal N, we want a as high as possible, e.g., 9. For each a, choose best d,b,c.
+
+We can treat d as variable 0-9. But also digits produce certain residues.
+
+Compute 6a mod7 for a=9: 6*9=54, 54 mod7 =54-49=5. So 6a ≡5 mod7. Then equation (A): 6a - d ≡5 mod7 => 5 - d ≡5 => -d ≡0 mod7 => d ≡0 mod7 => d=0 or 7. But d digit 0-9: 0 or 7.
+
+Now evaluate each d option.
+
+Case d=0: then put into B: 2b ≡ d+1 =1 => 2b ≡1 mod7. Solve 2b mod7 =1. Multiply by inverse of2 (4): b ≡4 mod7. So b can be 4 or 11? But b digit 0-9, so b=4 only. Also check c: 3c ≡ d+2 =2 => 3c≡2 mod7. Inverse of3 is5: c≡5*2=10≡3 mod7. So c can be 3 or 10? digit 0-9 -> c=3. So digits: a=9,b=4,c=3,d=0. N=9430. But we must confirm property: N=9430. We also need numbers where any digit replaced with 1 is divisible by 7. Let's verify quickly: (i) replace thousand with 1: 1430. 1430 divisible by 7? 7*204=1428, remainder 2. Not divisible. Wait but our math predicted condition satisfied. Let's check our equations maybe not fully ensuring property? Let's test: If we change thousand to 1, new number = 1430. Check divisibility by 7: compute 1430 /7 = 204 remainder 2, so not divisible. So something wrong again.
+
+Let's recalc: For a=9, d=0, our congruence derived from 6a - d ≡5. Let's test 6a - d = 54 -0 =54, 54 mod7 =5 correct. So 6a-d ≡5 holds. But the derived condition ensures 6a- d ≡5 mod7, which is same as 6a ≡ d+5.
+
+But earlier we had 6a - d ≡5 from equation (A) derived from 6a - d ≡5. That ensures 6a ≡ d+5. For d=0, 6a ≡5. 6a value 54, mod7=5. Works.
+
+But does this guarantee the property? Let's recompute N mod7 and compare.
+
+N=9430. Compute N mod7 using 6a+2b+3c+d with mod values: 6a=54=>54 mod7=5; 2b=8 =>1 mod7? 8 mod7=1; 3c=9=>2 mod7? 9 mod7=2; d=0 =>0. Sum mod7: 5+1+2+0=8 mod7=1. So N mod7 =1.
+
+We earlier formula says N ≡ d-1 mod7 because N ≡ x and x=d-1. Here d-1=-1 =>6 mod7. But we found N mod7 =1. So not equal. So indeed our system of congruences did not enforce this relation.
+
+Let's re-evaluate derivation:
+
+We had: For modification at position thousand:
+
+N_a = N - 1000a + 1000 = N -1000(a-1). Divisible by 7 => N ≡ 1000(a-1) (mod 7). OK.
+
+Second for hundred: N_b = N - 100b + 100 = N - 100(b-1). Must be divisible: N ≡ 100(b-1) mod7.
+
+Similarly tens: N ≡ 10(c-1) mod7.
+
+And units: N ≡ (d-1) mod7.
+
+Thus all these residues must be equal. So 1000(a-1) ≡ 100(b-1) ≡ 10(c-1) ≡ (d-1) mod7.
+
+Thus we can set y = 1000(a-1) mod7.
+
+Thus N ≡ y mod7. Not necessarily equal to d-1? Wait but 1000(a-1) mod7 equals y; 100(b-1) mod7 equals same y; etc. But (d-1) mod7 equals same y. So y ≡ d-1 mod7, yes. So N ≡ d-1.
+
+Thus N mod7 must equal d-1. That is a key.
+
+But in our example d=0, d-1=-1 ≡6; N mod7 computed earlier was 1. So fails. So our digits did not satisfy.
+
+So we must enforce N mod7 equal d-1.
+
+But note that N mod7 computed from 6a+2b+3c+d. Set equal to d-1.
+
+Thus 6a+2b+3c+d ≡ d-1. Simplify: 6a+2b+3c ≡ -1 ≡6 mod7. (E). This imposes additional constraint among a,b,c independent of d. This along with previous equations ensures property.
+
+But our earlier equations A,B,C came from equating residues. But we derived them incorrectly? Let's re-derive systematically.
+
+Start: From equal residues:
+
+6(a-1) ≡ x  (mod7)   where x = (d-1) mod7.
+
+Wait 1000(a-1) mod7 = 6(a-1) mod7. So 6(a-1) ≡ d-1 (mod7). That's one congruence.
+
+Also 100(b-1) mod7 = 2(b-1) ≡ d-1 (mod7). So 2(b-1) ≡ d-1 (mod7).
+
+Also 10(c-1) mod7 =3(c-1) ≡ d-1 (mod7).
+
+Thus we get:
+
+6(a-1) ≡ d-1  ...(1)
+2(b-1) ≡ d-1  ...(2)
+3(c-1) ≡ d-1  ...(3)
+
+Additionally, N ≡ d-1 mod7 from 1000a+100b+10c+d? Let's compute N mod7: 6a+2b+3c+d. We want N ≡ d-1. This may actually follow from the above congruences? Let's check: If 6(a-1)≡d-1, then 6a -6 ≡ d-1 => 6a ≡ d+5. So 6a = d+5 + 7k. Similarly 2b = d+1 + 7m; 3c = d+2 + 7n.
+
+Sum: 6a+2b+3c = (d+5)+(d+1)+(d+2)+7(k+m+n)=3d +8 +7k'.$d+2+? Wait 5+1+2=8. So 6a+2b+3c = 3d + 8 + 7*something.
+
+Now N = 6a+2b+3c+d = 3d + 8 + d + 7*t = 4d+8 +7t.
+
+So N mod7 = (4d+8) mod7 = 4d +1 (since 8≡1). Thus N ≡ 4d +1 mod7. We want N ≡ d-1. That leads to 4d+1 ≡ d-1 => 3d ≡ -2 => 3d ≡5 mod7 (since -2≡5). Multiply by inverse of 3 (5): d ≡ 5*5=25≡4 mod7. So d ≡4 mod7. That is, d must be 4 or 11? But digit 0-9, so d ∈ {4}. It could also be 11? Not allowed. So d must be 4. But we also considered d can be 0 or 7 earlier from equations; contradictory. Let's analyze again.
+
+Our derivation shows that requiring N mod7 = d-1 is automatically implied by modular equations? Let's re-check.
+
+If we set 6(a-1) ≡ d-1, etc., we already have equations. But does that automatically ensure the derived N mod7 = d-1? Let's verify with an example that works; but earlier we found d=4 may be needed. However our earlier example with a=8,b=8,c=8,d=1 had d=1; d-1=0. Let's test if that satisfies equations: 6(a-1)=6*7=42 => 42 mod7=0 => 0 = d-1(=0). Good. 2(b-1)=2*7=14 => 0 ≠ d-1? Wait 0 matches 0. 3(c-1)=3*7=21 ≡0. So equations hold. So d=1 okay. Our earlier test flagged N=8881 not valid, but maybe due to calculation error? Let's check N=8881 divisibility when modify digits:
+
+Change thousands: 1881. 1881 /7 = 268 remainder? Actually 7*269=1883. 1881 ≠ 1883. So not divisible by 7. So N=8881 fails; but equations indicated they hold? Let's test equations again: For N=8881, digits a=8,b=8,c=8,d=1.
+
+Compute 6(a-1)=6*7=42 ≡ 0.
+
+Compute d-1=0. good.
+
+Similarly 2(b-1)=14≡0.
+
+3(c-1)=21≡0.
+
+Thus equations satisfied. But N mod7? Compute N = 8881 mod7: earlier we found 5 (but maybe miscalc). Let's recompute: 7*1268=8876 remainder 5, yes N mod7=5. But we predicted N mod7 must equal d-1=0. So indeed it fails; so our derived equations cannot be simultaneously satisfied? But we found they are satisfied. Contradiction suggests our earlier reasoning that system implies N mod7 = d-1 is wrong. Let's compute N mod7 from digits: 6a+2b+3c+d. For a=b=c=8: 6*8=48 ≡48-42=6, 2*8=16 ≡2, 3*8=24 ≡3, d=1. Sum =6+2+3+1=12 ≡5. Indeed N mod7 =5. So d-1=0 not equal. So equations don't force this? Wait but we had equation 6(a-1) ≡ d-1. That gave 42 mod7=0. So 6a-6 ≡0 => 6a ≡6. So 6a ≡6. For a=8, 48 ≡6, yes holds. Good.
+
+Also 2(b-1) ≡0 → 2b-2 ≡0 => 2b ≡2 → b ≡1? Wait 2b ≡2 mod7 => 2b ≡2 => multiply inverse 4: b≡8≡1? Actually 4*2b=8b. We solve: 2b≡2 => b≡1 mod7? Because 2*1=2. Yes b=1+7k. But b=8 satisfies? 2*8=16≡2? 16≡2 indeed! Because 16-14=2. So b=8 is congruent to 1 mod7? 1 mod7=1, 8 mod7=1. So 8 ≡1 mod7 yes. So equation satisfied.
+
+Similarly 3c ≡3(c-1)+? Wait 3(c-1) ≡0 => 3c-3 ≡0 => 3c≡3 => c≡1 mod7? 3*1=3. For c=8, 3*8=24≡3, indeed. So c=1 mod7 which means 8 satisfies. So equations don't force N mod7 to equal d-1. So my earlier deduction that N mod7 = ... was incorrect. Let's verify: Using 6a ≡ d+5 (like earlier). For d=1, we have 6a≡6 -> a≡1? 6a≡6 => a≡1 because multiply by inverse 6→a≡1. But a=8, a≡1 mod7 okay. So equations satisfied.
+
+Thus the derived conditions are necessary but not sufficient for the aditional property? Wait the property is that each modified number is divisible by 7. The derived equations were directly from that. So they are sufficient. But our test shows N=8881 fails property despite satisfying equations? Contradiction suggests we misapplied property: The equations come from requirement that N ≡ 1000(a-1) mod7 etc. But these ensure that N - 1000(a-1) is divisible by 7. That's correct. So that ensures thousand digit replaced by 1 gives divisible by 7. Similarly for others. So N=8881 should satisfy that property. But when we checked replacing thousands: 1881, we found not divisible. So check calculation: N - 1000(a-1) = 8881 - 1000*7 = 8881 - 7000 = 1881. 1881 divisible by 7? Let's actually check dividing 1881 by 7: 7*269=1883 (too high). 7*268=1876. 1881-1876=5. Not divisible. So N=8881 yields replacement at thousands does not produce divisible by 7, despite equations?
+
+But why does equation fail? Let's compute N mod7: 8881 mod7 = 5. 1000(a-1)=7000, mod7=0. N mod7 =5, 7000 mod7 =0. Are they congruent? No. But equation required N ≡ 1000(a-1) mod7. That fails (5 ≠0). So our derivation of equation was wrong: Wait we compute N ≡ 1000(a-1) mod7? But that's exactly N - 1000(a-1) multiples of 7? Let's re-evaluate: We required N - 1000(a-1) ≡ 0 mod7. Because new number after changing digit is N - 1000(a-1) + 1000? Wait compute.
+
+When thousand digit changed to 1: New number N' = 1000*1 + 100b +10c + d = N - 1000a + 1000 = N - 1000(a-1). For N' divisible by 7, N - 1000(a-1) ≡ 0 mod7. That is N ≡ 1000(a-1) mod7. Yes. So condition is N ≡ 1000(a-1). Let's test N=8881: N mod7=5. 1000(a-1)=7000 mod7=0. Not equal. So fails, as expected. But equation from earlier mis-solved? Wait we used 6(a-1) ≡ d-1 etc. That didn't come from N ≡ 1000(a-1). Wait we incorrectly wrote 6(a-1) ≡ d-1? Actually starting from equality of residues, we had 1000(a-1) ≡ 100(b-1) ≡ 10(c-1) ≡ (d-1). Let's test for N=8881:
+
+Compute 1000(a-1)=7000 mod7=0.
+
+100(b-1)=100*7=700 mod7=0.
+
+10(c-1)=70 mod7=0.
+
+(d-1)=0.
+
+All equal 0. So equality holds. Thus indeed the condition 1000(a-1) ≡ 100(b-1) ≡... holds. So our derived congruences held.
+
+But we also need N ≡ 1000(a-1) mod7. Wait that is not already implied by equality of 1000(a-1) with others. N is not expressed there. So our earlier condition that N must equal that is separate. This condition also must hold. The equivalence of those residues doesn't automatically yield N congruence. So we added it incorrectly earlier. The correct condition is that each of the numbers N - 1000a + 1000 etc must be divisible by 7. That's equivalent to N ≡ 1000(a-1) mod7 etc. Importantly, N itself may not equal that residue. So we need to enforce:
+
+N ≡1000(a-1) mod7
+N ≡100(b-1) mod7
+N ≡10(c-1) mod7
+N ≡(d-1) mod7
+
+Thus N must be congruent to each of those residues. While they are equal to each other modulo 7, because the congruence modulo 7 is transitive. Let's see: If N ≡ r1 and N ≡ r2, then r1≡r2 mod7. So if all four residues are equal modulo 7, then these four congruences are consistent. So condition of equal residues ensures existence of N mod7 consistent. But N' might be any number with that residue. Wait N must satisfy each individually. But if residues equal to each other modulo 7, then N must equal that common residue modulo7. Yes, N must be congruent to that common residue. But we don't know that residue's value; it's given by 1000(a-1) (which is some multiple of 7 perhaps). So N ≡ 1000(a-1) mod7. Similarly same. So equivalence yields N ≡ 1000(a-1) mod7. For N=8881, 1000(a-1)=7000, N mod7 5; does not equal 0. So equivalence doesn't hold? But we computed residues all zero; how can N not congruent to them? Wait compute N - 7000 = 1881; 1881 divisible by 7? No. So N ≡ 0 mod7? Not true. So the equality of residues 0 doesn't give N mod7 =0. So I'm misreading again.
+
+Hold on: Resides come from expressions 1000(a-1), 100(b-1), etc. For N=8881, we had all zeros. Those zeros are not N's residue; they are the residues we need for N such that N - 1000(a-1) ≡ 0 mod7. Actually N - 1000(a-1) ≡ 0, not N ≡ 1000(a-1). Wait we previously wrote that N - 1000(a-1) ≡ 0, which rearranges to N ≡ 1000(a-1). That's correct. So if 1000(a-1) ≡ 0, then N ≡ 0. But N is 5 mod7. So fails.
+
+Thus for N=8881, even though residues of 1000(a-1) and others are zero, there's no integer N satisfying N ≡ zero and N=8881. Thus condition fails. So our earlier reasoning that equality of residues implies existence of N is incorrect; we need further that N itself equals common residue modulo 7? Wait but N itself must be same residue as 1000(a-1) mod7; if that residue is 0, N must be divisible by 7. So N must be divisible by 7.
+
+Thus we require: 1000(a-1) ≡ N (mod7). Since 1000(a-1) is known from digits, we know its residue. Then N must equal that residue mod7. So condition:
+
+N ≡ 1000(a-1) ≡ 100(b-1) ≡ 10(c-1) ≡ (d-1) (mod7). So indeed N mod7 equals each of these residues. But residues equal to each other. So all four derived residues are equal; we can denote r. Then N mod7 = r.
+
+So the requirement is: Compute r = (d-1) mod7. Also r must equal 1000(a-1) mod7 = 6(a-1), etc.
+
+So we need r = 6(a-1) mod7. Also r = d-1.
+
+Thus 6(a-1) ≡ d-1 mod7. That's condition (1). Similarly 2(b-1) ≡ d-1. Similarly 3(c-1) ≡ d-1.
+
+Thus the earlier equations like we had earlier. And N must satisfy N ≡ d-1 mod7. And that's automatically satisfied because r=d-1.
+
+So earlier we missed that N must equal that residue. So we need to enforce N ≡ d-1 mod7.
+
+But is that automatically guaranteed by the other equations? Let's test with our example earlier where a=9,d=0 case: We computed 6a-d ≡5 => 6a ≡ d+5. That gave 6a ≡5. For a=9 that's true. Then N ≡ d-1? We found N mod7=1 not 6. So violates. So 6(a-1) ≡ d-1 alone does not guarantee N mod7 = d-1. Additional constraint from N's own digits: N ≡ d-1.
+
+Thus we have system:
+
+Equation 1: N ≡ d-1 (mod7).   (F)
+Equation 2: 6(a-1) ≡ d-1 (mod7).
+Equation 3: 2(b-1) ≡ d-1 (mod7).
+Equation 4: 3(c-1) ≡ d-1 (mod7).
+
+But equation 1 is about N mod7. N computed from a,b,c,d. So (F) gives 6a+2b+3c+d ≡ d-1 mod7. Which simplifies to 6a+2b+3c ≡ -1 mod7. That's an additional independent equation.
+
+Thus our earlier constraints A,B,C derived from equations 2,3,4 may not capture equation 1. But we still need to include F.
+
+Hence we need solve simultaneously:
+
+(2') 6a - d ≡5 (since 6(a-1)=6a-6 ≡ d-1 -> bring: 6a -6 -d +1 ≡0 ->6a - d ≡5) Wait compute: 6a-6 ≡ d-1 => 6a - d ≡5. Yes.
+
+So 6a - d ≡5 mod7.   (A)
+
+(3') 2b - d ≡1 mod7.   (B)
+
+(4') 3c - d ≡2 mod7.   (C)
+
+(5') 6a + 2b + 3c ≡6 mod7.   (D)  (since -1 ≡6)
+
+Now we just need digits 0-9 (a 1-9). Solve for feasible combos.
+
+Let's brute force with reasoning.
+
+Let d variable 0-9. We'll check each d.
+
+First compute from (A): 6a ≡ d+5 (mod7). Since inverse of6 is 6: a ≡ 6*(d+5) mod7 => a ≡ 6d +30 ≡ 6d +2 (since 30≡2). So a ≡ 6d+2 mod7. So a's residue mod7 determined by d.
+
+Similarly from (B): 2b ≡ d+1 => b ≡ 4*(d+1) ≡4d+4 mod7.
+
+From (C): 3c ≡ d+2 => c ≡5*(d+2)=5d+10≡5d+3 mod7.
+
+Now we need digits a,b,c each 0-9 (a≥1). Also numbers derived from residues may need plus multiples of 7 (but must be <=9). So a = residue or residue+7 if <=9.
+
+Similarly for others.
+
+We also need D equation: 6a+2b+3c ≡6.
+
+Rather than brute, we can iterate d 0-9 compute residues and feasible digits set.
+
+Let's write quick compute in head:
+
+We'll produce table:
+
+For each d:
+
+Compute r_a = 6d+2 mod7.
+
+Compute a_possible = r_a or r_a+7 if <=9.
+
+Similarly r_b = 4d+4 mod7.
+
+b_possible = r_b or r_b+7 <=9.
+
+r_c = 5d+3 mod7.
+
+c_possible = r_c or r_c+7 <=9.
+
+Also D: compute 6a+2b+3c mod7.
+
+Let's iterate d 0 to9.
+
+We can use mod properties but we can numeric compute.
+
+I'll compute residues mod7 for each d:
+
+d=0:
+r_a = 2 mod7 =2.
+a possibilities: 2 or 9? 2+7=9 <=9 => {2,9}
+r_b =4 mod7=4 => b=4 or 11? 11>9 => {4}
+r_c =3 mod7=3 => c=3 or 10? 10>9 => {3}
+Now compute D for each a choice:
+
+If a=2: 6a=12≡5; b=4:2b=8≡1; c=3:3c=9≡2. Sum =5+1+2=8≡1 mod7. Need ≡6, fails.
+
+If a=9: 6a=54≡5 (same). So same sum. So d=0 impossible.
+
+d=1:
+r_a = 6*1+2=8≡1. a possibilities {1,8?} 1+7=8 <=9 => {1,8}
+r_b =4*1+4=8≡1 => b {1,8}
+r_c =5*1+3=8≡1 => c {1,8}
+Now compute D: 6a + 2b + 3c. Let's try digits highest for maximum N. Likely choose a=8,b=8,c=8. Compute:
+
+6a=48≡6*? 48 mod7=48-42=6
+2b=16≡2
+3c=24≡3
+sum=6+2+3=11≡4. Need 6.
+
+Try a=8,b=8,c=1: 6+2+3*1? 3c=3 => sum=6+2+3=11 ≡4.
+
+a=8,b=1,c=8: 6+2*1=2, 3c=24≡3 => total=6+2+3=11=4.
+
+a=1,b=8,c=8: 6*1=6, 2*8=16≡2, 3*8=24≡3, sum=6+2+3=11=4.
+
+a=1,b=1,c=8: 6+2+24≡3=6+2+3=11=4.
+
+For any combo with a,b,c residues 1 or 8, the value of each term mod7: a ≡1 or 8≡1 mod7, so 6a ≡6. No, check: if a ≡1 mod7, a=1 or 8. 6*1=6. 6*8=48≡6. So always 6. Similarly b≡1 => 2b ≡2. c≡1 => 3c≡3. So sum always 6+2+3=11≡4. So always 4 not 6. So d=1 impossible.
+
+d=2:
+r_a = 6*2+2=14 ≡0. a possibilities {0,7?} 0 gives a=0 invalid (a≥1). But 0+7=7 <=9 => a=7 only. So a=7.
+
+r_b =4*2+4=12≡5. b possibilities {5,12?} 5, 12>9 => {5}.
+
+r_c =5*2+3=13≡6. c possibilities {6,13?} 6 only.
+
+Thus digits fixed: a=7,b=5,c=6,d=2.
+
+Now compute D: 6a=6*7=42≡0; 2b=10≡3; 3c=18≡4. Sum 0+3+4=7≡0. Need ≡6. So fails. So d=2 impossible.
+
+d=3:
+r_a = 6*3+2=20≡6. a possibilities: 6 or 13? 13>9 => a=6.
+
+r_b =4*3+4=16≡2. b=2 only.
+
+r_c =5*3+3=18≡4. c=4 only.
+
+Now D: 6a=6*6=36≡1; 2b=4≡4; 3c=12≡5. Sum 1+4+5=10≡3. Need 6. Fails.
+
+d=4:
+r_a = 6*4+2=26≡5. a possibilities: 5 or 12? 12>9 => a=5.
+
+r_b =4*4+4=20≡6. b=6 only.
+
+r_c =5*4+3=23≡2. c=2 only.
+
+D: 6a=30≡2; 2b=12≡5; 3c=6≡6. Sum 2+5+6=13≡6. Bingo! D satisfied.
+
+Thus digits a=5,b=6,c=2,d=4 works.
+
+Check N=5624. Let's verify property quickly:
+
+Replace thousand digit with 1: N1 = 1624. 1624 /7? 7*232=1624 exactly yes. Good.
+
+Replace hundred digit with 1: 511? Wait replace second digit: a=5 b=?? for hundred replaced: Number = 5 1 2 4? Actually replacing hundred digit (b), we get 5 1 2 4 = 5124. 5124/7? 7*732=5124 yes.
+
+Replace tens digit: 5 6 1 4 = 5614. 7*802=5614 correct.
+
+Replace unit digit: 5621? Wait replace unit with 1: 5621. 5621/7? 7*802=5624? wait 7*802=5614? Wait 5621? 7*802=5614; 7*803=5621. Indeed divisible.
+
+Thus N=5624 works! So is it the greatest? Let's continue exploring d>4 to ensure not bigger number.
+
+d=5:
+r_a = 6*5+2=32≡4. a possibilities: 4 or 11? 11>9 => a=4
+
+r_b: 4*5+4=24≡3. b=3
+
+r_c: 5*5+3=28≡0. c=0 ( allowed 0)
+
+Now D: 6a=24≡3; 2b=6≡6; 3c=0; sum=3+6=9≡2. Need 6. Fail.
+
+d=6:
+r_a = 6*6+2=38≡3. a=3
+
+r_b =4*6+4=28≡0. b=0
+
+r_c =5*6+3=33≡5. c=5
+
+D:6a=18≡4;2b=0;3c=15≡1; sum 4+0+1=5≠6.
+
+d=7:
+r_a = 6*7+2=44≡2. a=2 or 9? 2+7=9 => a∈{2,9}
+
+r_b=4*7+4=32≡4. b=

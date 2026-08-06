@@ -1,0 +1,68 @@
+<|channel|>analysis<|message|>We need to implement fib4 defined as above: base cases: n=0 -> 0, n=1 -> 0, n=2 -> 2, n=3 -> 0. Then for n>=4: fib4(n)=fib4(n-1)+fib4(n-2)+fib4(n-3)+fib4(n-4). So it's like a linear recurrence of order 4.
+
+We need efficient computation, not recursion. Could use iterative loop storing last four terms. Or matrix exponentiation for O(log n). But for simplicity iterative O(n) is fine since n is presumably moderate. Implementation: handle n < 0? Not necessary. Use list or deque. Return int.
+
+Edge cases: n=0,1,2,3. Ensure the docstring holds. Provide appropriate type hints and docstring. Use integer. Implementation:
+
+def fib4(n: int) -> int:
+    if n < 0: raise ValueError etc? Not necessary.
+
+We'll just compute iteratively.
+
+Pseudo:
+
+if n==0 or n==1: return 0
+if n==2: return 2
+if n==3: return 0
+a,b,c,d = 0,0,2,0 # fib4(0),fib4(1),fib4(2),fib4(3)
+for i in range(4, n+1):
+    e = a + b + c + d
+    a,b,c,d = b,c,d,e
+return d
+
+Yes. Provide docstring that may match original.
+
+Also handle n values as given.
+
+All good.
+
+Now produce full function.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def fib4(n: int) -> int:
+    """
+    The Fib4 number sequence is a sequence similar to the Fibonacci sequence that's defined as follows:
+        fib4(0) -> 0
+        fib4(1) -> 0
+        fib4(2) -> 2
+        fib4(3) -> 0
+        fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).
+
+    This function efficiently computes the n-th element of the fib4 number sequence without using recursion
+    by iteratively maintaining the last four computed values.
+
+    >>> fib4(5)
+    4
+    >>> fib4(6)
+    8
+    >>> fib4(7)
+    14
+    """
+    if n < 0:
+        raise ValueError("n must be a non‑negative integer")
+
+    # Base cases
+    if n == 0 or n == 1:
+        return 0
+    if n == 2:
+        return 2
+    if n == 3:
+        return 0
+
+    # Initialize the first four terms
+    a, b, c, d = 0, 0, 2, 0  # fib4(0), fib4(1), fib4(2), fib4(3)
+
+    for _ in range(4, n + 1):
+        e = a + b + c + d  # next term
+        a, b, c, d = b, c, d, e
+
+    return d
+```

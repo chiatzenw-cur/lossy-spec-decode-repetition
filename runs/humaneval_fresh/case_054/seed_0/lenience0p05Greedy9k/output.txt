@@ -1,0 +1,11 @@
+<|channel|>analysis<|message|>We need to implement function add(x: int, y: int) that returns int sum. The function signature: def add(x: int, y: int): ... The docstring already includes examples. The function body: return x + y. Should we type hint? The function signature already has type hints. Should we return int? The function body: return x + y. Also maybe add type checking? But not necessary. Provide full function. Also maybe add type hints? The function body: return x + y. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def add(x: int, y: int) -> int:
+    """Add two numbers x and y
+
+    >>> add(2, 3)
+    5
+    >>> add(5, 7)
+    12
+    """
+    return x + y
+```

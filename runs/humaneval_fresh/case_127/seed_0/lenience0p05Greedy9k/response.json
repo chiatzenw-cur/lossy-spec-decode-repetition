@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9711d8027ad76373",
+  "object": "text_completion",
+  "created": 1786025442,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that returns True if list is sorted in ascending order, and if there is more than 1 duplicate of same number, return False. Clarify: \"If list has more than 1 duplicate of the same number, return False.\" Means if a value appears more than twice, that is invalid. But what about duplicates? Example: [1,2,2,3,3,4] => True. They have duplicates of 2 and 3 each appears twice. So let's check: \"more than 1 duplicate of the same number\" means if a value appears more than 2 times, then return False. That is, duplicates are allowed but only one duplicate. So each value appears at most 2 times. So we must check that each value appears at most twice. Also need to check that the list is sorted ascending. So we need to iterate through list, check that each element is <= next element. Also check that the number of duplicates is not more than 2. Also check that the list is sorted ascending. But if there are duplicates, we must ensure that the duplicate is not more than 2 times in total. So we can use a Counter to count frequencies. Or maintain a dict of seen values. For each element, if count > 2, return False. Also check that each element is >= previous. But we also need to handle duplicates: if a value appears twice, that is allowed. And if a value appears twice, it must be consecutive. But sorted ascending means duplicates are allowed. So if a list is sorted ascending, duplicates will be consecutive. So we can just check for sortedness. So we can combine: for each element, if element < prev, return False. If element == prev, count++ else count=1. Also check that count <=2. Also check that no duplicates >2. So we can do:\n\nprev = None\ncount = 0\nfor i, val in enumerate(lst):\n    if prev is None:\n        prev = val\n        count = 1\n    else:\n        if val < prev:\n            return False\n        if val == prev:\n            count += 1\n            if count > 2: return False\n        else:\n            prev = val\n            count = 1\n\nReturn True\n\nEdge cases: empty list: return True. single element: return True.\n\nAlso assumption: no negative numbers and only integers. So we can just use int.\n\nWe also need to consider that the list is sorted ascending. No duplicates >2. So we can just return True.\n\nLet's produce final code. Provide docstring. Provide implementation. Use type hints. Provide tests. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef is_sorted(lst):\n    \"\"\"\n    Given a list of numbers, return whether or not they are sorted in ascending order.\n    If a value appears more than twice (i.e., more than one duplicate), return False.\n\n    Parameters\n    ----------\n    lst : list[int]\n        A list of non‑negative integers.\n\n    Returns\n    -------\n    bool\n        True if the list is sorted in non‑decreasing order and no element appears more than twice, False otherwise.\n\n    Examples\n    --------\n    >>> is_sorted([5])\n    True\n    >>> is_sorted([1, 2, 3, 4, 5])\n    True\n    >>> is_sorted([1, 3, 2, 4, 5])\n    False\n    >>> is_sorted([1, 2, 3, 4, 5, 6])\n    True\n    >>> is_sorted([1, 2, 3, 4, 5, 6, 7])\n    True\n    >>> is_sorted([1, 3, 2, 4, 5, 6, 7])\n    False\n    >>> is_sorted([1, 2, 2, 3, 3, 4])\n    True\n    >>> is_sorted([1, 2, 2, 2, 3, 4])\n    False\n    \"\"\"\n    if not lst:\n        return True\n\n    prev = None\n    count = 0\n\n    for value in lst:\n        if prev is None:\n            prev = value\n            count = 1\n            continue\n\n        if value < prev:          # not sorted\n            return False\n\n        if value == prev:\n            count += 1\n            if count > 2:          # more than one duplicate\n                return False\n        else:\n            prev = value\n            count = 1\n\n    return True\n```\n\nThis function checks two things in one pass:  \n1. **Non‑decreasing order** – if the current element is smaller than the previous one, it fails.  \n2. **Duplicate count** – each value is allowed at most twice; if it exceeds two, the function returns `False`.  \n\nThe algorithm runs in O(n) time with O(1) additional space.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 361,
+    "total_tokens": 1405,
+    "completion_tokens": 1044,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

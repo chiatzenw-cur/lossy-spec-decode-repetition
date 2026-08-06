@@ -1,0 +1,27 @@
+<|channel|>analysis<|message|>We need to complete the function body. The question: "Complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation)." So we need to write the full function code, including the signature, docstring, and implementation. The given snippet includes signature and docstring. Implementation is missing.
+
+We should provide the entire function as code block. Implementation: we can use string.swapcase() method to flip case. Use return string.swapcase().
+
+Edge cases: None. We'll preserve whitespace and punctuation unchanged. Just return string.swapcase().
+
+Add doctest in docstring: They already provided one test.
+
+Thus final function:
+
+def flip_case(string: str) -> str:
+    """For a given string, flip lowercase characters to uppercase and uppercase to lowercase.
+    >>> flip_case('Hello')
+    'hELLO'
+    """
+    return string.swapcase()
+
+But ensure there's a blank line after docstring. Provide final. Let's return that.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+def flip_case(string: str) -> str:
+    """For a given string, flip lowercase characters to uppercase and uppercase to lowercase.
+    >>> flip_case('Hello')
+    'hELLO'
+    """
+    return string.swapcase()
+```

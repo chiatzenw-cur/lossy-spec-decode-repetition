@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8c437359f6ecdbb3",
+  "object": "text_completion",
+  "created": 1786027655,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that checks if three sides form a right triangle. The triangle sides must satisfy triangle inequality: a + b > c, a + c > b, b + c > a. Also check that the sides are positive numbers. Also check that the Pythagorean theorem holds: i.e., a^2 + b^2 == c^2 for some ordering. But we can also check sorted: sides sorted ascending. Then check if sides[0]**2 + sides[1]**2 == sides[2]**2. Use float comparisons? Usually we use integer equality. But we can use math.isclose for floating. But spec: \"Given the lengths of the three sides of a triangle. Return True if the three sides form a right-angled triangle\" So we can treat as ints. We'll implement robust.\n\nEdge cases: if sides are not positive, return False. If not triangle, return False. If triangle inequality fails, return False.\n\nAlso check that exactly one side is the hypotenuse? For right triangle, the hypotenuse is the longest side. So we can sort ascending.\n\nImplementation:\n\ndef right_angle_triangle(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return True if the three\n    sides form a right-angled triangle, False otherwise.\n    ...\n    '''\n    # Check positivity\n    if not all(isinstance(x, (int, float)) for x in (a, b, c)):\n        raise TypeError(\"All arguments must be numbers\")\n    if not (a > 0 and b > 0 and c > 0):\n        return False\n    # Triangle inequality\n    if a + b <= c or a + c <= b or b + c <= a:\n        return False\n    sides = sorted([a, b, c])\n    if isinstance(sides[0], float) or isinstance(sides[1], float) or isinstance(sides[2], float):\n        return math.isclose(sides[0]**2 + sides[1]**2, sides[2]**2, rel_tol=1e-9)\n    return sides[0]**2 + sides[1]**2 == sides[2]**2\n\nBut we need to import math. We can import math inside function. The function body should include import math. Provide docstring.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef right_angle_triangle(a, b, c):\n    \"\"\"\n    Return True if the three sides (a, b, c) can form a right‑angled triangle,\n    False otherwise.\n\n    Parameters\n    ----------\n    a, b, c : int or float\n        The lengths of the three sides of the triangle.\n\n    Returns\n    -------\n    bool\n        True if the three sides satisfy the triangle inequality and\n        the Pythagorean theorem, False otherwise.\n\n    Notes\n    -----\n    * The function checks that the side lengths are positive and that the\n      triangle inequality holds.\n    * The sides are sorted in ascending order to identify the\n      longest side as the hypotenuse.\n    * For floating‑point inputs the result is compared with a tolerance\n      using ``math.isclose``.\n    \"\"\"\n    import math\n    # Validate that all arguments are numeric\n    if not all(isinstance(x, (int, float)) for x in (a, b, c)):\n        raise TypeError(\"All arguments must be numbers\")\n\n    # All sides must be positive\n    if not (a > 0 and b > 0 and c > 0):\n        return False\n\n    # Triangle inequality: sum of any two sides must be longer than the third\n    if a + b <= c or a + c <= b or b + c <= a:\n        return False\n\n    # Sort the sides so that the longest side is the last element\n    sides = sorted([a, b, c])\n    # Check the Pythagorean theorem\n    if isinstance(sides[0], float) or isinstance(sides[1], float) or isinstance(sides[2], float):\n        return math.isclose(sides[0]**2 + sides[1]**2, sides[2]**2, rel_tol=1e-9)\n    return sides[0]**2 + sides[1]**2 == sides[2]**2\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 220,
+    "total_tokens": 1144,
+    "completion_tokens": 924,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

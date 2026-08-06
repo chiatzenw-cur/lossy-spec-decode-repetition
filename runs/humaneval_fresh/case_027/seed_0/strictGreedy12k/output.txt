@@ -1,0 +1,65 @@
+<|channel|>analysis<|message|>We need to complete the function remove_duplicates(numbers: List[int]) -> List[int]. The docstring: "From a list of integers, remove all elements that occur more than once. Keep order of elements left the same as in the input."
+
+Essentially: given list, keep only elements that occur exactly once. Example: [1, 2, 3, 2, 4] => [1,3,4]. So let's compute frequencies and keep items where count==1.
+
+Implementation: using collections.Counter or dict to count frequencies. Then iterate original list and append to output if counts[number]==1. Return list.
+
+Edge cases: negative numbers, duplicates of duplicates etc. Also empty list returns [].
+
+Docstring includes doctest.
+
+Return the function with appropriate type annotation.
+
+Also we need to include imports: we already have 'from typing import List' at top. We can import collections.Counter inside function or at top.
+
+We'll implement something minimal:
+
+from collections import Counter
+
+def remove_duplicates(numbers: List[int]) -> List[int]:
+    """
+    ...
+    """
+    freq = Counter(numbers)
+    return [n for n in numbers if freq[n] == 1]
+
+That's it.
+
+But we may provide explanation. Implementation is straightforward. They want only the function body is missing; produce complete function with signature, docstring, and implementation. So we need to output full function. I think we'll output:
+
+def remove_duplicates(numbers: List[int]) -> List[int]:
+    """
+    From a list of integers, remove all elements that occur more than once.
+    Keep order of elements left the same as in the input.
+
+    Examples:
+    >>> remove_duplicates([1, 2, 3, 2, 4])
+    [1, 3, 4]
+    """
+    from collections import Counter
+    counts = Counter(numbers)
+    return [x for x in numbers if counts[x] == 1]
+
+We need doctest to be correct: '>>> remove_duplicates([1, 2, 3, 2, 4])\n[1, 3, 4]' Without trailing spaces.
+
+Also maybe expand comments. Provide full function. Let's produce it.
+
+Also ensure the docstring matches: it currently uses triple quotes and example. We'll keep as is.
+
+Ok I'll produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def remove_duplicates(numbers: List[int]) -> List[int]:
+    """ From a list of integers, remove all elements that occur more than once.
+    Keep order of elements left the same as in the input.
+    >>> remove_duplicates([1, 2, 3, 2, 4])
+    [1, 3, 4]
+    """
+    # Count how many times each number occurs
+    from collections import Counter
+    freq = Counter(numbers)
+
+    # Keep only the numbers that appear exactly once, preserving original order
+    return [n for n in numbers if freq[n] == 1]
+```

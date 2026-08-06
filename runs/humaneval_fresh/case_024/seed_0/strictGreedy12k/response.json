@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b58f400c60800cdd",
+  "object": "text_completion",
+  "created": 1786003516,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>The user wants to complete the Python function `strlen` that returns the length of given string. It's just straightforward. But we should follow the instructions: The function signature and docstring are provided; only the body is missing. Provide full function.\n\nPotential pitfalls: The function receives a string; we should handle it. We can just use `len(string)`.\n\nThey might want to illustrate how to test. It's a trivial function. Implementation: return len(string). Just implement.\n\nAlso maintain code in a python code block. They want only the function; the docstring remains. Provide just the whole function.\n\nWe need to include the function signature, its docstring, and our implementation. That's all.\n\nI'll do that in a python block.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n    # The built‑in len() function gives the number of characters in the string.\n    return len(string)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 155,
+    "total_tokens": 377,
+    "completion_tokens": 222,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-ab0e42cc6eba9c91",
+  "object": "text_completion",
+  "created": 1786007877,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function body. Conditions: three numbers. Return True if one number equals sum of other two and all numbers are integers. Else False. Must check integer type and maybe numeric types. Should use int type check; let's treat numbers like floats but convertible to int: if all numbers are ints, else return False. But if floats are integral like 2.0? Example: input 5.0, 2, 7 - but not given. Probably check isinstance(x, int) or isinstance(x, float) but value.is_integer() etc. But spec says all numbers are integers. So 5.0 should be considered not integer. So just isinstance(x, int) etc. We'll do all(isinstance(val, int) for val in (x,y,z)). If not all true: return False. Then check if any of x==y+z or y==x+z or z==x+y. Return accordingly.\n\nEdge: negative numbers okay. Implementation straightforward.\n\nReturn True/False.\n\nWrite full function accordingly.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) ➞ True\n    \n    any_int(3, 2, 2) ➞ False\n\n    any_int(3, -2, 1) ➞ True\n    \n    any_int(3.6, -2.2, 2) ➞ False\n    '''\n    # Ensure all arguments are of integer type\n    if not all(isinstance(v, int) for v in (x, y, z)):\n        return False\n\n    # Check if any one of the numbers equals the sum of the other two\n    if x == y + z or y == x + z or z == x + y:\n        return True\n\n    return False\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 247,
+    "total_tokens": 680,
+    "completion_tokens": 433,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

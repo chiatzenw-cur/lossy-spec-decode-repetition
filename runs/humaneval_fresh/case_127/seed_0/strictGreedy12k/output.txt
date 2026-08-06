@@ -1,0 +1,108 @@
+<|channel|>analysis<|message|>We need to implement a function is_sorted(lst) that returns True if list sorted ascending order, and no number occurs more than once? Wait: "If list has more than 1 duplicate of the same number, return False." Means duplicates allowed as long as each number appears at most twice? Actually "more than 1 duplicate" means appears at least 3 times? Example: [1,2,2,3,3,4] is True; duplicates appear twice each, permitted. [1,2,2,2,3,4] -> duplicate 2 appears 3 times, so False. So rule: each number can appear at most twice.
+
+Also consider ordering: ascending order may allow equal adjacent numbers in ascending sequence (non-decreasing). So we should check each consecutive pair non-decreasing. Additionally, exceed duplicate limit 2.
+
+Return True for single element always sorted.
+
+Edge cases: empty list? Not specified, but we can treat empty as True. Also duplicates >2 contiguous but maybe duplicates separated? Example: [1,2,1,2,3]? Not sorted because not non-decreasing.
+
+Implementation: iterate through list, maintain previous element. Count occurrences using dictionary or just track previous duplicates: we can maintain a dict counts; if any number's count >2 return False. Check ordering: if current < prev: return False.
+
+Also duplicates can be non-consecutive? But if list sorted, duplicates will be consecutive. So no issue. We'll keep dictionary.
+
+We should also allow only integers and no negative numbers but not necessary to enforce.
+
+Return bool.
+
+Let's craft docstring maybe expand.
+
+Add tests? Not needed.
+
+We need full function: signature, docstring, implementation. Provide in python block. Let's write.
+
+Also note we should check duplicate count only after seeing duplicates.
+
+Implementation:
+
+```
+def is_sorted(lst):
+    '''
+    Given positive integer list, returns True if list sorted (non-decreasing) and no value appears more than twice.
+    ...
+    '''
+    if not lst:
+        return True
+    counts = {}
+    prev = lst[0]
+    counts[prev] = 1
+    for num in lst[1:]:
+        if num < prev:
+            return False
+        counts[num] = counts.get(num, 0) + 1
+        if counts[num] > 2:
+            return False
+        prev = num
+    return True
+```
+
+Yes.
+
+Return example.
+
+Ok.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def is_sorted(lst):
+    '''
+    Determine whether a list of non‑negative integers is sorted in
+    ascending (non‑decreasing) order and whether no integer appears
+    more than twice.
+
+    A list is considered sorted if every element is greater than or equal
+    to the previous one.  Duplicates are allowed, but a value may occur
+    at most two times; if any number appears three or more times the
+    function returns False.
+
+    Parameters
+    ----------
+    lst : list[int]
+        A list of non‑negative integers.
+
+    Returns
+    -------
+    bool
+        True if the list is sorted and no number appears more than twice,
+        otherwise False.
+
+    Examples
+    --------
+    >>> is_sorted([5])
+    True
+    >>> is_sorted([1, 2, 3, 4, 5])
+    True
+    >>> is_sorted([1, 3, 2, 4, 5])
+    False
+    >>> is_sorted([1, 2, 2, 3, 3, 4])
+    True
+    >>> is_sorted([1, 2, 2, 2, 3, 4])
+    False
+    '''
+    if not lst:
+        return True  # empty list is trivially sorted
+
+    counts = {}
+    prev = lst[0]
+    counts[prev] = 1
+
+    for num in lst[1:]:
+        # Check ascending order
+        if num < prev:
+            return False
+
+        # Track occurrence count
+        counts[num] = counts.get(num, 0) + 1
+        if counts[num] > 2:
+            return False
+
+        prev = num
+
+    return True
+```

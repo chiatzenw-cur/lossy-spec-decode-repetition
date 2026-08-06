@@ -1,0 +1,38 @@
+<|channel|>analysis<|message|>We need to find function that returns whether n can be written as sum of exactly 4 positive even numbers. Positive even numbers are >= 2. So we need to check if there exist e1, e2, e3, e4 >= 2, even integers, sum = n. Equivalent to let's set each as 2 + 2a_i where a_i >=0. Sum = 4*2 + sum(2 a_i) = 8 + 2 sum(a_i). So n must be >= 8 and even. Also n-8 must be even => n-8 even => n even. So n must be even and >= 8. But need distinct? Not required. So exactly 4 positive even numbers. So any even number >= 8 qualifies? Let's test: 8 can be 2+2+2+2 = 8 => yes. 10? 2+2+2+4=10 => yes. 12? 2+2+2+6 etc. So yes. So function returns True for n%2==0 and n>=8. Let's examine ex: is_equal_to_sum_even(4) False, 6 False, 8 True. Good.
+
+Edge cases: negative numbers, zero, etc. So implement accordingly.
+
+Return boolean.
+
+We should handle int input only. Provide signature.
+
+Ok.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def is_equal_to_sum_even(n):
+    """Evaluate whether the given number `n` can be written as the sum of exactly
+    four positive even numbers.
+
+    Since any positive even number can be expressed as 2k with k ≥ 1, we can
+    write the sum of four such numbers as:
+
+        n = 2a + 2b + 2c + 2d   with a,b,c,d ≥ 1
+
+    This simplifies to
+
+        n = 2(a+b+c+d)
+
+    Hence `n` must be an even integer and must be at least `2*4 = 8`
+    (the smallest sum using four positive evens, 2+2+2+2).
+
+    Examples
+    --------
+    >>> is_equal_to_sum_even(4)
+    False
+    >>> is_equal_to_sum_even(6)
+    False
+    >>> is_equal_to_sum_even(8)
+    True
+    >>> is_equal_to_sum_even(10)
+    True
+    """
+    return isinstance(n, int) and n >= 8 and n % 2 == 0
+```

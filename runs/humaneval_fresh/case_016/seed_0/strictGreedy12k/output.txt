@@ -1,0 +1,12 @@
+<|channel|>analysis<|message|>We need to complete the function body. The docstring says: Return a string containing space-delimited numbers starting from 0 upto n inclusive. Implementation straightforward: join numbers. Also need to ensure n is non-negative? Should we handle negative n? Could let's say if n < 0 return ''? But tests show only 0 and 5. We can just handle normally. Use list comprehension or map: " ".join(str(i) for i in range(n+1)). We'll produce final function. Provide code in python block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def string_sequence(n: int) -> str:
+    """Return a string containing space‑delimited numbers starting from 0 up to n inclusive.
+
+    >>> string_sequence(0)
+    '0'
+    >>> string_sequence(5)
+    '0 1 2 3 4 5'
+    """
+    # Generate numbers from 0 to n and join them with a single space.
+    return " ".join(str(i) for i in range(n + 1))
+```

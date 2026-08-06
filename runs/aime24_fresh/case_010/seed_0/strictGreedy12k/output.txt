@@ -1,0 +1,68 @@
+<|channel|>analysis<|message|>We need find probability that Jen gets all 4 correct given she gets at least 2 correct. Let's calculate combinatorics. There are S size 10. Jen picks 4 distinct numbers. The lottery draws 4 numbers from 10. Equivalent to let's say choose 4 numbers as official winning numbers. Jen picks a set of 4. But the random selection is independent of her selection? Usually lottery draws 4 numbers and you compare with her picks. Equivalent to from 10 choose 4 possible winning tickets. She fixed selection; probability of winning exactly k matches is Hypergeometric: Among 4 chosen by lottery, match with her 4. 4 draws from 10 containing 4 predetermined 'good' numbers. Probability of exactly k matches is C(4,k)*C(6,4-k)/C(10,4). Because there are 4 good numbers (those she selected), 6 bad numbers. So:
+
+- Probability of grand prize (k=4): C(4,4)*C(6,0)/C(10,4) = 1 * 1 / 210 = 1/210? Wait C(10,4)=210. So 1/210.
+
+- Probability of at least 2 matches (k=2,3,4). Let's compute.
+
+k=2: C(4,2)*C(6,2)/210 = 6 * 15 /210 = 90/210 = reduce? 90/210 = 3/7? Wait 90/210= 3*30 / 210. 210/90= 7/3. Quick compute: 90/210 = 3/7? 3/7 = 0.4286; 90/210 is 0.4286 indeed. 90/210=3/7 after simplifying divide by 30 =3/7. Yes.
+
+k=3: C(4,3)*C(6,1)/210 = 4 * 6 /210 = 24/210 = reduce by 6: 4/35? Wait 24/210 = divide by 6 gives 4/35. Yes.
+
+k=4: 1/210.
+
+Sum at least 2: 3/7 + 4/35 + 1/210. Find common denominator 210. 3/7 = 90/210; 4/35 = 24/210; 1/210 = 1/210. Sum = 115/210 =? 115 and 210 gcd? 5. 115/210 = 23/42. So probability of at least 2 matches is 23/42.
+
+We need conditional probability of all 4 matches given at least 2 matches: P(k=4)/P(k≥2) = (1/210) / (23/42) = (1/210)*(42/23)=42/(210*23)=? Simplify 42/210 = 1/5. So = (1/5)/23 = 1/(115). Wait check: 42/(210*23) = (42/210)/23 = (1/5)/23 = 1/(115). Yes.
+
+So probability is 1/115. m=1, n=115, relatively prime. m+n=116. But double-check cross-check numbers: P(at least 2 matches) simpler formula: choose at least 2 matches from 4 successes out of 4 draws? Let's confirm sums: hypergeometric numerator counts combos of 4 from 10. The denominator C(10,4)=210. For k=2, need select 2 of her 4 numbers and 2 of the remaining 6. That's C(4,2)*C(6,2)=6*15=90. So 90 combos. For k=3, C(4,3)*C(6,1)=4*6=24 combos. For k=4, C(4,4)*C(6,0)=1 combos. Total 115 combos. Yes, so probability of at least 2 matches is 115/210=23/42. So conditional probability is 1/115. Check total combos of draws: 210. So probability of grand prize is 1/210. The ratio with at least 2 is (1/210)/(115/210)= 1/115. Good.
+
+Thus answer m+n = 116. So \boxed{116}. Ensure final answer format: Provide final in box.<|end|><|start|>assistant<|channel|>final<|message|>The number of ways the lottery can draw 4 numbers from the set \(S=\{1,\dots ,10\}\) is  
+
+\[
+\binom{10}{4}=210.
+\]
+
+Let \(k\) be the number of matches with Jen’s 4 chosen numbers.  
+Using the hypergeometric distribution, for \(k=0,1,2,3,4\):
+
+\[
+P(k)=\frac{\binom{4}{k}\binom{6}{4-k}}{\binom{10}{4}}.
+\]
+
+The probability of the grand prize (all four match) is
+
+\[
+P(4)=\frac{\binom{4}{4}\binom{6}{0}}{210}=\frac{1}{210}.
+\]
+
+The probability of winning any prize (at least two matches) is
+
+\[
+\begin{aligned}
+P(k\ge 2) &= P(2)+P(3)+P(4)\\
+&= \frac{\binom{4}{2}\binom{6}{2}+\binom{4}{3}\binom{6}{1}+\binom{4}{4}\binom{6}{0}}{210}\\
+&= \frac{90+24+1}{210}\\
+&= \frac{115}{210}\\
+&= \frac{23}{42}.
+\end{aligned}
+\]
+
+Hence the conditional probability that Jen wins the grand prize given she wins a prize is
+
+\[
+\frac{P(4)}{P(k\ge 2)}
+  = \frac{\frac{1}{210}}{\frac{23}{42}}
+  = \frac{1}{210}\cdot\frac{42}{23}
+  = \frac{1}{115}.
+\]
+
+This fraction is already in lowest terms, so \(m=1,\; n=115\).  
+Thus
+
+\[
+m+n = 1+115 = 116.
+\]
+
+\[
+\boxed{116}
+\]

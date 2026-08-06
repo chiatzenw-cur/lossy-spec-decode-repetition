@@ -1,0 +1,60 @@
+<|channel|>analysis<|message|>We need to implement int_to_mini_roman. The function takes integer 1-1000, returns Roman numeral string in lowercase. We need to support up to 1000. We need to produce Roman numeral in standard system: I=1, V=5, X=10, L=50, C=100, D=500, M=1000. For numbers up to 1000, inclusive. For 1000, we should output 'm' (since 1000 is M). But we need to check if 1000 is allowed. The example: 152 returns 'clii', 426 'cdxxvi', 19 'xix'. So we implement standard Roman numerals. For 1000, we can output 'm'. For 1000 inclusive, we can handle 1000. For 0? Not needed. For 1-1000. So we can implement mapping from values to roman numerals: list of tuples: (1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'), (100, 'c'), (90, 'xc'), (50, 'l'), (40, 'xl'), (10, 'x'), (9, 'ix'), (5, 'v'), (4, 'iv'), (1, 'i'). Then iterate over mapping, subtract as many times as possible. That will produce Roman numeral. The function returns string. We need to ensure it is lowercase. Use the mapping string as lowercase. That is fine.
+
+Edge cases: 1 <= number <= 1000. So number 1000 returns 'm'. For 1000, we subtract 1000, remainder 0. So result 'm'.
+
+We also need to ensure the function docstring is correct. Provide docstring. Provide type hints? Not necessary. Provide test examples. Provide code.
+
+We need to ensure function signature: def int_to_mini_roman(number): ... Provide docstring. Provide code.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def int_to_mini_roman(number):
+    """
+    Convert a positive integer to its Roman numeral representation in
+    lowercase, using the standard Roman numeral system.
+
+    Parameters
+    ----------
+    number : int
+        The integer to convert. Must be in the range 1 <= number <= 1000.
+
+    Returns
+    -------
+    str
+        The Roman numeral representation in lowercase.
+
+    Examples
+    --------
+    >>> int_to_mini_roman(19)
+    'xix'
+    >>> int_to_mini_roman(152)
+    'clii'
+    >>> int_to_mini_roman(426)
+    'cdxxvi'
+    >>> int_to_mini_roman(1000)
+    'm'
+    """
+    # Ordered list of Roman numerals (value, numeral)
+    roman_map = [
+        (1000, 'm'),
+        (900,  'cm'),
+        (500,  'd'),
+        (400,  'cd'),
+        (100,  'c'),
+        (90,   'xc'),
+        (50,   'l'),
+        (40,   'xl'),
+        (10,   'x'),
+        (9,    'ix'),
+        (5,    'v'),
+        (4,    'iv'),
+        (1,    'i')
+    ]
+
+    # Build the result string
+    result = []
+    for value, numeral in roman_map:
+        while number >= value:
+            result.append(numeral)
+            number -= value
+    return ''.join(result)
+```

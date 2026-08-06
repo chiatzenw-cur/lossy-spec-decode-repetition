@@ -115,11 +115,16 @@ common_args=(
 # vLLM 0.20.1 had no such knob, so pre-upgrade acceptance numbers are pessimistic.
 DRAFT_SAMPLE_METHOD="${DRAFT_SAMPLE_METHOD:-probabilistic}"
 
+# Off by default: only P-EAGLE-style parallel-drafting draft models (e.g.
+# amazon/GPT-OSS-20B-P-EAGLE) need this; the default nebius/EAGLE3 drafter is
+# autoregressive (one token per forward pass) and does not set this field.
+PARALLEL_DRAFTING="${PARALLEL_DRAFTING:-false}"
+
 spec_json() {
   local method="$1"
   local extra="$2"
-  printf '{"method":"eagle3","model":"%s","num_speculative_tokens":%s,"rejection_sample_method":"%s","draft_sample_method":"%s"%s}' \
-    "$DRAFT_MODEL_PATH" "$NUM_SPEC" "$method" "$DRAFT_SAMPLE_METHOD" "$extra"
+  printf '{"method":"eagle3","model":"%s","num_speculative_tokens":%s,"rejection_sample_method":"%s","draft_sample_method":"%s","parallel_drafting":%s%s}' \
+    "$DRAFT_MODEL_PATH" "$NUM_SPEC" "$method" "$DRAFT_SAMPLE_METHOD" "$PARALLEL_DRAFTING" "$extra"
 }
 
 case "$MODE" in

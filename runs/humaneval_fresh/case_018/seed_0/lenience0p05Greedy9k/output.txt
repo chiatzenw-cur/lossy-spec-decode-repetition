@@ -1,0 +1,59 @@
+<|channel|>analysis<|message|>We need to parse a string of musical notes. The input string: 'o o| .| o| o| .| .| .| .| o o' etc. The notes are separated by spaces. Formats: 'o' (whole note), 'o|' (half note), '.|' (quarter note). The code should parse each element and return list of ints. Edge cases: maybe multiple spaces? The string may contain consecutive spaces. The code should handle that. Also maybe 'o' vs 'o|', let's parse. The rules: 'o' - whole note, 4 beats. 'o|' - half note, 2 beats. '.|' - quarter note, 1 beat. So we need to parse tokens. The string may have spaces and maybe punctuation. We can split on whitespace. For each token, if token is 'o', beats 4. else if token is 'o|', beats 2. else if token is '.|', beats 1. else maybe nothing. But we might also consider that the string may contain 'o' or 'o|', but also 'o' might be part of 'o' or 'o' but with trailing spaces? The string may have trailing spaces. We can just split on whitespace. Then for each token, mapping. If token is exactly 'o', then 4. If token is 'o|', then 2. If token is '.|', then 1. Else maybe raise? But we can ignore. But the spec says "Input to this function is a string representing musical notes in a special ASCII format." So we can just parse these tokens. Might also handle 'o' or 'o|' with trailing spaces. But we can handle.
+
+We need to produce a function with docstring, etc. Provide the function. Also maybe include error handling. Provide docstring. Let's produce final code.
+
+We need to import typing. Provide parse_music. Use docstring. Provide function. Use list comprehension. Provide mapping.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """
+    Parse a string representing musical notes in a custom ASCII format and return a list of
+    integer durations corresponding to each note.
+
+    The notation uses the following symbols:
+
+    - 'o'   : whole note, 4 beats
+    - 'o|'  : half note, 2 beats
+    - '.|'  : quarter note, 1 beat
+
+    The notes are separated by whitespace. The function ignores any empty tokens
+    that can arise from multiple spaces.
+
+    Parameters
+    ----------
+    music_string : str
+        A whitespace‑separated string of musical notes.
+
+    Returns
+    -------
+    List[int]
+        A list where each integer is the beat count for the corresponding note.
+
+    Examples
+    --------
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    # Map the possible token strings to their beat counts
+    mapping = {
+        'o': 4,
+        'o|': 2,
+        '.|': 1,
+    }
+
+    # Split on whitespace to get individual tokens
+    tokens = music_string.split()
+    # Convert each token to its corresponding beat count
+    beats = []
+
+    for token in tokens:
+        # Quick sanity check: if the token is not in the mapping
+        # we ignore it – this makes the function tolerant to malformed input.
+        if token not in mapping:
+            continue
+        beats.append(mapping[token])
+
+    return beats
+```

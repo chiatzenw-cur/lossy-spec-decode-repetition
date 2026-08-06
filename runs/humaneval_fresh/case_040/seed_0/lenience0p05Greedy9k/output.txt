@@ -1,0 +1,168 @@
+<|channel|>analysis<|message|>We need to implement function prime_fib(n). The docstring: "prime_fib returns n-th number that is a Fibonacci number and it's also prime." The examples: 1->2, 2->3, 3->5, 4->13, 5->89. So we need to generate Fibonacci numbers and check primality. The Fibonacci sequence: 0,1,1,2,3,5,8,13,21,34,... So primes: 2,3,5,13,89,233,1597, ... Actually 1597 is prime. So we need to generate until we find n-th prime Fibonacci. We need to write efficient primality test. For moderate n, we can use simple deterministic test. Since n might be small, but we can implement efficient primality test for large numbers. Use Miller-Rabin for numbers up to maybe 2^64. But we can implement simple deterministic test for small numbers. But we can implement simple trial division up to sqrt(n). For n up to maybe 10^6? But Fibonacci numbers grow quickly. For n up to, say, 1000, Fibonacci numbers huge. But we can just implement simple trial division up to sqrt, but for large numbers, we can use Miller-Rabin. But simpler: we can implement deterministic Miller-Rabin for 64-bit. Provide tests for large n. But we can implement a simple primality test for small; but for large n, maybe heavy. But we can implement a simple Miller-Rabin for 64-bit. Provide the function.
+
+We need to return n-th prime Fibonacci number. The definition: prime_fib(n) returns n-th prime Fibonacci number. The function should be defined as:
+
+def prime_fib(n: int) -> int:
+    """Return n-th prime Fibonacci number."""
+    # Implementation: Generate Fibonacci numbers, check primality
+    # Use simple primality test.
+
+We need to handle n <= 0? Probably raise ValueError. But we can implement simple check.
+
+Edge cases: n=1 -> 2. n=2 -> 3. n=3 -> 5. n=4 -> 13. n=5 -> 89.
+
+We need to produce the function. Provide docstring. Provide generics.
+
+We need to implement prime_fib(n) as:
+
+- if n <= 0: raise ValueError.
+
+- def is_prime(k: int) -> bool.
+
+- Use Miller-Rabin for 64-bit.
+
+- For n <= maybe 1000, we can just use simple trial division up to sqrt. But we can use Miller-Rabin.
+
+Simplify: Use a precomputed list of primes up to sqrt(n) maybe. But we can just implement simple trial division up to sqrt(n) for n up to maybe 10^12? But Fibonacci numbers can be huge. But likely the user expects a moderate n.
+
+Let's implement is_prime with Miller-Rabin.
+
+Implementation:
+
+def is_prime(n: int) -> bool:
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0:
+        return False
+    # Miller-Rabin
+    d = n-1
+    s = 0
+    while d % 2 == 0:
+        d //= 2
+        s += 1
+    # Use deterministic bases for 64-bit
+    for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
+        if a % n == 0:
+            continue
+        x = pow(a, d, n)
+        if x == 1 or x == n-1:
+            continue
+        for _ in range(s-1):
+            x = pow(x, 2, n)
+            if x == n-1:
+                break
+        else:
+            return False
+    return True
+
+Need to import math.
+
+Now prime_fib:
+
+- Use a loop: a, b = 0, 1; i = 0; count = 0; while True: if a>=2: check prime; if prime, count++; if count==n: return a; else: a, b = b, a+b
+
+But we need to start with 0,1. But we need 2,3,5,13,89. So we need to start at a=2, b=3? Wait we need to include 2,3,5,13,89. So we can generate Fibonacci numbers starting from 1,1,2,3,5,8,13,21,34,... But we can just skip the first two 1's. So we can start with a=1, b=1. Then we can iterate from a=1, b=1, then while True: a, b = b, a+b; if a is prime, count++.
+
+But we need to ensure that 2 is counted. Let's test: a=1, b=1; a, b = 1, 2; a=1, skip. Next a=2, prime. So we can do that.
+
+Alternatively, we can generate a list of Fibonacci numbers starting from 2,3,5,... but we can just skip 1 and 1.
+
+So algorithm: a=1, b=1, count=0; while True: a, b = b, a+b; if a >= 2 and is_prime(a): count++ ; if count==n: return a
+
+Edge: n=1: return 2.
+
+Should we also handle n=0? Not needed.
+
+Let's implement.
+
+Also we can use caching for prime numbers? Not necessary.
+
+We also need to import math.
+
+Now produce final code.
+
+Also we need to include docstring and maybe test.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+import math
+from typing import Iterable
+
+def prime_fib(n: int) -> int:
+    """
+    Return the n‑th prime Fibonacci number.
+
+    The sequence is defined as the Fibonacci numbers that are prime
+    (``2, 3, 5, 13, 89, 233, …``).  The first few values are:
+
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+
+    Parameters
+    ----------
+    n : int
+        The index of the desired prime Fibonacci number (1‑based).
+
+    Returns
+    -------
+    int
+        The n‑th prime Fibonacci number.
+
+    Raises
+    ------
+    ValueError
+        If `n` is not a positive integer.
+    """
+    if n < 1:
+        raise ValueError("n must be a positive integer")
+
+    # ---- primality test ----------------------------------------------------
+    def is_prime(x: int) -> bool:
+        """Return True if x is a prime number."""
+        if x <= 1:
+            return False
+        if x <= 3:
+            return True
+        if x % 2 == 0:
+            return False
+
+        # Miller–Rabin test for 64‑bit integers (deterministic bases)
+        d, s = x - 1, 0
+        while d % 2 == 0:
+            d //= 2
+            s += 1
+
+        # Deterministic bases for 64‑bit integers
+        for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
+            if a % x == 0:
+                continue
+            x_pow = pow(a, d, x)
+            if x_pow == 1 or x_pow == x - 1:
+                continue
+            for _ in range(s - 1):
+                x_pow = pow(x_pow, 2, x)
+                if x_pow == x - 1:
+                    break
+            else:
+                return False
+        return True
+
+    # ---- Fibonacci generator ------------------------------------------------
+    a, b = 1, 1          # start with 1, 1
+    count = 0
+    while True:
+        a, b = b, a + b
+        if a >= 2 and is_prime(a):
+            count += 1
+            if count == n:
+                return a
+```

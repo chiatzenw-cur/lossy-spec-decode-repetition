@@ -1,0 +1,64 @@
+<|channel|>analysis<|message|>We need to implement fib4(n) iterative. The definition: fib4(0)=0, fib4(1)=0, fib4(2)=2, fib4(3)=0. Recurrence: fib4(n) = fib4(n-1)+fib4(n-2)+fib4(n-3)+fib4(n-4). So we need efficient algorithm. Use iterative with list of length n+1 or use sliding window. Provide docstring, type hints. Complexity O(n). Provide code. Also verify example: fib4(5) -> 4? Let's compute: fib4(0)=0, fib4(1)=0, fib4(2)=2, fib4(3)=0, fib4(4)=fib4(3)+fib4(2)+fib4(1)+fib4(0)=0+2+0+0=2. fib4(5)=fib4(4)+fib4(3)+fib4(2)+fib4(1)=2+0+2+0=4. fib4(6)=fib4(5)+fib4(4)+fib4(3)+fib4(2)=4+2+0+2=8. fib4(7)=8+4+2+0=14. So correct.
+
+Edge cases: n negative? Probably not. We'll handle negative raise ValueError. Provide docstring. Provide efficient algorithm: iterative loop with list; or use deque.
+
+Let's produce.
+
+Also we can use list comprehension for initial part. But we can also use simple loop.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def fib4(n: int) -> int:
+    """Return the *n*‑th element of the fib4 number sequence.
+
+    The sequence is defined as:
+        fib4(0) = 0
+        fib4(1) = 0
+        fib4(2) = 2
+        fib4(3) = 0
+        fib4(n) = fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4)   for n >= 4
+
+    Parameters
+    ----------
+    n : int
+        The index of the sequence to compute (must be non‑negative).
+
+    Returns
+    -------
+    int
+        The value of the fib4 sequence at index ``n``.
+
+    Raises
+    ------
+    ValueError
+        If ``n`` is negative.
+
+    Examples
+    --------
+    >>> fib4(5)
+    4
+    >>> fib4(6)
+    8
+    >>> fib4(7)
+    14
+    """
+    if n < 0:
+        raise ValueError("n must be non‑negative")
+
+    # Base cases
+    if n == 0:
+        return 0
+    if n == 1:
+        return 0
+    if n == 2:
+        return 2
+    if n == 3:
+        return 0
+
+    # Compute iteratively using a rolling window
+    a, b, c, d = 0, 0, 2, 0          # fib4(0), fib4(1), fib4(2), fib4(3)
+    for _ in range(4, n + 1):
+        a, b, c, d = b, c, d, a + b + c + d
+    return d
+```
+
+This implementation uses a simple iterative loop and a rolling window of the last four values, giving O(n) time complexity and O(1) extra space. It avoids recursion, handles the required base cases, and validates the input.

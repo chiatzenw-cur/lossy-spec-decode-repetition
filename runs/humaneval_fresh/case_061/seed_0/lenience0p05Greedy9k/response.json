@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9926bc722ada17e2",
+  "object": "text_completion",
+  "created": 1786020770,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement the function sum_to_n(n: int). The function should sum numbers from 1 to n inclusive. The examples show typical sums. For n=0? Not given. But we can handle n=0 and return 0. For negative n, maybe 0. But typical sum formula: n*(n+1)/2. But we can implement with a loop or formula. Provide docstring. Also handle negative n: maybe return 0. Provide type hints. Provide docstring. I'll implement:\n\ndef sum_to_n(n: int) -> int:\n    \"\"\"Sum of numbers from 1 to n inclusive.\"\"\"\n    if n <= 0:\n        return 0\n    return n * (n + 1) // 2\n\nBut the docstring includes examples. The docstring is already given. We can add a comment. The function body: slice. Provide docstring. Provide function. Provide type hints. Provide cast to int. Provide docstring comments. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef sum_to_n(n: int) -> int:\n    \"\"\"\n    Sum the numbers from 1 to n inclusive.\n\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n    # The arithmetic series sum formula: n*(n+1)/2\n    if n <= 0:\n        return 0\n    return n * (n + 1) // 2\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 206,
+    "total_tokens": 557,
+    "completion_tokens": 351,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,39 @@
+<|channel|>analysis<|message|>We need to implement intersperse(numbers: List[int], delimeter: int) -> List[int]. Behavior: insert delimeter between every two consecutive elements of input list. So if list empty, return empty. If list has one element, return [element]. If list has length n, return [n1, delimeter, n2, delimeter, ..., n_n]. Use list comprehension or loop. Provide docstring. Also handle general case. Provide function. Use typing. Provide final code. Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+def intersperse(numbers: List[int], delimeter: int) -> List[int]:
+    """
+    Insert a number 'delimeter' between every two consecutive elements of the input list `numbers`.
+
+    Parameters
+    ----------
+    numbers : List[int]
+        The list of numbers to be interspersed.
+    delimeter : int
+        The value to insert between consecutive elements.
+
+    Returns
+    -------
+    List[int]
+        A new list containing the original elements with `delimeter` inserted between
+        each adjacent pair.
+
+    Examples
+    --------
+    >>> intersperse([], 4)
+    []
+    >>> intersperse([1, 2, 3], 4)
+    [1, 4, 2, 4, 3]
+    """
+    if not numbers:
+        return []
+
+    # Build a new list; place the first element then add the delimiter and the next element
+    result = []
+    for i, value in enumerate(numbers):
+        result.append(value)
+        if i < len(numbers) - 1:          # skip after the last element
+            result.append(delimeter)
+
+    return result
+```

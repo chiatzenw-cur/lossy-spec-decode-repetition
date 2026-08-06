@@ -1,0 +1,77 @@
+<|channel|>analysis<|message|>We need to parse a string of groups separated by spaces. Each group contains parentheses. We need to output the deepest level of nesting of each group. For each group, we find the maximum depth. The function parse_nested_parens returns List[int] of depths.
+
+We need to handle input: string with parentheses, maybe whitespace? The example: parse_nested_parens('(()()) ((())) () ((())()())') -> [2,3,1,3].
+
+We need to parse each group. For each group, we need to count depth. We can use a stack count or just a counter. For each char, if '(' increment counter, update max. If ')' decrement counter. If any other characters, ignore. The groups may have spaces; we can split on space. The function should handle empty groups? The function signature: def parse_nested_parens(paren_string: str) -> List[int]. So we can implement.
+
+Edge cases: maybe empty string? Should return [].
+
+Also, if there are mismatched parentheses, we might handle? But spec says groups are valid parentheses. We can produce -1 for invalid? But not required.
+
+We can also handle potential leading/trailing spaces. Use .split().
+
+Implementation: parse_nested_parens(paren_string: str) -> List[int]. Use list comprehension.
+
+Return list of ints.
+
+Docstring: mention.
+
+Let's produce final code. Should we include type hints? Already.
+
+Also, we can use enumerate.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def parse_nested_parens(paren_string: str) -> List[int]:
+    """
+    Parse a string containing several groups of parentheses separated by spaces
+    and return the deepest level of nesting for each group.
+
+    A group is a contiguous string of parentheses.  The maximum depth of a
+    group is the maximum number of open parentheses that are currently active
+    at any point while scanning the string.
+
+    Parameters
+    ----------
+    paren_string : str
+        The input string, e.g. "(()()) ((())) () ((())()())"
+
+    Returns
+    -------
+    List[int]
+        A list of the maximum depth for each group, in the same order as the
+        groups appear in the input.
+
+    Examples
+    --------
+    >>> parse_nested_parens('(()()) ((())) () ((())()())')
+    [2, 3, 1, 3]
+
+    >>> parse_nested_parens('()  (())  (((()))))')
+    [1, 2, 4]
+
+    >>> parse_nested_parens('')   # no groups
+    []
+    """
+    # Split on whitespace to get the groups; consecutive spaces are ignored
+    groups = paren_string.split()
+    result: List[int] = []
+
+    for group in groups:
+        depth = 0
+        max_depth = 0
+        for ch in group:
+            if ch == '(':
+                depth += 1
+                if depth > max_depth:
+                    max_depth = depth
+            elif ch == ')':
+                depth -= 1
+                # In a well‑formed string we shouldn't go below 0.
+            # Any other character is ignored.
+        # At the end of the group, depth should be 0 for a valid string.
+        result.append(max_depth)
+    return result
+```

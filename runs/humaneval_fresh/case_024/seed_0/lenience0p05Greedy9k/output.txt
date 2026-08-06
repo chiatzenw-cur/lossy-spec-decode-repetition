@@ -1,0 +1,19 @@
+<|channel|>analysis<|message|>We need to implement strlen. The function should return length of given string. The docstring examples show usage. We can implement simply by len() or manually count. But we need to write full function. The function body is missing. So we just provide full function. Should we use recursion? The simplest is to return len(s). But we can also implement manual loop. But the simplest is len(s). The question: "Complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation)." So we just need to provide the function with docstring and code. So we need to include the function body. Provide the entire function. So we can write:
+
+def strlen(string: str) -> int:
+    """Return length of given string...
+    >>> ...
+    """
+    return len(string)
+
+But we need to ensure slice matches. Provide docstring. The function body: return len(string). That is the implementation. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def strlen(string: str) -> int:
+    """Return length of given string.
+
+    >>> strlen('')
+    0
+    >>> strlen('abc')
+    3
+    """
+    return len(string)
+```

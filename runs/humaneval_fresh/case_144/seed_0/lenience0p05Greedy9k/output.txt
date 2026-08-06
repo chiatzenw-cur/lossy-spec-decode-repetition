@@ -1,0 +1,52 @@
+<|channel|>analysis<|message|>We need to write function words_in_sentence(sentence). The task: given a string, return a string containing words from the original sentence whose lengths are prime numbers, order preserved. Input: "This is a test" -> words lengths: "This" (4), "is" (2), "a" (1), "test" (4). Only 2 is prime, so "is" output. Example 2: "lets go for swimming" -> words lengths: "lets" (4), "go" (2), "for" (3), "swimming" (8). Prime lengths: 2,3. So "go for" output. Need to handle string length 1-100. Only letters. So we can split by whitespace. Implementation: generate primes up to 100. We can just compute primes up to 100 or use simple function. Determine if length is prime. Use simple function. Then join. Return empty string if no primes. Provide docstring. Ok.
+
+Edge: "sentence" may contain spaces? We'll assume words separated by spaces. Use sentence.split().
+
+Return string. Implementation: use list comprehension. Compute primes. Use simple function.
+
+Complexities: O(n) time.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def words_in_sentence(sentence: str) -> str:
+    """
+    Return a string containing only the words from the original sentence whose
+    lengths are prime numbers, in the same order.
+
+    Parameters
+    ----------
+    sentence : str
+        The input string. It contains only letters and spaces between words.
+
+    Returns
+    -------
+    str
+        A string containing the selected words, separated by a single space.
+        If no word has a prime length, the result is an empty string.
+
+    Examples
+    --------
+    >>> words_in_sentence("This is a test")
+    'is'
+    >>> words_in_sentence("lets go for swimming")
+    'go for'
+    """
+    # Helper: check if a number is prime
+    def is_prime(n: int) -> bool:
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+
+    # Split the sentence into words, filter by prime length, and join
+    words = sentence.split()
+    prime_words = [w for w in words if is_prime(len(w))]
+    return " ".join(prime_words)
+```

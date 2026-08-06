@@ -1,0 +1,54 @@
+<|channel|>analysis<|message|>We need to implement max_fill(grid, capacity). The problem: We have grid of rows (wells). Each row has a list of 0 or 1 representing water units. Each well has a bucket capacity and we can fill bucket from a well, then pour water, but we need to minimize number of times to lower bucket. The bucket capacity is per fill. We need to fill all wells with water. Each bucket can be used to fill up to capacity units. Each time we fill bucket, we can only fill from a single well? Actually each bucket can be used to extract water from a well, but we can fill bucket only from a single well per fill? The problem statement: "Each well has a corresponding bucket that can be used to extract water from it, and all buckets have the same capacity." So each bucket can only be used to extract water from a single well. So each well has a bucket. We need to empty the wells. Each bucket can fill up to capacity. So we need to count how many times we need to lower the bucket to fill its bucket. Each bucket can fill capacity at most. So we need to count for each row, how many times we need to fill the bucket for that row. Each row: has number of water units. Each fill can fill up to capacity. So ceil(num / capacity). But we also might consider that we can fill bucket partially from a single well, but can we fill multiple times? The bucket can be used to extract water from it, but we can fill bucket from a single well, then pour water. So each bucket can be filled multiple times. So we need to count number of times we need to lower the bucket for that well. So for each row, compute number of water units = sum(row). Then number of bucket fills = ceil(count / capacity). But we also need to consider bucket capacity is 1 for example 1. Row 1: 0,0,1,0 => 1 water. ceil(1/1)=1. Row 2: 0,1,0,0 => 1 water. ceil=1. Row 3: 1,1,1,1 => 4 water. ceil=4. Total 6. Good.
+
+Example 2: grid: [[0,0,1,1],[0,0,0,0],[1,1,1,1],[0,1,1,1]] capacity=2. Row1: 2 water => 2/2=1. Row2: 0 water => 0. Row3: 4 water => 2. Row4: 3 water => 3/2=1.5 => ceil=2. Total 1+2+2=5. Good.
+
+Example 3: grid: [[0,0,0],[0,0,0]] capacity=5 => 0. So answer 0.
+
+Thus algorithm: iterate over rows, sum water, compute ceiling division: (count + capacity - 1) // capacity. Accumulate.
+
+Edge cases: capacity up to 10. grid size up to 10^2. So fine.
+
+Return int.
+
+We need to implement function max_fill. Provide docstring. Provide imports. Use math. Provide algorithm.
+
+All good.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def max_fill(grid, capacity):
+    """
+    Compute the total number of times the bucket must be lowered to empty all wells.
+
+    Parameters
+    ----------
+    grid : list[list[int]]
+        A 2‑D list where each row represents a single well. Each element
+        is 1 if the corresponding unit of water is present, otherwise 0.
+    capacity : int
+        The maximum number of water units a single bucket can carry.
+
+    Returns
+    -------
+    int
+        The total number of times the bucket must be lowered (i.e. the number of
+        bucket fills required to empty all wells).
+
+    Notes
+    -----
+    For each well we have a bucket that can be used to extract water from it.
+    The bucket can be filled at most once per lowering, and each fill can
+    contain at most `capacity` water units. Therefore, for each well we need
+    to fill the bucket `ceil(total_water / capacity)` times.
+
+    The function is simply a linear scan over the `grid` summing the
+    number of water units in each row and using integer division to
+    compute the ceiling.
+    """
+    import math
+    total_fills = 0
+    for row in grid:
+        water_units = sum(row)
+        if water_units:
+            total_fills += (water_units + capacity - 1) // capacity
+    return total_fills
+```

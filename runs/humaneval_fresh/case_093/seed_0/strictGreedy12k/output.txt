@@ -1,0 +1,32 @@
+<|channel|>analysis<|message|>We need to complete the function body. Conditions: three numbers. Return True if one number equals sum of other two and all numbers are integers. Else False. Must check integer type and maybe numeric types. Should use int type check; let's treat numbers like floats but convertible to int: if all numbers are ints, else return False. But if floats are integral like 2.0? Example: input 5.0, 2, 7 - but not given. Probably check isinstance(x, int) or isinstance(x, float) but value.is_integer() etc. But spec says all numbers are integers. So 5.0 should be considered not integer. So just isinstance(x, int) etc. We'll do all(isinstance(val, int) for val in (x,y,z)). If not all true: return False. Then check if any of x==y+z or y==x+z or z==x+y. Return accordingly.
+
+Edge: negative numbers okay. Implementation straightforward.
+
+Return True/False.
+
+Write full function accordingly.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def any_int(x, y, z):
+    '''
+    Create a function that takes 3 numbers.
+    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.
+    Returns false in any other cases.
+    
+    Examples
+    any_int(5, 2, 7) ➞ True
+    
+    any_int(3, 2, 2) ➞ False
+
+    any_int(3, -2, 1) ➞ True
+    
+    any_int(3.6, -2.2, 2) ➞ False
+    '''
+    # Ensure all arguments are of integer type
+    if not all(isinstance(v, int) for v in (x, y, z)):
+        return False
+
+    # Check if any one of the numbers equals the sum of the other two
+    if x == y + z or y == x + z or z == x + y:
+        return True
+
+    return False
+```

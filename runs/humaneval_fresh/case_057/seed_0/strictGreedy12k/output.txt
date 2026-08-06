@@ -1,0 +1,52 @@
+<|channel|>analysis<|message|>We need to complete the function correct_bracketing that takes a string of "<" and ">" and returns True if every opening bracket `<` has a corresponding closing bracket `>` and properly nested. Actually, what exactly is requirement? They say return True if every opening bracket has a corresponding closing bracket. Should also check order? Example: let's check tests.
+
+Test cases: 
+- "<" => False. 
+- "<>" => True. 
+- "<<><>>" => True. 
+- "><<>" => False.
+
+Look at "><<>" returns False. Explanation: It starts with a close, so invalid. Because there's no opening bracket before it. So algorithm: Use counter. For each char: if `<` increment; if `>` decrement; if counter ever negative -> return False; After loop, if counter zero -> True else False.
+
+Edge cases: The function returns boolean.
+
+Implementation: simple.
+
+Let's produce code.
+
+We also must keep signature and docstring identical: keep def correct_bracketing(brackets: str): ... We need to fill in body.
+
+We should include doctest maybe. Add proper comments.
+
+Return type bool.
+
+Let's craft final code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def correct_bracketing(brackets: str):
+    """ brackets is a string of "<" and ">".
+    return True if every opening bracket has a corresponding closing bracket.
+
+    >>> correct_bracketing("<")
+    False
+    >>> correct_bracketing("<>")
+    True
+    >>> correct_bracketing("<<><>>")
+    True
+    >>> correct_bracketing("><<>")
+    False
+    """
+    # Use a counter to track unmatched opening brackets.
+    # Increment for '<', decrement for '>' and ensure it never drops below 0.
+    count = 0
+    for ch in brackets:
+        if ch == "<":
+            count += 1
+        elif ch == ">":
+            count -= 1
+            if count < 0:          # More closing brackets than opening ones
+                return False
+        else:
+            # The problem states only '<' and '>' appear, but guard against others.
+            continue
+    # All openings are matched only if the counter is 0 at the end.
+    return count == 0
+```

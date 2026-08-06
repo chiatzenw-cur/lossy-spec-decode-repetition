@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8ae0b014f062bd39",
+  "object": "text_completion",
+  "created": 1786022227,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function numerical_letter_grade. The docstring describes mapping. We need to return list of letter grades. The input list of GPA. The example: grade_equation([4.0, 3, 1.7, 2, 3.5]) ==> ['A+', 'B', 'C-', 'C', 'A-'].\n\nWe need to convert list of grades to string. Edge cases: 4.0 -> A+, 3.7 to 3.7? Actually > 3.7 is A, but 3.7 is equal? The table says > 3.7 declines to A. So 3.7 is not > 3.7; so 3.7 is probably A? Wait: table: 4.0 -> A+, > 3.7 -> A, > 3.3 -> A- etc. So 3.7 is not > 3.7, so 3.7 is A-? Let's check: 3.7 > 3.7 is false. So 3.7 would be <= 3.7 and >3.3. So 3.7 is A-? But 3.7 is not > 3.3, so 3.7 > 3.3. So 3.7 is A-? Wait 3.7 > 3.3 is true, so 3.7 is A-? But the example: 3.5 -> A-? Example: 3.5 -> A- the list: 3.5 -> A- indeed. So 3.5 (3.5 > 3.3) is A-.\n\nBut 3.5 is > 3.3, so A-; 3.5 is > 3.7? No. So 3.5 is A-.\n\nBut 3.7 is > 3.7? No. So 3.7 is A-? Wait 3.7 > 3.3 is true, so A-; but 3.7 > 3.3? Yes. So 3.7 would be A-.\n\nBut 3.7 is > 3.7? No. So 3.7 is not > 3.7. So 3.7 is A-? But we might want to consider that 3.7 is again A? But the example shows 3.5 -> A-; 3.5 is less than 3.7 but >3.3. So the rule is: > 3.7 -> A, > 3.3 -> A- etc. So 3.7 is not > 3.7, so 3.7 is A-? But 3.7 shouldn't be A- because 3.7 is exactly 3.7? The rule might be that 3.7 is A, but the rule uses > 3.7. But the example shows 3.5 -> A- so 3.7 is not defined. But we can treat 3.7 as A. But given the rule, we need to replicate. Let's decide: I will implement as:\n\nif g == 4.0: A+\nelif g > 3.7: A\nelif g > 3.3: A-\nelif g > 3.0: B+\nelif g > 2.7: B\nelif g > 2.3: B-\nelif g > 2.0: C+\nelif g > 1.7: C\nelif g > 1.3: C-\nelif g > 1.0: D+\nelif g > 0.7: D\nelif g > 0.0: D-\nelse: E\n\nBut we need to treat 3.7 as A? Actually if g > 3.7, then g > 3.7. So 3.7 is not > 3.7. So 3.7 is A-? But 3.7 > 3.3 is true, so 3.7 would be A-? But maybe the rule is \">= 3.7\" but they wrote \">\"? The example uses 3.5 -> A-, so 3.5 is <3.7. So 3.7 maybe is A? But the rule says > 3.7. But we can interpret that the rule's thresholds are inclusive. But we cannot guess. But we can implement as:\n\nif g == 4.0: A+\nelif g > 3.7: A\nelif g > 3.3: A- etc.\n\nBut we can also consider that 3.7 is A. But the rule says > 3.7, so 3.7 is not > 3.7. But we can treat 3.7 as A. But the rule domain might be ambiguous. But we can implement as:\n\nif g == 4.0: return A+\nelif g > 3.7: A\nelif g > 3.3: A-\n...\n\nBut tests might not test 3.7. But we code.\n\nEdge: 0.0 is E. So if g == 0.0: E.\n\nAlso we need to handle negative values? The spec says > 0.0. So if g < 0.0 -> E. But we can treat them as E.\n\nAlso we need to handle g > 4.0? Not needed.\n\nLet's produce function:\n\ndef numerical_letter_grade(grades):\n    \"\"\"Return letter grades for a list of GPA values according to the table.\"\"\"\n    mapping = []\n    for g in grades:\n        if g == 4.0:\n            mapping.append('A+')\n        elif g > 3.7:\n            mapping.append('A')\n        elif g > 3.3:\n            mapping.append('A-')\n        elif g > 3.0:\n            mapping.append('B+')\n        elif g > 2.7:\n            mapping.append('B')\n        elif g > 2.3:\n            mapping.append('B-')\n        elif g > 2.0:\n            mapping.append('C+')\n        elif g > 1.7:\n            mapping.append('C')\n        elif g > 1.3:\n            mapping.append('C-')\n        elif g > 1.0:\n            mapping.append('D+')\n        elif g > 0.7:\n            mapping.append('D')\n        elif g > 0.0:\n            mapping.append('D-')\n        else:\n            mapping.append('E')\n    return mapping\n\nWe add docstring. Provide full function.\n\nAlso we might want to use list comprehension. But the spec says function body missing. Provide full function.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef numerical_letter_grade(grades):\n    \"\"\"Return a list of letter grades for a list of GPA values.\n\n    The mapping is defined by the table:\n\n    GPA    | Letter grade\n    -------------------------\n    4.0    | A+\n    > 3.7  | A\n    > 3.3  | A-\n    > 3.0  | B+\n    > 2.7  | B\n    > 2.3  | B-\n    > 2.0  | C+\n    > 1.7  | C\n    > 1.3  | C-\n    > 1.0  | D+\n    > 0.7  | D\n    > 0.0  | D-\n    0.0    | E\n\n    Parameters\n    ----------\n    grades : list[float]\n        A list of GPA values.\n\n    Returns\n    -------\n    list[str]\n        The corresponding letter grades for each GPA.\n    \"\"\"\n    result = []\n    for g in grades:\n        if g == 4.0:\n            result.append(\"A+\")\n        elif g > 3.7:\n            result.append(\"A\")\n        elif g > 3.3:\n            result.append(\"A-\")\n        elif g > 3.0:\n            result.append(\"B+\")\n        elif g > 2.7:\n            result.append(\"B\")\n        elif g > 2.3:\n            result.append(\"B-\")\n        elif g > 2.0:\n            result.append(\"C+\")\n        elif g > 1.7:\n            result.append(\"C\")\n        elif g > 1.3:\n            result.append(\"C-\")\n        elif g > 1.0:\n            result.append(\"D+\")\n        elif g > 0.7:\n            result.append(\"D\")\n        elif g > 0.0:\n            result.append(\"D-\")\n        else:\n            result.append(\"E\")\n    return result\n```\n\nThis function iterates over the input list of GPA values, applies the grading rules, and returns the corresponding list of letter grades.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 382,
+    "total_tokens": 2278,
+    "completion_tokens": 1896,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

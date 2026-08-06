@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a319b962d6c939fc",
+  "object": "text_completion",
+  "created": 1786009362,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement max_fill(grid, capacity). The description: rectangular grid of wells; each row is a single well; each 1 represents a unit of water. You have a bucket that can take capacity units of water per lowering. We need to empty all wells using as few bucket lowers as possible? But output examples: Example 1 grid = [[0,0,1,0],[0,1,0,0],[1,1,1,1]] capacity=1. Let's compute: Each row: counts: row1 1, row2 1, row3 4. With capacity 1, each unit requires separate lowering in each well because bucket can only hold 1 unit? But bucket can be lowered into a well to extract water from one unit maybe? Actually you can lower bucket, grab water unit(s) up to capacity, then withdraw. So to empty a well with water units count w, you need ceil(w/capacity) bucket lowers for that well. So sum over rows of ceil(count/w?). Let's test: capacities 1: rows counts 1->1, 1->1, 4->4 = total 6. Matches Example1 output6. Example2: values counts per row: row0 2, row1 0, row2 4, row3 3. capacity 2: ceil(2/2)=1, ceil(0/2)=0, ceil(4/2)=2, ceil(3/2)=2 => total=5 matches. Example3: all zeros: 0. So indeed formula.\n\nThus implement max_fill as sum(math.ceil(sum(row)/capacity)) over rows.\n\nEdge cases: grid empty? constraints 1 <= length. capacity >=1. Use integer division? For ceil we can do (w + cap - 1)//cap. Return int.\n\nAlso docstring mentions constraints. So implement.\n\nLet's produce code.\n\nAdditionally, ensure we import math at top? Already exists in code snippet but we can keep.\n\nReturn as integer? Example outputs: 6. So int.\n\nWill also include function docstring thoroughly. But we need to keep given docstring? The snippet contains docstring inside triple quotes after import math - but should be part of function? Actually in snippet they inserted raw docstring inside indent, but within function body? The signature:\n\ndef max_fill(grid, capacity):\n    import math\n    \"\"\"\n    ...\n    \"\"\"\n\nThat's weird: docstring after import math? That still counts as docstring for function. So we need to keep same structure: the docstring after import math. So function body should start with import math, then docstring, then algorithm.\n\nOk.\n\nImplementation:\n\n    import math\n    \"\"\"\n    ...\n    \"\"\"\n    total_lowers = 0\n    for row in grid:\n        water_units = sum(row)\n        if water_units == 0:\n            continue\n        lower_needed = math.ceil(water_units / capacity)\n        total_lowers += lower_needed\n    return total_lowers\n\nBut we can simply compute using integer division: lower_needed = (water_units + capacity - 1) // capacity.\n\nReturn total_lowers.\n\nEdge: If capacity is 0? not allowed.\n\nReturn int.\n\nLet's produce final code.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef max_fill(grid, capacity):\n    import math\n    \"\"\"\n    You are given a rectangular grid of wells. Each row represents a single well,\n    and each 1 in a row represents a single unit of water.\n    Each well has a corresponding bucket that can be used to extract water from it,\n    and all buckets have the same capacity.\n    Your task is to use the buckets to empty the wells.\n    Output the number of times you need to lower the buckets.\n\n    Example 1:\n        Input: \n            grid : [[0,0,1,0], [0,1,0,0], [1,1,1,1]]\n            bucket_capacity : 1\n        Output: 6\n\n    Example 2:\n        Input: \n            grid : [[0,0,1,1], [0,0,0,0], [1,1,1,1], [0,1,1,1]]\n            bucket_capacity : 2\n        Output: 5\n    \n    Example 3:\n        Input: \n            grid : [[0,0,0], [0,0,0]]\n            bucket_capacity : 5\n        Output: 0\n\n    Constraints:\n        * all wells have the same length\n        * 1 <= grid.length <= 10^2\n        * 1 <= grid[:,1].length <= 10^2\n        * grid[i][j] -> 0 | 1\n        * 1 <= capacity <= 10\n    \"\"\"\n    total_lowers = 0\n    for row in grid:\n        water_units = sum(row)\n        if water_units:\n            total_lowers += (water_units + capacity - 1) // capacity\n    return total_lowers\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 435,
+    "total_tokens": 1483,
+    "completion_tokens": 1048,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

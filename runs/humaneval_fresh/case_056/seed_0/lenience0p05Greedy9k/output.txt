@@ -1,0 +1,60 @@
+<|channel|>analysis<|message|>We need to implement fib(n). The function should return n-th Fibonacci number. The examples: fib(10) returns 55, fib(1) returns 1, fib(8) returns 21. Standard Fibonacci: F(0)=0, F(1)=1, F(2)=1, etc. But they say fib(1)=1, so maybe they consider F(1)=1, F(2)=1. So fib(10) returns 55: that is F(10)=55. So their indexing is 1-indexed. That means fib(1)=1, fib(2)=1, fib(3)=2, fib(4)=3, fib(5)=5, fib(6)=8, fib(7)=13, fib(8)=21, fib(9)=34, fib(10)=55. So fib(10)=55. So we implement fib(n) with n>=1. Probably handle negative n? But we can ignore. We'll implement iterative.
+
+Let's produce code:
+
+def fib(n:int):
+    if n <= 0:
+        raise ValueError
+    if n <= 2:
+        return 1
+    a, b = 1, 1
+    for _ in range(3, n+1):
+        a, b = b, a + b
+    return b
+
+But we need to define docstring. Provide docstring. Include typing. Provide docstring. Provide implementation. Use in-place. Provide full function. Provide docstring. Ensure to use optional type hints. Provide docstring with examples. Provide the function. Provide docstring. Provide implementation. Provide appropriate error handling. Provide docstring. Probably fine.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def fib(n: int) -> int:
+    """
+    Return the n‑th Fibonacci number (1‑indexed).
+
+    The Fibonacci sequence is defined as:
+        F(1) = 1, F(2) = 1
+        F(n) = F(n-1) + F(n-2) for n >= 3
+
+    Parameters
+    ----------
+    n : int
+        The index of the Fibonacci number to compute. Must be a positive integer.
+
+    Returns
+    -------
+    int
+        The n-th Fibonacci number.
+
+    Raises
+    ------
+    ValueError
+        If n is not a positive integer.
+
+    Examples
+    --------
+    >>> fib(10)
+    55
+    >>> fib(1)
+    1
+    >>> fib(8)
+    21
+    """
+    if n < 1:
+        raise ValueError("n must be a positive integer")
+    if n <= 2:
+        return 1
+    a, b = 1, 1
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+```
+
+This function uses a simple iterative loop, which is O(n) time and O(1) space, and handles the usual Fibonacci definition with the 1‑indexed convention.

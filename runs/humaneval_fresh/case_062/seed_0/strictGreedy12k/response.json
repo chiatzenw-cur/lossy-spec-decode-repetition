@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bc62ef59e35e467d",
+  "object": "text_completion",
+  "created": 1786005902,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function correct_bracketing that returns True if every opening bracket has a corresponding closing bracket, i.e., balanced parentheses. Typical algorithm: keep counter. For each char: if '(' increment, else decrement. If counter negative at any point -> False. At end, return counter==0.\n\nEnsure string only contains '(' and ')', but we ignore else.\n\nDocstring includes examples and test. We need to implement function body accordingly. Provide full function with signature and docstring. We'll produce code.\n\nOk.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n    # Keep a counter for unmatched opening brackets.\n    balance = 0\n    for ch in brackets:\n        if ch == '(':\n            balance += 1\n        elif ch == ')':\n            balance -= 1\n        # If at any point we have more closing than opening, it's unbalanced.\n        if balance < 0:\n            return False\n    # At the end we must have no unmatched openings.\n    return balance == 0\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 203,
+    "total_tokens": 501,
+    "completion_tokens": 298,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

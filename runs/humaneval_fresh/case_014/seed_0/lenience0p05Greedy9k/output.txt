@@ -1,0 +1,33 @@
+<|channel|>analysis<|message|>We need to implement gcd function. The function signature: def greatest_common_divisor(a: int, b: int) -> int. We need to handle negative numbers? The doctests only show positive numbers. We can implement Euclidean algorithm: while b != 0: a, b = b, a % b. Then return abs(a). Also handle zero? gcd(0,0) maybe defined as 0 or 0? Usually gcd(0,0)=0. But we can return 0. Provide docstring. Provide function. Provide tests. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def greatest_common_divisor(a: int, b: int) -> int:
+    """
+    Return the greatest common divisor of two integers a and b.
+
+    The algorithm uses the Euclidean algorithm, which is efficient for
+    large integers.  The function works for negative inputs as well
+    and returns the gcd as a non‑negative integer.
+
+    Examples
+    --------
+    >>> greatest_common_divisor(3, 5)
+    1
+    >>> greatest_common_divisor(25, 15)
+    5
+    >>> greatest_common_divisor(0, 0)
+    0
+    >>> greatest_common_divisor(-12, 30)
+    6
+    """
+    # The Euclidean algorithm works with the absolute values
+    a, b = abs(a), abs(b)
+
+    # If both are zero, the gcd is conventionally defined as 0
+    if a == 0 and b == 0:
+        return 0
+
+    while b:
+        a, b = b, a % b
+    return a
+```
+
+This function uses the Euclidean algorithm (`a, b = b, a % b`) to iteratively reduce the remainder until the remainder becomes zero. The last non‑zero remainder is the greatest common divisor. The function handles negative inputs and the special case `0, 0` gracefully.

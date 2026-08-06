@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b501732f1863d2c0",
+  "object": "text_completion",
+  "created": 1786020702,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement largest_prime_factor(n). We need to consider n>1, not a prime. We can use typical algorithm: factorization by dividing by primes. We can use simple trial division upto sqrt. For n up to large? Not specified. We can use efficient algorithm: while n%2==0, record factor. Then iterate odd i from 3 to sqrt(n). If n% i==0, set factor. Keep dividing. After loop, if n>1, largest prime factor is n. But we need to return largest prime factor. Actually we need to track last prime factor. So algorithm: let's set largest=1. While n%2==0: largest=2; n//=2. While n%3==0: largest=3; n//=3. Then loop i from 5 to sqrt(n) step 6: while n% i==0: largest= i; n//=i; while n% (i+2) ==0: largest= i+2; n//=i+2. Continue until n>1. But we also need to update sqrt each time. Implementation: while n%2==0: largest=2; n//=2. while n%3==0: largest=3; n//=3. Then i=5; while i*i <= n: while n% i==0: largest= i; n//=i; while n%(i+2) ==0: largest= i+2; n//=i+2; i+=6. After loop, if n>1: largest= n. That ensures largest prime factor. Return largest.\n\nEdge cases: n=2? But n>1, not prime. But we can handle n=2? But not prime. Our function will handle. But we assume n>1, not prime. So if n is prime, we will return n? But we don't need. But we can echo.\n\nWe need to produce docstring and function body. Provide tests. Provide final answer.\n\nLet's craft final function:\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    if n <= 1:\n        raise ValueError(\"n must be greater than 1\")\n    largest = 1\n    # factor out 2\n    while n % 2 == 0:\n        largest = 2\n        n //= 2\n    # factor out 3\n    while n % 3 == 0:\n        largest = 3\n        n //= 3\n    # factor out 5 and 7 pattern\n    i = 5\n    while i * i <= n:\n        while n % i == 0:\n            largest = i\n            n //= i\n        while n % (i + 2) == 0:\n            largest = i + 2\n            n //= i + 2\n        i += 6\n    if n > 1:\n        largest = n\n    return largest\n\nBut we also need to handle n=2? But n>1 and not prime. So if n==2, we may raise. But we can handle though.\n\nWe can also apply simple algorithm: while n%2==0: n//=2; last=2; while n%3==0: n//=3; last=3; while n%5==0: n//=5; last=5; while n%6==0: n//=6; last=6; but 6 is not prime. So better use 5,7.\n\nBut we can just use simple trial division up to sqrt(n). That is fine.\n\nNeed to ensure we don't use infinite loops. Use while i*i <= n.\n\nEdge: n=2? Not prime. But we can handle.\n\nOk.\n\nAlso we can use mathematics: for n in range(2, n+1). But we can just implement.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"\n    Return the largest prime factor of n.\n\n    The function assumes that `n` is greater than 1 and is not a prime.\n\n    Parameters\n    ----------\n    n : int\n        The integer to factorise.\n\n    Returns\n    -------\n    int\n        The largest prime factor of `n`.\n\n    Examples\n    --------\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    if n <= 1:\n        raise ValueError(\"n must be greater than 1\")\n\n    # The largest prime factor found so far\n    largest = 1\n\n    # Factor out 2\n    while n % 2 == 0:\n        largest = 2\n        n //= 2\n\n    # Factor out 3\n    while n % 3 == 0:\n        largest = 3\n        n //= 3\n\n    # Factor out the remaining primes using the 6k±1 pattern\n    # (all primes > 3 are of the form 6k±1)\n    i = 5\n    while i * i <= n:\n        while n % i == 0:\n            largest = i\n            n //= i\n        while n % (i + 2) == 0:\n            largest = i + 2\n            n //= i + 2\n        i += 6\n\n    # If n is still > 1, it is the greatest prime factor.\n    if n > 1:\n        largest = n\n\n    return largest\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 175,
+    "total_tokens": 1391,
+    "completion_tokens": 1216,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

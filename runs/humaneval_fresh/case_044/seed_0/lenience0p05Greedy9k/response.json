@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8d6a9a2933d04038",
+  "object": "text_completion",
+  "created": 1786019608,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that returns True if any two distinct elements in the list sum to zero. The list is integers. We need to check duplicates. We can use set or dictionary. For each element, check if -x in set. But careful: we need to avoid counting same element twice. For example, if list contains 0, then 0+0=0 but we need two distinct elements, i.e., need at least two zeros. So if 0 is present, we need two zeros. Implementation: iterate over list, maintain set of seen numbers. For each number, if -x in seen, then return True. If x == 0 and x in seen: we need to check if we have seen 0 earlier. But we only add after checking. So if x==0 and seen contains 0, we can return True. But if x==0 and seen contains 0, we can return True. So algorithm: for each x in list: if -x in seen: return True. If x==0 and seen contains 0: return True. Add x to seen. That works. But we also need to handle duplicates: e.g., if x=5 and seen contains 5, but we need to check if -5 exists. But if -5 wasn't in seen, we will add 5. So fine.\n\nEdge cases: list length 1: always False. For list of length >1, we can use set. Complexity O(n). Provide docstring.\n\nReturn True if any pair sum to zero. If not, return False.\n\nLet's test with given examples: [1,3,5,0] -> none. [1,3,-2,1] -> none. [1,2,3,7] -> none. [2,4,-5,3,5,7] -> 2+(-2) no, 4+(-4) no, -5+5? list has 5 and -5, so yes. [1] -> False.\n\nEdge: [0,0] -> should return True. Our algorithm returns True because when x==0, seen contains 0? We first x=0, seen empty -> not found. Then add 0. Second x=0, seen contains 0 -> True. So works.\n\nEdge: [1,1,-1] -> 1+(-1)=0? Wait 1+(-1) = 0, but 1 is not distinct? Actually 1+(-1) is distinct, yes. Our algorithm: seen contains 1, then process -1: -1 in seen? -1 not in seen, add -1. Then seen contains 1, -1. Then process 1: -1 in seen? -1 present, so True. Good.\n\nEdge: [1,2] -> no.\n\nEdge: [1, -1, -1] -> 1+(-1) = 0. algorithm: first 1, seen empty, add 1. second -1: -1 in seen? -1 not, add -1. third -1: -1 in seen? -1 present, so True. Good.\n\nWorks.\n\nWe need to produce function signature, docstring, and implementation.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef pairs_sum_to_zero(l):\n    \"\"\"\n    Return True if the list contains two distinct elements that sum to zero.\n\n    Parameters\n    ----------\n    l : list[int]\n        A list of integers.\n\n    Returns\n    -------\n    bool\n        True if there exist two distinct elements whose sum is zero, False otherwise.\n\n    Examples\n    --------\n    >>> pairs_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> pairs_sum_to_zero([1, 3, -2, 1])\n    False\n    >>> pairs_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> pairs_sum_to_zero([2, 4, -5, 3, 5, 7])\n    True\n    >>> pairs_sum_to_zero([1])\n    False\n    \"\"\"\n    seen = set()\n    for x in l:\n        if -x in seen:\n            return True\n        # Special case: two distinct zeros\n        if x == 0 and 0 in seen:\n            return True\n        seen.add(x)\n    return False\n```\n\n**Explanation of the algorithm**\n\n1. Iterate over the list while keeping a set of values seen so far.\n2. For each element `x`, check if `-x` is already in the set.  \n   * If it is, the pair `x` and `-x` sums to zero and the function returns `True`.\n3. If `x` is zero, we need to ensure that we have *two* zeros.  \n   * If `0` is already in the set, we return `True`.\n4. Otherwise, add the current element to `seen` and continue.\n5. If no qualifying pair is found, the function returns `False`.\n\nThis approach runs in linear time and uses a linear amount of additional memory.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 269,
+    "total_tokens": 1351,
+    "completion_tokens": 1082,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,42 @@
+<|channel|>analysis<|message|>We need to implement rolling_max. The function takes list of ints, returns list of rolling maximum. For each element, maximum up to that index. Implementation: iterate and maintain current max. Complexity O(n). Return list. Also handle empty list. Provide docstring. Provide type hints. Provide function. Provide code. Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List, Tuple
+
+
+def rolling_max(numbers: List[int]) -> List[int]:
+    """From a given list of integers, generate a list of rolling maximum element found until given moment in the sequence.
+
+    The *i*-th element in the result is the maximum value of the first `i+1` elements of the input list.
+
+    Parameters
+    ----------
+    numbers : List[int]
+        Input list of integers.
+
+    Returns
+    -------
+    List[int]
+        A list of the same length as ``numbers`` containing the rolling maximum.
+
+    Examples
+    --------
+    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])
+    [1, 2, 3, 3, 3, 4, 4]
+    >>> rolling_max([5, 1, 7, 4, 3])
+    [5, 5, 7, 7, 7]
+    >>> rolling_max([])
+    []
+
+    Notes
+    -----
+    The implementation is O(n) time and O(1) additional space.
+    """
+    result: List[int] = []
+    current_max: int | None = None
+    for x in numbers:
+        if current_max is None or x > current_max:
+            current_max = x
+        result.append(current_max)
+    return result
+```
+
+This function iterates through the input list, keeps track of the current maximum, and appends it to the result list. It handles empty lists gracefully and maintains a constant‑time complexity.

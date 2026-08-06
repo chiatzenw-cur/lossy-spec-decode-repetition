@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b0f6d3dad58a5caa",
+  "object": "text_completion",
+  "created": 1786004205,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function unique(l: list). It returns sorted unique elements. The typical implementation: use set to deduplicate, then sorted. Keep type mostly same. Might need to handle list of arbitrary types. The docstring expects int list. So let's return sorted(set(l)). But to keep order? It's sorted anyway. Implementation:\n\n```\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n    return sorted(set(l))\n```\n\nBut consider how to preserve order? No, sorted unique. What about returning in same type? sorted returns list. Good.\n\nOne nuance: if list contains unorderable types (Python 3.9+ sorting tries to compare types). Acceptible for test.\n\nMaybe add type hint return List? but keep minimal.\n\nEdge cases: repeated: set doesn't preserve order, but sorted will.\n\nWe can also do:\n\n```\nreturn sorted(set(l), key=l.index)\n```\n\nNo, that's stable but not needed.\n\nThus just return sorted(set(l)). That's simplest.\n\nLet's produce the full function.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n    # Convert to a set to remove duplicates and then sort the result.\n    return sorted(set(l))\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 185,
+    "total_tokens": 553,
+    "completion_tokens": 368,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

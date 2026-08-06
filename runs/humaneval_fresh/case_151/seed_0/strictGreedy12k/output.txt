@@ -1,0 +1,42 @@
+<|channel|>analysis<|message|>We need to complete the function. Provide signature, docstring. The function takes n, x, y. Should return x if n is prime, else y. Must check primality of n. Use simple algorithm. Consider n <= 1 not prime. The examples: x_or_y(7,34,12)=34 since 7 prime. x_or_y(15,8,5)=5 since 15 composite. Implementation. Use is_prime helper inside function. Could use simple division up to sqrt(n). For negative numbers and 0,1: not prime.
+
+Edge cases: test for n in Python. Should handle integer input. We could optionally use math.isqrt. We'll write appropriate code.
+
+Docstring: Already given, but we should keep. Provide full function.
+
+We should do import math is allowed within function. Or use int(n**0.5). All fine.
+
+Return: x if prime else y.
+
+Given the instruction: "Only the function body is missing; reproduce the full function (signature, docstring, and your implementation)." So we need to write entire function including docstring.
+
+Let's produce final answer.
+
+We'll show function code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def x_or_y(n, x, y):
+    """A simple program which should return the value of x if n is 
+    a prime number and should return the value of y otherwise.
+
+    Examples:
+    >>> x_or_y(7, 34, 12)
+    34
+    >>> x_or_y(15, 8, 5)
+    5
+    """
+    # Handle trivial non‑prime cases first
+    if n <= 1:
+        return y
+
+    # Check divisibility by 2
+    if n == 2:
+        return x
+    if n % 2 == 0:
+        return y
+
+    # Check odd divisors up to sqrt(n)
+    limit = int(n**0.5)  # integer square root
+    for d in range(3, limit + 1, 2):
+        if n % d == 0:
+            return y
+    return x
+```

@@ -1,0 +1,51 @@
+<|channel|>analysis<|message|>We need to implement decimal_to_binary. Input: integer decimal. Output string: "db"+binary representation + "db". Need to handle decimal to binary string. Implementation: use bin(decimal)[2:] to get binary string. But if decimal is negative? Not specified. Might assume positive integer. Provide error handling. Provide docstring. Let's implement.
+
+Edge cases: decimal=0 -> "db0db". Should we use "0" or "0"? Yes.
+
+Also handle negative numbers: maybe use '-' sign? But let's just return ''? But spec says convert to binary. I think we can return string with '-' sign inside binary? But not necessary. We'll just treat decimal as int.
+
+Return string: "db" + binary + "db".
+
+Ok. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def decimal_to_binary(decimal):
+    """
+    Convert a decimal integer to its binary representation.
+
+    The function returns a string containing the binary representation of the
+    number, with the characters 'db' added at the beginning and at the end
+    of the string. Each character in the binary part is either '0' or '1'.
+
+    Parameters
+    ----------
+    decimal : int
+        The integer to convert to binary.
+
+    Returns
+    -------
+    str
+        The binary representation of the integer, wrapped in ``db`` markers.
+
+    Examples
+    --------
+    >>> decimal_to_binary(15)
+    'db1111db'
+    >>> decimal_to_binary(32)
+    'db100000db'
+    >>> decimal_to_binary(0)
+    'db0db'
+    """
+    if not isinstance(decimal, int):
+        raise TypeError(f"Expected int, got {type(decimal).__name__}")
+
+    # Convert the integer to binary using the built‑in bin function.
+    binary_str = bin(decimal)[2:]  # strip the leading '0b'
+
+    return f"db{binary_str}db"
+```
+
+**Explanation**
+
+1. Check that the input is an integer to avoid silent failures.  
+2. Use `bin()` to convert the integer to a binary string, stripping the leading `0b`.  
+3. Surround the result with `'db'` at the beginning and the end.  
+4. The function returns the resulting string.

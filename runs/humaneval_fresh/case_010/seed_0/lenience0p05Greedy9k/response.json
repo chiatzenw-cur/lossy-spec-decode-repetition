@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-82a454bfc41a90a1",
+  "object": "text_completion",
+  "created": 1786017247,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement rolling_max. The function takes list of ints, returns list of rolling maximum. For each element, maximum up to that index. Implementation: iterate and maintain current max. Complexity O(n). Return list. Also handle empty list. Provide docstring. Provide type hints. Provide function. Provide code. Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\"From a given list of integers, generate a list of rolling maximum element found until given moment in the sequence.\n\n    The *i*-th element in the result is the maximum value of the first `i+1` elements of the input list.\n\n    Parameters\n    ----------\n    numbers : List[int]\n        Input list of integers.\n\n    Returns\n    -------\n    List[int]\n        A list of the same length as ``numbers`` containing the rolling maximum.\n\n    Examples\n    --------\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    >>> rolling_max([5, 1, 7, 4, 3])\n    [5, 5, 7, 7, 7]\n    >>> rolling_max([])\n    []\n\n    Notes\n    -----\n    The implementation is O(n) time and O(1) additional space.\n    \"\"\"\n    result: List[int] = []\n    current_max: int | None = None\n    for x in numbers:\n        if current_max is None or x > current_max:\n            current_max = x\n        result.append(current_max)\n    return result\n```\n\nThis function iterates through the input list, keeps track of the current maximum, and appends it to the result list. It handles empty lists gracefully and maintains a constant‑time complexity.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 212,
+    "total_tokens": 618,
+    "completion_tokens": 406,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bfd62cbbb3b3510f",
+  "object": "text_completion",
+  "created": 1786002213,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function to return decimal part of number. There's a docstring. It accepts positive floating point number. We have to compute decimal part (difference between number and floor?). The doc says \"largest integer smaller than given number\" (floor?) So decimal part = number - floor(number). For positive numbers, it's fine. Implementation could use math.floor or int cast? For positive numbers, int(number) truncates toward zero (i.e., floor since number positive). So decimals = number - int(number). But need to handle very small floating errors? Might want to use decimal library? Not necessary. Provide simple implementation.\n\nEdge cases: 3.0 returns 0.0. 0.999999? Accept. Provide return decimal part.\n\nAlso note that the function docstring has triple quotes mismatched? Provided docstring: \n\"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n\nBut they want to preserve? In final answer, produce full function with signature, docstring, body.\n\nPseudo:\n\ndef truncate_number(number: float) -> float:\n    \"\"\"docstring above.\"\"\"\n    if number < 0:\n        raise ValueError(\"number must be positive\")\n    integer_part = int(number)\n    decimal_part = number - integer_part\n    # handle floating precision: round to 12 decimal digits? maybe use round(decimal_part, 12)\n    return decimal_part\n\nThus produce final. But maybe they want use math.floor maybe as well.\n\nI'll produce final code accordingly. Provide only function body? The instruction: \"Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\"\n\nThus we output full function definition.\n\nAdditionally, test: truncation of negative? doc says positive. So raise ValueError.\n\nLet's craft:\n\ndef truncate_number(number: float) -> float:\n    \"\"\"Given a positive floating point number, ...\"\"\"\n\nShould keep original docstring? Slight modifications? We'll keep docstring as given. I'll just copy. Provide final function. Also use math.floor to be clear.\n\nEdge case: 3.9 -> 3.9 - 3 = 0.9; okay.\n\nAll good.<|end|><|start|>assistant<|channel|>final<|message|>```python\nimport math\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    if number < 0:\n        raise ValueError(\"``number`` must be positive\")\n\n    integer_part = math.floor(number)  # largest integer <= number (since number≥0)\n    decimal_part = number - integer_part\n\n    # Avoid tiny floating‑point artefacts that could give a result\n    # like 0.49999999999999994 instead of 0.5.\n    return round(decimal_part, 12)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 196,
+    "total_tokens": 879,
+    "completion_tokens": 683,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b7a4be776ed9f5e0",
+  "object": "text_completion",
+  "created": 1786003209,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to find the number of times a substring appears in string, counting overlapping. Straight. But may have special cases: substring empty? How many times? In examples, substring 'a', string '' returns 0. For substring empty let's decide: searching empty substring typically yields len(string)+1 occurrences. But not requested; maybe return 0. Use while loop: iterate indices from 0 to len(string)-len(substring)+1. For each position, if string[i:i+len(substring)]== substring increment. That's simple. Complexity O(n*m). Use slicing.\n\nAlternatively could use str.find with start index advanced by 1 to allow overlap. Use while True: index = string.find(substring, start). If -1 break. Count++; start = index+1. This counts overlapping. Works even for empty substrings? find('','') returns 0 always; could infinite loop. So guard against substring empty: return 0.\n\nReturn int.\n\nWrite docstring. Implementation. Use while loop.\n\nAlso include examples: test.\n\nEdge cases: string == '', substring '': we'll return 0. Good.\n\nDo not import modules. Simple.\n\nWe must produce full function with signature, docstring, and body. Also maybe add optional type hints imported? Already signature includes.\n\nOk. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef how_many_times(string: str, substring: str) -> int:\n    \"\"\"Find how many times a given substring can be found in the original string.\n    Count overlapping matches.\n\n    Parameters\n    ----------\n    string : str\n        The string to search in.\n    substring : str\n        The substring to search for.\n\n    Returns\n    -------\n    int\n        The number of occurrences of *substring* in *string*,\n        counting overlapping matches.\n\n    Examples\n    --------\n    >>> how_many_times('', 'a')\n    0\n    >>> how_many_times('aaa', 'a')\n    3\n    >>> how_many_times('aaaa', 'aa')\n    3\n    \"\"\"\n    if not substring or not string:\n        # Empty pattern or empty text: no meaningful matches\n        return 0\n\n    count = 0\n    start = 0\n    while True:\n        pos = string.find(substring, start)\n        if pos == -1:\n            break\n        count += 1\n        # Advance by one so that overlapping matches are counted\n        start = pos + 1\n    return count\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 200,
+    "total_tokens": 717,
+    "completion_tokens": 517,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

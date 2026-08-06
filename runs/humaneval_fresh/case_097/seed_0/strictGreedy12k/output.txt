@@ -1,0 +1,144 @@
+<|channel|>analysis<|message|>We need to complete the function count_up_to(n) that returns list of primes less than n.
+
+We need function to handle n may be negative? description says non-negative integer, but need to return an array of first n integers that are prime numbers? The description appears confusing: "takes an non-negative integer and returns an array of the first n integers that are prime numbers and less than n." I think they mean: returns array of all primes less than n.
+
+Examples: count_up_to(5) => [2,3]; primes less than 5: 2,3. count_up_to(11) => [2,3,5,7] (primes less than 11). So correct.
+
+So implement typical prime sieve or simple check.
+
+Edge cases: n=0,1 produce [].
+
+Implement function that returns list of primes less than n.
+
+We should probably implement a simple sieve of Eratosthenes up to n-1.
+
+Return list sorted ascending.
+
+Docstring: maybe adjust.
+
+Implement.
+
+Check for n small. Also negative numbers return [] perhaps.
+
+Time complexity: for typical use.
+
+Let's produce function:
+
+```
+def count_up_to(n):
+    """Return a list of all prime numbers less than n.
+
+    Parameters
+    ----------
+    n : int
+        Non-negative integer.
+
+    Returns
+    -------
+    list[int]
+        List of prime numbers < n, in ascending order.
+    """
+    if n <= 2: return []
+    sieve = [True] * n
+    sieve[0:2] = [False, False]  # 0 and 1 not prime
+    for i in range(2, int(n**0.5)+1):
+        if sieve[i]:
+            step = i
+            start = i*i
+            sieve[start:n:step] = [False]*(((n-1-start)//step)+1)
+    return [i for i, val in enumerate(sieve) if val]
+```
+
+But we need primes less than n. For n up to maybe large. Provide correct.
+
+Edge case: negative n produce [].
+
+Use `if n <= 2: return []`. Actually if n is negative we want []. So check.
+
+Also correct calculation for `sieve[0:2]` but if n < 2, `sieve[0:2]` slice will get slice of available length? But we handle earlier.
+
+We could do:
+
+```
+if n <= 2: return []
+```
+
+That avoids issues.
+
+Alternatively, if n could be <2, we can just return [].
+
+Need to be certain about slicing and indexes.
+
+Let's implement iterative.
+
+Simplify: just generate primes via simple loop: for i in range(2,n): if is_prime(i). Compose list.
+
+But implementing simple function to test prime for each number. Complexity O(n sqrt n). Good for typical small n.
+
+But we might use sieve for large n.
+
+I'll implement simple sieve.
+
+Edge case: n=2 should return []. n=3 returns [2].
+
+Testing examples: 5 -> [2,3]
+
+Also check 18: primes < 18: 2,3,5,7,11,13,17. Good.
+
+Ok.
+
+Write function.
+
+Consider negative values: e.g., n=-10; the loop returns no primes.
+
+Edge: n=1 -> [].
+
+Implementation.
+
+Let's produce the complete function.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def count_up_to(n):
+    """Return a list of all prime numbers that are strictly less than *n*.
+
+    Parameters
+    ----------
+    n : int
+        A non‑negative integer.  If ``n`` is less than or equal to 2 the
+        function returns an empty list.
+
+    Returns
+    -------
+    list[int]
+        All primes less than ``n`` in ascending order.
+
+    Examples
+    --------
+    >>> count_up_to(5)
+    [2, 3]
+    >>> count_up_to(11)
+    [2, 3, 5, 7]
+    >>> count_up_to(0)
+    []
+    >>> count_up_to(20)
+    [2, 3, 5, 7, 11, 13, 17, 19]
+    >>> count_up_to(1)
+    []
+    >>> count_up_to(18)
+    [2, 3, 5, 7, 11, 13, 17]
+    """
+    # For n <= 2 there are no primes strictly less than n
+    if n <= 2:
+        return []
+
+    # Sieve of Eratosthenes up to n-1
+    sieve = [True] * n
+    sieve[0:2] = [False, False]  # 0 and 1 are not prime
+    limit = int(n ** 0.5) + 1
+
+    for p in range(2, limit):
+        if sieve[p]:
+            # Mark multiples of p as non-prime
+            start = p * p
+            sieve[start:n:p] = [False] * (((n - 1 - start) // p) + 1)
+
+    return [i for i, is_prime in enumerate(sieve) if is_prime]
+```

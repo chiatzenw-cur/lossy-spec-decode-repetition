@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-af6952b9c53a899a",
+  "object": "text_completion",
+  "created": 1786007296,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to find the count of n-digit positive integers that start or end with 1. So we count numbers from 10^(n-1) to 10^n - 1. For a given n-digit integer, start digit can be 1 or end digit can be 1 (but need to avoid double counting numbers that start AND end with 1). So total = count(start = 1) + count(end = 1) - count(start = 1 AND end = 1).\n\nWe need to figure out formulas.\n\nCount start = 1: the first digit is 1, the remaining n-1 digits can be any from 0-9: 10^(n-1) possibilities.\n\nCount end = 1: last digit is 1; first digit cannot be 0 because must be n-digit. So first digit choices: 1-9 except? first digit can be 1-9. For each of the other n-2 middle digits: 10^(n-2). So count = 9 * 10^(n-2) (for n>=2). For n=1, start and end are same digit, we need handle separately.\n\nCount both start and end 1: first digit 1, last digit 1, middle digits any: 10^(n-2). For n=1, that count is 1 (just number 1). Let's handle n=1 separately.\n\nn=1: 1-digit positive integers from 1-9. Which start or end with 1? The digit itself. Since it's single digit, starting and ending with same digit, 1 qualifies: only number 1: count=1. The formula: start=1 gives 1, end=1 gives 1, subtract both gives 1. For n=1: start count=1, end count=1, both =1 -> total=1. Could implement general formula with piecewise handling.\n\nGeneral n>=2:\nCount_start=10**(n-1)\nCount_end=9*10**(n-2)\nBoth=1*10**(n-2)\nTotal = 10**(n-1) + 9*10**(n-2) - 10**(n-2)\n\nSimplify: 10**(n-2) * (10 + 9 - 1) = 10**(n-2)*18.\n\nWait 10**(n-1) = 10 * 10 ** (n-2). So 10*x + 9*x - x = 18*x. Yes.\n\nThus for n>=2, answer = 18 * 10**(n-2).\n\nCheck n=2: We can test all 2-digit numbers 10-99. Count those starting or ending with 1: count start 1: numbers 10-19 (10 numbers). Count end 1: 21,31,...,91 (9 numbers). Both? 11 only counted twice. So total: 10+9-1=18. Formula: 18*10**0 = 18. Works.\n\nn=3: start=1: 100-199: 100 numbers. end=1: first digit 1-9 (9 options), middle digit any 0-9 (10), last 1: 9*10=90 numbers. both: start 1, end 1: 100-199 and last digit 1: 101,111,...,191: that's 10 numbers. Total: 100+90-10=180. Formula: 18*10**1=180. Good.\n\nEdge n=1: formula would be 18*10**(-1) = 1.8, invalid. So handle piecewise.\n\nImplementation: def starts_one_ends(n): docstring included. Validate n positive int? Not required but can assert.\n\nReturn integer.\n\nTest examples: n=1 -> 1. n=2 -> 18. n=3 -> 180. n=4 -> 1800? Let's test: formula 18*10**2=1800. Let's check logically: first: 1000-1999: 1000 numbers. end: first digit 1-9 (9), middle 2 digits each 10 options => 9*10*10=900. both: start=1, end=1: first digit 1, last digit1, middle 2 digits any: 10*10=100. total: 1000 +900 -100 = 1800. Good.\n\nCorner n = 0? Not positive. Could raise ValueError.\n\nComplexities: O(1).\n\nLet's produce the function.\n\nPotential approach: if n==1: return 1. else: return 18*10**(n-2).\n\nAdd docstring: explains.\n\nReturn int.\n\nImplementation. Let's produce final version.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n\n    For an n‑digit integer the first digit cannot be zero.  We count:\n      * Numbers that start with 1: 10**(n-1) possibilities.\n      * Numbers that end  with 1: 9 * 10**(n-2) possibilities (first digit 1‑9,\n        middle digits free).\n      * Numbers that both start and end with 1: 10**(n-2) possibilities.\n\n    By inclusion‑exclusion the desired answer is  \n        10**(n-1) + 9*10**(n-2) – 10**(n-2) = 18 * 10**(n-2)  for n ≥ 2.\n\n    Special case:\n      * n == 1: only the single-digit number 1 satisfies the condition, so\n        the answer is 1.\n\n    Parameters\n    ----------\n    n : int\n        A positive integer (n ≥ 1).\n\n    Returns\n    -------\n    int\n        The count of n‑digit positive integers that start or end with 1.\n    \"\"\"\n    if n < 1 or not isinstance(n, int):\n        raise ValueError(\"n must be a positive integer\")\n\n    # Handle the single‑digit case separately\n    if n == 1:\n        return 1\n\n    # For n >= 2 use the derived formula\n    return 18 * 10 ** (n - 2)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 157,
+    "total_tokens": 1539,
+    "completion_tokens": 1382,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

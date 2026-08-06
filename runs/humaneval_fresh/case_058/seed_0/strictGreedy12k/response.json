@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-828bf3414dc019ee",
+  "object": "text_completion",
+  "created": 1786005653,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function monotonic(l). It returns True if list elements are monotonically increasing OR decreasing. It accepts a list. No special conditions mentioned. The docstring includes examples. We need to implement accordingly.\n\nWe should consider edge cases: empty list or list with one element. Typically considered monotonic (True). The function should handle any comparable elements, not just numbers. Use all(a <= b for a,b in zip(l,l[1:])) or all(a >= b for a,b in zip(l,l[1:])). If either holds, return True. But careful: if list contains incomparable items e.g., non-ordered, but we can rely on Python's ordering for given types. The examples use integers.\n\nImplementation: if len(l) <= 1 return True. Check inc = True for increasing, dec = True for decreasing. Iterate through pairs. If any a > b set inc False, if any a < b set dec False. Or use list comprehension. Then return inc or dec.\n\nDocstring: currently given. We just need to provide the function body.\n\nLet's produce final code:\n\n```python\ndef monotonic(l: list):\n    \"\"\"Return True if list elements are monotonically increasing or decreasing.\n    ...\n    \"\"\"\n    # empty or single element values are considered monotonic\n    if len(l) <= 1:\n        return True\n    inc = True\n    dec = True\n    for a, b in zip(l, l[1:]):\n        if a > b:\n            inc = False\n        if a < b:\n            dec = False\n        if not inc and not dec:\n            # early exit\n            return False\n    return inc or dec\n```\n\nAlternatively use: inc = all(a <= b for a,b in pairs). dec = all(a >= b...). But the loop is fine.\n\nLet's ensure docstring formatting matches. Provide function signature and body.\n\nOk produce final.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef monotonic(l: list):\n    \"\"\"Return True if list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n    # Lists with 0 or 1 element are trivially monotonic\n    if len(l) <= 1:\n        return True\n\n    inc = True   # flag for increasing order\n    dec = True   # flag for decreasing order\n\n    for a, b in zip(l, l[1:]):\n        if a > b:\n            inc = False\n        if a < b:\n            dec = False\n        # If it is neither increasing nor decreasing, stop early\n        if not inc and not dec:\n            return False\n\n    return inc or dec\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 198,
+    "total_tokens": 806,
+    "completion_tokens": 608,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

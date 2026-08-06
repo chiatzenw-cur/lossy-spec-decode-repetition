@@ -1,0 +1,61 @@
+<|channel|>analysis<|message|>We need to implement function string_to_md5. Provide docstring, signature, and implementation. Should handle empty string: return None. Should compute MD5 hash of string. Use hashlib. Ensure encoding. Use text.encode('utf-8').
+
+Return hex string. Use .hexdigest().
+
+Return None if ''.
+
+Edge cases: maybe input is None. Should raise? But spec says if text empty string return None. So I'll implement accordingly.
+
+Return None if not string? Not specified. But we can assume input is string. But let's add check: if not isinstance(text, str) or not text: return None.
+
+Return '3e25960a79dbc69b674cd4ec67a72c62' for 'Hello world'.
+
+Let's test mentally: 'Hello world' hashed: '3e25960a79dbc69b674cd4ec67a72c62' matches.
+
+Return hex string.
+
+Also maybe include docstring.
+
+Return None if empty.
+
+Return else.
+
+Ok. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def string_to_md5(text: str) -> str | None:
+    """
+    Return the MD5 hash of a string.
+
+    Parameters
+    ----------
+    text : str
+        The string to hash.  If the string is empty, the function
+        returns ``None``.
+
+    Returns
+    -------
+    str | None
+        The MD5 hash represented as a 32‑character hexadecimal string
+        (or ``None`` if the input is empty).
+
+    Notes
+    -----
+    The function uses UTF‑8 encoding to convert the string to bytes
+    before hashing.  The ``hashlib`` module is used to generate the
+    MD5 digest.
+
+    Examples
+    --------
+    >>> string_to_md5('Hello world')
+    '3e25960a79dbc69b674cd4ec67a72c62'
+    >>> string_to_md5('')
+    None
+    """
+    # Return None if the input is empty or not a string
+    if not isinstance(text, str) or not text:
+        return None
+
+    import hashlib
+    return hashlib.md5(text.encode('utf-8')).hexdigest()
+```
+
+This function uses the standard `hashlib` module to compute the MD5 hash of the supplied string, handling the empty‑string case by returning `None`.

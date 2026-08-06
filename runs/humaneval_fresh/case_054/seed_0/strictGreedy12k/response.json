@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b48ba71e7408cd51",
+  "object": "text_completion",
+  "created": 1786005405,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>The user wants to complete a Python function defined with signature def add(x: int, y: int):. It's a simple addition. Provide the code with function body. They want the full function, including docstring and implementation.\n\nWe should preserve docstring and example. There may be minor formatting issues: the docstring starts with triple quotes, but missing closing triple quotes? Actually the docstring shows triple quotes start at line after def add, opening triple quotes. Then description, then doctest examples. But missing closing triple quotes. We should add closing triple quotes. Then implement return x + y. We could also ensure type hints and docstring. Provide complete function code.\n\nReturn type int can be annotated: def add(x: int, y: int) -> int. Provide docstring. Implementation is return x + y. Also maintain semantics.\n\nEnsure no mistakes: Add def again. Provide proper indentation.\n\nThus final code:\n\n```python\ndef add(x: int, y: int) -> int:\n    \"\"\"Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n    return x + y\n```\n\nThat's it.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef add(x: int, y: int) -> int:\n    \"\"\"Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n    return x + y\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 165,
+    "total_tokens": 487,
+    "completion_tokens": 322,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

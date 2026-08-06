@@ -1,0 +1,80 @@
+<|channel|>analysis<|message|>We need to implement file_name_check. Requirements: "no more than three digits" in entire string. "exactly one dot". Substring before dot not empty, starts with a letter from a-z A-Z. Substring after dot one of ['txt', 'exe', 'dll'].
+
+Should return 'Yes' if valid else 'No'. Possibly case sensitive for extension? Provided examples: 'txt' lower case etc. Probably treat case sensitively? Use exactly these strings. Implementation: we can split by dot: if not exactly 2 parts => No. Check digits <=3 in whole string: sum(c.isdigit() for c in file_name) <=3. Then part0 starts with letter and non-empty. part1 extension in set. Also ensure no additional dot in part1? Already part0 is all before dot, part1 after dot. Also ensure there are no digits >3 but digits elsewhere? We counted all digits. Additionally ensure file name may contain other characters? The conditions don't restrict other non-digit characters, but I think allowed: letters, maybe underscores, hyphens. Not explicitly disallowed.
+
+Edge Cases: leading/trailing whitespace? We can strip? Might not needed.
+
+Return 'Yes' else 'No'.
+
+Let's implement.
+
+We should check if file_name is string: we assume.
+
+Let's produce code with docstring.
+
+Potential issues: .split('.') returns more than 2 if more than one dot. We need exactly one dot. Use file_name.count('.') ==1.
+
+Check char starting: part0[0].isalpha().
+
+Return accordingly.
+
+Let's write function.
+
+Also for digits count: if count>3 return No. That covers digits after dot too, but extension may have digits but allowed? Not specified? But extension allowed only txt exe dll so no digits. So digits can only come in base name. But condition doesn't restrict digits before dot but count <=3 total, maybe earlier digits counted.
+
+Edge: input "ex4mple.txt" counts digits: 1 <=3.
+
+Ok.
+
+Also check sample: "example.txt" => Yes.
+
+"1example.dll" => Start part0 starts with '1', fails.
+
+One more: "abc10x.exe" digits 3 -> Yes. "abc12345.txt" digits 5 -> No.
+
+Return 'Yes'/'No'.
+
+Implementation complete.
+
+Let's prepare final.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def file_name_check(file_name):
+    """Return 'Yes' if `file_name` meets all of the following rules, otherwise return 'No'.
+
+    Rules:
+    1. The filename may contain at most three digits (0‑9) anywhere in the string.
+    2. It must contain exactly one dot `.` character.
+    3. The part before the dot must be non‑empty and must start with a Latin alphabet
+       letter (`a`‑`z` or `A`‑`Z`).
+    4. The part after the dot must be exactly one of: 'txt', 'exe', or 'dll'.
+
+    Parameters
+    ----------
+    file_name : str
+        Name of the file to check.
+
+    Returns
+    -------
+    str
+        'Yes' if the name is valid, 'No' otherwise.
+    """
+    # Rule 2 – exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split into the two parts
+    name_part, ext_part = file_name.split('.')
+
+    # Rule 3 – non-empty name part starting with a letter
+    if not name_part or not name_part[0].isalpha():
+        return 'No'
+
+    # Rule 4 – extension must be one of the allowed types
+    if ext_part not in {'txt', 'exe', 'dll'}:
+        return 'No'
+
+    # Rule 1 – at most 3 digits in the entire string
+    if sum(ch.isdigit() for ch in file_name) > 3:
+        return 'No'
+
+    return 'Yes'
+```

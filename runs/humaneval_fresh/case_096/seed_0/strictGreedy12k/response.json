@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b24e466c9d9a1a70",
+  "object": "text_completion",
+  "created": 1786008078,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function check_dict_case(dict). It checks if all keys are lowercase strings or all uppercase strings. Also if dict empty return False. Also if any non-string key, return False. Also duplicates? Example: {\"a\":\"apple\", 8:\"banana\", ...} should return False. So let's parse logic:\n\nInput is variable name dict. We need to get keys list: keys = dict.keys()\n\nIf not keys: return False.\n\nFor each key: if not isinstance(key, str): return False.\n\nCollect cases: For each key: test if key.islower() or key.isupper().\n\nWe need to decide if all keys are either all lower or all upper. We can't have mix.\n\nApproach: Use sets to keep flags: has_lower, has_upper. Iterate. If key.islower(): has_lower = True. elif key.isupper(): has_upper = True. else: return False (because contains neither all lower nor all upper, e.g., key has mix or contains letters and others? Actually key.islower() returns True if all cased characters are lower case and there's at least one cased character. For key with digits only, e.g., \"123\", islower() returns False because no cased characters, but isupper() also False. In requirement: This would be ambiguous. Might consider such keys invalid: return False. Use else return False.\n\nAt end: if has_lower and not has_upper -> True; if has_upper and not has_lower -> True; else -> return False. Also ensure both flags set false? That cannot happen because at least one key will set one flag or return False earlier.\n\nEdge case: key with uppercase characters but also digits only? Eg 'ABC123': isupper() True. Ok.\n\nAlso key with special chars '?': isupper returns False if no cased letters. So fail.\n\nNeed docstring.\n\nLet's write function accordingly.\n\nAlso we must avoid using variable name dict that shadows built-in; but as question func signature uses dict param; still we can keep.\n\nReturn bool.\n\nBe sure to handle all cases.\n\nLet's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef check_dict_case(dict):\n    \"\"\"\n    Determine whether all keys in a dictionary are either\n    all lower‑case strings or all upper‑case strings.\n\n    Rules\n    -----\n    * If the dictionary is empty, return False.\n    * If any key is not a string, return False.\n    * If a key contains a mix of upper‑case and lower‑case letters,\n      or contains neither (e.g., only digits or symbols), return False.\n    * Otherwise the function returns True if **either** every key is lower‑case\n      **or** every key is upper‑case, but not a mixture of the two.\n\n    Parameters\n    ----------\n    dict : dict\n        Dictionary to inspect.\n\n    Returns\n    -------\n    bool\n        ``True`` when all keys satisfy the above constraints and are\n        all lower‑case or all upper‑case, otherwise ``False``.\n    \"\"\"\n    # An empty dictionary is considered invalid.\n    if not dict:\n        return False\n\n    has_lower = False\n    has_upper = False\n\n    for key in dict.keys():\n        # Must be a string.\n        if not isinstance(key, str):\n            return False\n\n        # Determine the case of the key.\n        if key.islower():\n            has_lower = True\n        elif key.isupper():\n            has_upper = True\n        else:\n            # Key mixes cases or contains no cased letters.\n            return False\n\n    # Valid only if all keys are the same case.\n    return (has_lower and not has_upper) or (has_upper and not has_lower)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 281,
+    "total_tokens": 1053,
+    "completion_tokens": 772,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

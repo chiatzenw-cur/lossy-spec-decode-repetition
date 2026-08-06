@@ -1,0 +1,77 @@
+<|channel|>analysis<|message|>We need to implement factorize. Input: integer n. We need to return list of prime factors sorted ascending. Should handle negative numbers? Probably not. Should handle 1? The docstring says "Return list of prime factors of given integer in the order from smallest to largest." No mention of 1. For n=1, return empty list? Usually prime factorization of 1 is empty. We'll handle that.
+
+We need to implement correctly. Use trial division up to sqrt(n). For n up to maybe large, but fine.
+
+Edge cases: negative numbers? Could return factors for abs(n). But we can also return negative sign? The problem didn't specify. We'll just handle n>=1.
+
+We need to include docstring.
+
+Implementation: def factorize(n: int) -> List[int]: .. if n <= 0: raise ValueError? But we can handle n negative? We'll just handle n==0: return []? But maybe we should raise ValueError. But we can handle n==0: return [].
+
+We can use while loop: i=2; while i*i<=n: if n%i==0: append; n//=i; else: i+=1. After loop, if n>1: append n. Ensure sorted ascending.
+
+Return list of ints.
+
+Test with provided examples: 8 -> [2,2,2]; 25 -> [5,5]; 70 -> [2,5,7].
+
+Edge: n=1 -> [].
+
+Ok.
+
+Let's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+def factorize(n: int) -> List[int]:
+    """Return list of prime factors of *n* in ascending order.
+
+    Each factor is repeated in the list as many times as it appears in the
+    factorisation of *n* (the integer is assumed to be positive).
+    The product of all factors in the list equals the original integer.
+    The function returns an empty list for `n == 1` (or `n == 0`).
+
+    Parameters
+    ----------
+    n : int
+        The integer to factorise.
+
+    Returns
+    -------
+    List[int]
+        A list of prime factors, sorted ascending.
+
+    Examples
+    --------
+    >>> factorize(8)
+    [2, 2, 2]
+    >>> factorize(25)
+    [5, 5]
+    >>> factorize(70)
+    [2, 5, 7]
+    """
+    if n <= 0:
+        # For 0 we return empty list since it has no prime factorisation
+        # and negative numbers are not supported in the problem statement.
+        return []
+
+    factors: List[int] = []
+    # Handle factor 2 separately to allow incrementing by 2
+    while n % 2 == 0:
+        factors.append(2)
+        n //= 2
+
+    # Check odd divisors
+    divisor = 3
+    while divisor * divisor <= n:
+        while n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        divisor += 2
+
+    # If n > 1, it is a prime factor
+    if n > 1:
+        factors.append(n)
+
+    return factors
+```
+
+This function performs trial division up to the square root of the input, handles the even factor 2 separately, and returns the prime factors in ascending order.

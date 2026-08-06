@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8c51b8c6875040a0",
+  "object": "text_completion",
+  "created": 1786018210,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement strlen. The function should return length of given string. The docstring examples show usage. We can implement simply by len() or manually count. But we need to write full function. The function body is missing. So we just provide full function. Should we use recursion? The simplest is to return len(s). But we can also implement manual loop. But the simplest is len(s). The question: \"Complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\" So we just need to provide the function with docstring and code. So we need to include the function body. Provide the entire function. So we can write:\n\ndef strlen(string: str) -> int:\n    \"\"\"Return length of given string...\n    >>> ...\n    \"\"\"\n    return len(string)\n\nBut we need to ensure slice matches. Provide docstring. The function body: return len(string). That is the implementation. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef strlen(string: str) -> int:\n    \"\"\"Return length of given string.\n\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n    return len(string)\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 155,
+    "total_tokens": 414,
+    "completion_tokens": 259,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

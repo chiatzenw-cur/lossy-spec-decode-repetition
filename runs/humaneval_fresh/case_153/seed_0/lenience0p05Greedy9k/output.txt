@@ -1,0 +1,46 @@
+<|channel|>analysis<|message|>We need to implement a function compare(game,guess). The function should return a list of differences: each index is 0 if guess matches score else absolute difference. The input arrays are lists of numbers. The function should handle length equal. Should handle maybe negative? No special. Just return list. Should docstring. Provide code. Also handle if input lists are np arrays? But not necessary. Provide simple.
+
+Edge cases: not equal length -> raise ValueError? But we can just compute up to min length. But spec says equal length. So we can just compute.
+
+Return list of ints.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def compare(game, guess):
+    """
+    Determine the distance from each guess to the actual score.
+
+    The function compares two lists of equal length, `game` and `guess`.  
+    For each index `i` the return list contains:
+
+        * `0` if `guess[i] == game[i]`
+        * `abs(guess[i] - game[i])` otherwise
+
+    The function assumes that the input lists are of the same length and that
+    they contain numeric values (int or float).  It does not modify the input
+    lists.
+
+    Parameters
+    ----------
+    game : list[int | float]
+        The list of actual scores for each match.
+    guess : list[int | float]
+        The list of guesses corresponding to the same matches.
+
+    Returns
+    -------
+    list[int | float]
+        A list of the same length as the inputs, where each element is
+        the distance between the guess and the actual score.
+
+    Examples
+    --------
+    >>> compare([1,2,3,4,5,1], [1,2,3,4,2,-2])
+    [0, 0, 0, 0, 3, 3]
+    >>> compare([0,5,0,0,0,4], [4,1,1,0,0,-2])
+    [4, 4, 1, 0, 0, 6]
+    """
+    if len(game) != len(guess):
+        raise ValueError("Input lists must have the same length")
+
+    return [0 if g == h else abs(g - h) for g, h in zip(game, guess)]
+```

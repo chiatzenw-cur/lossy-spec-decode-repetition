@@ -1,0 +1,36 @@
+<|channel|>analysis<|message|>We need to implement function string_sequence(n: int) -> str. The function returns a space-separated string of numbers from 0 to n inclusive. The function should be robust. Provide docstring, code. Should handle n=0. Should handle negative? Probably not. But we can return empty string for negative? But spec says return a string containing space-delimited numbers starting from 0 to n inclusive. So if n negative, maybe return empty string. But typical usage: n >= 0. So we simply implement.
+
+Edge cases: n large. Use list comprehension. Use str.join. Return string.
+
+We must provide full function body. Provide docstring. Provide code.
+
+Let's produce.
+
+Also we can use `range(n+1)` to get 0 to n inclusive. Use slice join.
+
+Return `' '.join(map(str, range(n+1)))`.
+
+Also we can add docstring.
+
+Return.
+
+Ok.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def string_sequence(n: int) -> str:
+    """Return a string containing space‑delimited numbers starting from 0 up to n inclusive.
+
+    The function accepts a non‑negative integer `n`.  It returns a single string
+    containing the numbers from `0` to `n` inclusive, separated by a single
+    space.  If `n` is negative an empty string is returned.
+
+    >>> string_sequence(0)
+    '0'
+    >>> string_sequence(5)
+    '0 1 2 3 4 5'
+    """
+    # Handle negative n by returning an empty string
+    if n < 0:
+        return ""
+
+    # Build a list of numbers from 0 to n inclusive and convert to str
+    return " ".join(map(str, range(n + 1)))
+```

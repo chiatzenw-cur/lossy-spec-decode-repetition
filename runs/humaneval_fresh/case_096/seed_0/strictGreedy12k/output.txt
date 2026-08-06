@@ -1,0 +1,80 @@
+<|channel|>analysis<|message|>We need to implement a function check_dict_case(dict). It checks if all keys are lowercase strings or all uppercase strings. Also if dict empty return False. Also if any non-string key, return False. Also duplicates? Example: {"a":"apple", 8:"banana", ...} should return False. So let's parse logic:
+
+Input is variable name dict. We need to get keys list: keys = dict.keys()
+
+If not keys: return False.
+
+For each key: if not isinstance(key, str): return False.
+
+Collect cases: For each key: test if key.islower() or key.isupper().
+
+We need to decide if all keys are either all lower or all upper. We can't have mix.
+
+Approach: Use sets to keep flags: has_lower, has_upper. Iterate. If key.islower(): has_lower = True. elif key.isupper(): has_upper = True. else: return False (because contains neither all lower nor all upper, e.g., key has mix or contains letters and others? Actually key.islower() returns True if all cased characters are lower case and there's at least one cased character. For key with digits only, e.g., "123", islower() returns False because no cased characters, but isupper() also False. In requirement: This would be ambiguous. Might consider such keys invalid: return False. Use else return False.
+
+At end: if has_lower and not has_upper -> True; if has_upper and not has_lower -> True; else -> return False. Also ensure both flags set false? That cannot happen because at least one key will set one flag or return False earlier.
+
+Edge case: key with uppercase characters but also digits only? Eg 'ABC123': isupper() True. Ok.
+
+Also key with special chars '?': isupper returns False if no cased letters. So fail.
+
+Need docstring.
+
+Let's write function accordingly.
+
+Also we must avoid using variable name dict that shadows built-in; but as question func signature uses dict param; still we can keep.
+
+Return bool.
+
+Be sure to handle all cases.
+
+Let's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def check_dict_case(dict):
+    """
+    Determine whether all keys in a dictionary are either
+    all lower‑case strings or all upper‑case strings.
+
+    Rules
+    -----
+    * If the dictionary is empty, return False.
+    * If any key is not a string, return False.
+    * If a key contains a mix of upper‑case and lower‑case letters,
+      or contains neither (e.g., only digits or symbols), return False.
+    * Otherwise the function returns True if **either** every key is lower‑case
+      **or** every key is upper‑case, but not a mixture of the two.
+
+    Parameters
+    ----------
+    dict : dict
+        Dictionary to inspect.
+
+    Returns
+    -------
+    bool
+        ``True`` when all keys satisfy the above constraints and are
+        all lower‑case or all upper‑case, otherwise ``False``.
+    """
+    # An empty dictionary is considered invalid.
+    if not dict:
+        return False
+
+    has_lower = False
+    has_upper = False
+
+    for key in dict.keys():
+        # Must be a string.
+        if not isinstance(key, str):
+            return False
+
+        # Determine the case of the key.
+        if key.islower():
+            has_lower = True
+        elif key.isupper():
+            has_upper = True
+        else:
+            # Key mixes cases or contains no cased letters.
+            return False
+
+    # Valid only if all keys are the same case.
+    return (has_lower and not has_upper) or (has_upper and not has_lower)
+```

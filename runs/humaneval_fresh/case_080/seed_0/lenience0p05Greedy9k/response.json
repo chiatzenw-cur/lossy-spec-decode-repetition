@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-add77c94643a03f1",
+  "object": "text_completion",
+  "created": 1786022094,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement decimal_to_binary. Input: integer decimal. Output string: \"db\"+binary representation + \"db\". Need to handle decimal to binary string. Implementation: use bin(decimal)[2:] to get binary string. But if decimal is negative? Not specified. Might assume positive integer. Provide error handling. Provide docstring. Let's implement.\n\nEdge cases: decimal=0 -> \"db0db\". Should we use \"0\" or \"0\"? Yes.\n\nAlso handle negative numbers: maybe use '-' sign? But let's just return ''? But spec says convert to binary. I think we can return string with '-' sign inside binary? But not necessary. We'll just treat decimal as int.\n\nReturn string: \"db\" + binary + \"db\".\n\nOk. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef decimal_to_binary(decimal):\n    \"\"\"\n    Convert a decimal integer to its binary representation.\n\n    The function returns a string containing the binary representation of the\n    number, with the characters 'db' added at the beginning and at the end\n    of the string. Each character in the binary part is either '0' or '1'.\n\n    Parameters\n    ----------\n    decimal : int\n        The integer to convert to binary.\n\n    Returns\n    -------\n    str\n        The binary representation of the integer, wrapped in ``db`` markers.\n\n    Examples\n    --------\n    >>> decimal_to_binary(15)\n    'db1111db'\n    >>> decimal_to_binary(32)\n    'db100000db'\n    >>> decimal_to_binary(0)\n    'db0db'\n    \"\"\"\n    if not isinstance(decimal, int):\n        raise TypeError(f\"Expected int, got {type(decimal).__name__}\")\n\n    # Convert the integer to binary using the built‑in bin function.\n    binary_str = bin(decimal)[2:]  # strip the leading '0b'\n\n    return f\"db{binary_str}db\"\n```\n\n**Explanation**\n\n1. Check that the input is an integer to avoid silent failures.  \n2. Use `bin()` to convert the integer to a binary string, stripping the leading `0b`.  \n3. Surround the result with `'db'` at the beginning and the end.  \n4. The function returns the resulting string.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 251,
+    "total_tokens": 724,
+    "completion_tokens": 473,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

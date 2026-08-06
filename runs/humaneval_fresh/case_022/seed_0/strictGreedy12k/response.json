@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8a73485fb614396b",
+  "object": "text_completion",
+  "created": 1786003396,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement rescale_to_unit(numbers). Linear transform: map min to 0, max to 1. For each number x: (x - min)/(max - min). Since at least two elements, denominator not zero? Could be equal if all same? Problem states at least two elements but could all equal; but then min==max would be division by zero. Could handle by returning zeros perhaps. But test likely not include. We'll implement robust: if max==min: return [0.0]*len(numbers). Implementation.\n\nDocstring in example. Provide list of floats. return list of floats. Use list comprehension. Ensure non-numerical? just floats.\n\nReturn list. Use type hints. Provide safety.\n\nLet's produce function.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\"Given a list of at least two numbers, apply a linear transform so that\n    the smallest value becomes 0 and the largest becomes 1.\n\n    The transformation is defined as:\n        y = (x - min(numbers)) / (max(numbers) - min(numbers))\n\n    If all numbers are equal, the function returns a list of zeros,\n    because every value is already (degenerately) the min and max.\n\n    Example\n    -------\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n    if not numbers:\n        raise ValueError(\"Input list must contain at least one element\")\n\n    # find min and max values\n    min_val = min(numbers)\n    max_val = max(numbers)\n\n    # avoid division by zero when all values are identical\n    if max_val == min_val:\n        return [0.0] * len(numbers)\n\n    scale = max_val - min_val\n    return [(x - min_val) / scale for x in numbers]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 237,
+    "total_tokens": 673,
+    "completion_tokens": 436,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

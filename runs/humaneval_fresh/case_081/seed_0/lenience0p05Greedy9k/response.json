@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8384de97c59377f2",
+  "object": "text_completion",
+  "created": 1786022161,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement is_happy(s). The function: if len(s) >=3 and every 3 consecutive letters are distinct. That means for each i from 0 to len-3, we need s[i], s[i+1], s[i+2] all distinct. So if any triple repeats, return False. Also check length >=3. So return True if length >=3 and all triples distinct. Implementation: iterate over indices. Use set or tuple. Use len(set(sub))==3. If all true, return True. If len(s) <3, return False.\n\nEdge cases: empty string? No. Should be fine.\n\nReturn boolean.\n\nDocstring: Already given. Provide code.\n\nLet's implement.\n\nAlso we might want to handle case where s is None? Not needed.\n\nReturn True/False.\n\nLet's produce final answer.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef is_happy(s):\n    \"\"\"\n    You are given a string s.\n    Your task is to check if the string is happy or not.\n    A string is happy if its length is at least 3 and every 3 consecutive letters are distinct\n    For example:\n        is_happy(a) => False\n        is_happy(aa) => False\n        is_happy(abcd) => True\n        is_happy(aabb) => False\n        is_happy(adb) => True\n        is_happy(xyy) => False\n    \"\"\"\n    # The string must be at least 3 characters long.\n    if len(s) < 3:\n        return False\n\n    # Check each 3‑letter window\n    for i in range(len(s) - 2):\n        # The 3 characters must be distinct\n        if len(set(s[i:i + 3])) != 3:\n            return False\n    return True\n```\n\nThis function returns `True` if the string is happy, and `False` otherwise.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 234,
+    "total_tokens": 638,
+    "completion_tokens": 404,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

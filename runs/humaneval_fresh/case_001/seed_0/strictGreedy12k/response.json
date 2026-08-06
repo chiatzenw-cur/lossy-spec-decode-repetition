@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a0766352f5cdb311",
+  "object": "text_completion",
+  "created": 1786002086,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function to check if any pair of numbers in list is closer than given threshold. Straight O(n^2) may be okay for small lists. But we can sort and then check consecutive differences O(n log n). We'll implement accordingly.\n\nEdge cases: empty or single elements => return False. Need also handle duplicates? threshold could be zero? If threshold <=0? If threshold <= 0, only duplicate (distance 0) would be < threshold? 0 < 0 false. But threshold may be negative unrealistic; just return False.\n\nDocstring includes examples. Implementation: sort copy: sorted_numbers = sorted(numbers). For i in range(len(sorted_numbers)-1): if abs(sorted_numbers[i+1]-sorted_numbers[i]) < threshold: return True. After loop return False. The threshold value used is absolute difference.\n\nWe'll include type hints. Also use generics? just code: return bool.\n\nLet's produce final function.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\"Check if any two numbers in ``numbers`` are closer to each other than\n    ``threshold``.\n\n    The function sorts the list once and then only checks adjacent pairs\n    which are the minimal candidates for the smallest distance.  This\n    yields ``O(n log n)`` complexity.\n\n    Parameters\n    ----------\n    numbers : List[float]\n        The list of numeric values.\n    threshold : float\n        Candidate distance threshold.  If it is less than or equal to zero,\n        the function will simply return ``False`` because no positive\n        difference can be less than or equal to a non‑positive value.\n\n    Returns\n    -------\n    bool\n        ``True`` if there exists a pair of distinct elements whose absolute\n        difference is strictly less than ``threshold``; otherwise ``False``.\n\n    Examples\n    --------\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    # Trivial cases\n    n = len(numbers)\n    if n < 2 or threshold <= 0:\n        return False\n\n    # Sort once; then only adjacent pairs can yield the minimum difference\n    sorted_numbers = sorted(numbers)\n    for i in range(n - 1):\n        if abs(sorted_numbers[i + 1] - sorted_numbers[i]) < threshold:\n            return True\n    return False\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 237,
+    "total_tokens": 795,
+    "completion_tokens": 558,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

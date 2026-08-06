@@ -1,0 +1,40 @@
+<|channel|>analysis<|message|>We need to implement flip_case. The function takes a string, returns a string with all characters toggled case: lower->upper, upper->lower. We need to produce code. The function should handle all characters, including non-letters presumably unchanged. The simplest: use str.swapcase() or iterate manually. But we can just use built-in str.swapcase().
+
+We need to write full function including signature, docstring, implementation. Provide docstring. Also mention that it returns string. Provide example. The function should be straightforward.
+
+We can also mention that we can use str.swapcase().
+
+We need to produce the full function. The function body: return string.swapcase().
+
+We should not include any other code. The function is defined. Provide docstring. Provide the function only.
+
+Thus final answer: Provide function with signature and docstring. Provide implementation. Use swapcase. Provide docstring. Then supply code.
+
+Let's produce final.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def flip_case(string: str) -> str:
+    """
+    Return a string where every uppercase letter is converted to lowercase
+    and every lowercase letter is converted to uppercase.
+
+    Parameters
+    ----------
+    string : str
+        The string to transform.
+
+    Returns
+    -------
+    str
+        The string with all alphabetic characters' case flipped.
+
+    Examples
+    --------
+    >>> flip_case('Hello')
+    'hELLO'
+    >>> flip_case('Python 3.8')
+    'pYTHON 3.8'
+    >>> flip_case('12345')
+    '12345'
+    """
+    # The built‑in str.swapcase() method handles all cases.
+    return string.swapcase()
+```

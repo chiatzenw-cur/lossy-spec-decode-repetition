@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b548677277873f83",
+  "object": "text_completion",
+  "created": 1786018756,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement is_prime function. The function is to return True if prime, else False. Should handle negative numbers? Input examples: 6, 101, 11, 13441, 61, 4, 1. So we need to handle int >=1. For 0? Not in examples. Should handle negative numbers. Let's define: if n <= 1 return False. For n <=3: return True. For n divisible by 2 or 3, return False. Then iterate i from 5 to sqrt(n), step 6. Check if n % i == 0 or n % (i+2) == 0. That is efficient. Provide docstring. Also handle n as int. Provide type hints. Provide explanation. Provide final code. Let's deliver.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef is_prime(n: int) -> bool:\n    \"\"\"Return true if a given number is prime, and false otherwise.\n\n    >>> is_prime(6)\n    False\n    >>> is_prime(101)\n    True\n    >>> is_prime(11)\n    True\n    >>> is_prime(13441)\n    True\n    >>> is_prime(61)\n    True\n    >>> is_prime(4)\n    False\n    >>> is_prime(1)\n    False\n    \"\"\"\n    # Non‑positive integers are not prime\n    if n <= 1:\n        return False\n\n    # 2 and 3 are prime\n    if n <= 3:\n        return True\n\n    # Eliminate multiples of 2 and 3\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n\n    # Test divisors up to sqrt(n) using the 6k±1 optimisation\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n```\n\n**Explanation of the algorithm**\n\n1. **Base cases** – `n <= 1` is not prime. `2` and `3` are prime.  \n2. **Small divisors** – Any even number (> 2) or divisible by `3` is not prime.  \n3. **General test** – For numbers larger than 3, the only possible prime divisors are of the form `6k ± 1`.  \n   - We start at `i = 5` and test `i` and `i+2` (i.e., 5 and 7).  \n   - Increment `i` by 6 each iteration, checking `i` and `i+2`.  \n   - The loop stops when `i*i > n`, which is sufficient because if a divisor exists, it must be ≤ √n.  \n4. **Return** – If no divisor is found, `n` is prime.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 211,
+    "total_tokens": 829,
+    "completion_tokens": 618,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

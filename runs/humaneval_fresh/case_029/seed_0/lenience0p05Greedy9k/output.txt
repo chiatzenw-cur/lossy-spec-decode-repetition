@@ -1,0 +1,20 @@
+<|channel|>analysis<|message|>We need to implement function that concatenates list of strings. The function should be defined. The function signature: def concatenate(strings: List[str]) -> str. The function docstring: "Concatenate list of strings into a single string". It already has examples. The function body: just return ''.join(strings). But we need to handle maybe None? But type hints list. So implement. Also we might want to strip whitespace? But not needed. Implementation straightforward.
+
+We need to ensure to import typing. Provide full function including docstring. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def concatenate(strings: List[str]) -> str:
+    """
+    Concatenate list of strings into a single string.
+
+    Examples
+    --------
+    >>> concatenate([])
+    ''
+    >>> concatenate(['a', 'b', 'c'])
+    'abc'
+    """
+    # Using the built‑in `join` method is efficient and concise.
+    return ''.join(strings)
+```

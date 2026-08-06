@@ -1,0 +1,121 @@
+<|channel|>analysis<|message|>We need to implement a function that returns words with exactly n consonants. Input string s contains only letters and spaces. So words separated by spaces. Count consonants: letters that are not vowels (a, e, i, o, u, case-insensitive). Need to treat punctuation? not required as only letters and spaces.
+
+Edge: if s is empty, return [].
+
+Examples: "Mary had a little lamb" n=4 => "little" has 4 consonants? l,i,t,t,l,e: vowels: i, e => 2 vowels. Consonants: l,t,t,l => 4 correct. "Mary had a little lamb" n=3 => "Mary" M,a,r,y: vowels: a => 1, consonants: M,r,y => 3. "lamb": l,a,m,b => a 1 vowel, l,m,b 3 consonants. So returns ["Mary","lamb"].
+
+"simple white space", n=2 => all words maybe none. "simple": letters: s,i,m,p,l,e => vowels: i,e => 2, consonants: s,m,p,l => 4. "white": w,i,t,h,e => vowels: i,e => 2, cons: w,t,h => 3. "space": s,p,a,c,e => vowels: a,e =>2, cons: s,p,c =>3. So no words with exactly 2 conso. Good.
+
+"Hello world", n=4 => "Hello": e,o values, 2 vowels 3? Actually: h,e,l,l,o => vowels e,o => 2, consonants: h,l,l => 3. "world": w,o,r,l,d => vowel: o =>1, consonants: w,r,l,d =>4. So correct.
+
+"Uncle sam", n=3 => "Uncle": U,n,c,l,e => vowels: U,e =>2, cons: n,c,l =>3. "sam": s,a,m => vowel a =>1, cons: s,m =>2. So returns ["Uncle"].
+
+We need correct function. Straight forward: define vowels set = {'a','e','i','o','u'}. For each word, count consonants by scanning each char: if char.lower() not in vowels, count++. Return filtered list.
+
+Consider groups: We should split s by whitespace but keep multiple spaces? Use str.split() default splits on any whitespace. For empty string, s.split() returns [].
+
+Edge: string may have multiple spaces, all good.
+
+Return list of words that match. Implementation details: we might use list comprehension.
+
+Also ensure we test input "": should return [] not error.
+
+Should preserve original words order.
+
+Return type: list of strings.
+
+Also note the function should handle uppercase/lowercase. We treat char.isalpha() but we know only letters and spaces. So fine.
+
+Implement:
+
+def select_words(s, n):
+    """docstring...
+    """
+
+docstring from prompt already given; we just need to copy the docstring inside the function.
+
+Wait: The prompt prints function skeleton with docstring already but incomplete; we need to complete function body only, preserving signature and docstring. Provide full function containing body. Let's check prompt: 
+
+It says:
+
+```python
+def select_words(s, n):
+    """Given a string s and a natural number n, you have been tasked to implement 
+    a function that returns a list of all words from string s that contain exactly 
+    n consonants, in order these words appear in the string s.
+    If the string s is empty then the function should return an empty list.
+    Note: you may assume the input string contains only letters and spaces.
+    Examples:
+    select_words("Mary had a little lamb", 4) ==> ["little"]
+    select_words("Mary had a little lamb", 3) ==> ["Mary", "lamb"]
+    select_words("simple white space", 2) ==> []
+    select_words("Hello world", 4) ==> ["world"]
+    select_words("Uncle sam", 3) ==> ["Uncle"]
+    """
+```
+
+So they want us to implement function body. We'll provide:
+
+    if not s: return []
+    vowels = set('aeiou')
+    result = []
+    for word in s.split():
+        consonants = sum(1 for char in word if char.lower() not in vowels)
+        if consonants == n:
+            result.append(word)
+    return result
+
+Alternatively list comprehension: return [w for w in s.split() if sum(1 for c in w.lower() if c not in vowels) == n]
+
+But we may also guard for s being None? but spec says string. We can still handle. Provide final version.
+
+Add docstring: It's already there in code skeleton; we just keep same docstring inside.
+
+Return.
+
+Edge: Consonants: For uppercase consonant, char.isalpha should be true. Counting all letters that are not vowels using set.
+
+Make sure to treat 'y' as consonant? Yes, y is a consonant (not vowel). Only defined vowels are aeiou.
+
+Consider maybe to treat underscore? only letters.
+
+Ok.
+
+Let's produce final function.
+
+But we need to provide "complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation)."
+
+Thus we produce full code snippet with signature, docstring, body.
+
+Return code within triple backticks.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def select_words(s, n):
+    """Given a string s and a natural number n, you have been tasked to implement 
+    a function that returns a list of all words from string s that contain exactly 
+    n consonants, in order these words appear in the string s.
+    If the string s is empty then the function should return an empty list.
+    Note: you may assume the input string contains only letters and spaces.
+    Examples:
+    select_words("Mary had a little lamb", 4) ==> ["little"]
+    select_words("Mary had a little lamb", 3) ==> ["Mary", "lamb"]
+    select_words("simple white space", 2) ==> []
+    select_words("Hello world", 4) ==> ["world"]
+    select_words("Uncle sam", 3) ==> ["Uncle"]
+    """
+    if not s:
+        return []
+
+    vowels = set('aeiou')
+    result = []
+
+    for word in s.split():
+        # Count consonants: letters that are not vowels (case‑insensitive)
+        consonant_count = sum(1 for ch in word if ch.lower() not in vowels)
+        if consonant_count == n:
+            result.append(word)
+
+    return result
+```

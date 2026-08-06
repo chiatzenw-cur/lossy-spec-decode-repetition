@@ -1,0 +1,33 @@
+<|channel|>analysis<|message|>We need to implement function count_distinct_characters. Input string: str. Need to count distinct characters ignoring case, so we convert to lower case or upper. Count distinct characters characters. Should return number. Should exclude duplicates. Should handle case-insensitive. Also maybe treat special characters? The problem says "regardless of case" so we convert to lower case. So we can use set. Count distinct characters ignoring case. So return len(set(string.lower())).
+
+Edge cases: None. Should we ignore whitespace? Not specified. So just count every character including whitespace. So we return len(set(s.lower())).
+
+Add docstring: includes explanation. Provide code. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def count_distinct_characters(string: str) -> int:
+    """
+    Count the number of distinct characters in a string, ignoring case.
+
+    Parameters
+    ----------
+    string : str
+        The string to analyze.
+
+    Returns
+    -------
+    int
+        The number of unique characters in the string when case is ignored.
+
+    Examples
+    --------
+    >>> count_distinct_characters('xyzXYZ')
+    3
+    >>> count_distinct_characters('Jerry')
+    4
+    """
+    # Convert the string to a single case (lowercase) and use a set to find
+    # distinct characters.
+    return len(set(string.lower()))
+```
+
+***Explanation of the implementation***  
+The function converts the input string to lowercase using `string.lower()`. This guarantees that 'A' and 'a' are treated as the same character. The `set` data structure collects all unique characters, so the number of distinct characters is simply the length of that set. The function then returns this integer.

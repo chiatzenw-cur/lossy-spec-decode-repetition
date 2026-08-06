@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-94b2e668a74446fc",
+  "object": "text_completion",
+  "created": 1786017526,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement gcd function. The function signature: def greatest_common_divisor(a: int, b: int) -> int. We need to handle negative numbers? The doctests only show positive numbers. We can implement Euclidean algorithm: while b != 0: a, b = b, a % b. Then return abs(a). Also handle zero? gcd(0,0) maybe defined as 0 or 0? Usually gcd(0,0)=0. But we can return 0. Provide docstring. Provide function. Provide tests. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\"\n    Return the greatest common divisor of two integers a and b.\n\n    The algorithm uses the Euclidean algorithm, which is efficient for\n    large integers.  The function works for negative inputs as well\n    and returns the gcd as a non‑negative integer.\n\n    Examples\n    --------\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    >>> greatest_common_divisor(0, 0)\n    0\n    >>> greatest_common_divisor(-12, 30)\n    6\n    \"\"\"\n    # The Euclidean algorithm works with the absolute values\n    a, b = abs(a), abs(b)\n\n    # If both are zero, the gcd is conventionally defined as 0\n    if a == 0 and b == 0:\n        return 0\n\n    while b:\n        a, b = b, a % b\n    return a\n```\n\nThis function uses the Euclidean algorithm (`a, b = b, a % b`) to iteratively reduce the remainder until the remainder becomes zero. The last non‑zero remainder is the greatest common divisor. The function handles negative inputs and the special case `0, 0` gracefully.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 182,
+    "total_tokens": 594,
+    "completion_tokens": 412,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

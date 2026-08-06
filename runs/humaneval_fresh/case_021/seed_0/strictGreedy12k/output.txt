@@ -1,0 +1,66 @@
+<|channel|>analysis<|message|>We need to implement a function find_closest_elements that returns two numbers that are closest. The list length >= 2. We must return smaller, larger. Also need to consider duplicates. We can sort the array, find minimal absolute difference between adjacent sorted numbers, track indices. Return tuple sorted ascending. That's straightforward. Need to handle floats; but just differences absolute value. Implementation: copy list sorted, compute min diff, keep two numbers. If multiple pairs have same diff, we can return any? Probably first minimal. In examples: [1,2,3,4,5,2.2] sorted gives [1.0,2.0,2.2,3.0,...]. Adjacent differences: 1.0 to 2.0 diff=1, 2.0 to 2.2 diff=0.2 => min. return (2.0, 2.2). Works.
+
+Edge case: duplicates: [2.0,2.0] sorted same, diff 0 => return (2.0,2.0). Works.
+
+Implementation details: iterate i from 0 to n-2. diff = abs(sorted[i+1]-sorted[i]). If diff < min_diff: update min and pair. If equals, skip.
+
+Return pair. Since sorted list ensures left <= right values, we can return tuple as (sorted[i], sorted[i+1]).
+
+Time complexity O(n log n). That's fine. Edge: maybe numbers not sorted ascending; but sorted is fine.
+
+Also we should ensure return order smaller larger, but if duplicate equal they are equal, fine.
+
+Let's produce final function including signature, docstring, and implementation.
+
+Let's implement:
+
+```python
+def find_closest_elements(numbers: List[float]) -> Tuple[float, float]:
+    ...
+```
+
+Docstring: we can keep original. Implementation: check len < 2? but precondition ensures.
+
+Ok.
+
+Let's produce final code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List, Tuple
+
+def find_closest_elements(numbers: List[float]) -> Tuple[float, float]:
+    """
+    From a supplied list of numbers (of length at least two) select and return two that are the closest to each
+    other and return them in order (smaller number, larger number).
+
+    Parameters
+    ----------
+    numbers : List[float]
+        A list of numeric values, length >= 2.
+
+    Returns
+    -------
+    Tuple[float, float]
+        A tuple containing the two numbers that are closest in value, ordered from smaller to larger.
+
+    Examples
+    --------
+    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])
+    (2.0, 2.2)
+    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])
+    (2.0, 2.0)
+    """
+    # Sort the numbers so that the closest pair must be adjacent in this order
+    sorted_nums = sorted(numbers)
+
+    # Initialize the minimal difference as large number and pair as first two elements
+    min_diff = abs(sorted_nums[1] - sorted_nums[0])
+    best_pair = (sorted_nums[0], sorted_nums[1])
+
+    # Iterate over adjacent pairs to find the minimal distance
+    for i in range(1, len(sorted_nums) - 1):
+        diff = sorted_nums[i + 1] - sorted_nums[i]  # sorted_nums is ascending, diff ≥ 0
+        if diff < min_diff:
+            min_diff = diff
+            best_pair = (sorted_nums[i], sorted_nums[i + 1])
+
+    return best_pair
+```

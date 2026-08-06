@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-ab27b18c942f9b3d",
+  "object": "text_completion",
+  "created": 1786018620,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement filter_by_prefix. The function takes a list of strings, returns a list of strings starting with prefix. The function should preserve original list order? The docstring examples show that. We should handle empty strings, maybe prefix is empty string. Should handle case where prefix is None? The type is List[str], prefix: str. So implement straightforward.\n\nEdge cases: When prefix is '', all strings start with prefix? Usually .startswith('') returns True. So we can return all strings. But maybe they want to treat empty string as all strings? That is fine.\n\nWe can implement using list comprehension: [s for s in strings if s.startswith(prefix)]. Or a loop.\n\nWe should also consider slice? Not needed.\n\nWe should also consider that the function should be correctly typed. Provide docstring.\n\nReturn list.\n\nAlso maybe we can use a generator? But return list.\n\nWe can also add a docstring for clarity.\n\nWe should also consider that the function is part of a test suite with doctest. The function must be defined at top-level. The docstring is included. The function body is missing.\n\nWe need to provide the entire function with signature, docstring, and implementation. The function body needs to be inserted.\n\nWe should also consider that the function should be documented. The function is defined as:\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\"Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    # implementation\n\nWe can implement:\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    return [s for s in strings if s.startswith(prefix)]\n\nBut we need to consider that some might be None? But types are List[str], so no None.\n\nWe can also add type checking.\n\nWe can also add a small test: if prefix is None raise ValueError.\n\nBut the requirement: \"Complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\"\n\nSo we just provide the function body. We can add a docstring but we already have it. The signature is already provided. We can include the function body.\n\nThus final answer: Provide the function with the body.\n\nWe should also ensure that we import List from typing.\n\nWe can also mention that the function is a simple implementation.\n\nWe can also add a comment: \"If the prefix is empty, return all strings.\" But we can just use list comprehension.\n\nThus final code:\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    return [s for s in strings if s.startswith(prefix)]\n\nBut we need to ensure that the function is correct. The docstring includes the function definition. It's fine.\n\nWe might also add a check for non-string values? But not needed.\n\nThus answer: Provide the function.\n\nWe need to remember to include the function body. There is no other function body.\n\nTherefore final answer: Provide the function.\n\nWe can also add a comment: \"The function is simple and returns a list of strings that start with the prefix.\" But not necessary.\n\nThus final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\"Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    return [s for s in strings if s.startswith(prefix)]\n```\n\nThis function uses a simple list comprehension to return a new list containing only those strings that start with the supplied `prefix`. It preserves the original order of the input list and handles empty strings or empty prefixes as expected.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 200,
+    "total_tokens": 1102,
+    "completion_tokens": 902,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

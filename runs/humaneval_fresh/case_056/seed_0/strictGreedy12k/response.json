@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-93fcd4cb8213eed6",
+  "object": "text_completion",
+  "created": 1786005528,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function fib(n): return nth Fibonacci number. The examples: fib(10) -> 55, fib(1) -> 1, fib(8) -> 21. So maybe Fibonacci sequence starting with fib(1) = 1, fib(2) = 1, fib(n) = fib(n-1)+fib(n-2). The function should handle n>=1 perhaps. There may be negative or zero? Not mentioned. We can assume n positive integer.\n\nShould implement efficient iterative algorithm or recursion with caching. Implementation: for n <= 0: maybe raise ValueError. Implementation: iterative loop.\n\nAdd docstring includes examples.\n\nWrite in Python.\n\nAlso include type hints: def fib(n: int) -> int.\n\nEdge-case: fib(0)? Might interpret as 0. But example not. But we could support fib(0) returns 0, similar to standard Fibonacci.\n\nWe'll implement:\n\n- If n <= 0: raise ValueError(\"n must be positive integer\").\n\nElse use two variables a,b.\n\nReturn b after loop.\n\nPseudo:\n\ndef fib(n:int) -> int:\n    if n <= 0:\n        raise ValueError(\"n must be positive int\")\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n\nTesting: fib(1) -> a=0,b=1 ; loop iter 1 times => a,b=1,1 => return 1. Good. fib(2) -> another: a,b=1,2 after loop? Let's check: initial a=0,b=1. For 2 loops: first: a=1,b=1, second: a=1,b=2 -> return 1 -> correct fib(2)=1. fib(3) -> third: a=2,b=3 -> return 2 fib(3)=2. Works.\n\nfib(10) -> after 10 loops, return 55. correct.\n\nEdge-case fib(0) would raise ValueError; but typical fib(0)=0. Might be accepted. The spec didn't use fib(0). We can incorporate fib(0) returns 0 if n==0; Let’s decide: better to support n==0 returning 0. Provide docstring maybe. In many definitions, fib(0) = 0, fib(1) = 1. So we can support that; use if n <= 0: raise if n<0 else return 0. But base test doesn't cover 0. Let's choose to raise error for non-positive. But typical external expectation might be n being positive. I'll implement raising ValueError for n <= 0.\n\nAlso we can check type: if not isinstance(n,int): raise TypeError.\n\nShould be fine.\n\nLet's produce final function.\n\nAlso mention docstring sample. Provide full code.\n\nOk.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef fib(n: int) -> int:\n    \"\"\"Return the *n*‑th Fibonacci number.\n\n    The sequence is defined as::\n\n          fib(1) = 1\n          fib(2) = 1\n          fib(k) = fib(k-1) + fib(k-2)   for k > 2\n\n    Parameters\n    ----------\n    n : int\n        The index of the Fibonacci number to return. Must be a positive integer.\n\n    Returns\n    -------\n    int\n        The *n*‑th Fibonacci number.\n\n    Raises\n    ------\n    ValueError\n        If *n* is less than 1.\n\n    Examples\n    --------\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \"\"\"\n    if not isinstance(n, int):\n        raise TypeError(f\"n must be an int, got {type(n).__name__}\")\n    if n < 1:\n        raise ValueError(\"n must be a positive integer\")\n\n    a, b = 0, 1  # a = fib(k-2), b = fib(k-1)\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 164,
+    "total_tokens": 1045,
+    "completion_tokens": 881,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

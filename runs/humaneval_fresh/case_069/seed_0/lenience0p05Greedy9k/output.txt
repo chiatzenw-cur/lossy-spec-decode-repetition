@@ -1,0 +1,91 @@
+<|channel|>analysis<|message|>We need to implement a function that returns the smallest even value node and its index. The input arr is a list of ints. Return list of two ints: [value, index]. If empty or no even, return [].
+
+We need to consider that 0 is even. The smallest even value is the minimum of all even values. If multiple equal, return the earliest index. So we iterate over arr, keep track of min_even, min_index. If found, return [min_even, min_index]. Complexity O(n). Use int.
+
+Edge cases: empty array -> return [].
+
+Constraints: 0 <= node.value. So we can use arr == [].
+
+Return list of two ints.
+
+We need to ensure only the function body is missing; we need to provide the full function. So we need to write the function with signature and docstring.
+
+Let's produce code:
+
+def pluck(arr):
+    """..."""
+
+    if not arr: return []
+
+    min_even = None
+    min_index = None
+    for i, val in enumerate(arr):
+        if val % 2 == 0:
+            if min_even is None or val < min_even or (val == min_even and i < min_index):
+                min_even = val
+                min_index = i
+    return [] if min_even is None else [min_even, min_index]
+
+Because we need to return [] if min_even is None, i.e., no even.
+
+We can also use min_even_can = None.
+
+Edge: if arr has no even numbers, return [].
+
+Ok.
+
+We also need to ensure the function body is correct. Provide docstring.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def pluck(arr):
+    """
+    "Given an array representing a branch of a tree that has non-negative integer nodes
+    your task is to pluck one of the nodes and return it.
+    The plucked node should be the node with the smallest even value.
+    If multiple nodes with the same smallest even value are found return the node that has smallest index.
+
+    The plucked node should be returned in a list, [smalest_value, its index],
+    If there are no even values or the given array is empty, return [].
+
+    Example 1:
+        Input: [4,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index.
+
+    Example 2:
+        Input: [1,2,3]
+        Output: [2, 1]
+        Explanation: 2 has the smallest even value, and 2 has the smallest index.
+
+    Example 3:
+        Input: []
+        Output: []
+
+    Example 4:
+        Input: [5, 0, 3, 0, 4, 2]
+        Output: [0, 1]
+        Explanation: 0 is the smallest value, but  there are two zeros,
+                     so we will choose the first zero, which has the smallest index.
+
+    Constraints:
+        * 1 <= nodes.length <= 10000
+        * 0 <= node.value
+    """
+    if not arr:
+        return []
+
+    min_even = None
+    min_index = None
+
+    for i, val in enumerate(arr):
+        if val % 2 == 0:
+            if min_even is None or val < min_even or (val == min_even and i < min_index):
+                min_even = val
+                min_index = i
+
+    if min_even is None:
+        return []
+
+    return [min_even, min_index]
+```
+

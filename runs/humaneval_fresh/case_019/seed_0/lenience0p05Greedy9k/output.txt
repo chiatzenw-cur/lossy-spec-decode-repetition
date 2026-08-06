@@ -1,0 +1,102 @@
+<|channel|>analysis<|message|>We need to implement function that counts how many times substring occurs in string, overlapping allowed. We need to return int. For empty string, we want 0. For empty substring? The docstring examples: 'a' and 'a' etc. For empty string, we should return 0. For empty substring, we might consider that substring is empty, but we can treat as 0? Usually if substring is empty, we might consider it found at every position? But typical semantics: if substring is empty, technically it occurs at every position. But examples: ``how_many_times('', 'a')`` returns 0. So we can check if substring empty: return 0. But if string empty, substring empty: return 0? But not needed. We'll implement.
+
+We need to count overlapping occurrences. Use a loop: while True: find index = string.find(substring, start). If index == -1: break. Count += 1. Then increment start by 1 to allow overlapping. For overlapping, we should start at index+1. But if substring is empty, we can skip.
+
+Edge cases: substring longer than string: return 0.
+
+Also if string empty: return 0.
+
+We can implement as:
+
+def how_many_times(string: str, substring: str) -> int:
+    """ ...
+    """
+    if not string or not substring:
+        return 0
+    count = 0
+    start = 0
+    while True:
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        start = index + 1
+    return count
+
+We need to ensure type of string: str. The function returns int.
+
+We also need to test with examples: '' 'a' -> 0. 'aaa' 'a' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'abc' 'abc' -> 1. 'abc' 'abcd' -> 0. 'aaaa' 'aa' -> 3. 'aaaa' 'baa' -> 0. 'aaaa' 'a' -> 4. 'aaaa' 'a' -> 4. 'aaaa' 'a' -> 4. 'aaaaa' 'aa' -> 4. 'aaaa' 'aa' -> 3. 'aaaaa' 'aa' -> 4. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'b' -> 0. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. 'aaaa' 'aa' -> 3. etc.
+
+We can also use a regex approach: re.findall(r'(?=...)', string). But that would be slower. But we can use simple string search.
+
+Edge: string contains substring: e.g., 'aaaa' and 'aa' -> 3. 'a' 'a' -> 1. 'a' '' -> 0. 'a' 'a' -> 1. 'a' 'a' -> 1. 'a ' 'a' -> 1. 'a' 'a' -> 1.
+
+We can also use built-in count with overlapping? But not.
+
+We should also consider that substring may be equal to string. Example: 'aaa' 'aaa' -> 1. 'aaa' 'aaa' -> 1. 'aaa' 'aaa' -> 1 (since start at 0). Overlap: 'aaa' 'aa' -> 2. 'aaa' 'aa': positions 0-1, 1-2. So 2. Good.
+
+Implementation: Add docstring.
+
+Return 0 for empty string or empty substring.
+
+Possible improvement: use while loop.
+
+Let's produce final code.
+
+Also we need to ensure that the function is reproducible. Provide docstring.
+
+We can also use yield.
+
+Edge: if substring is longer than string: return 0: while loop will find -1.
+
+Ok.
+
+Let's produce function.
+
+Also we can add docstring for examples.
+
+We can also add type hints.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def how_many_times(string: str, substring: str) -> int:
+    """Find how many times a given substring can be found in the original string.
+    The search is **overlapping**: each occurrence is counted even if it overlaps
+    with a previous one.
+
+    Parameters
+    ----------
+    string : str
+        The string to search in.
+    substring : str
+        The substring to search for.
+
+    Returns
+    -------
+    int
+        The number of times the substring appears in `string`.
+
+    Examples
+    --------
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+
+    count = 0
+    start = 0
+    while True:
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        # Move one position forward to allow overlapping
+        start = index + 1
+    return count
+```

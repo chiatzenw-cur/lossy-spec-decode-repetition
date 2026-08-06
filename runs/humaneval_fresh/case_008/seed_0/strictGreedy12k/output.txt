@@ -1,0 +1,41 @@
+<|channel|>analysis<|message|>We need to complete the function filter_by_substring that takes a list of strings and a substring string, returns list of strings that contain the substring. Implementation straightforward. But maybe sorting? Not requested. Use list comprehension [s for s in strings if substring in s].
+
+Consider case sensitivity? Example: substring 'a' matches strings 'abc', 'bacd', 'array'. The substring 'a' is present. Probably case-sensitive as they didn't use lower. Use "in". Also handle empty substring: if substring==''? Typically in Python, '' in 'abc' returns True. So all strings will be returned. Might be expected.
+
+Docstring with examples. Should include imports? Already imported List.
+
+Implementation: return [s for s in strings if substring in s] .
+
+Edge: None? Not required.
+
+We'll fill body. All done.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """Filter an input list of strings only for ones that contain a given substring.
+
+    Parameters
+    ----------
+    strings : List[str]
+        The list of strings to filter.
+    substring : str
+        The substring to search for.
+
+    Returns
+    -------
+    List[str]
+        A new list containing only the strings that contain ``substring``.
+
+    Examples
+    --------
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    # Use a list comprehension to keep only those strings that contain the substring.
+    return [s for s in strings if substring in s]
+```

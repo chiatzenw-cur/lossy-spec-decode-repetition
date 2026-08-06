@@ -1,0 +1,31 @@
+<|channel|>analysis<|message|>The user wants to complete a Python function defined with signature def add(x: int, y: int):. It's a simple addition. Provide the code with function body. They want the full function, including docstring and implementation.
+
+We should preserve docstring and example. There may be minor formatting issues: the docstring starts with triple quotes, but missing closing triple quotes? Actually the docstring shows triple quotes start at line after def add, opening triple quotes. Then description, then doctest examples. But missing closing triple quotes. We should add closing triple quotes. Then implement return x + y. We could also ensure type hints and docstring. Provide complete function code.
+
+Return type int can be annotated: def add(x: int, y: int) -> int. Provide docstring. Implementation is return x + y. Also maintain semantics.
+
+Ensure no mistakes: Add def again. Provide proper indentation.
+
+Thus final code:
+
+```python
+def add(x: int, y: int) -> int:
+    """Add two numbers x and y
+    >>> add(2, 3)
+    5
+    >>> add(5, 7)
+    12
+    """
+    return x + y
+```
+
+That's it.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def add(x: int, y: int) -> int:
+    """Add two numbers x and y
+    >>> add(2, 3)
+    5
+    >>> add(5, 7)
+    12
+    """
+    return x + y
+```

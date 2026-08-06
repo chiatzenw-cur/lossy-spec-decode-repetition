@@ -1,0 +1,70 @@
+<|channel|>analysis<|message|>We need to implement fibfib(n): defined as: fibfib(0)=0, fibfib(1)=0, fibfib(2)=1; and for n>=3: fibfib(n)=fibfib(n-1)+fibfib(n-2)+fibfib(n-3). Compute efficiently: using iterative dynamic programming or matrix exponentiation. For moderate inputs, DP is fine. Could use fast doubling variant? Ask for efficient compute. We'll write iterative using list or dict to avoid recursion. Complexity O(n). Use caching. Could also use Memoization recursion. We'll implement iterative. For negative n? Not specified. We'll handle n<0 raise ValueError.
+
+Edge cases: n==0 -> 0, n==1->0, n==2->1.
+
+Examples: fibfib(5) =? Let's compute manually: f(0)=0,1=0,2=1,3=1+0+0=1,4=1+1+0=2,5=2+1+1=4 matches. 8: compute quickly; seems 24 matches: f6=4+2+1=7, f7=7+4+2=13, f8=13+7+4=24. Good.
+
+Implementation: use int. Possibly big numbers: use Python big ints.
+
+Let's produce full function: with docstring same as given. Manage n typed int; return int. Might also handle caching for repeated calls: use lru_cache; but the requirement may apply to better performance across calls? maybe not. I'll implement iterative stack.
+
+Potential for negative numbers? Raise ValueError.
+
+Time complexity O(n) and space O(1) using three variables.
+
+We'll produce code:
+
+```
+def fibfib(n: int) -> int:
+    """..."""  # doc string identical
+
+    if n < 0:
+        raise ValueError("fibfib is defined only for non-negative integers")
+    if n == 0 or n == 1:
+        return 0
+    if n == 2:
+        return 1
+    a, b, c = 0, 0, 1   # fibfib(0), fibfib(1), fibfib(2)
+    for _ in range(3, n+1):
+        a, b, c = b, c, a+b+c
+    return c
+```
+
+Yes, iterative. Might use tuple assignment.
+
+Alternatively we could use list dp: dp=[0,0,1,...]. But we use O(1) memory.
+
+Doc string remains same.
+
+Edge: n=3-> returns 1. Good.
+
+Let's produce final answer: print entire function.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def fibfib(n: int) -> int:
+    """The FibFib number sequence is a sequence similar to the Fibonacci sequence that's defined as follows:
+    fibfib(0) == 0
+    fibfib(1) == 0
+    fibfib(2) == 1
+    fibfib(n) == fibfib(n-1) + fibfib(n-2) + fibfib(n-3).
+    Please write a function to efficiently compute the n‑th element of the fibfib number sequence.
+    >>> fibfib(1)
+    0
+    >>> fibfib(5)
+    4
+    >>> fibfib(8)
+    24
+    """
+    if n < 0:
+        raise ValueError("fibfib is defined only for non‑negative integers")
+
+    # Handle the base cases directly
+    if n == 0 or n == 1:
+        return 0
+    if n == 2:
+        return 1
+
+    # Use a rolling window of the last three values
+    a, b, c = 0, 0, 1  # a = fibfib(n-3), b = fibfib(n-2), c = fibfib(n-1)
+    for _ in range(3, n + 1):
+        a, b, c = b, c, a + b + c  # compute next value
+    return c
+```

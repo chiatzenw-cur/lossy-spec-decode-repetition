@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bc3a614c4c6b66cb",
+  "object": "text_completion",
+  "created": 1786004957,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement fib4 defined as above: base cases: n=0 -> 0, n=1 -> 0, n=2 -> 2, n=3 -> 0. Then for n>=4: fib4(n)=fib4(n-1)+fib4(n-2)+fib4(n-3)+fib4(n-4). So it's like a linear recurrence of order 4.\n\nWe need efficient computation, not recursion. Could use iterative loop storing last four terms. Or matrix exponentiation for O(log n). But for simplicity iterative O(n) is fine since n is presumably moderate. Implementation: handle n < 0? Not necessary. Use list or deque. Return int.\n\nEdge cases: n=0,1,2,3. Ensure the docstring holds. Provide appropriate type hints and docstring. Use integer. Implementation:\n\ndef fib4(n: int) -> int:\n    if n < 0: raise ValueError etc? Not necessary.\n\nWe'll just compute iteratively.\n\nPseudo:\n\nif n==0 or n==1: return 0\nif n==2: return 2\nif n==3: return 0\na,b,c,d = 0,0,2,0 # fib4(0),fib4(1),fib4(2),fib4(3)\nfor i in range(4, n+1):\n    e = a + b + c + d\n    a,b,c,d = b,c,d,e\nreturn d\n\nYes. Provide docstring that may match original.\n\nAlso handle n values as given.\n\nAll good.\n\nNow produce full function.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef fib4(n: int) -> int:\n    \"\"\"\n    The Fib4 number sequence is a sequence similar to the Fibonacci sequence that's defined as follows:\n        fib4(0) -> 0\n        fib4(1) -> 0\n        fib4(2) -> 2\n        fib4(3) -> 0\n        fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n\n    This function efficiently computes the n-th element of the fib4 number sequence without using recursion\n    by iteratively maintaining the last four computed values.\n\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non‑negative integer\")\n\n    # Base cases\n    if n == 0 or n == 1:\n        return 0\n    if n == 2:\n        return 2\n    if n == 3:\n        return 0\n\n    # Initialize the first four terms\n    a, b, c, d = 0, 0, 2, 0  # fib4(0), fib4(1), fib4(2), fib4(3)\n\n    for _ in range(4, n + 1):\n        e = a + b + c + d  # next term\n        a, b, c, d = b, c, d, e\n\n    return d\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 282,
+    "total_tokens": 968,
+    "completion_tokens": 686,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

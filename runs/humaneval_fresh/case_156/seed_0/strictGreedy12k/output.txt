@@ -1,0 +1,43 @@
+<|channel|>analysis<|message|>We need to complete the function. We must provide full function definition with signature, docstring, and implementation. The function takes an integer. We need to count even and odd digits. Negative sign may ignore. Should treat digits of absolute value. For 0? 0 is even, so count even=1, odd=0. For negative numbers: e.g., -12 -> 1 even and 1 odd. They want tuple (even_count, odd_count). Use absolute value and iterate over digits: str(abs(num)). For each char, convert to int and check digit%2==0. Count in two variables.
+
+Edge cases: empty string? If num is 0, str(0) yields "0" so count 1 even. Good.
+
+Implementation: 
+```
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = odd_count = 0
+    for ch in str(abs(num)):
+        digit = int(ch)
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+Good. Might handle case where num is None or not int? Not required.
+
+We'll return tuple. Provide full function. That solves.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def even_odd_count(num):
+    """Given an integer. Return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    # Work with the absolute value to ignore any sign
+    even_count, odd_count = 0, 0
+    for ch in str(abs(num)):
+        digit = int(ch)
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```

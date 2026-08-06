@@ -1,0 +1,36 @@
+<|channel|>analysis<|message|>We need to implement function that takes integer. Return tuple of number of even digits and odd digits. Input: negative numbers: treat abs. Should handle 0? 0 has even digits. So expect (1,0). Let's deduce: if num is 0, digits: 0. So count even=1, odd=0. Implementation: iterate over digits of abs(num). Use str(abs(num)). For each digit char, int. If digit%2==0: even++, else odd++.
+
+Return tuple (even, odd). Should handle negative sign. There is no specification about zero. We'll include.
+
+Edge cases: no digits? Not possible. So implement.
+
+Return tuple.
+
+Also docstring: maybe include docstring as given. Provide entire function.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    # Work with the absolute value to ignore sign
+    num = abs(num)
+    # Convert the integer to a string to iterate over each digit
+    digits = str(num)
+    even_count = 0
+    odd_count = 0
+
+    for ch in digits:
+        d = int(ch)
+        if d % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    return even_count, odd_count
+```
+
+This function handles positive integers, negative integers, and zero, returning a tuple of the counts of even and odd digits.

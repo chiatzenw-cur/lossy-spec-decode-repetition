@@ -1,0 +1,48 @@
+<|channel|>analysis<|message|>We need to complete the function below_zero. Provide docstring and code. The behavior: given a list of integers operations (positive deposit, negative withdraw). Start account with 0. Need to detect if balance falls below zero at any point; return True when that occurs, otherwise False.
+
+Return bool.
+
+Docstring provided; we can keep or update.
+
+Implementation: iterate through list, maintain balance, if at any point balance<0 return True. After loop, return False.
+
+Edge cases: list empty => no operations, balance stays 0 => return False.
+
+Also negative numbers in list may cause immediate negative.
+
+Return the function with appropriate type hints and docstring.
+
+Simplify.
+
+We should consider all tests; do we need to use annotations in function body? Not necessary.
+
+We'll implement accordingly. All done.
+
+Also: concurrency? Not needed.
+
+Ok. Provide full function code in block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """Detect whether the account balance ever goes below zero.
+
+    The account starts at zero. Each integer in ``operations`` is a deposit
+    (positive) or withdrawal (negative). As soon as the running total dips
+    below zero the function will return ``True``; if all operations keep the
+    balance non‑negative, it returns ``False``.
+
+    Examples
+    --------
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+    return False
+```

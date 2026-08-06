@@ -1,0 +1,36 @@
+<|channel|>analysis<|message|>We need to implement solve(s). According to description: If s[i] is a letter, reverse its case. If no letters, reverse string. Implementation: iterate and build result, track if any letters. But if no letter, just reverse entire string. Should maintain digits, punctuation unchanged. let's code accordingly.
+
+Note: For letters, we should handle A-Z and a-z. We can use str.isalpha to check letter. But caretaker: isalpha returns True for letters and maybe unicode letters. Acceptable. Implementation: for each ch in s: if ch.isalpha(): toggled = ch.swapcase() else: keep same. Track letters_found = letters_found or ch.isalpha().
+
+After loop, if not letters_found, result = s[::-1]. Else result = ''.join(transformed). That's it.
+
+Edge cases: empty string, no letters is empty; reversing empty string remains empty. Also string containing letters plus digits, invert letters and keep others.
+
+The function returns string.
+
+Let's produce full function definition with docstring and implementation.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def solve(s):
+    """You are given a string s.
+    If s[i] is a letter, reverse its case from lower to upper or vise versa,
+    otherwise keep it as it is.
+    If the string contains no letters, reverse the string.
+    The function should return the resulted string.
+    Examples
+    solve("1234") = "4321"
+    solve("ab") = "AB"
+    solve("#a@C") = "#A@c"
+    """
+    has_letter = False
+    transformed = []
+
+    for ch in s:
+        if ch.isalpha():
+            has_letter = True
+            transformed.append(ch.swapcase())
+        else:
+            transformed.append(ch)
+
+    if not has_letter:
+        return s[::-1]
+    return "".join(transformed)
+```

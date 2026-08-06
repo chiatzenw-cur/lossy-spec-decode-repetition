@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-aea26e7020229aa9",
+  "object": "text_completion",
+  "created": 1786006278,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function fruit_distribution(s, n). We parse the string like \"5 apples and 6 oranges\". The string format has integer number before \"apples and\" and before \"oranges\"? Example: \"5 apples and 6 oranges\". The numbers are integer digits. So we can use regex to find all numbers. There might be multiple numbers but we need two: the number of apples and oranges. Use re.findall(r'\\d+', s). Then apples = int(nums[0]), oranges = int(nums[1]). Then mangoes = n - apples - oranges. Return that integer.\n\nHandle negative or extra? Probably not.\n\nAlso the string may have punctuation? Could be \"0 apples and 1 oranges\". Ok.\n\nSo implement.\n\nWe should do import re inside function or at top. Simpler: inside.\n\nEdge: If number of numbers <2, raise ValueError? Could return None. But problem assumptions: always two numbers.\n\nReturn integer.\n\nWrite docstring. Implementation straightforward.\n\nLet's produce final function.<|end|><|start|>assistant<|channel|>final<|message|>```python\nimport re\n\ndef fruit_distribution(s, n):\n    \"\"\"\n    Return the number of mango fruits in a basket given a description of apples\n    and oranges and the total fruit count.\n\n    Parameters\n    ----------\n    s : str\n        String describing the number of apples and oranges in the format\n        \"<apples> apples and <oranges> oranges\".  The numbers are integers.\n    n : int\n        Total number of fruits in the basket.\n\n    Returns\n    -------\n    int\n        The number of mangoes: n - apples - oranges.\n\n    Examples\n    --------\n    >>> fruit_distribution(\"5 apples and 6 oranges\", 19)\n    8\n    >>> fruit_distribution(\"0 apples and 1 oranges\", 3)\n    2\n    >>> fruit_distribution(\"2 apples and 3 oranges\", 100)\n    95\n    >>> fruit_distribution(\"100 apples and 1 oranges\", 120)\n    19\n    \"\"\"\n    # Find all integers in the string\n    numbers = re.findall(r'\\d+', s)\n    if len(numbers) < 2:\n        raise ValueError(f\"Could not find two integer values in the string: '{s}'.\")\n    apples, oranges = int(numbers[0]), int(numbers[1])\n    return n - apples - oranges\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 322,
+    "total_tokens": 815,
+    "completion_tokens": 493,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

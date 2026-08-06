@@ -1,0 +1,51 @@
+<|channel|>analysis<|message|>We need to complete the function. We must import hashlib. Return None if text is empty. Else compute md5 digest and return hex digest. The docstring has example: string_to_md5('Hello world') -> '3e25960a79dbc69b674cd4ec67a72c62'.
+
+Implement as usual.
+
+We need to include function body fully. Implementation:
+
+```
+import hashlib
+
+def string_to_md5(text):
+    """
+    ...
+    """
+    if not text:
+        return None
+    m = hashlib.md5()
+    m.update(text.encode('utf-8'))
+    return m.hexdigest()
+```
+
+We also need to import hashlib at top level or inside function. We can import in function or at module level. Provide the function with appropriate docstring and code.
+
+We also need to include the safety for unicode; text could be string, we encode to utf-8. Also maybe support bytes? Not required.
+
+Also: Some style: use text.encode('utf-8') is fine.
+
+We should include doctest example. Should it be strict equality? The docstring shows==. That's okay.
+
+Make sure to include __all__? Not necessary.
+
+Thus full function as request: signature, docstring and body. Provide in python code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+import hashlib
+
+def string_to_md5(text):
+    """
+    Given a string `text`, return the MD5 hash of the string as a
+    hexadecimal string.  If `text` is an empty string, return ``None``.
+
+    The function is safe for Unicode input; the string is first encoded
+    using UTF‑8 before hashing.
+
+    Example:
+    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'
+    """
+    if not text:                       # Empty string or None
+        return None
+
+    md5_obj = hashlib.md5()
+    md5_obj.update(text.encode('utf-8'))
+    return md5_obj.hexdigest()
+```

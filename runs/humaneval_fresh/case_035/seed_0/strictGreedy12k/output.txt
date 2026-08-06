@@ -1,0 +1,39 @@
+<|channel|>analysis<|message|>We need to complete the function unique(l: list). It returns sorted unique elements. The typical implementation: use set to deduplicate, then sorted. Keep type mostly same. Might need to handle list of arbitrary types. The docstring expects int list. So let's return sorted(set(l)). But to keep order? It's sorted anyway. Implementation:
+
+```
+def unique(l: list):
+    """Return sorted unique elements in a list
+    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])
+    [0, 2, 3, 5, 9, 123]
+    """
+    return sorted(set(l))
+```
+
+But consider how to preserve order? No, sorted unique. What about returning in same type? sorted returns list. Good.
+
+One nuance: if list contains unorderable types (Python 3.9+ sorting tries to compare types). Acceptible for test.
+
+Maybe add type hint return List? but keep minimal.
+
+Edge cases: repeated: set doesn't preserve order, but sorted will.
+
+We can also do:
+
+```
+return sorted(set(l), key=l.index)
+```
+
+No, that's stable but not needed.
+
+Thus just return sorted(set(l)). That's simplest.
+
+Let's produce the full function.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def unique(l: list):
+    """Return sorted unique elements in a list
+
+    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])
+    [0, 2, 3, 5, 9, 123]
+    """
+    # Convert to a set to remove duplicates and then sort the result.
+    return sorted(set(l))
+```

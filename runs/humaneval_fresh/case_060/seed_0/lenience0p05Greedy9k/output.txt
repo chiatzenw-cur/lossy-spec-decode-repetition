@@ -1,0 +1,112 @@
+<|channel|>analysis<|message|>We need to implement largest_prime_factor(n). We need to consider n>1, not a prime. We can use typical algorithm: factorization by dividing by primes. We can use simple trial division upto sqrt. For n up to large? Not specified. We can use efficient algorithm: while n%2==0, record factor. Then iterate odd i from 3 to sqrt(n). If n% i==0, set factor. Keep dividing. After loop, if n>1, largest prime factor is n. But we need to return largest prime factor. Actually we need to track last prime factor. So algorithm: let's set largest=1. While n%2==0: largest=2; n//=2. While n%3==0: largest=3; n//=3. Then loop i from 5 to sqrt(n) step 6: while n% i==0: largest= i; n//=i; while n% (i+2) ==0: largest= i+2; n//=i+2. Continue until n>1. But we also need to update sqrt each time. Implementation: while n%2==0: largest=2; n//=2. while n%3==0: largest=3; n//=3. Then i=5; while i*i <= n: while n% i==0: largest= i; n//=i; while n%(i+2) ==0: largest= i+2; n//=i+2; i+=6. After loop, if n>1: largest= n. That ensures largest prime factor. Return largest.
+
+Edge cases: n=2? But n>1, not prime. But we can handle n=2? But not prime. Our function will handle. But we assume n>1, not prime. So if n is prime, we will return n? But we don't need. But we can echo.
+
+We need to produce docstring and function body. Provide tests. Provide final answer.
+
+Let's craft final function:
+
+def largest_prime_factor(n: int) -> int:
+    """Return the largest prime factor of n. Assume n > 1 and is not a prime.
+    >>> largest_prime_factor(13195)
+    29
+    >>> largest_prime_factor(2048)
+    2
+    """
+    if n <= 1:
+        raise ValueError("n must be greater than 1")
+    largest = 1
+    # factor out 2
+    while n % 2 == 0:
+        largest = 2
+        n //= 2
+    # factor out 3
+    while n % 3 == 0:
+        largest = 3
+        n //= 3
+    # factor out 5 and 7 pattern
+    i = 5
+    while i * i <= n:
+        while n % i == 0:
+            largest = i
+            n //= i
+        while n % (i + 2) == 0:
+            largest = i + 2
+            n //= i + 2
+        i += 6
+    if n > 1:
+        largest = n
+    return largest
+
+But we also need to handle n=2? But n>1 and not prime. So if n==2, we may raise. But we can handle though.
+
+We can also apply simple algorithm: while n%2==0: n//=2; last=2; while n%3==0: n//=3; last=3; while n%5==0: n//=5; last=5; while n%6==0: n//=6; last=6; but 6 is not prime. So better use 5,7.
+
+But we can just use simple trial division up to sqrt(n). That is fine.
+
+Need to ensure we don't use infinite loops. Use while i*i <= n.
+
+Edge: n=2? Not prime. But we can handle.
+
+Ok.
+
+Also we can use mathematics: for n in range(2, n+1). But we can just implement.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def largest_prime_factor(n: int) -> int:
+    """
+    Return the largest prime factor of n.
+
+    The function assumes that `n` is greater than 1 and is not a prime.
+
+    Parameters
+    ----------
+    n : int
+        The integer to factorise.
+
+    Returns
+    -------
+    int
+        The largest prime factor of `n`.
+
+    Examples
+    --------
+    >>> largest_prime_factor(13195)
+    29
+    >>> largest_prime_factor(2048)
+    2
+    """
+    if n <= 1:
+        raise ValueError("n must be greater than 1")
+
+    # The largest prime factor found so far
+    largest = 1
+
+    # Factor out 2
+    while n % 2 == 0:
+        largest = 2
+        n //= 2
+
+    # Factor out 3
+    while n % 3 == 0:
+        largest = 3
+        n //= 3
+
+    # Factor out the remaining primes using the 6k±1 pattern
+    # (all primes > 3 are of the form 6k±1)
+    i = 5
+    while i * i <= n:
+        while n % i == 0:
+            largest = i
+            n //= i
+        while n % (i + 2) == 0:
+            largest = i + 2
+            n //= i + 2
+        i += 6
+
+    # If n is still > 1, it is the greatest prime factor.
+    if n > 1:
+        largest = n
+
+    return largest
+```

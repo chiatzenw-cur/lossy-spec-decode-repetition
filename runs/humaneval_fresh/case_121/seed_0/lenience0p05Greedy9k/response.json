@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bf91af5f14d9bc78",
+  "object": "text_completion",
+  "created": 1786025025,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement max k numbers in arr. The function should return sorted list of length k with maximum k numbers. The input constraints: k may be 0 to len(arr). So we can handle k=0. We need to return sorted list of the maximum k numbers. So we need to find k largest values. This is typical: sort arr descending, then take k. Or use heapq.nlargest. But we can also sort and then slice. The function returns sorted list ascending. Example 1: arr = [-3, -4, 5], k=3 => sorted list of length 3: [-4, -3, 5] (the array sorted). So output is sorted ascending. Example 2: arr = [4, -4, 4], k=2 => get 4 largest: [4,4] (two 4's). Sorted ascending. Example 3: arr = [-3, 2, 1, 2, -1, -2, 1], k=1 => get 2 largest: [2] (two 2's). Sorted ascending. So algorithm: sort arr descending, then pick first k elements, then sort ascending. But we can just sort ascending globally and then take last k elements: sorted(arr) ascending, then take slice [-k:] for k>0, then sort ascending. However if we sort ascending and then take last k, it's already sorted ascending. So we can just return sorted(arr)[:k] if we want the smallest k? Wait: we want the largest k numbers. So sorted ascending, then take last k (i.e., from end). That yields sorted ascending list of the largest k numbers. Example: arr = [-3, -4, 5], sorted ascending: [-4, -3, 5], last k=3 => all; sorted ascending: [-4, -3, 5]. Good. Example 2: arr = [4, -4, 4], sorted ascending: [-4, 4, 4], last k=2 => [4,4] (sorted ascending). Good. Example 3: arr = [-3, 2, 1, 2, -1, -2, 1], sorted ascending: [-3, -2, -1, 1, 1, 2, 2], last k=1 => [2] (sorted). Good. So algorithm: sort ascending, then take last k elements: if k>0: return sorted_arr[-k:] else: return [].\n\nEdge cases: k=0: return [].\n\nNow we need to produce full function. Provide docstring can be reused. Provide safety. Implementation: use sorted(arr) and then slice. Also we can use heapq.nlargest but that returns unsorted. But we can just sort and slice.\n\nWe need to return sorted list of length k. So we implemented accordingly.\n\nWe also need to mention that the function returns sorted list.\n\nLet's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list\n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n    # Edge case: k == 0 → return empty list\n    if k == 0:\n        return []\n\n    # Sort the array in ascending order and then take the last k elements\n    # (the largest k values). They are already in ascending order.\n    sorted_arr = sorted(arr)\n    return sorted_arr[-k:] if k > 0 else []\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 329,
+    "total_tokens": 1257,
+    "completion_tokens": 928,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

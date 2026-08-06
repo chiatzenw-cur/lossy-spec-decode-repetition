@@ -1,0 +1,43 @@
+<|channel|>analysis<|message|>We need to implement a function that returns the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The list is non-empty, positive integers. Return -1 if none.
+
+We need to compute frequency of each number. Then find numbers satisfying condition. Then return the maximum. Complexity O(n). Implementation straightforward.
+
+Edge cases: duplicates, frequencies. The function returns the greatest integer that is greater than zero, but all numbers are positive. So we just need to find the largest such integer.
+
+We can use collections.Counter.
+
+Return integer.
+
+Let's produce function.
+
+Also we need to preserve docstring. Provide example.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def search(lst):
+    '''
+    You are given a non-empty list of positive integers. Return the greatest integer that is greater than 
+    zero, and has a frequency greater than or equal to the value of the integer itself. 
+    The frequency of an integer is the number of times it appears in the list.
+    If no such a value exist, return -1.
+    Examples:
+        search([4, 1, 2, 2, 3, 1]) == 2
+        search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3
+        search([5, 5, 4, 4, 4]) == -1
+    '''
+    from collections import Counter
+
+    # Count occurrences of each integer
+    freq = Counter(lst)
+
+    # Find all numbers that satisfy the condition
+    candidates = [num for num, cnt in freq.items() if cnt >= num]
+
+    # Return the greatest one, or -1 if none exists
+    return max(candidates, default=-1)
+```
+
+**Explanation**
+
+1. `Counter` gives a frequency table for each integer in `lst`.  
+2. Iterate over the `(num, count)` pairs, keeping only those where `count >= num`.  
+3. The `max` function returns the greatest number in the list of candidates; if the list is empty, `default=-1` yields `-1`.

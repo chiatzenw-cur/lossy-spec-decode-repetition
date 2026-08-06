@@ -1,0 +1,69 @@
+<|channel|>analysis<|message|>We need to implement function that checks if a string of "<" and ">" is correctly balanced. Equivalent to checking if parentheses () match. The function returns True if every opening bracket has a corresponding closing bracket. The examples: "<" -> False, "<>" -> True, "<<><>>" -> True, "><<>" -> False. So we need to check if there is a matching sequence where each opening bracket is matched by a closing bracket later in the string, and the stack is balanced. Equivalent to valid parentheses: count of opener must be zero at end, and no negative count during traversal.
+
+We need to implement function. Provide docstring, maybe include examples. Provide function body. Use python.
+
+Edge cases: empty string? Should return True? The spec: "return True if every opening bracket has a corresponding closing bracket." For empty string, no opening, so vacuously true. So return True.
+
+Also need to handle potential other characters? Not needed.
+
+Implementation: 
+
+```
+def correct_bracketing(brackets: str):
+    """brackets is a string of "<" and ">".
+    return True if every opening bracket has a corresponding closing bracket.
+    >>> correct_bracketing("<")
+    False
+    >>> correct_bracketing("<>")
+    True
+    >>> correct_bracketing("<<><>>")
+    True
+    >>> correct_bracketing("><<>")
+    False
+    """
+    count = 0
+    for ch in brackets:
+        if ch == "<":
+            count += 1
+        elif ch == ">":
+            count -= 1
+            if count < 0:
+                return False
+        else:
+            raise ValueError("Invalid character: only '<' and '>' allowed")
+    return count == 0
+```
+
+But we might not need to raise ValueError. The spec didn't mention. But we can be safe. But to be safe, we can just ignore. But it's fine.
+
+We can also just use a stack: count variable.
+
+Return True if count==0.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def correct_bracketing(brackets: str):
+    """brackets is a string of "<" and ">".
+    return True if every opening bracket has a corresponding closing bracket.
+    >>> correct_bracketing("<")
+    False
+    >>> correct_bracketing("<>")
+    True
+    >>> correct_bracketing("<<><>>")
+    True
+    >>> correct_bracketing("><<>")
+    False
+    """
+    count = 0
+    for ch in brackets:
+        if ch == "<":
+            count += 1
+        elif ch == ">":
+            count -= 1
+            if count < 0:          # a closing bracket before a matching opening
+                return False
+        else:
+            raise ValueError("Invalid character: only '<' and '>' allowed")
+    return count == 0
+```

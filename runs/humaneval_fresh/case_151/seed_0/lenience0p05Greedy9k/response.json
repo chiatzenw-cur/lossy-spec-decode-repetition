@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9682c71ae74b5c53",
+  "object": "text_completion",
+  "created": 1786027172,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function x_or_y(n, x, y). The function should return x if n is prime, else return y. The function should check primality. We need to write a function that is efficient. We need to handle n being integer? Usually prime numbers are positive integers greater than 1. For n <= 1, return y (not prime). For n==2, return x. For other n, check divisibility. Use trial division up to sqrt(n). Use integer math. Use int(math.isqrt(n)) for Python 3.8+. Use math.isqrt. For negative numbers, we can treat as not prime. So return y. Provide docstring. Also include explanation. Provide entire function. Provide code. Also need to handle n is int? We'll assume int. Provide docstring as given. Provide function. Provide proper code. Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef x_or_y(n, x, y):\n    \"\"\"\n    Return the value of x if n is a prime number, otherwise return the value of y.\n\n    Examples:\n        >>> x_or_y(7, 34, 12)\n        34\n        >>> x_or_y(15, 8, 5)\n        5\n\n    The function considers n a prime only if it is a positive integer greater than 1 and\n    has no divisors other than 1 and itself.  Numbers that are not integers or are\n    less than 2 are treated as not prime.\n    \"\"\"\n    # Prime numbers must be positive integers greater than 1.\n    if not isinstance(n, int) or n <= 1:\n        return y\n\n    # 2 and 3 are prime.\n    if n <= 3:\n        return x\n\n    # Even numbers greater than 2 are not prime.\n    if n % 2 == 0:\n        return y\n\n    # Check odd divisors up to sqrt(n)\n    import math\n    limit = math.isqrt(n)\n    for d in range(3, limit + 1, 2):\n        if n % d == 0:\n            return y\n    return x\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 198,
+    "total_tokens": 655,
+    "completion_tokens": 457,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

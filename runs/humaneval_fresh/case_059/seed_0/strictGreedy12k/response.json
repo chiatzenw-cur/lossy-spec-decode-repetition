@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8fc0b6b26c671639",
+  "object": "text_completion",
+  "created": 1786005715,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function common(l1, l2) returning sorted unique common elements.\n\nDocstring: \"Return sorted unique common elements for two lists.\" Implementation: find intersection. Should return a list sorted in ascending order. Use set intersection, then sort and return list.\n\nConsider duplicates in l1 or l2: take unique. Example: [5,5,1], [5,6,5] => common [5] only. Use set.\n\nAlso maybe input could be non-ints? Problem states lists of ints. But implement generic.\n\nAlso maintain order in sorted list: ascending numeric.\n\nImplement function returning list sorted. Completion: use set(l1).intersection(l2). Sort then list.\n\nEdge cases: mismatched type? not needed.\n\nImplement docstring is already provided. Need to just fill body. All done.\n\nAlso: keep typing: def common(l1: list, l2: list):\n\nReturn list.\n\nImplement.\n\nAlso might want to handle list parameters. Implementation:\n\ndef common(l1: list, l2: list):\n    return sorted(set(l1).intersection(l2))\n\nMake sure to test examples. Quick mental:\n\ncommon([1,4,3,34,653,2,5], [5,7,1,5,9,653,121]) returns sorted([1,5,653]) -> [1,5,653].\n\nSecond example: sorted([2,3]) => [2,3].\n\nWorks.\n\nThus final answer.<|end|><|start|>assistant<|channel|>final<|message|>Here’s a concise, fully‑documented implementation of the `common` function that returns a sorted list of unique elements common to both input lists:\n\n```python\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n    \"\"\"\n    # Convert each list to a set to keep only unique values,\n    # then compute the intersection, sort, and return a list.\n    return sorted(set(l1).intersection(l2))\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 226,
+    "total_tokens": 720,
+    "completion_tokens": 494,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

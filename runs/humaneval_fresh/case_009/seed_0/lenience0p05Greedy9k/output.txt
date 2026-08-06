@@ -1,0 +1,41 @@
+<|channel|>analysis<|message|>We need to implement sum_product(numbers: List[int]) -> Tuple[int, int]. The description: sum of integers, product of all integers. Empty sum should be 0, empty product should be 1. Provide code. Should handle empty list. Use built-in sum and product. For product, we can use math.prod or manual loop. Use math.prod for Python 3.8+. But we can implement manually. Provide docstring. Provide type hints. Provide function. Provide final code. Ensure correctness. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List, Tuple
+
+
+def sum_product(numbers: List[int]) -> Tuple[int, int]:
+    """
+    Return the sum and the product of all integers in ``numbers``.
+
+    The function is robust against an empty list: the sum is 0 and the
+    product is 1 in that case.
+
+    Parameters
+    ----------
+    numbers : List[int]
+        A list of integers. The list may be empty.
+
+    Returns
+    -------
+    Tuple[int, int]
+        A tuple containing the sum and the product of the numbers.
+
+    Examples
+    --------
+    >>> sum_product([])
+    (0, 1)
+    >>> sum_product([1, 2, 3, 4])
+    (10, 24)
+    """
+    # Empty sum: sum([]) == 0
+    total = sum(numbers)
+
+    # Empty product: product of no elements is 1
+    # We can use a loop to avoid the need for math.prod
+    prod = 1
+    for num in numbers:
+        prod *= num
+
+    return total, prod
+```
+
+This function works for any list of integers, including the empty list, and returns the correct sum and product as required.

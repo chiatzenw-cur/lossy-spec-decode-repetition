@@ -1,0 +1,123 @@
+<|channel|>analysis<|message|>We need to find maximum real part of expression: (75+117i)z + (96+144i)/z. With z complex with magnitude 4. We need maximize Re( (75+117i)z + (96+144i)/z ). Let z = 4 e^{iθ}. Then z/|z| = 4 e^{iθ}. So expression: E = (75+117i) * 4 e^{iθ} + (96+144i)/(4 e^{iθ}) * 4 e^{iθ}? Wait: (96+144i)/z = (96+144i)/ (4 e^{iθ}) = (96+144i)/4 * e^{-iθ}. So expression: E = 4 e^{iθ} (75+117i) + (1/4) e^{-iθ} (96+144i). Actually 4 e^{iθ} times (75+117i) plus (96+144i)/(4 e^{iθ}) = (96+144i)/4 e^{-iθ}. So E = 4(75+117i) e^{iθ} + (96+144i)/4 e^{-iθ}.
+
+Compute constants: 75+117i, 4(75+117i)=300+468i. 96+144i = 96+144i. Divide by 4: 24+36i. So E = (300+468i) e^{iθ} + (24+36i) e^{-iθ}. That's the expression.
+
+Now we want real part of E. Let's denote A = 300+468i. Let B = 24+36i. Then E = A e^{iθ} + B e^{-iθ}. We want real part of E. Let θ real. Observe that E = A e^{iθ} + B e^{-iθ} = A e^{iθ} + B e^{-iθ}. Write e^{iθ} = cosθ + i sinθ. So E = A (cosθ + i sinθ) + B (cosθ - i sinθ) = (A + B) cosθ + i (A - B) sinθ. Because A i sinθ + B (-i sinθ) = i (A - B) sinθ. So E = (A + B) cosθ + i (A - B) sinθ. So real part of E = Re( (A + B) cosθ ) + Re( i (A - B) sinθ )? Wait, we need the real part of E. Since E = (A + B) cosθ + i (A - B) sinθ. This is complex. But we can write real part: Re( (A + B) cosθ ) + Re( i (A - B) sinθ ) = Re( (A + B) cosθ ) + Re( i (A - B) sinθ ). But we can also express E as (A + B) cosθ + i (A - B) sinθ. So E's real part is Re( (A + B) cosθ) + Im( (A - B) sinθ )? Wait, we need to express E as a real part plus imaginary part. Let's compute E directly: Let A = 300+468i, B = 24+36i. Then A + B = 324+504i. A - B = 276+432i. Then E = (324+504i) cosθ + i (276+432i) sinθ. But i (276+432i) = i*276 + i*432i = 276i + 432i^2 = 276i - 432 = -432 + 276i. So E = (324+504i) cosθ + (-432 + 276i) sinθ. So combine: E = (324 cosθ - 432 sinθ) + i(504 cosθ + 276 sinθ). So E = (324 cosθ - 432 sinθ) + i(504 cosθ + 276 sinθ). So real part is R = 324 cosθ - 432 sinθ.
+
+Thus the problem reduces to maximize R = 324 cosθ - 432 sinθ. We need maximize over real θ. This is a typical linear combination: R = R.max = sqrt(324^2 + 432^2) = sqrt(324^2 + 432^2) = sqrt(324^2 + 432^2). Let's compute: 324^2 = 104,976. 432^2 = 186,624. Sum = 291,600. sqrt(291,600) = sqrt(2916*100) = 54*10? Wait sqrt(2916)=54. So 54*10=540. So R_max = 540. So maximum real part is 540. But we need to confirm that the expression we derived is indeed correct. Let's double-check: The expression is E = (300+468i) e^{iθ} + (24+36i) e^{-iθ}. We derived E = (324 cosθ - 432 sinθ) + i(504 cosθ + 276 sinθ). Let's verify: Multiply:
+
+(300+468i) e^{iθ} = (300+468i)(cosθ + i sinθ) = (300 cosθ + 468i cosθ) + i(300 sinθ + 468i sinθ) = (300 cosθ) + (468i cosθ) + (i 300 sinθ) + (i^2 468 sinθ) = (300 cosθ) + (468i cosθ) + (300i sinθ) - (468 sinθ) = (300 cosθ - 468 sinθ) + i(468 cosθ + 300 sinθ). Good.
+
+(24+36i) e^{-iθ} = (24+36i)(cosθ - i sinθ) = (24 cosθ - 24i sinθ) + (36i cosθ - 36i^2 sinθ) = (24 cosθ) + (36i cosθ) + (-24i sinθ) + (36 sinθ) = (24 cosθ + 36 sinθ) + i(36 cosθ - 24 sinθ). Good.
+
+Now sum: real part: (300 cosθ - 468 sinθ) + (24 cosθ + 36 sinθ) = 324 cosθ - 432 sinθ. Imag part: (468 cosθ + 300 sinθ) + (36 cosθ - 24 sinθ) = (504 cosθ + 276 sinθ). Good.
+
+Thus R = 324 cosθ - 432 sinθ. So maximum R = sqrt(324^2 + 432^2) = sqrt(291,600) = 540. Good.
+
+Thus maximum real part is 540. But must confirm that the expression is indeed constrained to |z|=4. Yes. So answer 540.
+
+Ok. But we need to ensure we didn't misinterpret the problem: "Find the largest possible real part of \[(75+117i)z+\frac{96+144i}{z}\] where $z$ is a complex number with $|z|=4$." So we need maximum real part of (75+117i)z + (96+144i)/z. We transformed z to 4e^{iθ}. Then we solved. So answer 540.
+
+But we should double-check by computing the expression at the angle where R_max occurs. For R = 324 cosθ - 432 sinθ, we can param to find θ such that cosθ + sinθ? Actually we can find θ such that R = 540. The maximum occurs when cosθ = -a? Wait we can find θ such that R = 540. The general solution: R = 540 cos(θ - φ). Where φ = arctan(432/324)?? Actually we can express R = 540 cos(θ - φ). Because R = 540 cos(θ - φ). Let's compute: amplitude = sqrt(324^2 + 432^2) = 540. So φ = arctan(432/324) = arctan(432/324) = arctan(4/3) = arctan(4/3). So R = 540 cos(θ - φ). So R_max = 540 when θ = φ. So indeed the maximum occurs. So we can find z: z = 4 e^{iφ} where φ = arctan(432/324). But we don't need that. So answer 540.
+
+But we should double-check numeric values: 75+117i, 96+144i. Let's compute maybe we can also find R via vector approach: The expression is (75+117i)z + (96+144i)/z. We can interpret as z = 4 e^{iθ}. Then E = (75+117i) * 4 e^{iθ} + (96+144i)/4 e^{-iθ}. Let's compute numeric: 75+117i = 75+117i. Multiply by 4: 300+468i. Then 96+144i = 96+144i. Divide by 4: 24+36i. So E = (300+468i) e^{iθ} + (24+36i) e^{-iθ}. Good.
+
+Now R = 324 cosθ - 432 sinθ. So R_max = 540. Good.
+
+Check if any other possibility: maybe bigger real part? But we found maximum. So answer 540.
+
+Double-check: Did we mis-calc sign? Let's double-check the sign: The expression is (300+468i) e^{iθ} + (24+36i) e^{-iθ}. We computed E = (300 cosθ - 468 sinθ) + i(468 cosθ + 300 sinθ) + (24 cosθ + 36 sinθ) + i(36 cosθ - 24 sinθ). So sum: real part: 300 cosθ - 468 sinθ + 24 cosθ + 36 sinθ = 324 cosθ - 432 sinθ. Imag part: 468 cosθ + 300 sinθ + 36 cosθ - 24 sinθ = 504 cosθ + 276 sinθ. Good.
+
+Thus R = 324 cosθ - 432 sinθ. So R_max = sqrt(324^2 + 432^2) = 540. Good.
+
+Thus answer 540. But we should double-check the information: The expression is (75+117i)z + (96+144i)/z. When z is a complex number with |z|=4. We used z = 4e^{iθ}. So we considered the expression. Good.
+
+Thus answer: 540.
+
+But we should also check if there might be any other constraints: The expression is linear in z and 1/z. But we can also consider that z is any complex number with |z|=4. So we can find z that gives that. So answer 540.
+
+But we might also consider if we could find the maximum real part by using the fact that the expression is real part of (something) maybe with a maximum. But we can keep as above.
+
+Thus final answer: $\boxed{540}$.
+
+But we should double-check the presence of the possibility of any negative sign? But we used the right sign. So final answer: 540.
+
+But we might also check with a more direct method: We can treat z = 4e^{iθ}. Then we can compute expression as: (75+117i)z + (96+144i)/z = 4 e^{iθ} (75+117i) + (1/4) e^{-iθ} (96+144i) = (300+468i) e^{iθ} + (24+36i) e^{-iθ}. We can compute the real part: Re( (300+468i) e^{iθ} + (24+36i) e^{-iθ}) = 324 cosθ - 432 sinθ. So indeed maximum at 540. Good.
+
+Thus answer: $\boxed{540}$.
+
+We should also check if any missing factor: The expression is (75+117i)z + (96+144i)/z. Not plus (96+144i)/|z|? No. So we handled correctly.
+
+Thus final answer: 540.<|end|><|start|>assistant<|channel|>final<|message|>Let  
+
+\[
+z=4e^{i\theta}\qquad(|z|=4)
+\]
+
+Then  
+
+\[
+(75+117i)z+\frac{96+144i}{z}
+   = (75+117i)\,4e^{i\theta}
+     +\frac{96+144i}{4e^{i\theta}}
+   = (300+468i)e^{i\theta} + (24+36i)e^{-i\theta}.
+\]
+
+Write the two complex constants in the form  
+
+\[
+A=300+468i,\qquad B=24+36i.
+\]
+
+Then  
+
+\[
+E = Ae^{i\theta}+Be^{-i\theta}
+   = (A+B)\cos\theta + i(A-B)\sin\theta .
+\]
+
+Hence  
+
+\[
+A+B = (324+504i),\qquad
+A-B = (276+432i).
+\]
+
+Therefore  
+
+\[
+E = (324+504i)\cos\theta + i(276+432i)\sin\theta
+   = (324\cos\theta-432\sin\theta)
+     + i(504\cos\theta+276\sin\theta).
+\]
+
+The real part of the expression is  
+
+\[
+\Re(E)=324\cos\theta-432\sin\theta .
+\]
+
+This is a linear combination of \(\cos\theta\) and \(\sin\theta\).  
+Its maximum value is obtained by the amplitude of the corresponding
+vector:
+
+\[
+\max_{\theta}\bigl(324\cos\theta-432\sin\theta\bigr)
+   =\sqrt{324^{2}+432^{2}}.
+\]
+
+Compute
+
+\[
+324^{2}=104\,976,\qquad
+432^{2}=186\,624,
+\]
+\[
+\sqrt{104\,976+186\,624}= \sqrt{291\,600}=540.
+\]
+
+Thus the largest possible real part of \((75+117i)z+\dfrac{96+144i}{z}\) is
+
+\[
+\boxed{540}.
+\]

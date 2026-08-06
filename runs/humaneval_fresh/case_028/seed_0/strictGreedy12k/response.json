@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a6959fdf29bb640e",
+  "object": "text_completion",
+  "created": 1786003768,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function body. The question: \"Complete the following Python function. Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\" So we need to write the full function code, including the signature, docstring, and implementation. The given snippet includes signature and docstring. Implementation is missing.\n\nWe should provide the entire function as code block. Implementation: we can use string.swapcase() method to flip case. Use return string.swapcase().\n\nEdge cases: None. We'll preserve whitespace and punctuation unchanged. Just return string.swapcase().\n\nAdd doctest in docstring: They already provided one test.\n\nThus final function:\n\ndef flip_case(string: str) -> str:\n    \"\"\"For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n    return string.swapcase()\n\nBut ensure there's a blank line after docstring. Provide final. Let's return that.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef flip_case(string: str) -> str:\n    \"\"\"For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n    return string.swapcase()\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 160,
+    "total_tokens": 426,
+    "completion_tokens": 266,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

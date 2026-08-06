@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a6424baf7aee9819",
+  "object": "text_completion",
+  "created": 1786010408,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function digits(n): product of odd digits, return 0 if all digits even. The function should take positive integer n. Implementation: iterate over digits (convert to string or modulo). Use product variable. If an odd encountered multiply. Keep track whether any odd. If none, return 0.\n\nPotential edge: n=0? doc says positive integer; if n=0? Not needed.\n\nWe need full function including signature, docstring, and body.\n\nLet's produce final answer.\n\nAlso handle large n. Use while loop: while n>0: digit = n%10; if digit %2==1: product*=digit; else nothing. After loop, if product unchanged? Starting product =1, but if no odd, product remains 1 incorrectly. So we need a flag: any_odd=False. After loop, if any_odd: return product else 0.\n\nEdge case: n=1 => product=1. any_odd True => return product=1.\n\nn=4 => no odd => return 0.\n\nReturn int.\n\nLet's produce code.\n\nAlso optionally handle negative? Not needed.\n\nOk.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n    product = 1\n    has_odd = False\n    while n:\n        digit = n % 10\n        if digit % 2 == 1:      # odd digit\n            product *= digit\n            has_odd = True\n        n //= 10\n    return product if has_odd else 0\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 183,
+    "total_tokens": 566,
+    "completion_tokens": 383,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

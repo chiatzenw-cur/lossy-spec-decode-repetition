@@ -1,0 +1,48 @@
+<|channel|>analysis<|message|>We need to implement mean_absolute_deviation. The function should calculate mean absolute deviation of list of floats. Should handle empty list? Probably raise ValueError. The docstring: "For a given list of input numbers, calculate Mean Absolute Deviation around the mean of this dataset." Should return float. Implementation: compute mean, sum abs differences, divide by len. Use sum. Use list comprehension. Provide error handling. Provide docstring. Export. Provide function. Use Python 3.8+. Use type hints. Provide docstring. Possibly use math.fsum for precision. Provide tests. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """
+    Calculate the mean absolute deviation of a list of numbers.
+
+    The mean absolute deviation (MAD) is the average absolute difference
+    between each element and the arithmetic mean of the list.
+
+    Parameters
+    ----------
+    numbers : List[float]
+        A list of numeric values.
+
+    Returns
+    -------
+    float
+        The mean absolute deviation of the list.
+
+    Raises
+    ------
+    ValueError
+        If the input list is empty.
+
+    Examples
+    --------
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    >>> mean_absolute_deviation([1.0])
+    0.0
+    """
+    if not numbers:
+        raise ValueError("Input list must contain at least one number")
+
+    # Use math.fsum for higher precision when summing many floats
+    mean = sum(numbers) / len(numbers)
+    mad = sum(abs(x - mean) for x in numbers) / len(numbers)
+    return mad
+```
+
+**Explanation**
+
+1. **Input validation** – If the list is empty, a `ValueError` is raised.
+2. **Mean** – Compute the arithmetic mean of the list.
+3. **Deviation** – Sum the absolute differences between each element and the mean.
+4. **Average** – Divide the sum by the number of elements to obtain the MAD.
+5. **Return** – Return the computed deviation as a float.

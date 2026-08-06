@@ -1,0 +1,107 @@
+<|channel|>analysis<|message|>We need find max real part of expression f(z) = (75+117i)z + (96+144i)/z where |z|=4.
+
+Let z = 4 e^{iθ}. Then expression: (75+117i) * 4 e^{iθ} + (96+144i) / (4 e^{iθ}) = 4(75+117i) e^{iθ} + (96+144i)/(4) * e^{-iθ}.
+
+Let A = 4(75+117i) = 300 + 468i. Let B = (96+144i)/4 = 24 + 36i.
+
+Thus f(θ) = (300+468i) e^{iθ} + (24+36i) e^{-iθ}.
+
+We want real part: Re[f] = Re[ (300+468i) e^{iθ} + (24+36i) e^{-iθ} ].
+
+Compute e^{iθ} = cosθ + i sinθ; e^{-iθ} = cosθ - i sinθ.
+
+Let’s denote complex numbers: let C = 300+468i. Let D=24+36i.
+
+Compute contributions: (C)(cosθ + i sinθ) = C cosθ + i C sinθ.
+
+Wait: Actually multiplication: (a+ib)(c+id) = (ac - bd) + i(ad + bc). We'll compute stepwise.
+
+Let C = a+ib with a=300, b=468. D = e+if with e=24, f=36.
+
+Compute product C e^{iθ} = (a+ib)(cosθ + i sinθ) = (a cosθ - b sinθ) + i(a sinθ + b cosθ). Similarly D e^{-iθ} = (e+if)(cosθ - i sinθ) = (e cosθ + f sinθ) + i(-e sinθ + f cosθ).
+
+Add to get f: real part = (a cosθ - b sinθ) + (e cosθ + f sinθ) = (a+e) cosθ + (f - b) sinθ.
+
+Plug numbers: a+e = 300+24 = 324. f-b = 36-468 = -432.
+
+Thus real part Re(f) = 324 cosθ - 432 sinθ.
+
+We need maximum over θ real. This is amplitude of expression R cos(θ+φ) etc. Max of A cos θ + B sin θ is sqrt(A^2 + B^2). Here A=324, B=-432. magnitude sqrt(324^2 + (-432)^2). Compute: 324^2 = 104976; 432^2 = 186624. Sum = 291600. sqrt 291600 =? 291600 = 2916*100 = 54^2*100? Let's check: 54^2=2916. So sqrt = sqrt(2916*100)=54*10=540. Indeed 540.
+
+Thus maximum real part = 540.
+
+Wait check sign: We used real part = 324 cosθ -432 sinθ. The maximum is sqrt(324^2 + (-432)^2)=540. So answer should be 540.
+
+Double-check: Are we missing constant? Because max real part may depend on amplitude, but also could be offset? Expression has only terms proportional to e^iθ and e^{-iθ} no constant term. So yes amplitude 540.
+
+But double-check calculation earlier: f(z) = (75+117i)z + (96+144i)/z with |z|=4. Let z=4 e^{iθ}.
+
+Compute (75+117i)*4 e^{iθ} = 4(75+117i)e^{iθ}. Good.
+
+Second term: (96+144i)/(4 e^{iθ}) = (96+144i)/4 * e^{-iθ} = (24+36i) e^{-iθ}. Good.
+
+Now Re(f) = Re[(300+468i)* e^{iθ} + (24+36i) e^{-iθ}]. Evaluate as done.
+
+Let's verify using approach of real part as linear combination: For complex numbers X and Y: Re(X e^{iθ}) = Re(X) cosθ - Im(X) sinθ. Because X e^{iθ} = (Re(X) + i Im(X))(cosθ + i sinθ) = (Re(X)cosθ - Im(X) sinθ) + i( Im(X) cosθ + Re(X) sinθ). Real part expression correct.
+
+Similarly Re(Y e^{-iθ}) = Re(Y) cosθ + Im(Y) sinθ (because e^{-iθ} = cosθ - i sinθ). Good.
+
+Thus Re(f) = Re(C)(cosθ) - Im(C) sinθ + Re(D) cosθ + Im(D) sinθ = (Re(C)+Re(D)) cosθ + (-Im(C)+ Im(D)) sinθ. Wait compute: second term adds + Im(D) sinθ. So combined sin coefficient: - Im(C) + Im(D). For numbers: Re(C)=300, Im(C)=468. Re(D)=24, Im(D)=36. So sin coefficient = -468+36 = -432. Yes.
+
+Thus Re(f) = (300+24) cosθ + (-432) sinθ = 324 cosθ -432 sinθ. So amplitude sqrt(324^2 + (-432)^2)= sqrt(324^2+432^2). Compute 324^2: 324^2 = (300+24)^2=90000+14400+576=104,976. 432^2: 432^2 = (400+32)^2=160,000+25,600+1,024=186,624. Sum=291,600. sqrt? 540^2 = 291,600 indeed. So amplitude = 540. So maximum = 540.
+
+However check if any constant additive shift? Not present. So answer 540.
+
+But maybe we should also confirm that with given magnitude |z|=4, that's indeed maximum. Could there be condition that we should also consider solutions where z has negative real part etc? But we covered all θ. Good.
+
+Thus final answer: 540. Provide boxed answer.
+
+Let's produce final explanation.<|end|><|start|>assistant<|channel|>final<|message|>Let  
+
+\[
+z=4e^{i\theta}\qquad(\theta\in\mathbb R),\qquad |z|=4 .
+\]
+
+Then  
+
+\[
+(75+117i)z+\frac{96+144i}{z}
+=(75+117i)(4e^{i\theta})+\frac{96+144i}{4e^{i\theta}}
+=\, (300+468i)e^{i\theta}+(24+36i)e^{-i\theta}.
+\]
+
+Write the real part of each term.
+
+\[
+\operatorname{Re}\!\big[(300+468i)e^{i\theta}\big]
+=300\cos\theta-468\sin\theta,
+\]
+\[
+\operatorname{Re}\!\big[(24+36i)e^{-i\theta}\big]
+=24\cos\theta+36\sin\theta.
+\]
+
+Adding these, the real part of the whole expression is
+
+\[
+\Re f(\theta)=
+(300+24)\cos\theta-(468-36)\sin\theta
+=324\cos\theta-432\sin\theta.
+\]
+
+This is of the form \(A\cos\theta+B\sin\theta\) with  
+\(A=324,\; B=-432\).  
+The maximum possible value for such a trigonometric expression is
+
+\[
+\sqrt{A^{2}+B^{2}}
+=\sqrt{324^{2}+(-432)^{2}}
+=\sqrt{104\,976+186\,624}
+=\sqrt{291\,600}=540.
+\]
+
+Hence the largest possible real part of \((75+117i)z+\frac{96+144i}{z}\) for \(|z|=4\) is  
+
+\[
+\boxed{540}.
+\]

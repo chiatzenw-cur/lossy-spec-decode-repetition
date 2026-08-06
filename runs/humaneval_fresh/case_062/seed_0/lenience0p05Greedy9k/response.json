@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b84e46e8123b32c0",
+  "object": "text_completion",
+  "created": 1786020837,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function that checks if bracket string is balanced. Return True when all opening have closing. Standard approach: iterate and count. For each character, if '(', increment counter; if ')', decrement counter. If counter becomes negative, return False. After loop, if counter == 0, return True else False.\n\nEdge cases: empty string? Should return True? The docstring says \"every opening bracket has a corresponding closing bracket.\" For empty string, there are no opening, so true. But maybe not in tests. But we can let's return True.\n\nAlso check for non-characters? The problem says brackets is a string of \"(\" and \")\". So we can assume.\n\nReturn True if balanced.\n\nDocstring: Already provided.\n\nReturn True.\n\nAlso we can use python's built-in stack.\n\nBut we need to implement.\n\nLet's craft final code:\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n    # implement.\n\nReturn True if counter==0 else False.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n    # Count how many opening brackets are unmatched.\n    balance = 0\n    for ch in brackets:\n        if ch == '(':\n            balance += 1\n        elif ch == ')':\n            balance -= 1\n            if balance < 0:          # more closing than opening\n                return False\n        else:\n            # If the input contains any other character, its behaviour\n            # is not defined; we raise an exception for safety.\n            raise ValueError(f\"Invalid character: {ch!r}\")\n    return balance == 0\n```\n\nThis function iterates through the bracket string, keeps track of the current balance, and ensures that the string never has more closing than opening brackets and that the final balance is zero.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 203,
+    "total_tokens": 730,
+    "completion_tokens": 527,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

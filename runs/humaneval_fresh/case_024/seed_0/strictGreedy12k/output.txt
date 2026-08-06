@@ -1,0 +1,21 @@
+<|channel|>analysis<|message|>The user wants to complete the Python function `strlen` that returns the length of given string. It's just straightforward. But we should follow the instructions: The function signature and docstring are provided; only the body is missing. Provide full function.
+
+Potential pitfalls: The function receives a string; we should handle it. We can just use `len(string)`.
+
+They might want to illustrate how to test. It's a trivial function. Implementation: return len(string). Just implement.
+
+Also maintain code in a python code block. They want only the function; the docstring remains. Provide just the whole function.
+
+We need to include the function signature, its docstring, and our implementation. That's all.
+
+I'll do that in a python block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def strlen(string: str) -> int:
+    """ Return length of given string
+    >>> strlen('')
+    0
+    >>> strlen('abc')
+    3
+    """
+    # The built‑in len() function gives the number of characters in the string.
+    return len(string)
+```

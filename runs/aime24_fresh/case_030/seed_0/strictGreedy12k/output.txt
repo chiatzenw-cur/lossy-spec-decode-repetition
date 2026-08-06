@@ -1,0 +1,293 @@
+<|channel|>analysis<|message|>We need to find number of ways to select cells and assign colors satisfying constraints. We have 25 white and 25 black chips total, but we may use some of them in the grid. Condition: each cell at most 1 chip. All chips in same row have same color. So rows are monochromatic: each row either all white or all black among cells that contain chips. Similarly columns monochromatic.
+
+We must place chips so that any additional chip would violate at least one of the two previous conditions. That means the arrangement is maximal: cannot add another chip without breaking row or column uniform color rule. In other words, each row/column with any chips cannot be extended: if we add a chip to a cell currently empty, either there's at least one other cell in that row/col with a chip of same colour? Let's understand: Suppose we have a row R that has some chips. All chips in that row are same color, say white. If we add one more chip in an empty cell in that row, it would be white too to maintain uniformity. But then column condition might be violated if that column already has a chip of different color or has chips of same color? Wait: Suppose we try to add a white chip to an empty cell in row R. Column C: if C currently has no chips, then adding a white chip would set color of column C to white (since first chip in column defines column color). That would not violate column condition. Could we add a chip always? The condition that any additional chip would violate one or more of the previous two conditions means that there is no possible position where you could add a chip (white or black, we have chips available) while maintaining both row and column monochromatic. But we also need to use up to 25 chips each color but may not use all.
+
+Thus, maximal configuration: for each empty cell, either adding chip would break row or column monochromatic condition. But how to realize? Maybe the pattern is such that all rows have chips of one color, all columns have chips of one color, and the intersection of a white row and black column, etc. There can be conflict: cannot have a column color different from rows in intersection cells.
+
+Observation: Since all chips in same row same color, row color fully determined by any chip in that row. Similarly column color. For the cell at intersection of row r, column c, if both row and column have chips, the cell must contain a chip of color consistent with both. That implies the row color must equal column color if there is a chip at that intersection (i.e., cell occupied). But if intersection cell empty, there is no conflict.
+
+Thus arrangement corresponds to selecting some rows to be "white rows" (with chips of white), some rows "black rows", and some rows "empty" (no chips). Similarly columns. Additionally, we must assign chips to certain cells such that row and column compatibility: If a row is white and a column is black, then their intersection cannot contain a chip because that would require both white and black. So intersection must be empty. But that intersection might be empty but there could be chips in other cells of the row or column.
+
+Thus we need to choose subsets of rows/cols to put chips in such way that any filled cell in a row-col pair with conflicting colors is not allowed.
+
+Essentially the grid becomes bipartite between rows and columns, with rows each either white, black, or empty; columns similarly. We place chips only in cells where row color equals column color (except if one is empty). Actually we can also have row is white and column empty: cells in that row are freely white? Wait: If column empty, that column has no chips, so its color not defined. That allows us to put chips in the white row cells without conflict: For row white and column empty, intersection can be filled with white chip; column remains empty but would now have a chip so cannot be empty. Contradiction. So if we place chip in that intersection, column becomes nonempty, requiring a color. Since row is white, the chip would be white, so column becomes white. So column becomes white. So column empty cannot contain a chip. So for a column to be empty, it must have no chips in any row. So intersection with any row cannot have chip. Thus a row colored cannot contain chips in columns that are empty? No, row chips can exist only in columns that are also colored the same color. So effectively, if a row has chips, it can only put chips in columns with same color. So only intersections of same-color rows and columns can have chips.
+
+Thus arrangement corresponds to: choose subsets R_w of rows for white, R_b for black, R_e for empty. Similarly C_w, C_b, C_e. Chips can only be placed on cells where row and column color both same (white or black). And such that every chosen white row has at least one chip, same for black rows, at least one chip. Also each chosen column must have at least one chip. Because otherwise it would be empty; but if a column has no chips it's empty. But we allowed columns to be empty or colored. So each colored column must have at least one chip. Similarly colored rows.
+
+Goal: arrangement maximal: cannot add chip without breaking rule. Let's analyze maximality condition. Suppose we have a white row and a black column. Their intersection cells are empty, but could we add a chip there? If we add a chip, either color? Row requires white, column requires black, conflict. So cannot place chip there because would break. Good. Similarly white row and empty column: we could add chip? Put white chip: row requires white, column becomes white, which may be allowed because column currently empty. Adding a chip would create a colored column. That's allowed? It wouldn't violate row or column condition. But maximality says cannot add any chip. So such scenario cannot exist: if there is a white row and an empty column, then the cell at their intersection could take a white chip; no conflict, would satisfy both r row and column would become colored white. That is allowed, so would not be maximal. So we cannot have white row with empty column because then we could add chip. Unless it's occupied but it's empty. Wait, maybe empty column must be such that *every* cell in that column intersects either a row that would cause conflict if a chip is added. But if the row is white, adding white chip would satisfy row. Column empty would become colored, but that's allowed. Thus arrangement cannot have empty column adjacent to any color row. Similarly, a colored row cannot have empty column. So all columns that are adjacent to any colored row must also be colored. Similarly all colored columns must have at least one colored row? Let's analyze.
+
+Thus the only way to prevent adding a chip in a column that is empty while there is a colored row is to have no colored rows at all in that column? But a column can be empty if all rows that intersect it are also empty. That means for any empty column, all rows are empty. But we can have some rows colored and others empty. If there's a colored row intersecting any column, that column must be colored as well. So colored rows set must be subset of rows that intersect colored columns: that means colored rows intersect at least one colored column. Since any colored row has chips, it must intersect some colored column (since a chip is at intersection of its row and a column). Similarly any colored column intersects some colored row.
+
+Thus colored rows and colored columns must form a nonempty bipartite subgraph where each colored row has chips in some colored columns (same color). That implies we need at least one colored row and one colored column.
+
+Now maximality: for any empty cell, adding chip would maintain color conditions if and only if both its row and column are same color or at least one empty? Let's analyze: Suppose a cell with empty row (R_e) and empty column (C_e). Adding chip would be possible: row and column empty; choose any color chip suffices, would assign color to both row and column. That would not violate conditions. Since we want maximality, such empty row and empty column pair cannot exist unless no chips of that color left? Wait but we have enough chips: 25 each. But condition: any additional chip would violate one or more of previous two conditions. That includes both conditions 1 and 2 (3rd condition). So we cannot add a chip to any empty cell of empty row/empty column intersection. That means there must be no such pair? Maybe but if both row and column empty (no chips anywhere), adding a chip would not break uniformity: row would become monocolor (any color) and column too; no conflict. So arrangement must forbid that. So either there are no rows empty that have at least one column that is also empty? But columns empties may exist but cross with colored rows? If column empty and row colored, no chip? Wait earlier we concluded can't have colored row with empty column. So if any empty column exists, all rows must be empty. Similarly if any empty row exists, all columns must be empty. That would lead to trivial entire grid empty? That would violate maximality because you could add chip anywhere. So for maximality we must ensure no empty row or empty column can be combined with any other row/column that allows adding chip. Let's deduce precise condition.
+
+Let's formalize maximality: For every empty cell (i,j) that currently has no chip, adding a chip of some color (say either white or black) would fail at least one of the two uniformity conditions (row/column). Those conditions check all chips in that row (including the new one) must be same color: So if the row currently has chips, they all have color C_r. Adding chip must have color C_r. If the row currently has no chips, any color would work.
+
+Similarly for column: if column has chips, must match column color C_c. If column has no chips, any color works.
+
+Thus a cell is addable (without violating) if both: (row has chips? if yes, need new chip same color, else free) AND (col has chips? if yes, need same color). Additionally, the new chip's color must satisfy both row and column constraints. That means if both row and column have chips, they must have same color; else, can't add.
+
+Thus a cell is addable iff (row empty OR row has color CR) and (col empty OR col has color CC) and if both have colors, CR == CC. Otherwise not addable.
+
+Thus maximality requires that for every empty cell, either row and column colors differ (if both colored) or at least one row or column has chips with colors not match? Wait analyze.
+
+Case 1: Row has chips with color CR, column has chips with color CC. If CR != CC, then cannot add chip (color conflict). Good.
+
+Case 2: Row has chips (CR), column empty. Then we could add a chip of color CR, creating column colored CR. That would not violate, so not maximal. So cannot have colored row with empty column where intersection empty.
+
+Case 3: Row empty, column has chips (CC). Similarly cannot have empty row with colored column if intersection empty. So cannot.
+
+Case 4: Both empty: we could add any color; not maximal unless we are out of chips? But we have chips, so can't have both empty.
+
+Thus for maximality: Every row that has chips must have chips in all columns that are not colored differently? Wait condition 2: colored row must be accompanied by colored columns of same color? Actually if row colored, all columns that intersect this row and have chips must be same color. But we need to ensure no empty columns that intersect colored rows, because those would be addable. Similarly, no empty rows that intersect colored columns.
+
+Thus all columns that intersect any colored row must also be colored. Similarly all rows that intersect any colored column must be colored. That implies that if there exists any colored row, then all columns must be colored. And if there exists any colored column, then all rows must be colored.
+
+Thus either all rows and all columns are colored (no empties), or all rows and columns empty? But all rows empty leads to grid empty which is invalid since we can add chip.
+
+Wait maybe we can have some rows empty but colored columns such that no intersection exists (maybe because empty rows no intersection?). Let's think: Suppose row r is empty. Then any column c that is colored intersects it -> cell is empty but row empty, column colored: we can add chip of column color, leading to row now colored, conflict? Let's check: row empty, column colored CC. Intersection empty: we could add chip of color CC; row would then have chips of CC, which would make the row colored CC. That would be consistent with column color. So allowed. So not maximal.
+
+Thus if any row empty, cannot have colored columns. Since any column intersects all rows. Thus if any row empty, then all columns must be empty as well. But then grid empty -> not maximal. So we must have all rows colored. Similarly all columns colored. So no empty rows/columns allowed.
+
+Therefore all 5 rows must be colored (either white or black). Similarly all 5 columns colored.
+
+Now we need arrangement where this holds and no additional chip can be placed. The only way to block adding is having row colors differ from column colors in all intersections, making them conflict. Wait if row colored R and column colored C with same color, then the intersection cell currently could be empty; adding chip would be of that color, consistent. That would be allowed, so must not leave empty such intersection. Thus, if a row and column have same color, we must have a chip in their intersection. If they have different colors, intersection must be empty - but that's already what we want to block, as adding chip would conflict. So maximal condition: For each pair of row and column with same color, we must place a chip at their intersection. For each pair of row and column with different colors, the intersection must be empty (can't place chip due to conflict). Since all rows and columns colored, we need to decide assignment of colors to rows and columns such that this gives a completed grid? Let's analyze.
+
+Let set of rows color white: W_R rows; black rows: B_R rows. Similarly columns white: W_C columns; black: B_C columns. We have W_R+B_R=5, W_C+B_C=5.
+
+For each white row and white column, we must place a chip at intersection. For each black row and black column, chip at intersection. For white row and black column, intersection must be empty. For black row and white column, intersection empty.
+
+Thus the chip positions are exactly cross product of white rows with white columns, plus black rows with black columns. So number of chips placed = W_R*W_C + B_R*B_C.
+
+Now we must ensure using at most 25 chips of each color. We have 25 white indistinguishable chips to assign to white-colored cells, 25 black to black cells. How many chips used of each color?
+
+White chips used: W_R*W_C. Must be ≤25. Black chips used: B_R*B_C ≤25. Also we cannot exceed available, but we may use fewer. Condition: "any additional chip placed on the grid would violate one or more of the previous two conditions." This requires that we cannot add any chip, even if we have unused chips of that color. Our arrangement with digits already satisfies that because any empty cell is at intersection of rows/columns with differing colors (empty) or colored rows/columns with same colors but we already filled them (no empty). Actually for same colors, we have placed chip. For different colors, intersection empty but conflict; so cannot add chip. So maximality satisfied.
+
+Now we need to count number of such configurations with appropriate counts? We must also consider that we have 25 chips of each color. Suppose we use only 10 white chips; that's okay because we still have unused white chips but cannot place them because would violate row/column colors as there is no more room to add (any addition would conflict). For example, white rows 3, white columns 2: would use 6 white chips, but we could still add another white chip at some white row white column intersection if empty, but we already placed chip at each intersection. So cannot add any more because all cells that are same color pairs are filled. So we can leave unused chips.
+
+Thus constraints: W_R, B_R, W_C, B_C positive integers (≥0) but since all rows colored, we need each row colored either white or black. Similarly columns. We can have 0 white rows? Wait W_R could be 0, then all rows black. Then B_R=5. Similarly W_C could be 0 or 5 etc. That's allowed because we have black chips only. For example, all rows black, all columns black => B_R=5, B_C=5 => chips used = 25 black - uses all black chips, zero white chips. That's one configuration. Also we can't have rows colored but columns etc must be colored all 5 (no empties). So any assignment of colors to rows and columns is allowed, as long as counts of chips of each color used don't exceed available. But we also need each row colored with its chips defined by same color as columns? Wait rule: row color defined by any chip in that row. If row is black, there must be at least one chip in that row, which implies at least one intersection with a black column must be populated. Since all black rows have some black columns, then each black row will have at least one chip (since black row × black column cells filled). So ok. Similarly white rows with white columns.
+
+Similarly, for column to be colored, there must be at least one chip in that column, thus there must be at least one intersection with a row of same color. So if we set W_C columns white, there must be at least one white row; else columns cannot be colored. Because black rows cannot host white chips. So yields condition that W_R>0 if W_C>0. Similarly B_R>0 if B_C>0.
+
+But if W_C=0, then no white columns; but if W_R>0 still? Can we have white rows but no white columns? That would mean row colored white would have no chips since no column of that color. But rule: all chips in same row have same color but it doesn't force row to have chips? Wait earlier we assumed colored rows must have at least one chip, but condition didn't state a row has to have chips. But if row has no chips, it's not colored? The definition "all chips in the same row have the same colour" holds vacuously if no chips. So row could be considered uncolored? But we earlier considered that any colored rows must have chips. But it's possible we could have rows that contain chips but the row color forced by chips; but if no chips, row is considered not colored. However for maximality, we argued we needed no empty rows, because otherwise empty row would allow adding chip on intersection with any colored column.
+
+But is it allowed to have a row with no chips but still have colored columns? That would allow adding a chip there of column color, violating maximality. So not allowed. So if we had any row without chips, we must have all columns empty too, which impossible. So all rows must have chips. Similarly all columns must have chips. So there must be at least one chip in each row and each column.
+
+Thus if column is white (color white) but there are no white rows, then there is no place for white chip. That column would be empty, contradict all columns must have chips. So white columns require at least one white row. Similarly black columns need at least one black row.
+
+Thus we require W_R≥1 if W_C≥1; B_R≥1 if B_C≥1.
+
+Similarly for rows: if a row colored white, must have at least one white column. But if W_R≥1 there must be at least one white column W_C≥1, but they could be unequal.
+
+Thus we need both pairs positive when color present.
+
+Thus possibilities: Color sets may include both colors; at least one row and column for each color used.
+
+We need to count number of distinct configurations, up to unlabeled, considering rows and columns are distinct positions in grid (5x5). Indistinguishable chips; grid positions distinct. So number of color assignments to rows and columns, subject to constraints and chip counts.
+
+Because rows order matters, columns order matters. So we count assignments of colors to 5 row labels and 5 column labels.
+
+We need to assign each row a color (white or black). Similarly columns. But binary assignments. Let's denote r_i in {W,B}. Similarly c_j.
+
+Constraints:
+
+- For each pair (i,j), chip present unless r_i != c_j. So chip present if r_i == c_j. So grid pattern determined.
+
+- Number of white chips used: count of positions where r_i == c_j == W: that's (#white rows * #white columns). Must be ≤ 25.
+
+- Number of black chips used similarly.
+
+- Each row must have chip: equivalently for row i, there must exist at least one j with r_i == c_j. But that's ensured because if r_i=white, need at least one white column; if r_i=black need at least one black column. So row color must have at least one matching column. Similarly column color must have at least one matching row.
+
+Therefore beyond row/column counts.
+
+Let a = #white rows (W_R). b = #black rows (B_R) = 5-a.
+
+Let c = #white columns = W_C. d = #black columns = 5-c.
+
+Constraints: a>0 iff c>0, b>0 iff d>0.
+
+Thus possibilities: 0≤a≤5, 0≤c≤5, but a and c either both zero or both positive, similarly for b and d.
+
+So allowed combos:
+
+- a=0, then c must=0. (No white rows/columns)
+- a>0, c>0.
+
+Similarly, b=0, d must=0. a=5 => b=0. For b>0, d>0.
+
+Thus essentially we can have any a from 0 to 5, c from 0 to 5, but constraint: a=0⇔c=0, a=5⇔c=5? Wait if a=5 (all rows white), then c could be 0..5? But if c=0, no white columns, but then no white chips would be placed; but rows are white and must have chips? Actually row white but no white column: cannot place white chips; but row would have no chips, violating all rows must contain chips. But earlier we said each row must have chip. So if a=5 and c=0 -> no white column, so no coin; so rows cannot have chips; not allowed. So we enforce that if a>0, c>0. Similarly if c>0, a>0. But a could be 5 only if c>0; c could be 5 only if a>0.
+
+Thus we must consider all a in [1,5] and c in [1,5]; plus the possibility a=0, c=0 (no color at all). But that would mean all rows empty and all columns empty. Not maximal. So invalid. Similarly a=0, c>0 invalid. So we must have a>0 and c>0 or maybe a=0,c=0? Not allowed.
+
+Thus we need a=1..5, c=1..5.
+
+But also must satisfy also that b=5-a>0 if d>0. But d=5-c. So we need b>0 iff d>0. But if a between 1 and 4 inclusive, then b>0; we need d>0; i.e., c≠5. For a=5, b=0, so need d=0, i.e., c=5. If a<5, c<5; else if a<5 but c=5? That would mean d=0 but b>0 -> black columns zero but black rows >0; black rows would have no matching black columns, violating chips condition. Thus c cannot be 5 if a<5. Similarly if c<5 but a=5? Wait a=5 -> c=5 only to satisfy d=0. So both colors can't be unbalanced unless all rows/cols all one color.
+
+Thus feasible pairs:
+
+- All rows white (a=5), all columns white (c=5). Only one configuration type.
+
+- All rows black (a=0?), but a must >0? If a=0 -> c=0. That would mean all black? Wait if a=0, means no white rows; so all rows black. But we also need c=0 (no white columns) to satisfy condition a=0 ⇔ c=0. So black rows count 5, black columns count 5. That's all black. So a=0, c=0 allowed? We earlier Y think a=0,c=0 invalid due to no chips? But if all rows black, all columns black. Then B_R=5, B_C=5, chips used 25 black, fine. Are there any white chips? no. All rows have black chips at each intersection of black rows and black columns: since only black rows/cols, whole grid filled with black chips. So all rows have chips. So a=0,c=0 corresponds to all black. It's allowed. Wait earlier we had a>0 is necessary for c>0 but that was to ensure at least one row/col of that color; but it's fine that row color present in all rows except white rows count 0. That still satisfies each row has a chip (black). So a=0 is allowed. For a=0, c=0 necessarily. But still all rows contain chips (black). Good. Similarly a=5, c=5 all white.
+
+Now consider a between 1 and 4 inclusive. Then c must also between 1 and 4 inclusive? Wait we also must satisfy b>0 iff d>0. Since a in 1..4, b>0; so we need d>0, i.e., c not equal 5. So c in 1..4. That's fine. In addition we must meet chip counts ≤25. Let's compute chips used.
+
+White chips used = a*c. Black chips used = b*d = (5-a)*(5-c).
+
+Need both ≤25. Since max product a*c occurs when a=4,c=4 => 16 ≤25. Similarly black product also ≤25. So all combos okay.
+
+Thus all a in 1..4 and c in 1..4 are allowed. But also we can have a=0,c=0 and a=5,c=5. Are there possibilities with a=0,c=0? This is all black: already counted.
+
+What about a=0,c=0 but we also could have a=0,c=0: only all black. Similarly a=5,c=5 all white. So we have combinations:
+
+- (a,c) = (0,0)
+- (5,5)
+- (a,c) where a∈{1,2,3,4} and c∈{1,2,3,4}
+
+However we must also consider that {a,c} can be swapped? But not symmetric? Row counts vs column counts independent. We count each arrangement of colors on rows and columns.
+
+Given a and c values, number of ways to choose which rows are white? choose a from 5 rows: C(5,a). Columns choose c from 5 columns: C(5,c). So for a∈1..4, c∈1..4, we have C(5,a)*C(5,c) assignments.
+
+For (0,0) and (5,5) we have only 1 assignment: all rows black or all white.
+
+However is (a,c)=(0,0) same as (5,5)? No, different color patterns; (0,0) all black; (5,5) all white. Good.
+
+Thus total configurations = sum_{(a,c) valid} C(5,a)*C(5,c).
+
+Compute.
+
+We need sum over a=1..4, c=1..4 of C(5,a)C(5,c). Then add two extra for all black and all white. Let's compute quickly.
+
+Values for C(5,k): 1,5,10,10,5,1 for k=0..5.
+
+Now sum_{a=1}^4 C(5,a) * sum_{c=1}^4 C(5,c) - but careful: Since a and c independent product sum factorizes: sum over a=1..4 C(5,a) * sum over c=1..4 C(5,c). That's product of sums.
+
+Sum_a=1^4 C(5,a) = (1+5+10+10+5) - C(5,0)-C(5,5)?? Wait we exclude 0 and 5. But a from 1 to 4: sum is total minus endpoints: total sum of binomial coefficients for k=0..5 is 2^5=32. Subtract k=0 (1) and k=5 (1): 32-2=30. But note a=4 includes C(5,4)=5. So sum seems 30. Similarly for c. So product 30*30 =900.
+
+Add 2 for all black and all white: total 902.
+
+But check if (a=0,c=0) and (a=5,c=5) are included in sum? No because a=0 and 5 excluded. So we add them.
+
+Thus answer 902? Let's double-check edge cases: Are we allowed a=0,c=0? Yes all black uses 25 black chips. We have 25 black chips available, yes. Similarly a=5, c=5 uses 25 white chips. Fine. Are we allowed a=0,c=0 where we use zero white chips? Yes fine. Does maximality hold? Entire grid filled with black chips. Each cell used. We cannot add more chips. Good.
+
+Similarly all white.
+
+Now is there any possibility where we have a=0,c=0 but black columns count 5 and white columns 0 etc? That's exactly all black.
+
+Now what about arrangements with a=0,c=0 but we are counting as distinct arrangement; yes.
+
+Similarly a=5,c=5.
+
+Thus 902 ways.
+
+But we need to double-check that we didn't miscount configurations where white rows = 0 but black rows 5 but white columns same? Wait a=0,c=0 we counted one. Good.
+
+Also consider a=0, c=0 fine. For a=0,c=0 there is only one way to assign colors to rows: all black. Similarly to columns.
+
+Now is there any other constraints due to number of chips per color? The number of chips used of each color may exceed 25? Let's check worst case: a=4, c=4 -> white chips 16; black chips (1)*(1)=1. So fine. Similarly extremes. All good.
+
+Thus total 902.
+
+Wait but could there be arrangements where both colors present but with mismatched white rows/cols counts causing no chip intersections? This is okay.
+
+Edge case: Suppose a=1 white row, c=4 white columns. Then white chips used 4. Black chips used (4)*(1)=4. That totals 8 chips. Fine.
+
+Now verify maximality: For each empty intersection: white row and black column: white row has chips, black column has chips? black column has black rows: since black columns count 1, there are 4 black rows. The intersection of white row (row 1) with black column (col 1) where black column exists: Since row white, column black, intersection empty. Adding chip would conflict; cannot add. Similarly for white column and black row intersection.
+
+For intersection of black row and black column: if both indices in black group, then we already have chip there. Good.
+
+Thus maximal.
+
+Thus answer is 902.
+
+Let's produce final answer.
+
+Note: Are we overcounting symmetrical arrangements? Rows and columns are labelled positions; arrangement distinct by which specific rows/columns are colored. Since chips indistinguishable, but grid positions distinct. So counts as above.
+
+Hence \boxed{902}.<|end|><|start|>assistant<|channel|>final<|message|>Let  
+
+* \(a\) = number of white rows (\(0\le a\le5\)),  
+* \(b=5-a\) = number of black rows,  
+* \(c\) = number of white columns (\(0\le c\le5\)),  
+* \(d=5-c\) = number of black columns.
+
+---
+
+### 1.  When a configuration is possible  
+
+If a row is coloured **W**, at least one column of the same colour must exist;
+otherwise that row would have no chip.  
+Hence  
+
+\[
+a>0\iff c>0,\qquad b>0\iff d>0 .
+\]
+
+Consequently the only admissible pairs \((a,c)\) are  
+
+\[
+(a,c)= (0,0),\;(5,5),\quad \text{or}\quad a,c\in\{1,2,3,4\}.
+\]
+
+(For these values one may choose \(a\) whites among 5 rows and \(c\) whites among 5 columns; the remaining rows and columns are black.  
+The condition that all rows and columns contain at least one chip is automatically satisfied:  
+A white row contains a chip in every white column, a black row in every black column.)
+
+---
+
+### 2.  How many chips are used?
+
+A chip is present exactly at every intersection of a white row with a white column or of a black row with a black column.  
+Thus  
+
+\[
+\text{white chips}=a\,c,\qquad
+\text{black chips}=b\,d=(5-a)(5-c).
+\]
+
+Because \(a,c\in\{0,\dots ,5\}\), the products are at most \(25\);  
+hence the 25 chips of each colour are sufficient in all allowed cases.
+
+---
+
+### 3.  Maximality check  
+
+With the above colouring all of the following hold:
+
+* every **empty cell** is either in a row with the opposite colour to its column,  
+  so adding a chip would violate the “same colour in each row/column” rule, or  
+  it is already occupied,
+* thus no additional chip can be placed without breaking a rule.
+
+Hence all admissible colourings are maximal.
+
+---
+
+### 4.  Counting the colourings
+
+For a fixed pair \((a,c)\) with \(a>0,\;c>0,\;a<5,\;c<5\) the number of possible assignments is  
+
+\[
+\binom{5}{a}\binom{5}{c}.
+\]
+
+The total number of configurations is therefore  
+
+\[
+\sum_{a=1}^{4}\sum_{c=1}^{4}\binom{5}{a}\binom{5}{c}
+          \;+\;1 \;(\text{all black}) \;+\;1 \;(\text{all white})
+          = \bigl(\!\sum_{a=1}^{4}\!\binom{5}{a}\bigr)^2 + 2.
+\]
+
+Since \(\displaystyle\sum_{a=1}^{4}\binom{5}{a}=2^5-2=32-2=30\),
+
+\[
+\text{total}=30^2+2=900+2=902 .
+\]
+
+---
+
+\[
+\boxed{902}
+\]

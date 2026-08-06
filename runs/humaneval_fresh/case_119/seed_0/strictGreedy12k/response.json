@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bf621b8f853bdf3b",
+  "object": "text_completion",
+  "created": 1786009572,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function. Let's parse requirement: find the closest vowel that stands between two consonants from the right side of the word (case sensitive). Means: We scan from right side (end) towards start. Find a vowel that is not at beginning or ending, that has consonant on its left and on its right (i.e., two consonants adjacent). But also requirement \"closest vowel that stands between two consonants from the right side of the word\". Interpret as: Move from rightmost part toward left, find first vowel that satisfies left and right neighbors are consonants. Vowels: What counts as vowels? Usually A, E, I, O, U, a, e, i, o, u. Case sensitive means we treat uppercase differently but still same vowel classification. For example get_closest_vowel(\"FULL\") ==> \"U\". The word \"FULL\" letters: F U L L. Starting from right: indices: 0 F 1 U 2 L 3 L? Wait length: 4. Actually F(0) U(1) L(2) L(3). Rightmost is L (index 3). Going left: L index 2 has right neighbor L index 3 (consonant), left neighbor U index 1 (vowel). That doesn't satisfy two consonants on both sides. Next letter U index 1: left neighbor F (consonant), right neighbor L (consonant). So U fits. That is chosen. So scanning from right returns U.\n\nExample get_closest_vowel(\"yogurt\") ==> \"u\". Word: y o g u r t. Index:0 y,1 o,2 g,3 u,4 r,5 t. Starting from right: t index5 right side none. index4 r: right neighbor t consonant, left neighbor u vowel => not both consonants. index3 u: right neighbor r cons, left neighbor g cons? Wait g is at index2, yes consonant, so u qualifies. So we choose u. So we just need to find first vowel such that left char and right char (both adjacent) are consonants, scanning right to left. Need to ignore vowels at beginning (index0) because left neighbor none, and at end index len-1 because right neighbor none. So algorithm: iterate i from len(word)-2 down to 1 inclusive. For each i: char word[i] is vowel? Check. Then word[i-1] and word[i+1] are consonants (not vowels). Note we treat all letters, but we need to ensure consonants defined as non-vowel letters, but note there are only letters. So we can define set vowels_lower = 'aeiou'; vowels_upper = 'AEIOU'; but easier: if char in 'aeiouAEIOU'. Consonant if char not in vowels set. Need to include the entire alphabet; but we should also treat y? y is consonant or vowel? In examples, y is considered consonant (yogurt: y at index0; they skip; the vowel considered 'o', 'u' etc). y not in vowels set. So fine.\n\nEdge cases: string length <3 obviously return empty string. words beginning with vowel or ending with vowel: we ignore them.\n\nNeed to handle case sensitive output: return the vowel as is (original case). Example FULL returns 'U' uppercase; yoy example.\n\nWe also need to consider tests maybe where the consonant on one side is at word start? Wait: It says vowels in beginning and ending doesn't count, but they also must stand between two consonants. So left side needs to be a consonant (so i>0 ensures left neighbor exists). Right side needs to be a consonant (i< len-1). The left neighbor may also be beginning of word, maybe being a consonant. That's fine. For example word \"bcae\"? Let's not worry.\n\nReturn empty string if none.\n\nImplementation: straightforward.\n\nEdge Cases: Should we skip vowels that appear at start or end? We'll start i from len-2 (since i+1 exists), down to 1 (i-1 exists). That ensures we don't consider edges.\n\nTime O(n). Return early.\n\nLet's write docstring but already provided. We'll implement.\n\nAlso we might consider customizing vowels set: vowels = set(\"aeiouAEIOU\") ascii.\n\nNow produce final function.\n\nBut we need to only output function code with signature and docstring including same docstring. Provide full function.\n\nOk let's produce.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef get_closest_vowel(word):\n    \"\"\"You are given a word. Your task is to find the closest vowel that stands between \n    two consonants from the right side of the word (case sensitive).\n    \n    Vowels in the beginning and ending doesn't count. Return empty string if you didn't\n    find any vowel met the above condition. \n\n    You may assume that the given string contains English letter only.\n\n    Example:\n    get_closest_vowel(\"yogurt\") ==> \"u\"\n    get_closest_vowel(\"FULL\") ==> \"U\"\n    get_closest_vowel(\"quick\") ==> \"\"\n    get_closest_vowel(\"ab\") ==> \"\"\n    \"\"\"\n    vowels = set(\"aeiouAEIOU\")\n    n = len(word)\n    # Not enough length to have a vowel with consonants on both sides\n    if n < 3:\n        return \"\"\n\n    # Scan from right to left, but skip the last character (i+1 would be out of bounds)\n    for i in range(n - 2, 0, -1):\n        ch = word[i]\n        if ch in vowels:\n            left = word[i - 1]\n            right = word[i + 1]\n            if left not in vowels and right not in vowels:\n                return ch\n    return \"\"\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 258,
+    "total_tokens": 1484,
+    "completion_tokens": 1226,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

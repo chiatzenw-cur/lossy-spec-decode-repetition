@@ -1,0 +1,61 @@
+<|channel|>analysis<|message|>We need to implement function maximum(arr, k). Provide sorted list of length k with maximum k numbers in arr. Output sorted ascending. Implementation: if k==0 return [].
+
+We can use sorted arr descending, take first k, sort ascending as output. But let's consider complexity: array up to 1000. Simpler: sorted arr, take last k, then sort ascending? Sorted ascending gives list of all; largest k are at end. So final answer: sorted(arr)[-k:] ascending. But need to handle k=0: sorted(arr)[0:0]? That yields empty list. So safe: if k==0: return [] else: arr_sorted = sorted(arr); return arr_sorted[-k:] if k>0 else []? But arr_sorted[-k:] when k>0 will yield last k elements already ascending. For k=0, -0 is 0, arr_sorted[0:] entire list. Wrong. So handle. Implementation:
+
+def maximum(arr, k):
+    """Docstring repeated..."""
+    if k <= 0:
+        return []
+    arr_sorted = sorted(arr)
+    return arr_sorted[-k:]
+
+Alternate: to ensure sorted ascending: arr_sorted[-k:].
+
+Because negative indexing: arr_sorted[-k:] returns last k elements. Works for k>0. For k==len(arr) returns full list sorted ascending. For k==0, use early return.
+
+Edge: This returns ascending values as required.
+
+But maybe they expect another algorithm: find max k numbers better than sorting maybe using heap. But simple sorting fine: O(n log n) with small n.
+
+Let's produce final function.
+
+Also docstring same as given or we can duplicate.
+
+Return type: List[int].
+
+Use typing? Not necessary.
+
+Let's produce final answer inside triple-backticks.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def maximum(arr, k):
+    """
+    Given an array arr of integers and a positive integer k, return a sorted list 
+    of length k with the maximum k numbers in arr.
+
+    Example 1:
+
+        Input: arr = [-3, -4, 5], k = 3
+        Output: [-4, -3, 5]
+
+    Example 2:
+
+        Input: arr = [4, -4, 4], k = 2
+        Output: [4, 4]
+
+    Example 3:
+
+        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1
+        Output: [2]
+
+    Note:
+        1. The length of the array will be in the range of [1, 1000].
+        2. The elements in the array will be in the range of [-1000, 1000].
+        3. 0 <= k <= len(arr)
+    """
+    if k <= 0:
+        return []
+
+    # Sort the array in ascending order and take the last k elements.
+    # Those are the k largest numbers, already sorted ascending.
+    sorted_arr = sorted(arr)
+    return sorted_arr[-k:]
+```

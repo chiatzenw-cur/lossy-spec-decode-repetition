@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-88976f7cd2756ec4",
+  "object": "text_completion",
+  "created": 1786002337,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement mean_absolute_deviation. Compute mean, then sum absolute differences, divide by number. Should handle empty list? maybe return 0. Also need to import List. The function signature is as given.\n\nWe should preserve the docstring example. Implementation straightforward. Could use sum(numbers)/len(numbers) etc. Might handle empty by returning 0. Use float division.\n\nEdge cases: input may contain ints, floats. Return float.\n\nWrite code:\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    total_abs_dev = sum(abs(x - mean) for x in numbers)\n    return total_abs_dev / len(numbers)\n\nReturn float.\n\nWe'll include docstring unchanged.\n\nThus final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    # Guard against an empty list – return 0.0 as a sensible default\n    if not numbers:\n        return 0.0\n\n    # Compute the mean of the dataset\n    mean = sum(numbers) / len(numbers)\n\n    # Sum the absolute deviations from the mean\n    total_abs_dev = sum(abs(x - mean) for x in numbers)\n\n    # Return the mean absolute deviation\n    return total_abs_dev / len(numbers)\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 230,
+    "total_tokens": 616,
+    "completion_tokens": 386,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

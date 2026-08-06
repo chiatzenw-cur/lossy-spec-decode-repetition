@@ -1,0 +1,588 @@
+<|channel|>analysis<|message|>We need to find side length of equilateral hexagon ABCDEF such that all opposite sides are parallel and equal? Wait "convex equilateral hexagon in which all pairs of opposite sides are parallel." So equilateral hexagon: all sides equal. Opposite sides parallel: AB parallel to DE, BC parallel to EF? Let's think labeling ABCDEF around the hexagon counterclockwise. Opposite side pairs: AB opposite DE; BC opposite EF; CD opposite FA. So AB∥DE, BC∥EF, CD∥FA.
+
+Moreover side lengths AB=BC=CD=DE=EF=FA = s (unknown). We know triangle formed by extensions of AB, CD, EF has side lengths 200,240,300. Which sides correspond to 200,240,300? Let's denote lines ℓ_AB, ℓ_CD, ℓ_EF (extended lines). These three lines are not concurrent in general; they form a triangle intersection maybe not containing hexagon? The triangle formed by their extensions has side lengths given. Which pairs are which? Probably: side of triangle opposite to line AB between intersections of ℓ_AB with ℓ_CD and ℓ_EF. So side length opposite to line AB is length between intersection of lines ℓ_CD and ℓ_EF. Similarly for others.
+
+We need to find s that yields those distances. This seems like could be solved using vector geometry/inscribed triangle. Let the hexagon be inscribed in a parallelogram? But equilateral hexagon with opposite sides parallel maybe regular hexagon? Actually regular hexagon has opposite sides parallel: true. But here hexagon is equilateral but not necessarily regular (angles could vary). But opposite sides parallel implies the shape is parallel-sided hexagon symmetrical? For an equilateral hexagon with parallel opposite sides, it's a translation of parallelogram? Let's analyze.
+
+Let vectors: Let U = vector AB; V = vector BC; W = vector CD. Then further sides: DE = -U (since parallel and equal magnitude opposite direction), EF = -V, FA = -W (since to close polygon). Because AB + BC + CD + DE + EF + FA = 0. So AB + BC + CD - AB - BC - CD=0, satisfied. So condition: side vectors AB, BC, CD, DE, EF, FA form sequence such that AB = DE^(-?) Actually AB parallel to DE, both oriented same direction presumably? Wait if AB∥DE and lengths equal, then vector DE may be same direction or opposite. For parallelogram property, if DE is parallel to AB and has same length but direction? In a convex hexagon orientation: AB then BC then CD then DE. AB vector is U. Next BC vector V. Next CD vector W. Next DE vector must be parallel to AB and equal length; but orientation? In a convex hexagon, going around, after CD we go to DE which is roughly opposite direction to AB? Let's check with regular hexagon: labeling A,B,C,D,E,F around. AB is some vector. BC rotated by 60°, etc. In regular hexagon, AB opposite DE but opposite direction? Actually from regular hexagon, AB direction d0, DE direction d3? Let's compute: vertices: 0°, 60°,120°,180°,240°,300°. AB from angle 0 to 60: vector direction up-right? BC from 60 to 120 direction up-left? CD from 120 to 180: leftward? DE from 180 to240: down-left? Actually I may be off. Let's use sides: AB: from A at angle 0 to B at 60. So AB vector points at 30°? Hmm regular hexagon has edges rotated 60° each. Opposite sides are parallel but opposite direction: AB and DE are opposite direction because they are 180° apart. So AB vector + DE vector = 0? Let's test: AB vector direction 30°, DE direction -150° (or 210°) which is opposite. So DE = -AB. Similarly BC∥EF with EF = -BC, etc. So we can set:
+
+AB = U, BC = V, CD = W, then DE = -U, EF = -V, FA = -W.
+
+Thus the net sum zero holds.
+
+Thus hexagon coordinates: Let A at origin. B = U. C = U+V. D = U+V+W. E = U+V+W-U = V+W. F = V+W - V = W. Back to A: A=0= W - W? Wait F to A vector = ?
+
+Actually vertices:
+A = 0
+B = U
+C = U+V
+D = U+V+W
+E = U+V+W + (-U) = V+W
+F = V+W + (-V) = W
+and then back to A: A = W + (-W) = 0. Good.
+
+So polygon details. Need to find side length s = |U| = |V| = |W|.
+
+Now we consider lines: ℓ_AB: line through A and B (vector U). ℓ_CD: line through C and D (vector W? Wait CD vector is W). So ℓ_CD line passes through C and D. The direction vector is W. ℓ_EF: line through E and F. ℓ_EF line passes through E (point V+W) and F (W). Direction vector? EF vector is -V (since EF = -V). So line ℓ_EF has direction vector -V. So lines AB: direction U; CD: direction W; EF: direction -V.
+
+We need the triangle formed by the extensions of these three lines. So intersection of ℓ_AB & ℓ_CD; ℓ_CD & ℓ_EF; ℓ_EF & ℓ_AB. The side lengths are distances between intersection points. So we need lengths of segments formed by intersecting pairs of these lines.
+
+Thus we need to compute intersection points in terms of U,V,W. Basic coordinate representation: Let U,V,W be vectors of equal magnitude s in complex plane or vector plane. Also we have convex: shapes orientation such that U,V,W not collinear; we don't know angles between them. Let's treat as vectors unknown but lengths equal.
+
+We need distances between intersections of lines with directions U, W, -V. Use vector geometry: Intersection of line AB (through 0 with direction U) and CD (through point C = U+V, direction W). Solve param eq: any point on AB: tU; on CD: U+V + uW. Solve tU = U+V + uW. Solve for t and u. Similarly need other intersections.
+
+Alternatively use complex numbers: Represent U, V, W as complex numbers of magnitude s, unknown directions. But may be easier to use vector dot product.
+
+Let’s define unknown angle between U and V as a, between V and W as b, between W and U as c. Since all sides equal magnitude s. In a hexagon with opposite sides parallel, the sum U+V+W=0? Wait we had earlier: A->B->C->D->E->F->A: AB=U, BC=V, CD=W, DE=-U, EF=-V, FA=-W. Sum of first three U+V+W must be equal to vector from A to D, but D = U+V+W; then E = D+DE = U+V+W - U = V+W; F = E + EF = V+W - V = W; A = F + FA = W - W = 0. So U+V+W must be vector from A to D, not constrained to zero. So no relation sum=0. Thus unknown.
+
+Now lines:
+
+Line AB: param t U, t ∈ ℝ.
+
+Line CD: passes through C = U+V with direction W.
+
+Line EF: passes through E = V+W with direction -V.
+
+Compute intersection of AB and CD: Solve tU = U+V + uW. Let's move: tU - U - V = uW. Express u and t.
+
+We need distance between intersection of AB & CD (call point P), intersection of CD & EF (Q), intersection of EF & AB (R). Triangle PQR shape.
+
+We can compute pairwise distances using cross products.
+
+Set up coordinates: Choose vector basis: U as x-axis direction. Let U = s * e1 = (s,0). Let V rotated by angle θ from U? Let's allow V making angle φ1 with U: V = s*(cosα, sinα). W rotated relative to U by angle β: W = s*(cosβ, sinβ).
+
+We don't know angles. But we can determine from parallelism: AB∥DE and BC∥EF and CD∥FA. Already satisfied by our folding.
+
+Now use intersection formula. Let's compute using Python symbolic? Perhaps we can find general expression for distances in terms of angles.
+
+Let's use function dist(PQ) where P from intersection AB & CD; Q from intersection CD & EF; etc. Use param equations.
+
+Line AB: P_AB(t): tU, t real.
+
+Line CD: P_CD(t'): U+V + t'W.
+
+Set these equal: tU = U+V + t'W -> (t-1)U - V = t'W.
+
+Similarly, intersection of CD & EF. EF line: passing through E = V+W, direction -V: P_EF(t''): V+W + t''*(-V) = V+W - t''V.
+
+Set U+V + uW = V+W - t'' V. Solve.
+
+Similarly intersection of EF & AB: solve tU = V+W - t'' V.
+
+We can solve symbolic using linear algebra. Let's write unknowns t, u, t''.
+
+We can treat U,V,W as vectors.
+
+Equation AB & CD: tU = U+V + uW.
+
+This is vector equation. Similarly, AB & EF: tU = V+W + v*(-V). I'll denote w? Let's call parameter for EF: w. So tU = V+W - w V.
+
+CD & EF: U+V + uW = V+W - w V.
+
+We'll solve for t,u,w. Use coordinate representation? But we need distances between intersection points: for instance P (AB & CD) coordinate = tU.
+
+Similarly Q = intersection of CD & EF coordinate = U+V + uW.
+
+And R = intersection of EF & AB coordinate = V+W - wV.
+
+Then side lengths: side opposite line AB is between Q and R, maybe? Actually the triangle sides are formed by the intersections: Points are intersection of lines pairwise. Triangle side between P and Q is intersection of line AB and CD vs CD and EF. But careful: In triangle formed by lines AB, CD, EF, side between intersection of AB & CD and CD & EF is along line CD? Wait those two intersection points both lie on line CD? Intersection AB & CD lies on line CD. Intersection CD & EF lies also on line CD. So segment between them lies on line CD: that is the side of the triangle along CD. But side length is distance along line CD between those two intersection points. So length of side along line CD is distance between P and Q. Similarly side along line EF is between Q and R, etc.
+
+Thus side lengths: side on CD: |Q - P|. side on EF: |R - Q|. side on AB: |P - R|. And these are given as 200,240,300 (unspecified order). But we can assign later.
+
+Therefore we need to compute these distances. Let's compute using vector representation and unknown angles. Let's set up symbolic with sympy? Let's attempt numeric further by using angles a,b,c maybe. But we have unknowns: directions of U,V,W relative unknown. But we might get enough equations from given side lengths? Additional conditions: hexagon convex imposes cross product signs etc.
+
+But maybe there is property: The distances between intersection points equal distances between translations of hexagon? Because lines AB,CD,EF are parallel to respective opposite sides.
+
+Another viewpoint: The lines AB, CD, EF form a triangle whose sides are extensions of these lines. The hexagon is essentially inside that triangle maybe? The distances between intersections equal to something like 2s times lengths of parallel direction? Let's compute.
+
+Let s = side length.
+
+Let’s parameterize using complex numbers: Let U = s, real axis. V = s * e^{iα}. W = s * e^{iβ}. Then computations easier.
+
+Let me attempt to compute intersection points using this representation. Use sympy? Let's attempt to get expression for length |Q-P| in terms of s, α, β. Let's approximate later.
+
+Let's denote:
+
+U = s
+V = s*e^{iα}
+W = s*e^{iβ}
+
+Equation: tU = U+V + uW
+
+=> t*s = s + s*e^{iα} + u s e^{iβ}
+
+Divide by s: t = 1 + e^{iα} + u e^{iβ}
+
+Thus u = (t - 1 - e^{iα}) e^{-iβ}
+
+Then point P coordinate = tU = t s.
+
+Point Q coordinate = U+V + uW = s + s e^{iα} + u s e^{iβ}
+
+But we don't need substitution; we can compute Q-P easily: Q-P = (U+V+uW) - tU = U+V+uW - tU
+
+But U = s (along real axis). Let's compute Q-P: Q - P = (s + s e^{iα} + u s e^{iβ}) - t s
+
+But t = 1 + e^{iα} + u e^{iβ}, so t s = s + s e^{iα} + u s e^{iβ}. Therefore Q-P = 0! Wait that's obviously: Because from equation tU = U+V+uW => tU equals U+V+uW. So P and Q are same point! Wait this suggests intersection of AB and CD equals intersection of CD and AB i.e., the same intersection? Wait but the intersection of AB and CD is defined as the point that lies on both lines. But we used equality of coordinates tU and U+V+uW equals that point. So indeed Q and P are same point. That's wrong. Because we defined Q as intersection of CD & EF, not CD & AB. Sorry mis-identify: Q should be intersection of CD & EF, not BC.
+
+Hold: Let's correct.
+
+We have three lines: AB, CD, EF.
+
+Let P = intersection of AB and CD.
+
+Let Q = intersection of CD and EF.
+
+Let R = intersection of EF and AB.
+
+Thus Q should be solved by intersection of line CD and EF: equality of U+V+uW = V+W - wV. That's correct.
+
+P is intersection AB & CD: tU = U+V + uW.
+
+R is intersection EF & AB: tU = V+W - wV.
+
+Thus Q is intersection of CD & EF, not AB & CD. So earlier we computed Q incorrectly. We need Q coordinate: Solve U+V+uW = V+W - wV.
+
+Let's solve system for u,w. Unknowns: u,w.
+
+Equations: U+V+uW = V+W - wV.
+
+Rearrange: U+V + uW - V - W + wV = 0 => U + (u-1) W + (w) V = 0
+
+Thus u-1 times W plus w V plus U = 0.
+
+Similarly, we can solve for intersection of AB & CD: tU = U+V+uW -> tU - U - V = uW -> (t-1)U - V = uW.
+
+Thus we can solve t and u for the intersection of AB & CD: t = (1 + (V·U)/|U|^2?) Wait need vector direction consistency. This is easier using linear equations.
+
+Better approach: Use complex numbers again but maintain separate param equations.
+
+Let AB: a(t) = t U. CD: c(u) = U+V + uW. EF: e(v) = V+W + v*(-V) = V+W - vV.
+
+Now we want intersection of AB and CD: find t, u such that tU = U+V+uW.
+
+Similarly intersection of CD and EF: find u', v such that U+V + u'W = V+W - vV.
+
+Similarly intersection of EF and AB: find t', v' such that t'U = V+W - v'V.
+
+Note that we might get multiple equations; easier: find coordinates of intersection points symbolically using linear algebra.
+
+Let start by using coordinates in plane with basis determined by U and V? But U, V may not be orthogonal. Could use vector form.
+
+Let's represent vectors as 2D coordinates: Use U along x axis: U = (s,0). Let V = s*(cosθ, sinθ) where θ is angle from x-axis. Let W unknown vector satisfying |W|=s but no other constraints? Wait W must produce convex hexagon but could have arbitrary direction relative to U & V. But there may be additional constraints: For hexagon to be convex and opposite sides parallel, we might require that U, V, W are such that they correspond to three edge directions forming a “kite” shape? Let's examine.
+
+In the hexagon, the sum of vectors U+V+C? Actually the hexagon shape: from vertices coordinates computed earlier. Let's list vertices:
+
+A = (0,0).
+B = U = (s,0).
+C = U+V = (s + s cosθ, s sinθ).
+D = U+V+W.
+E = V+W.
+F = W.
+
+The shape convex requires that all turns are in same direction (all interior angles < 180). Equivalent to that cross product sign between successive edges consistent.
+
+We could search for numeric solutions given side length eqn. But maybe there is known result: triangle formed by extensions of alternate sides of such hexagon will have side lengths proportional to side length of hexagon.
+
+Let’s think geometric: Consider hexagon with opposite sides parallel. Then if you extend alternate sides to meet, they likely form triangle similar to hexagon? Wait maybe the triangle formed by extensions of AB, CD, EF is the “outer triangle” of the hexagon, akin to contacting lines of affine deconstruction? This might be the triangle connecting intersection points of extended opposite sides. In an equiangular hexagon? For a rectangle (square) it's like lines 3 opposite sides produce triangle? Eh.
+
+Maybe easier: For any convex hexagon with opposite sides parallel, the lines AB, CD, EF (nonadjacent sides) form a triangle that encapsulates the hexagon, and the side lengths of this triangle equal the sum of two side lengths of hexagon... hmm.
+
+Let's compute case with regular hexagon: s side length. Regular hexagon has all angles 120°, and opposite sides parallel. Let's compute triangle formed by extensions of AB, CD, EF. In regular hexagon, AB direction at 30°? Wait AB from (cos0, sin0) to (cos60, sin60). But equivalently edges rotated 60 degrees each. Let's determine coordinates: Regular hexagon centered at origin? But easier: Place A at (1,0) times s? But orientation.
+
+Let's compute numerically: Regular hexagon side length s. Coordinates: Let's start with A at (0,0). B = (s,0). Next step rotate 60°: C = B + s*e^{i60°} = (s + s cos60°, s sin60°) = (s + s/2, (sqrt3/2)s). D = C + s*e^{i120°} = (s + s/2 + s cos120°, s sin60° + s sin120°). cos120°=-1/2, sin120°=√3/2. So D x: s + s/2 - s/2 = s, y: (√3/2)s + (√3/2)s = √3 s. E = D + s*e^{i180°} = (s + s*(-1), √3 s) = (0, √3 s). F = E + s*e^{i240°} = (0 + s cos240°, √3 s + s sin240°). cos240° = -1/2, sin240° = -√3/2. So F x: -s/2, y: √3 s - (√3/2)s = (√3/2)s. Coordinates: A (0,0), B (s,0), C (3s/2, √3/2 s), D(s,√3 s), E(0,√3 s), F(-s/2, √3/2 s).
+
+Now compute lines AB: from (0,0) to (s,0) horizontal line y=0.
+
+Line CD: from C (3s/2, √3/2 s) to D(s, √3 s). direction vector D-C = (s - 3s/2 = -s/2, √3 s - √3/2 s = √3/2 s). So slope = (√3/2)/( -1/2) = -√3. So line CD equation: slope -√3 passing through C. Let's compute formula.
+
+Line EF: from E (0, √3 s) to F(-s/2, √3/2 s). direction = F-E = (-s/2, -√3/2 s) slope = (-√3/2)/(-1/2)= √3. So slope √3 passing through E.
+
+Now find intersection of AB (y=0) and CD: Solve y=0 with line equation.
+
+Line CD equation: using point (3s/2, √3/2 s). slope m = -√3. Equation: y - √3/2 s = -√3 (x - 3s/2). Set y=0: -√3/2 s = -√3 (x - 3s/2) => divide -√3: 1/2 s = x - 3s/2 => x = 3s/2 + 1/2 s = 2s. So intersection point P = (2s, 0).
+
+Intersection of CD and EF: Solve intersection of two lines slopes -√3 and √3 through points C and E.
+
+Line CD: y- √3/2 s = -√3 (x - 3s/2). Line EF: y - √3 s = √3 (x - 0).
+
+Solve: From line EF: y = √3 s + √3 x. From CD: y = √3/2 s - √3 (x - 3s/2) = √3/2 s - √3 x + (3s/2)*√3. Wait compute: -√3 (x - 3s/2) = -√3 x + (3s/2)√3. Add to √3/2 s: y = √3/2 s + (3√3/2)s - √3 x = √3/2 s + 3√3/2 s - √3 x = 2√3 s - √3 x? Let's compute sum: √3/2 + 3√3/2 = (4√3)/2 = 2√3. Yes, y = 2√3 s - √3 x.
+
+Now equate: √3 s + √3 x = 2√3 s - √3 x => divide √3: s + x = 2s - x => bring terms: x + x = 2s - s => 2x = s => x = s/2. Then y = √3 s + √3 * (s/2) = √3 s + (√3/2)s = (3√3/2)s.
+
+Thus Q = intersection of CD & EF = (s/2, (3√3/2)s).
+
+Similarly intersection of EF & AB: AB y=0; EF line: y = √3 s + √3 x. Set y=0: 0 = √3 s + √3 x => x = -s. So R = (-s,0).
+
+Now compute distances: side along AB: side between R and P: distance between (-s,0) and (2s,0) = 3s.
+
+Side along CD: between P and Q: distance between (2s,0) and (s/2, (3√3/2)s). Compute squared distance: (2s - s/2)^2 + (0 - 3√3/2 s)^2 = (3s/2)^2 + (3√3/2 s)^2 = (9/4)s^2 + (27/4)s^2 = (36/4)s^2 = 9s^2 => sqrt=3s. So side length also 3s.
+
+Side along EF: between Q and R: between (s/2, (3√3/2)s) and (-s,0). Delta vector: (s/2 + s, (3√3/2)s - 0) = (3s/2, (3√3/2)s). Distance squared: (3s/2)^2 + (3√3/2 s)^2 = 9/4 s^2 + 27/4 s^2 = 36/4 s^2=9s^2 => length 3s. Thus triangle sides all 3s. So triangle is equilateral with side 3s.
+
+Interesting! For regular hexagon, triangle sides each equal 3s. For the given triangle lengths 200,240,300, not all equal. So hexagon isn't regular; but maybe still triangle sides will be linear combinations of s maybe.
+
+However from the regular hexagon case, we deduce that the vector lengths between intersection points equal sum of some side vectors and perhaps produce lengths that depend only on s and some angle differences? Let's compute general case.
+
+Let’s compute intersection points.
+
+We choose coordinate frame: U = (s,0). V = s (cosθ, sinθ). Unknown W = s (cosφ, sinφ). Let's compute intersections.
+
+Define functions:
+
+A = (0,0)
+B = U = (s,0)
+C = U+V
+D = U+V+W
+E = V+W
+F = W
+
+Line AB: param t: (t s, 0).
+
+Line CD: passes through C and direction W = s (cosφ, sinφ). Any point: C + u W = (s + s cosθ + u s cosφ, s sinθ + u s sinφ).
+
+Line EF: passes through E and direction -V: E - v V = (s cosθ + s cosφ - v s cosθ, s sinθ + s sinφ - v s sinθ) = (s cosφ + (1-v) s cosθ, s sinφ + (1-v) s sinθ).
+
+We need intersection P of AB and CD: find t and u such that (t s, 0) = (s + s cosθ + u s cosφ, s sinθ + u s sinφ). So we have equations:
+
+t s = s + s cosθ + u s cosφ
+0 = s sinθ + u s sinφ
+
+Divide by s:
+
+t = 1 + cosθ + u cosφ   (1)
+0 = sinθ + u sinφ  -> u = - sinθ / sinφ  (2)
+
+So we can compute t and u.
+
+Thus intersection P coordinates: x_P = t s = s(1 + cosθ + u cosφ). But t already known.
+
+Plug u: u = - sinθ / sinφ.
+
+Thus t = 1 + cosθ + (- sinθ / sinφ)*cosφ = 1 + cosθ - (sinθ cosφ)/ sinφ.
+
+Good.
+
+Now intersection Q of CD and EF: solve for u', v such that:
+
+C + u'W = E - v V.
+
+Coordinates: left side: (s + s cosθ + u' s cosφ, s sinθ + u' s sinφ). Right: (s cosφ + (1-v) s cosθ, s sinφ + (1-v) s sinθ).
+
+Set equal:
+
+s + s cosθ + u' s cosφ = s cosφ + (1-v) s cosθ
+s sinθ + u' s sinφ = s sinφ + (1-v) s sinθ
+
+Divide by s:
+
+1 + cosθ + u' cosφ = cosφ + (1-v) cosθ
+sinθ + u' sinφ = sinφ + (1-v) sinθ
+
+We need to solve for u', v.
+
+Let's treat unknowns u', v. Two equations:
+
+( a) 1 + cosθ + u' cosφ - cosφ - (1-v) cosθ = 0
+=> 1 + cosθ - cosφ - cosθ + v cosθ + u' cosφ = 0
+Simplify: 1 - cosφ + v cosθ + u' cosφ = 0
+=> v cosθ + u' cosφ = cosφ - 1   (eqn A)
+
+( b) sinθ + u' sinφ - sinφ - (1-v) sinθ = 0
+=> sinθ - sinφ - sinθ + v sinθ + u' sinφ = 0
+=> v sinθ + u' sinφ = sinφ - sinθ   (eqn B)
+
+Thus linear equations in variables v and u'.
+
+We can solve for v and u' via 2x2 linear system. Write:
+
+cosθ * v + cosφ * u' = cosφ - 1  ....(A)
+sinθ * v + sinφ * u' = sinφ - sinθ ...(B)
+
+Solve for v and u'.
+
+Let's solve using linear algebra generically. The determinant D = cosθ sinφ - sinθ cosφ = sinφ cosθ - sinθ cosφ = sin(φ-θ) (since sin(A-B)=sinA cosB - cosA sinB). Actually sin(φ-θ) = sinφ cosθ - cosφ sinθ. So D = sin(θ-φ)? Let's compute: cosθ sinφ - sinθ cosφ = sinφ cosθ - sinθ cosφ = sin(φ-θ). So D = sin(φ-θ).
+
+If φ ≠ θ, D ≠ 0. So we can solve.
+
+Use Cramer's rule:
+
+v = ( (cosφ - 1)*sinφ - (sinφ - sinθ)*cosφ ) / D? Wait compute numerator: For v, replace first column with constants: [cosφ - 1, sinφ - sinθ]. Determinant = (cosφ -1)*sinφ - (sinφ - sinθ)*cosθ? Actually the matrix: | cosθ  cosφ |
+                               | sinθ  sinφ |
+Replace first column with constants: | (cosφ -1)  cosφ |
+                                   | (sinφ - sinθ) sinφ | (?). But careful: we replace column of v (coefficient of v). Actually eqn A: cosθ v + cosφ u' = cosφ-1. eqn B: sinθ v + sinφ u' = sinφ - sinθ.
+
+So to solve for v, use determinants:
+
+v = det([cosφ-1, cosφ; sinφ-sinθ, sinφ]) / det([cosθ, cosφ; sinθ, sinφ]).
+
+Compute numerator:
+
+N_v = (cosφ-1)*sinφ - (sinφ - sinθ)*cosφ = (cosφ-1)sinφ - sinφ cosφ + sinθ cosφ = (cosφ-1)sinφ - sinφ cosφ + sinθ cosφ? Let's compute (cosφ-1) sinφ - sinφ cosφ = cosφ sinφ - sinφ - sinφ cosφ = - sinφ. So N_v = - sinφ + sinθ cosφ = sinθ cosφ - sinφ.
+
+So v = (sinθ cosφ - sinφ) / D.
+
+Similarly u' numerator: replace second column: [cosθ, (cosφ-1); sinθ, (sinφ - sinθ)] compute:
+
+N_u' = cosθ*(sinφ - sinθ) - sinθ*(cosφ -1) = cosθ sinφ - cosθ sinθ - sinθ cosφ + sinθ.
+
+Simplify: cosθ sinφ - sinθ cosφ + sinθ - cosθ sinθ.
+
+But cosθ sinφ - sinθ cosφ = sin(φ-θ) = D. So N_u' = D + sinθ - cosθ sinθ.
+
+Wait but there is also -cosθ sinθ? Already wrote. So u' = N_u' / D = 1 + (sinθ - cosθ sinθ)/D? That seems messy.
+
+However perhaps we don't need explicit u', v. We might not require Q coordinate itself because we only need distances between intersections: side lengths along lines.
+
+Given earlier we have side lengths along lines equal to distances between intersection points. Could we compute those distances using purely vector differences of intersection coordinates?
+
+But maybe there is better approach: The side along CD between intersection with AB and EF i.e., between P and Q lies along CD direction W. We can compute length of segment PQ along line CD equal to |P - Q|.
+
+Since both P and Q lie on CD, we can express their coordinates as C + a W and C + b W respectively, where a and b parameters. We found that P coordinate derived from intersection AB and CD: P = C + u W with u earlier? Wait earlier we solved intersection of AB and CD: we found u = - sinθ / sinφ as defined earlier. Actually P is intersection of AB and CD, so the point lies on the line CD, meaning we should set tU = C + u W, with u found earlier. So we can write P = C + uP*W where uP = u. But note we also set tU = ... So yes, uP = - sinθ / sinφ.
+
+Similarly, Q is intersection of CD and EF. For Q we solved for u' as above. So Q lies on CD: Q = C + uQ * W where uQ = u'.
+
+Thus length along CD between P and Q is |uQ - uP| * |W| = |uQ - uP| * s.
+
+Similarly side along EF between Q and R: Since Q and R lie on EF line direction -V. So we can calculate parameter values on EF: Q = E - v_Q V; R = E - v_R V. Then length along EF = |v_Q - v_R| * s.
+
+Similarly along AB between R and P: both on AB direction U. Intersection AB with EF gives R coordinate along AB: t_R U (we could solve). Intersection AB with CD gives P coordinate t_P U earlier. So side length along AB = |t_P - t_R| * s.
+
+So our unknowns: angles, and we will have expressions for t_P, t_R, u_P, u_Q, v_Q, v_R etc. But maybe we only need relative differences, which may express length of triangle sides in terms of s and differences of angles.
+
+Let's compute differences symbolically using sympy to see pattern? Let's attempt to compute t_R: intersection of AB and EF.
+
+Intersection equations: tU = E - v V
+
+Hence t s = s cosφ + (1 - v) s cosθ   (x coordinate)
+0 = s sinφ + (1 - v) s sinθ (y coordinate)
+
+Wait y coordinate of EF is y = sinφ + (1-v) sinθ times s. For the intersection with AB where y=0. So equation:
+
+0 = s (sinφ + (1-v) sinθ) -> sinφ + (1-v) sinθ = 0 -> (1-v) sinθ = - sinφ -> 1 - v = - sinφ/sinθ -> v = 1 + sinφ/sinθ.
+
+Also x coordinate: t s = s cosφ + (1-v) s cosθ = s cosφ + (1 - v) s cosθ. But 1 - v = - sinφ / sinθ. So t = cosφ - (sinφ / sinθ) cosθ.
+
+Thus t_R = cosφ - (sinφ cosθ)/ sinθ.
+
+Similarly t_P earlier: t_P = 1 + cosθ - (sinθ cosφ)/ sinφ.
+
+Hence the difference t_P - t_R: compute symbolic.
+
+Let’s use sympy? Let's attempt manually.
+
+Let’s denote:
+
+tP = 1 + cosθ - (sinθ cosφ)/ sinφ
+tR = cosφ - (sinφ cosθ)/ sinθ
+
+We want Δt = tP - tR.
+
+Compute Δt = 1 + cosθ - (sinθ cosφ)/ sinφ - cosφ + (sinφ cosθ)/ sinθ.
+
+So Δt = 1 + cosθ - cosφ + (sinφ cosθ)/ sinθ - (sinθ cosφ)/ sinφ.
+
+So side length along AB: L_AB = s * |Δt|. Since convex orientation should produce positive difference; we consider absolute.
+
+Similarly for CD side length: difference uQ - uP. We have uP = - sinθ / sinφ. We need uQ.
+
+We earlier solved for u' (uQ). This expression we derived using solving linear equations: uQ = u' = ?
+
+We haven't final simplified. Let's compute using sympy to get expression. Since it's algebraic could be messy but maybe simplifies to something like (sin(φ-θ)+ something)/? We'll compute.
+
+In python.
+
+But we might be able to find relation between triangle side lengths to side length s and maybe to angles. But we have given three side lengths 200,240,300. That may correspond to scaled by s. Let's compute general ratio of side lengths in terms of s and angles, then solve for s.
+
+However, we might realize that the triangle side lengths are determined by s times some function of angles. Since we have three side lengths, we can set up three equations: L_AB = 200 or 240 or 300, etc. But unknowns: s, θ, φ. We have three equations, could be solvable. But maybe we don't need to solve for angles separately; maybe the triangle side lengths ratios depend solely on s independent of angles? Let's test with regular hexagon case: angles: θ = 60°, φ = 120°? Wait in regular hexagon, U direction along x-axis (0°). V direction 60°. W direction 120°. So θ=60°, φ=120°. Let's compute L_AB from formula for that case: compute Δt.
+
+Using values: sinθ= sin60=√3/2, cosθ=1/2. sinφ= sin120= √3/2, cosφ= -1/2.
+
+Compute tP: 1 + cosθ - (sinθ cosφ)/ sinφ = 1 + 1/2 - ((√3/2)*(-1/2))/( √3/2 ) = 1.5 - ((-√3/4)/(√3/2)) = 1.5 - (- (√3/4)*(2/√3)) = 1.5 - (- (2/4)) = 1.5+0.5=2. So tP=2. tR = cosφ - ( sinφ cosθ)/ sinθ = (-1/2) - ((√3/2)*(1/2))/(√3/2) = -0.5 - ((√3/4)/(√3/2)) = -0.5 - ( (√3/4)*(2/√3)) = -0.5 - (1/2)= -1.0. So Δt = 3. So sΔt = 3s. Good matches regular case, each side length 3s.
+
+Thus formula works.
+
+Hence for general case, L_AB = s|Δt|; L_CD = s|uQ - uP|; L_EF = s|vQ - vR|.
+
+But we could maybe express these differences in terms of sine and cos as linear functions of sin differences. Might be symmetrical. Let's compute analytic expressions maybe simpler using complex numbers. Let's solve generically with sympy symbolic.
+
+Let's do quickly mental? Hard.
+
+I'll try approximate numeric solving using unknown s, θ, φ. We have side lengths 200,240,300 but order unknown. We can guess which corresponds to which side (AB,CD,EF). In regular hexagon all equal, so can't infer. But maybe we can assign lengths such that L_AB (between intersection with AB lines) equals some value, maybe largest or smallest. Not sure.
+
+But we can set up numeric equations: Unknowns: s,θ,φ such that the absolute differences produce values 200,240,300 (in any order). We can set up absolute values and try to solve.
+
+But we might circumvent sign by using formulas for squared side lengths L_AB^2, etc. Let's compute squared lengths in terms of s^2 and trigonometric stuff. That might give easier system.
+
+Also given hexagon convex ensures 0<θ<π, 0<φ<π etc. And angles between edges maybe between 0 and π? For convex orientation, successive edges should turn left (or right) consistently.
+
+We can also impose that the order edges: Starting from U horizontally, moving V rotated by θ from U. Since we move CCW, the interior turn is something like 180° - internal angle etc. But may not need.
+
+Ok, maybe simpler: We can use property that triangle's side lengths are s*(|something|). Maybe ratio between side lengths is determined by angles. We can solve for angles using ratios.
+
+Set up general formulas and try to solve for angles by ratios of given side lengths (ignoring s). Then find s using a particular length.
+
+Let's derive expressions for the three differences:
+
+We already have:
+
+Δt = tP - tR = 1 + cosθ - cosφ + (sinφ cosθ)/ sinθ - (sinθ cosφ)/ sinφ.
+
+Now compute uP = - sinθ/ sinφ.
+
+We need uQ: we can solve u' directly. Let's use linear algebra to solve for uQ and v.
+
+Let’s use algebra:
+
+Equations:
+
+cosθ v + cosφ u = cosφ - 1   (I)
+sinθ v + sinφ u = sinφ - sinθ  (II)
+
+Solve for u (which is uQ) and v.
+
+Use determinant D = cosθ sinφ - sinθ cosφ = sin(φ-θ).
+
+Solving:
+
+u = ( (cosφ - 1) sinθ - (sinφ - sinθ) cosθ ) / D? Wait use Cramer's rule: For u numerator: replace second column with constants:
+
+| cosθ  (cosφ -1) |
+| sinθ  (sinφ - sinθ)|
+
+Determinant: cosθ*(sinφ - sinθ) - sinθ*(cosφ -1).
+
+Thus uQ = [cosθ*(sinφ - sinθ) - sinθ*(cosφ -1)] / D.
+
+Simplify numerator:
+
+cosθ sinφ - cosθ sinθ - sinθ cosφ + sinθ.
+
+Now note cosθ sinφ - sinθ cosφ = sin(φ-θ) = D.
+
+Thus numerator = D - cosθ sinθ + sinθ. That is D + sinθ(1 - cosθ).
+
+Similarly for v numerator: Replace first column with constants:
+
+| cosφ - 1   cosφ |
+| sinφ - sinθ  sinφ|
+
+Determinant: (cosφ -1) sinφ - (sinφ - sinθ) cosφ.
+
+Compute: sinφ cosφ - sinφ - sinφ cosφ + sinθ cosφ = - sinφ + sinθ cosφ.
+
+Thus v = ( - sinφ + sinθ cosφ ) / D.
+
+We also may need v_Q? Actually v_Q corresponds to parameter for Q along EF? From line EF: coordinate Q = E - v_Q V. We derived equation for intersection of CD and EF giving uQ and v. And we solved for v. So v_Q = v. Good.
+
+Similarly we need v_R for intersection of EF and AB earlier. We solved earlier v_R = 1 + sinφ/sinθ.
+
+Thus side along EF length: L_EF = s |v_Q - v_R| = s |v - (1 + sinφ/sinθ)|.
+
+= s | v - 1 - sinφ/sinθ|.
+
+But signs unknown but we consider absolute.
+
+Similarly side along CD: L_CD = s |uQ - uP| = s |u - (- sinθ/ sinφ)| = s | u + sinθ/ sinφ |.
+
+Now we have expressions.
+
+Let's compute them symbolically and attempt to set up ratio equations for given side lengths 200,240,300.
+
+Let’s denote t=θ, φ=φ.
+
+Let’s compute using python symbolic approach? As AI offline not connected? I'll mimic mentally but heavy. Could attempt approximate solving by reasoning.
+
+But maybe there's more geometric insight: The triangle's sides are sum of two adjacent sides of hexagon? Let's test on regular hexagon: each triangle side is 3s, which equals sum of three sides? Actually 3s equals number of sides? For regular, AB,CD,EF are spaced by two sides? AB and CD are separated by two sides BC between them. But sum s + s? That's 2s. Not 3s. So not.
+
+Maybe triangle side equals sum of two edge lengths? But 3s > 2s. So maybe something else.
+
+Let's compute for general angles maybe formula yields L_AB = s * (1 + something)...
+
+But maybe we can relate angles such that the triangle sides satisfy the law of cos. But we need final side length.
+
+Better approach: Use areas? Another angle: The triangle formed by lines AB, CD, EF is the triangle of the triad of parallel lines; the hexagon is a "symmetric" of that. Might be that the vector sum of three non- parallel equal vectors U,V,W yields a triangle that is "affine" of hexagon.
+
+Let's examine vector sum: The intersection points coordinates:
+
+P = C + uW = U + V + uW (since C = U+V). u = - sinθ / sinφ.
+
+Similarly Q = C + uQ W = U+V+ uQ W.
+
+R = ... along EF maybe not same param.
+
+Hard.
+
+Alternative: Use law of sines in triangle formed by three lines.
+
+We could compute angles of triangle in terms of angles of hexagon. For instance, angle between lines AB and CD equals angle between vectors U and W. Since U and W are sides separated by two edges: U->B then C maybe? Actually lines AB and CD are not consecutive edges; they are two apart. The angle between them is 180° - angle between U and W? For regular, U direction 0°, W direction 120°, angle between them 120° (since difference 120°). The line between intersection P and Q is along CD direction W. The angle at P between lines AB and CD equals angle between AB and CD lines: that's angle between U and W.
+
+Thus triangle side lengths maybe determined by lengths across lines measured along directions of opposite sides; interior angles at vertices correspond to angles between these lines.
+
+Thus triangle is formed by three lines with given pairwise angles: angle between AB and CD = angle between U and W; angle between CD and EF = angle between W and V; angle between EF and AB = angle between V and U. So the triangle formed by these lines has angles equal to the angles between the respective pairs of side vectors, which are simply 180 minus interior angles? Wait.
+
+Given that vectors U, V, W are the directions of successive edges of hexagon: U, V, W.
+
+Angles between U and V equals exterior angle between sides AB and BC? Inside hexagon interior angle at B: between vectors AB (from B to C? Actually AB vector from A to B), BC vector from B to C is oriented along vector V. The interior angle at B is the angle between vectors AB reversed (-U) and BC (=V). But that's not same as angle between U and V. But the angle between lines AB and BC is same as angle between U and V (since AB is line with direction U; BC has direction V). So angle between U and V equals angle between lines AB and BC, which equals interior angle (maybe not necessarily interior). But for convex hexagon, interior angle <180. But the difference between them? But interior angle at B equals 180° - angle between U and V? Let's test with regular: U direction 0°, V direction 60°. Angle between them 60°. Interior angle at B is 120°, which is 180 - 60. So interior angle = 180 - angle between vectors. So angle between vectors = 180 - interior angle.
+
+Thus angle between U and V is external angle (turn angle). Good.
+
+Given that, triangle formed by lines AB,CD,EF has angles equal to external angles of hexagon? Let's test regular hexagon: external angles are 60°, all equal. Then triangle defined by lines AB, CD, EF would be equilateral with internal angles 60°, which matches our computed triangle (since sides all equal). Right.
+
+Thus in general, the triangle formed by extensions of AB,CD,EF will have angles equal to the external angles of the hexagon at B, D, and F maybe? Actually angle between lines AB and CD corresponds to external at B? Wait lines AB and BC have external angle 60°, but lines AB and CD? AB and CD are separated by one side: AB and BC share B, CD is starting at C. So angle between AB and CD equals external at B? Let's compute: In regular hexagon, angle between AB and CD lines was 120°? Wait earlier we computed slopes between AB and CD? Actually we found side along AB between R and P; but angle at P? But maybe simpler: The triangle formed by lines AB,CD,EF has angles equal to the central angles between those lines, which equal external angles at vertices B, D, and F? Let's test for regular hexagon: external angles at B, D, F are 60°, 60°, 60°. Angles of triangle indeed 60°, because earlier we found triangle is equilateral. So plausible.
+
+Thus triangle's side lengths must be related to side length of hexagon via law of sines with known angles (external angles). Actually if we know triangle angles (external angles) will sum to 180°, yes external angles sum to 360°? Wait external angles of hexagon: each external angle is 180° - interior, sum of external angles = 360°? For any convex polygon, sum of external angles = 360°. For hexagon, 3 external angles? Wait we only have three lines: AB, CD, EF. But hexagon's external angles occur at each vertex. But we only involve three of them? Actually AB, CD, EF lines correspond to sides 1,3,5? Which vertices? Each line pass through two opposite vertices? Wait AB is between A and B; CD between C and D; EF between E and F. Each line corresponds to a segment of hexagon. The angles between these three lines correspond to the sum of two external angles? Let's analyze.
+
+Suppose hexagon vertices in order: A,B,C,D,E,F. Lines AB (through A-B), CD (through C-D), EF (through E-F). Angle between lines AB and CD = angle between lines through AB and CD. In hexagon, the vertex between B and C is B? Actually AB meets BC at B. CD meets BC at C. Angle between lines AB and CD is not directly angle at any vertex. But we can express it as sum or difference of external angles? We might need more careful geometry.
+
+Instead of going deeper, maybe we can use analytic geometry to compute lengths symbolically and set up equations. Let's attempt to use actual algebra computationally, but I'm not able to run code. I can try to manually derive formulas for all three side lengths L1, L2, L3 maybe simpler if we use complex numbers and manipulate.
+
+Let U, V, W with lengths s. Let denote complex numbers u, v, w of magnitude s.
+
+We derived tP: tP = 1 + cosθ - (sinθ cosφ)/ sinφ.
+
+But we can express using complex exponentials: Let u = s, v = s e^{iθ}, w = s e^{iφ}. Then constants.
+
+We could derive Δt = tP - tR. Let's compute symbolically using s=1 for simpleness; then multiply by s later.
+
+Use complex approach: Solve intersection points using complex. Compute P coordinate.
+
+But maybe easier to find side lengths using relative distances along lines between intersection points expressed using cross products. Because distance between intersections along same line equals perpendicular distance between two lines? Actually we can compute using formulas involving intersection parameters earlier.
+
+But maybe easier: compute using linear algebra approach for each difference:
+
+For line AB: intersection with lines AB&CD => parameter tP. Intersection with AB&EF => tR.
+
+We found tP = 1 + cosθ - (sinθ cosφ)/ sinφ. tR = cosφ - (sinφ cosθ)/ sinθ. So Δt computed earlier.
+
+For CD: intersection with AB&CD => parameter uP = - sinθ / sinφ. Intersection with CD&EF => uQ = u as above. With u2 expression: u = [ D + sinθ(1 - cosθ) ] / D, where D = sin(φ - θ). Let's verify our numerator earlier: N_u = D + sinθ(1 - cosθ). Good.
+
+Check: u = [D + sinθ(1 - cosθ)] / D = 1 + sinθ(1 - cosθ)/ D.
+
+Similarly, for EF line: intersection with CD&EF => parameter v = ( - sinφ + sinθ cosφ ) / D. Intersection with EF&AB => v_R = 1 + sinφ/ sinθ.
+
+Thus side lengths:
+
+L_AB = s |Δt|, where Δt = 1 + cosθ - cosφ + (sinφ cosθ)/ sinθ - ( sinθ cosφ)/ sinφ.
+
+L_CD = s | u - uP | = s | u + sinθ/ sinφ |.
+
+L_EF = s | v - v_R | = s | v - 1 - sinφ/ sinθ |.
+
+We can perhaps express these differences simpler using trig identities.
+
+Let’s attempt to compute u + sinθ/ sinφ: Replace u expression:
+
+u = 1 + sinθ(1 - cosθ)/ D.
+
+So u + sinθ/ sinφ = 1 + sinθ(1 - cosθ)/ D + sinθ/ sinφ.
+
+Similarly, v - 1 - sinφ/ sinθ = ( - sinφ + sinθ cosφ)/ D - 1 - sinφ/ sinθ.
+
+Also Δt expression may also reduce.
+
+This is still messy.
+
+Alternative approach: Use vector geometry with known side lengths of triangle between lines maybe relates to s and angles real linear? Let's attempt alternative: Use system of equations with side lengths given and unknown angles. Might be solvable with trigonometric manipulations to get s.
+
+Define unknowns α = angle between AB and CD, β = angle between CD and EF, γ = angle between EF and AB. These angles satisfy α+β+γ = 180°, as they form triangle. We can express α,

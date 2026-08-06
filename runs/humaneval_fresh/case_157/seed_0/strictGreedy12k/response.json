@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8cf645baaa1bac15",
+  "object": "text_completion",
+  "created": 1786012015,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function int_to_mini_roman. Provide roman numeral conversion for 1-1000. Implementation may use mapping table, iterate from largest to smallest subtracting values. Return lowercase string. Ensure docstring. Need to fill function body.\n\nPotential algorithm: \nRoman numeral rules for 1-1000 using standard subtractive notation (I=1, V=5, X=10, L=50, C=100, D=500, M=1000). For numbers up to 1000 inclusive. Provide mapping of numeral and value: [(1000,'M'), (900,'CM'), (500,'D'), (400,'CD'), (100,'C'), (90,'XC'), (50,'L'), (40,'XL'), (10,'X'), (9,'IX'), (5,'V'), (4,'IV'), (1,'I')]. Then build result.\n\nWe also need to use lowercase output. Just use .lower() or produce lower-case letters.\n\nEdge cases: number 0 is not allowed, but ensure we raise exception if outside range? Not specified. But can just assume valid input.\n\nLet's produce the function:\n\n```\ndef int_to_mini_roman(number):\n    \"\"\"\n    ...\n    \"\"\"\n    if not isinstance(number, int):\n        raise TypeError('Number must be an int')\n    if number < 1 or number > 1000:\n        raise ValueError('Number out of allowed range 1-1000')\n    values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]\n    numerals = ['m', 'cm', 'd', 'cd', 'c', 'xc', 'l', 'xl', 'x', 'ix', 'v', 'iv', 'i']\n    result = []\n    for v, n in zip(values, numerals):\n        while number >= v:\n            result.append(n)\n            number -= v\n    return ''.join(result)\n```\n\nAlternatively we can treat string building.\n\nShould ensure only 1 to 1000 inclusive. Also, use `if number== 1000` will produce 'm'. That is fine.\n\nLet's implement.\n\nMake docstring as question? Provide same examples: include triple quotes examples.\n\nReturn value: string lowercase roman.\n\nAlso, we can create a dict mapping.\n\nPotential usage: test.\n\nEdge, maybe no error handling needed but good to include.\n\nLet's produce final function.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef int_to_mini_roman(number):\n    \"\"\"\n    Convert a positive integer (1 <= number <= 1000) into its Roman numeral\n    representation, expressed in lowercase letters.\n\n    Parameters\n    ----------\n    number : int\n        The integer to convert. Must satisfy 1 <= number <= 1000.\n\n    Returns\n    -------\n    str\n        The Roman numeral equivalent in lowercase.\n\n    Examples\n    --------\n    >>> int_to_mini_roman(19) == 'xix'\n    >>> int_to_mini_roman(152) == 'clii'\n    >>> int_to_mini_roman(426) == 'cdxxvi'\n    \"\"\"\n    if not isinstance(number, int):\n        raise TypeError(\"number must be an int\")\n    if number < 1 or number > 1000:\n        raise ValueError(\"number must be in the range 1 <= number <= 1000\")\n\n    # Mapping of integer values to Roman numeral symbols (in lowercase).\n    VALUE_SYMBOL = [\n        (1000, \"m\"),\n        (900,  \"cm\"),\n        (500,  \"d\"),\n        (400,  \"cd\"),\n        (100,  \"c\"),\n        (90,   \"xc\"),\n        (50,   \"l\"),\n        (40,   \"xl\"),\n        (10,   \"x\"),\n        (9,    \"ix\"),\n        (5,    \"v\"),\n        (4,    \"iv\"),\n        (1,    \"i\"),\n    ]\n\n    result_parts = []\n\n    for value, symbol in VALUE_SYMBOL:\n        if number == 0:\n            break\n        # Determine how many times the current Roman symbol fits into the number.\n        count = number // value\n        if count:\n            result_parts.append(symbol * count)\n            number -= value * count\n\n    return \"\".join(result_parts)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 217,
+    "total_tokens": 1144,
+    "completion_tokens": 927,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

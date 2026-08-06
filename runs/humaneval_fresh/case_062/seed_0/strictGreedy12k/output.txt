@@ -1,0 +1,33 @@
+<|channel|>analysis<|message|>We need to complete the function correct_bracketing that returns True if every opening bracket has a corresponding closing bracket, i.e., balanced parentheses. Typical algorithm: keep counter. For each char: if '(' increment, else decrement. If counter negative at any point -> False. At end, return counter==0.
+
+Ensure string only contains '(' and ')', but we ignore else.
+
+Docstring includes examples and test. We need to implement function body accordingly. Provide full function with signature and docstring. We'll produce code.
+
+Ok.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def correct_bracketing(brackets: str):
+    """ brackets is a string of "(" and ")".
+    return True if every opening bracket has a corresponding closing bracket.
+
+    >>> correct_bracketing("(")
+    False
+    >>> correct_bracketing("()")
+    True
+    >>> correct_bracketing("(()())")
+    True
+    >>> correct_bracketing(")(()")
+    False
+    """
+    # Keep a counter for unmatched opening brackets.
+    balance = 0
+    for ch in brackets:
+        if ch == '(':
+            balance += 1
+        elif ch == ')':
+            balance -= 1
+        # If at any point we have more closing than opening, it's unbalanced.
+        if balance < 0:
+            return False
+    # At the end we must have no unmatched openings.
+    return balance == 0
+```

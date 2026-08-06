@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bac7037a20a7577e",
+  "object": "text_completion",
+  "created": 1786021381,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that returns the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The list is non-empty, positive integers. Return -1 if none.\n\nWe need to compute frequency of each number. Then find numbers satisfying condition. Then return the maximum. Complexity O(n). Implementation straightforward.\n\nEdge cases: duplicates, frequencies. The function returns the greatest integer that is greater than zero, but all numbers are positive. So we just need to find the largest such integer.\n\nWe can use collections.Counter.\n\nReturn integer.\n\nLet's produce function.\n\nAlso we need to preserve docstring. Provide example.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef search(lst):\n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than \n    zero, and has a frequency greater than or equal to the value of the integer itself. \n    The frequency of an integer is the number of times it appears in the list.\n    If no such a value exist, return -1.\n    Examples:\n        search([4, 1, 2, 2, 3, 1]) == 2\n        search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3\n        search([5, 5, 4, 4, 4]) == -1\n    '''\n    from collections import Counter\n\n    # Count occurrences of each integer\n    freq = Counter(lst)\n\n    # Find all numbers that satisfy the condition\n    candidates = [num for num, cnt in freq.items() if cnt >= num]\n\n    # Return the greatest one, or -1 if none exists\n    return max(candidates, default=-1)\n```\n\n**Explanation**\n\n1. `Counter` gives a frequency table for each integer in `lst`.  \n2. Iterate over the `(num, count)` pairs, keeping only those where `count >= num`.  \n3. The `max` function returns the greatest number in the list of candidates; if the list is empty, `default=-1` yields `-1`.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 277,
+    "total_tokens": 738,
+    "completion_tokens": 461,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9fb38443641ad60a",
+  "object": "text_completion",
+  "created": 1786003455,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function filter_integers that takes a list of any values and returns list of ints. It has some doctest examples: filter_integers(['a',3.14,5]) -> [5]; filter_integers([1,2,3,'abc',{},[]]) -> [1,2,3]. Implementation straightforward: iterate and keep if isinstance(v,int). But need to consider bool? bool is subclass of int. They might want to exclude bool? The spec says only integer values. In Python bool is subclass of int, but many such functions exclude bool by checking type(v) is int. What does doctest indicate? Not mention bool. To be safe: exclude bool. So filter if isinstance(v,int) and not isinstance(v,bool). But bool is subclass, so isinstance(True,int) returns True. If we want to exclude, use type(v) is int. Simpler: [v for v in values if isinstance(v,int) and not isinstance(v,bool)]. Use type check: type(v) is int. That excludes bool. We'll use type(v) is int.\n\nWe could also think about fractional ints? No.\n\nImplement:\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\"Filter given list ...\"\"\"\n\nImplementation inside:\n\nreturn [v for v in values if isinstance(v, int) and not isinstance(v, bool)]\n\nor using type(v) is int.\n\nDocstring remains.\n\nThat's all.\n\nNow provide full function.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\"Filter given list of any python values only for integers\n\n    Returns a new list containing only the items from `values` that are\n    integers (excluding booleans, since ``bool`` is a subclass of ``int``).\n\n    Examples\n    --------\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n    # Use a list comprehension to pick out pure integer values.\n    return [v for v in values if isinstance(v, int) and not isinstance(v, bool)]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 206,
+    "total_tokens": 689,
+    "completion_tokens": 483,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

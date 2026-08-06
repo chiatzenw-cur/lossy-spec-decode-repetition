@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-ac7bcbdd50aa4304",
+  "object": "text_completion",
+  "created": 1786017045,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to parse a string of groups separated by spaces. Each group contains parentheses. We need to output the deepest level of nesting of each group. For each group, we find the maximum depth. The function parse_nested_parens returns List[int] of depths.\n\nWe need to handle input: string with parentheses, maybe whitespace? The example: parse_nested_parens('(()()) ((())) () ((())()())') -> [2,3,1,3].\n\nWe need to parse each group. For each group, we need to count depth. We can use a stack count or just a counter. For each char, if '(' increment counter, update max. If ')' decrement counter. If any other characters, ignore. The groups may have spaces; we can split on space. The function should handle empty groups? The function signature: def parse_nested_parens(paren_string: str) -> List[int]. So we can implement.\n\nEdge cases: maybe empty string? Should return [].\n\nAlso, if there are mismatched parentheses, we might handle? But spec says groups are valid parentheses. We can produce -1 for invalid? But not required.\n\nWe can also handle potential leading/trailing spaces. Use .split().\n\nImplementation: parse_nested_parens(paren_string: str) -> List[int]. Use list comprehension.\n\nReturn list of ints.\n\nDocstring: mention.\n\nLet's produce final code. Should we include type hints? Already.\n\nAlso, we can use enumerate.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\"\n    Parse a string containing several groups of parentheses separated by spaces\n    and return the deepest level of nesting for each group.\n\n    A group is a contiguous string of parentheses.  The maximum depth of a\n    group is the maximum number of open parentheses that are currently active\n    at any point while scanning the string.\n\n    Parameters\n    ----------\n    paren_string : str\n        The input string, e.g. \"(()()) ((())) () ((())()())\"\n\n    Returns\n    -------\n    List[int]\n        A list of the maximum depth for each group, in the same order as the\n        groups appear in the input.\n\n    Examples\n    --------\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n\n    >>> parse_nested_parens('()  (())  (((()))))')\n    [1, 2, 4]\n\n    >>> parse_nested_parens('')   # no groups\n    []\n    \"\"\"\n    # Split on whitespace to get the groups; consecutive spaces are ignored\n    groups = paren_string.split()\n    result: List[int] = []\n\n    for group in groups:\n        depth = 0\n        max_depth = 0\n        for ch in group:\n            if ch == '(':\n                depth += 1\n                if depth > max_depth:\n                    max_depth = depth\n            elif ch == ')':\n                depth -= 1\n                # In a well‑formed string we shouldn't go below 0.\n            # Any other character is ignored.\n        # At the end of the group, depth should be 0 for a valid string.\n        result.append(max_depth)\n    return result\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 222,
+    "total_tokens": 912,
+    "completion_tokens": 690,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

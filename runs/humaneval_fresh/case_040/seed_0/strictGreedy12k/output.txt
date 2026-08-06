@@ -1,0 +1,160 @@
+<|channel|>analysis<|message|>We need to find the nth Fibonacci number that is prime. So we must generate Fibonacci sequence and test for primality. We need to handle large n up to maybe what? No constraints given. Use simple loop.
+
+Important: first Fibonacci primes: 2, 3, 5, 13, 89, 233, 1597, 28657, 514229, 433494437 etc. Provide test for prime.
+
+We need function prime_fib(n: int). Could implement helper functions: is_prime, next_fib.
+
+We should also consider that Fibonacci numbers may grow huge. We just need to generate until found nth prime.
+
+Edge cases: n <= 0? Might raise ValueError? Not specified. Provide minimal logic: n >= 1 else raise ValueError.
+
+Implementation: Use while count < n: compute next Fibonacci number, test prime, count++.
+
+Test prime using deterministic Miller-Rabin for 32-bit? We can use simple trial division up to sqrt(n) for moderate size. But Fibonacci primes might be huge. But given examples up to maybe 5th prime 89 is small. Might assume n small. Let's implement simple primality test via Miller-Rabin for bigger integers efficient.
+
+We'll implement deterministic MillerRabin for 64-bit numbers. But Fibonacci prime bigger than 2^64? But we may not reach that. Implementation as:
+
+def is_prime(n):
+    if n < 2: return False
+    small primes list [2,3,5,7,11,13,17,19,23,29,31,37]
+    if n in small: return True
+    for p in small: if n % p == 0: return False
+    d = n - 1
+    s = 0
+    while d % 2 == 0: d//=2; s+=1
+    for a in [2,325,9375,28178,450775,9780504,1795265022]: if a % n == 0: continue; x = pow(a,d,n); if x==1 or x==n-1: continue; for r in range(s-1): x = (x*x)%n; if x == n-1: break; else: return False; return True
+
+Simpler: deterministic for 64-bit.
+
+Now implement prime_fib:
+
+def prime_fib(n: int):
+    """
+    ...
+    """
+    if n <= 0: raise ValueError
+    count = 0
+    a, b = 0, 1
+    while True:
+        a, b = b, a+b   # generate Fibonacci numbers starting at 1? Sequence: 1,1,2,3,5,8...
+        # But first prime should be 2. That occurs when a=1? Wait: Start properly.
+    Actually let's define: a=1,b=1,...
+        a=1,b=1 => next: a,b=1,2 (a=1 fib2?), then third: a,b=2,3 (a=2), then third: a,b=3,5 (a=3), then a,b=5,8 (a=5).
+
+    Instead we can generate fibonacci numbers by a,b initialization and produce next value cur = b; then compute next.
+
+Simpler: Initialize a,b=0,1; while count < n: a,b=b,a+b; fibonacci = a; test prime. That yields: after first iteration a=1 (fib1=1) not prime; second iteration a=1 (fib2=1) not prime; third iteration a=2 (fib3=2) prime; etc. Good.
+
+Implement accordingly.
+
+Return prime when count reached n.
+
+Edge: tests maybe require prime_fib(1)=2, prime_fib(2)=3.
+
+Thus our algorithm produce: first prime 2, count=1; second prime 3, count=2; third 5 etc.
+
+Ok.
+
+Now provide function with docstring as given (samples), but we also need to include doctest. Good.
+
+We'll include necessary imports.
+
+Implementation:
+
+def prime_fib(n:int):
+    """returns n-th Fibonacci prime"""
+
+We'll produce similar docstring.
+
+Add __all__? Not needed.
+
+Ok. Let's produce final version.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def prime_fib(n: int):
+    """
+    prime_fib returns n‑th number that is a Fibonacci number and is also prime.
+
+    The sequence of Fibonacci primes begins with:
+        2, 3, 5, 13, 89, 233, 1597, 28657, ...
+
+    Parameters
+    ----------
+    n : int
+        The 1‑based index of the desired Fibonacci prime. Must be a positive integer.
+
+    Returns
+    -------
+    int
+        The n‑th Fibonacci prime.
+
+    Raises
+    ------
+    ValueError
+        If `n` is not a positive integer.
+
+    Examples
+    --------
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    if n <= 0:
+        raise ValueError("n must be a positive integer")
+
+    def is_prime(num: int) -> bool:
+        """
+        Deterministic Miller–Rabin primality test for 64‑bit integers.
+        Works for all integers < 2^64.
+        """
+        if num < 2:
+            return False
+        # Small primes for quick elimination
+        small_primes = (
+            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37
+        )
+        for p in small_primes:
+            if num == p:
+                return True
+            if num % p == 0:
+                return False
+
+        # Write num-1 as d * 2^s with d odd
+        d = num - 1
+        s = 0
+        while d % 2 == 0:
+            d //= 2
+            s += 1
+
+        # Witnesses for deterministic test of 64‑bit ints
+        witness_set = (
+            2, 325, 9375, 28178, 450775, 9780504, 1795265022
+        )
+        for a in witness_set:
+            if a % num == 0:
+                continue
+            x = pow(a, d, num)
+            if x == 1 or x == num - 1:
+                continue
+            for _ in range(s - 1):
+                x = (x * x) % num
+                if x == num - 1:
+                    break
+            else:
+                return False
+        return True
+
+    count = 0
+    a, b = 0, 1  # a holds the current Fibonacci number
+    while True:
+        a, b = b, a + b
+        if is_prime(a):
+            count += 1
+            if count == n:
+                return a
+```

@@ -1,0 +1,49 @@
+<|channel|>analysis<|message|>We need to complete the function body. Provide a straightforward implementation: iterate over items, find maximum. Should handle empty list? maybe raise ValueError, as built-in max does. Use same semantics. Provide docstring.
+
+Important: function signature already has l: list. Need also appropriate type hints: return type int or generic. Could return the element. Could use l[0] initial, but need handle empty. Implementation: if not l: raise ValueError('max_element() arg is an empty list').
+
+Then iterate: max_val = l[0]; for x in l[1:]: if x > max_val: max_val = x; return max_val.
+
+Return type could be Any. Might use typing.Any.
+
+Also consider that list can contain non-numbers, but we rely on > comparison. But just implement generic. All done.
+
+Also: keep function docstring same.
+
+The user requested "only the function body is missing; reproduce the full function (signature, docstring, and your implementation)". So we need to provide the entire function code. Yes.
+
+Let's produce:
+
+```python
+def max_element(l: list):
+    """Return maximum element in the list.
+    >>> max_element([1, 2, 3])
+    3
+    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])
+    123
+    """
+    if not l:
+        raise ValueError("max_element() arg is an empty list")
+    max_val = l[0]
+    for item in l[1:]:
+        if item > max_val:
+            max_val = item
+    return max_val
+```
+
+We are done. Provide in code block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def max_element(l: list):
+    """Return maximum element in the list.
+    >>> max_element([1, 2, 3])
+    3
+    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])
+    123
+    """
+    if not l:
+        raise ValueError("max_element() arg is an empty list")
+    max_val = l[0]
+    for item in l[1:]:
+        if item > max_val:
+            max_val = item
+    return max_val
+```

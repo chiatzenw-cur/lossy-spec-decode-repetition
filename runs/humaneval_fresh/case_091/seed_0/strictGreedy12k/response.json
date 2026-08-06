@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-812c8db7bd3c85b5",
+  "object": "text_completion",
+  "created": 1786007748,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement next_smallest(lst) returning second smallest element; if no such element return None. Constraints: duplicates may exist but second smallest should be distinct from smallest? Let's interpret as second smallest distinct. Example: [1,1] returns None. [1,2] should return 2? That has 2 distinct values; second smallest 2. [1,1,2] would be 2 as second distinct. [1,2,2] -> 2? Wait second smallest distinct: 1 is smallest, second smallest distinct is 2. Implementation: find distinct sorted unique numbers in list; if len>=2 return second element else None.\n\nEdge: list with negative numbers: [-5, -10, -20] second smallest distinct is -10? Sorted ascending: -20 is smallest, -10 second. Return -10.\n\nReturn int or None. Use set: unique = sorted(set(lst)). If len(unique) < 2: return None else unique[1].\n\nBut check list length. Implementation straightforward.\n\nNow produce final function with docstring included. I think docstring already given partially. Should include same description? It could be fine to keep docstring inside function. We'll just implement function body.\n\nLet's produce code:\n\ndef next_smallest(lst):\n    \"\"\"\n    ...\n    \"\"\"\n    unique = sorted(set(lst))\n    return unique[1] if len(unique) >= 2 else None\n\nReturn type int or None.\n\nThat's it.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n    # Find all distinct elements and sort them\n    distinct_sorted = sorted(set(lst))\n    # If there are at least two distinct elements, return the second one\n    return distinct_sorted[1] if len(distinct_sorted) >= 2 else None\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 236,
+    "total_tokens": 721,
+    "completion_tokens": 485,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

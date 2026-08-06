@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8e487bcdf0f6fb0c",
+  "object": "text_completion",
+  "created": 1786011821,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function to find the strongest extension by computing strength = number of uppercase letters minus number of lowercase letters. Actually description: \"CAP be the number of uppercase letters in the extension's name, and let SM be number of lowercase letters. strength given by fraction CAP - SM.\" That phrasing confusing but I think they mean integer difference: CAP - SM.\n\nGoal: find maximum strength, ties choose first. Use list order.\n\nReturn string: class_name + '.' + chosen_extension.\n\nEdge cases: extensions may have no letters? But may contain digits or punctuation? We just count uppercase/lowercase by str.isupper/islower.\n\nTake case sensitivity: other characters are ignored.\n\nImplementation: loop over extensions with enumerate, compute counts, maintain best_strength and best_index.\n\nReturn. Also validate that class_name is a string, extensions list of strings. But not necessary.\n\nSimplify.\n\nExamples: 'Slices' and ['SErviNGSliCes', 'Cheese', 'StuFfed']:\n\nCount uppercase in 'SErviNGSliCes': letters: S E r v i N G S l i C e s? Let's compute quickly: letters: S(1) E(2) r( ) v( ) i( ) N(3) G(4) S(5) l( ) i( ) C(6) e( ) s( ). So CAP=6 maybe? Wait count. For 'SErviNGSliCes', capitals: S, E, N, G, S, C = 6. SM lower: r v i l i e s? Actually includes 7? Let's count: r(1) v(2) i(3) l(4) i(5) e(6) s(7). So SM=7. strength = 6-7 = -1.\n\n'Cheese': capital C:1, lower: h e e s e 5 => strength -4.\n\n'StuFfed': capitals S F? Actually S, F =2; lower: t u u e d? Check: 'StuFfed' letters: S t u F f e d: capitals S, F =2; lowercase t u f e d =5 => -3. So best is -1 (SE...).\n\nReturn 'Slices.SErviNGSliCes'.\n\nEdge when tie: choose first.\n\nImplementation done.\n\nReturn f\"{class_name}.{best_ext}\"\n\nAlso if extensions empty? Not specified; skip.\n\nFinish.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef Strongest_Extension(class_name, extensions):\n    \"\"\"Return the strongest extension for a class.\n\n    For each extension name compute  \n        strength = (#uppercase letters) – (#lowercase letters)\n\n    The strongest extension (maximum strength) is selected; ties are resolved by the\n    order of appearance in ``extensions``.  \n    The result is formatted as ``ClassName.ExtensionName``.\n    \"\"\"\n    best_ext = None\n    best_strength = None\n\n    for ext in extensions:\n        # Count uppercase and lowercase letters\n        cap = sum(1 for c in ext if c.isupper())\n        sm = sum(1 for c in ext if c.islower())\n        strength = cap - sm\n\n        if best_strength is None or strength > best_strength:\n            best_strength = strength\n            best_ext = ext\n\n    # If no extensions were provided, return the class name alone\n    if best_ext is None:\n        return class_name\n\n    return f\"{class_name}.{best_ext}\"\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 384,
+    "total_tokens": 1120,
+    "completion_tokens": 736,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

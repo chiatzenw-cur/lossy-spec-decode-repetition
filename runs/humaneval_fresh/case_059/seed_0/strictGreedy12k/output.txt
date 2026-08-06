@@ -1,0 +1,49 @@
+<|channel|>analysis<|message|>We need to implement a function common(l1, l2) returning sorted unique common elements.
+
+Docstring: "Return sorted unique common elements for two lists." Implementation: find intersection. Should return a list sorted in ascending order. Use set intersection, then sort and return list.
+
+Consider duplicates in l1 or l2: take unique. Example: [5,5,1], [5,6,5] => common [5] only. Use set.
+
+Also maybe input could be non-ints? Problem states lists of ints. But implement generic.
+
+Also maintain order in sorted list: ascending numeric.
+
+Implement function returning list sorted. Completion: use set(l1).intersection(l2). Sort then list.
+
+Edge cases: mismatched type? not needed.
+
+Implement docstring is already provided. Need to just fill body. All done.
+
+Also: keep typing: def common(l1: list, l2: list):
+
+Return list.
+
+Implement.
+
+Also might want to handle list parameters. Implementation:
+
+def common(l1: list, l2: list):
+    return sorted(set(l1).intersection(l2))
+
+Make sure to test examples. Quick mental:
+
+common([1,4,3,34,653,2,5], [5,7,1,5,9,653,121]) returns sorted([1,5,653]) -> [1,5,653].
+
+Second example: sorted([2,3]) => [2,3].
+
+Works.
+
+Thus final answer.<|end|><|start|>assistant<|channel|>final<|message|>Here’s a concise, fully‑documented implementation of the `common` function that returns a sorted list of unique elements common to both input lists:
+
+```python
+def common(l1: list, l2: list):
+    """Return sorted unique common elements for two lists.
+    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])
+    [1, 5, 653]
+    >>> common([5, 3, 2, 8], [3, 2])
+    [2, 3]
+    """
+    # Convert each list to a set to keep only unique values,
+    # then compute the intersection, sort, and return a list.
+    return sorted(set(l1).intersection(l2))
+```

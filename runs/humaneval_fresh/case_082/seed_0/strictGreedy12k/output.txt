@@ -1,0 +1,129 @@
+<|channel|>analysis<|message|>We need to implement function numerical_letter_grade(grades). Provide docstring same as example? The provided docstring has some error: the example uses grade_equation name but should be our function name. We'll follow as given. Need to parse the grade thresholds.
+
+List of GPA to letter grade mapping:
+
+- 4.0 : A+
+- > 3.7 : A
+- > 3.3 : A-
+- > 3.0 : B+
+- > 2.7 : B
+- > 2.3 : B-
+- > 2.0 : C+
+- > 1.7 : C
+- > 1.3 : C-
+- > 1.0 : D+
+- > 0.7 : D
+- > 0.0 : D-
+- 0.0 : E
+
+Important: The thresholds are exclusive > except equal to 4.0? The table uses "4.0" vs ">" for others. Means if GPA==4.0, letter grade A+. For values between >3.7 and <=4.0 exclusive? But 4.0 handled. For others > thresholds: e.g., >3.7 then A. So if GPA==3.8, A. If GPA==3.7 exactly? Not >3.7 so doesn't match, next threshold >3.3, so A-. Similarly with 3.3, >3.3? no, go to >3.0 etc. That seems consistent.
+
+Also threshold >0.0 for D-; so if GPA=0.1, D-. If GPA=0.0? Exact 0.0 -> E.
+
+Also need to ensure for values > 4.0? Not expected? But we can clamp to 4.0 or treat as A+. Might not matter.
+
+Implementation: Iterate over grades, for each g value get grade string via if-elif sequence. Ensure float comparison. So we will compare using > and ==.
+
+Docstring: Provided. We'll use.
+
+Return list of letter grades. We should ensure type of input list maybe list of numbers. Should raise error? Not needed.
+
+Edge Cases: 4.0 -> A+. 3.7 -> >3.7? no -> >3.3? yes => A-. Good.
+
+Implementation:
+
+def numerical_letter_grade(grades):
+    """doc""" 
+    result=[]
+    for g in grades:
+        if g == 4.0:
+            result.append('A+')
+        elif g > 3.7:
+            result.append('A')
+        elif g > 3.3:
+            result.append('A-')
+        elif g > 3.0:
+            result.append('B+')
+        elif g > 2.7:
+            result.append('B')
+        elif g > 2.3:
+            result.append('B-')
+        elif g > 2.0:
+            result.append('C+')
+        elif g > 1.7:
+            result.append('C')
+        elif g > 1.3:
+            result.append('C-')
+        elif g > 1.0:
+            result.append('D+')
+        elif g > 0.7:
+            result.append('D')
+        elif g > 0.0:
+            result.append('D-')
+        else:
+            result.append('E')
+    return result
+
+Better to include <=4.0 case; we treat g>=4.0 as 'A+'? The table only says 4.0 but not > 4.0 but we may treat as A+. Might use if g >= 4.0 to be safe.
+
+Also we need.
+
+Let's produce final function.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+def numerical_letter_grade(grades):
+    """It is the last week of the semester and the teacher has to give the grades
+    to students. The teacher has been making her own algorithm for grading.
+    The only problem is, she has lost the code she used for grading.
+    She has given you a list of GPAs for some students and you have to write 
+    a function that can output a list of letter grades using the following table:
+             GPA       |    Letter grade
+              4.0                A+
+            > 3.7                A 
+            > 3.3                A- 
+            > 3.0                B+
+            > 2.7                B 
+            > 2.3                B-
+            > 2.0                C+
+            > 1.7                C
+            > 1.3                C-
+            > 1.0                D+ 
+            > 0.7                D 
+            > 0.0                D-
+              0.0                E
+    
+
+    Example:
+    numerical_letter_grade([4.0, 3, 1.7, 2, 3.5]) --> ['A+', 'B', 'C-', 'C', 'A-']
+    """
+    letter_grades = []
+    for gpa in grades:
+        # Upper bound check – treat anything >= 4.0 as the top grade.
+        if gpa >= 4.0:
+            letter_grades.append('A+')
+        elif gpa > 3.7:
+            letter_grades.append('A')
+        elif gpa > 3.3:
+            letter_grades.append('A-')
+        elif gpa > 3.0:
+            letter_grades.append('B+')
+        elif gpa > 2.7:
+            letter_grades.append('B')
+        elif gpa > 2.3:
+            letter_grades.append('B-')
+        elif gpa > 2.0:
+            letter_grades.append('C+')
+        elif gpa > 1.7:
+            letter_grades.append('C')
+        elif gpa > 1.3:
+            letter_grades.append('C-')
+        elif gpa > 1.0:
+            letter_grades.append('D+')
+        elif gpa > 0.7:
+            letter_grades.append('D')
+        elif gpa > 0.0:
+            letter_grades.append('D-')
+        else:  # exactly 0.0 or negative (should not occur in normal input)
+            letter_grades.append('E')
+    return letter_grades
+```

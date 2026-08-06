@@ -1,0 +1,43 @@
+<|channel|>analysis<|message|>We need to implement is_happy(s). The function: if len(s) >=3 and every 3 consecutive letters are distinct. That means for each i from 0 to len-3, we need s[i], s[i+1], s[i+2] all distinct. So if any triple repeats, return False. Also check length >=3. So return True if length >=3 and all triples distinct. Implementation: iterate over indices. Use set or tuple. Use len(set(sub))==3. If all true, return True. If len(s) <3, return False.
+
+Edge cases: empty string? No. Should be fine.
+
+Return boolean.
+
+Docstring: Already given. Provide code.
+
+Let's implement.
+
+Also we might want to handle case where s is None? Not needed.
+
+Return True/False.
+
+Let's produce final answer.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+def is_happy(s):
+    """
+    You are given a string s.
+    Your task is to check if the string is happy or not.
+    A string is happy if its length is at least 3 and every 3 consecutive letters are distinct
+    For example:
+        is_happy(a) => False
+        is_happy(aa) => False
+        is_happy(abcd) => True
+        is_happy(aabb) => False
+        is_happy(adb) => True
+        is_happy(xyy) => False
+    """
+    # The string must be at least 3 characters long.
+    if len(s) < 3:
+        return False
+
+    # Check each 3‑letter window
+    for i in range(len(s) - 2):
+        # The 3 characters must be distinct
+        if len(set(s[i:i + 3])) != 3:
+            return False
+    return True
+```
+
+This function returns `True` if the string is happy, and `False` otherwise.

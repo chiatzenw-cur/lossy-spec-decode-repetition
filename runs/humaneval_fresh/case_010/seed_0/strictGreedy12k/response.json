@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8d1de9e70e7d65de",
+  "object": "text_completion",
+  "created": 1786002648,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function rolling_max that takes a list of integers and returns a list of rolling maxima until that moment. Example: [1,2,3,2,3,4,2] yields [1,2,3,3,3,4,4]. Implementation: maintain current max and append as list. Edge cases: empty list should return empty list. Possibly numbers can be negative. Implementation straightforward.\n\nWe need to fully reproduce function signature, docstring, and implementation.\n\nAlso caretaker: might use isinstance? Anyway.\n\nFocus: implement. Use comprehension? But simplest: iterate.\n\nEdge: use initial max = -infinity or None then update.\n\nLet's implement:\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\"...\n    \"\"\"\n    result = []\n    current_max = None\n    for num in numbers:\n        if current_max is None or num > current_max:\n            current_max = num\n        result.append(current_max)\n    return result\n\nDocstring: maybe mention empty returns empty.\n\nAlso unit test. Also maintain typing: use typing List: import typing.\n\nReturn list.\n\nThe function body is missing, but we need to output the full function.\n\nLet's produce final answer.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\"\n    From a given list of integers, generate a list of rolling maximum\n    element found until the given moment in the sequence.\n\n    The *rolling maximum* at position *i* is the maximum among the\n    values ``numbers[0]`` through ``numbers[i]`` inclusive.\n\n    Parameters\n    ----------\n    numbers : List[int]\n        Input list of integers.\n\n    Returns\n    -------\n    List[int]\n        A list where each element is the maximum of the input up to that\n        position.  For an empty ``numbers`` list the result is an empty\n        list.\n\n    Examples\n    --------\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    >>> rolling_max([])\n    []\n\n    \"\"\"\n    result: List[int] = []\n    max_so_far: int | None = None\n\n    for num in numbers:\n        if max_so_far is None or num > max_so_far:\n            max_so_far = num\n        result.append(max_so_far)\n\n    return result\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 212,
+    "total_tokens": 732,
+    "completion_tokens": 520,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

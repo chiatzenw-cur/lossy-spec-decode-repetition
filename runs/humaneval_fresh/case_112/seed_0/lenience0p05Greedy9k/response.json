@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bd0d6f62658a6952",
+  "object": "text_completion",
+  "created": 1786024372,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that takes a string of space separated lowercase letters, returns a dict mapping letter(s) with maximum count to the count. The input string may contain spaces separated by spaces. Example: 'a b c a b' -> counts: a=2, b=2, c=1. Max count 2. So dictionary {'a':2,'b':2}. For empty string, return {}.\n\nAlso if string contains spaces, maybe there are multiple spaces? The problem says \"space separated lowercase letters\". So we can split by space. For '' -> splitting yields empty list, so counts empty.\n\nEdge cases: Could have trailing spaces? Splitting by space automatically splits on whitespace, but if only one space, we can use split() which splits on any whitespace. But for string with spaces, we can just split on whitespace. That will ignore leading/trailing spaces. For 'a b c' -> 'a','b','c'.\n\nAlso if extra spaces? Not needed.\n\nImplementation: count = collections.Counter(test.split()). Then find max count. If test empty, return {}. Then create dict of items with count == max_count: {k: v for k, v in counter.items() if v==max_count}. Return dict.\n\nDocstring: The function signature: def histogram(test): The docstring is given. We need to produce the function body. The function should be self-contained.\n\nWe need to produce the full function. The function definition is given. We need to include the function body. So we provide:\n\ndef histogram(test):\n    \"\"\"Given a string representing a space separated lowercase letters, return a dictionary...\n    Example:\n    ...\n    \"\"\"\n    # implementation\n    if not test:\n        return {}\n    # Count letters\n    words = test.split()\n    if not words:\n        return {}\n    counts = collections.Counter(words)\n    max_count = max(counts.values())\n    return {k: v for k, v in counts.items() if v == max_count}\n\nBut we need to import Counter. We cannot import inside function? We can import inside. But we can import from collections import Counter. So we can include inside function.\n\nWe need to ensure we import only inside. The function body is inside function. So we can import inside.\n\nEdge: if string contains spaces but no letters: e.g., '   ' -> .split() returns empty list. returns {}.\n\nEdge: if string contains other letters: but spec says only lowercase letters. No need to check.\n\nOk.\n\nBut we need to return dictionary of letters with count. So we return a dict mapping letter to count. That is correct.\n\nWe also need to ensure that the function returns a dict of letter(s) with count. For multiple letters, we return dict.\n\nOk.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef histogram(test):\n    \"\"\"Given a string representing a space separated lowercase letters, return a dictionary\n    of the letter with the most repetition and containing the corresponding count.\n    If several letters have the same occurrence, return all of them.\n\n    Example:\n    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}\n    histogram('a b b a') == {'a': 2, 'b': 2}\n    histogram('a b c a b') == {'a': 2, 'b': 2}\n    histogram('b b b b a') == {'b': 4}\n    histogram('') == {}\n\n    \"\"\"\n    # Fast exit: empty string\n    if not test:\n        return {}\n\n    # Split the string into words (letters) and count them\n    words = test.split()\n    if not words:\n        return {}\n\n    # Count occurrences\n    from collections import Counter\n    counts = Counter(words)\n\n    # Find the maximum count\n    max_count = max(counts.values())\n\n    # Build a dictionary of all letters that have the maximum count\n    return {k: v for k, v in counts.items() if v == max_count}\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 263,
+    "total_tokens": 1105,
+    "completion_tokens": 842,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

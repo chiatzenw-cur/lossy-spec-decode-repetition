@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a636b82fbbe85c2a",
+  "object": "text_completion",
+  "created": 1786012393,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function. We must import hashlib. Return None if text is empty. Else compute md5 digest and return hex digest. The docstring has example: string_to_md5('Hello world') -> '3e25960a79dbc69b674cd4ec67a72c62'.\n\nImplement as usual.\n\nWe need to include function body fully. Implementation:\n\n```\nimport hashlib\n\ndef string_to_md5(text):\n    \"\"\"\n    ...\n    \"\"\"\n    if not text:\n        return None\n    m = hashlib.md5()\n    m.update(text.encode('utf-8'))\n    return m.hexdigest()\n```\n\nWe also need to import hashlib at top level or inside function. We can import in function or at module level. Provide the function with appropriate docstring and code.\n\nWe also need to include the safety for unicode; text could be string, we encode to utf-8. Also maybe support bytes? Not required.\n\nAlso: Some style: use text.encode('utf-8') is fine.\n\nWe should include doctest example. Should it be strict equality? The docstring shows==. That's okay.\n\nMake sure to include __all__? Not necessary.\n\nThus full function as request: signature, docstring and body. Provide in python code block.<|end|><|start|>assistant<|channel|>final<|message|>```python\nimport hashlib\n\ndef string_to_md5(text):\n    \"\"\"\n    Given a string `text`, return the MD5 hash of the string as a\n    hexadecimal string.  If `text` is an empty string, return ``None``.\n\n    The function is safe for Unicode input; the string is first encoded\n    using UTF‑8 before hashing.\n\n    Example:\n    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    \"\"\"\n    if not text:                       # Empty string or None\n        return None\n\n    md5_obj = hashlib.md5()\n    md5_obj.update(text.encode('utf-8'))\n    return md5_obj.hexdigest()\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 188,
+    "total_tokens": 615,
+    "completion_tokens": 427,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

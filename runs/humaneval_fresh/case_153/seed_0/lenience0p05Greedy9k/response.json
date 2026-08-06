@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-942b10071406497b",
+  "object": "text_completion",
+  "created": 1786027308,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function compare(game,guess). The function should return a list of differences: each index is 0 if guess matches score else absolute difference. The input arrays are lists of numbers. The function should handle length equal. Should handle maybe negative? No special. Just return list. Should docstring. Provide code. Also handle if input lists are np arrays? But not necessary. Provide simple.\n\nEdge cases: not equal length -> raise ValueError? But we can just compute up to min length. But spec says equal length. So we can just compute.\n\nReturn list of ints.\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef compare(game, guess):\n    \"\"\"\n    Determine the distance from each guess to the actual score.\n\n    The function compares two lists of equal length, `game` and `guess`.  \n    For each index `i` the return list contains:\n\n        * `0` if `guess[i] == game[i]`\n        * `abs(guess[i] - game[i])` otherwise\n\n    The function assumes that the input lists are of the same length and that\n    they contain numeric values (int or float).  It does not modify the input\n    lists.\n\n    Parameters\n    ----------\n    game : list[int | float]\n        The list of actual scores for each match.\n    guess : list[int | float]\n        The list of guesses corresponding to the same matches.\n\n    Returns\n    -------\n    list[int | float]\n        A list of the same length as the inputs, where each element is\n        the distance between the guess and the actual score.\n\n    Examples\n    --------\n    >>> compare([1,2,3,4,5,1], [1,2,3,4,2,-2])\n    [0, 0, 0, 0, 3, 3]\n    >>> compare([0,5,0,0,0,4], [4,1,1,0,0,-2])\n    [4, 4, 1, 0, 0, 6]\n    \"\"\"\n    if len(game) != len(guess):\n        raise ValueError(\"Input lists must have the same length\")\n\n    return [0 if g == h else abs(g - h) for g, h in zip(game, guess)]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 342,
+    "total_tokens": 831,
+    "completion_tokens": 489,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,64 @@
+<|channel|>analysis<|message|>We need to implement a function to find the strongest extension by computing strength = number of uppercase letters minus number of lowercase letters. Actually description: "CAP be the number of uppercase letters in the extension's name, and let SM be number of lowercase letters. strength given by fraction CAP - SM." That phrasing confusing but I think they mean integer difference: CAP - SM.
+
+Goal: find maximum strength, ties choose first. Use list order.
+
+Return string: class_name + '.' + chosen_extension.
+
+Edge cases: extensions may have no letters? But may contain digits or punctuation? We just count uppercase/lowercase by str.isupper/islower.
+
+Take case sensitivity: other characters are ignored.
+
+Implementation: loop over extensions with enumerate, compute counts, maintain best_strength and best_index.
+
+Return. Also validate that class_name is a string, extensions list of strings. But not necessary.
+
+Simplify.
+
+Examples: 'Slices' and ['SErviNGSliCes', 'Cheese', 'StuFfed']:
+
+Count uppercase in 'SErviNGSliCes': letters: S E r v i N G S l i C e s? Let's compute quickly: letters: S(1) E(2) r( ) v( ) i( ) N(3) G(4) S(5) l( ) i( ) C(6) e( ) s( ). So CAP=6 maybe? Wait count. For 'SErviNGSliCes', capitals: S, E, N, G, S, C = 6. SM lower: r v i l i e s? Actually includes 7? Let's count: r(1) v(2) i(3) l(4) i(5) e(6) s(7). So SM=7. strength = 6-7 = -1.
+
+'Cheese': capital C:1, lower: h e e s e 5 => strength -4.
+
+'StuFfed': capitals S F? Actually S, F =2; lower: t u u e d? Check: 'StuFfed' letters: S t u F f e d: capitals S, F =2; lowercase t u f e d =5 => -3. So best is -1 (SE...).
+
+Return 'Slices.SErviNGSliCes'.
+
+Edge when tie: choose first.
+
+Implementation done.
+
+Return f"{class_name}.{best_ext}"
+
+Also if extensions empty? Not specified; skip.
+
+Finish.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def Strongest_Extension(class_name, extensions):
+    """Return the strongest extension for a class.
+
+    For each extension name compute  
+        strength = (#uppercase letters) – (#lowercase letters)
+
+    The strongest extension (maximum strength) is selected; ties are resolved by the
+    order of appearance in ``extensions``.  
+    The result is formatted as ``ClassName.ExtensionName``.
+    """
+    best_ext = None
+    best_strength = None
+
+    for ext in extensions:
+        # Count uppercase and lowercase letters
+        cap = sum(1 for c in ext if c.isupper())
+        sm = sum(1 for c in ext if c.islower())
+        strength = cap - sm
+
+        if best_strength is None or strength > best_strength:
+            best_strength = strength
+            best_ext = ext
+
+    # If no extensions were provided, return the class name alone
+    if best_ext is None:
+        return class_name
+
+    return f"{class_name}.{best_ext}"
+```

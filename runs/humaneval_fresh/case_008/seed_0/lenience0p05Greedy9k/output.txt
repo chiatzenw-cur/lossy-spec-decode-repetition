@@ -1,0 +1,47 @@
+<|channel|>analysis<|message|>We need to implement filter_by_substring. The function signature: def filter_by_substring(strings: List[str], substring: str) -> List[str]: It returns list of strings that contain substring. Straightforward. Should handle empty list, empty substring? The docstring says "contains given substring". For empty substring, we can treat it as all strings contain substring? In Python, ''. in string returns True. So filter returns original list. But we can implement straightforward.
+
+Edge cases: None. Should be simple.
+
+Return [s for s in strings if substring in s].
+
+Potential improvement: use list comprehension. Return list.
+
+We can also use filter function.
+
+Docstring: Provide example.
+
+Implementation: def filter_by_substring(strings: List[str], substring: str) -> List[str]: return [s for s in strings if substring in s].
+
+We can also add docstring.
+
+Let's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """
+    Return a list of strings that contain the specified substring.
+
+    Parameters
+    ----------
+    strings : List[str]
+        The list of strings to search.
+    substring : str
+        The substring to look for.
+
+    Returns
+    -------
+    List[str]
+        A new list containing only those strings that contain the substring.
+
+    Examples
+    --------
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    # Using a simple list comprehension keeps the code concise and readable.
+    return [s for s in strings if substring in s]
+```
+
+---

@@ -1,0 +1,43 @@
+<|channel|>analysis<|message|>We need to complete the function. The docstring gives examples: count_distinct_characters('xyzXYZ') returns 3; 'Jerry' returns 4. Actually 'Jerry' includes letters: J,e,r,r,y. Distinct without case: j,e,r,y = 4. So let's implement.
+
+We need to take a string, count distinct characters regardless of case: unify to lower or upper and use set. Should ignore case only: so difference between 'abc' and 'ABC' both count same.
+
+Implementation: def count_distinct_characters(string: str) -> int: lower_str = string.lower(); return len(set(lower_str)).
+
+Edge cases: the string could contain non-alpha? The function should count all distinct characters, regardless of case; but if non-alphabetic, case doesn't apply. But just using set is fine. For letters: we unify to lower case. For digits, they don't change. For punctuation, they are unchanged. Implementation okay.
+
+Add docstring: already present.
+
+Wrap whole function. Provide final block.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def count_distinct_characters(string: str) -> int:
+    """Given a string, find out how many distinct characters (regardless of case) it consists of.
+
+    Examples
+    --------
+    >>> count_distinct_characters('xyzXYZ')
+    3
+    >>> count_distinct_characters('Jerry')
+    4
+
+    Notes
+    -----
+    The function treats 'A' and 'a' as the same character; the rest of the
+    characters are considered distinct.  Non‑alphabetic characters are counted
+    as they appear.
+
+    Parameters
+    ----------
+    string : str
+        The input string to analyze.
+
+    Returns
+    -------
+    int
+        The number of distinct characters (case‑insensitive).
+    """
+    # Convert all alphabetic characters to lower case to ignore case and use a set
+    # to get unique elements.
+    lower_string = string.lower()
+    distinct_chars = set(lower_string)
+    return len(distinct_chars)
+```

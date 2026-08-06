@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b405cad502541679",
+  "object": "text_completion",
+  "created": 1786010080,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function is_sorted(lst) that returns True if list sorted ascending order, and no number occurs more than once? Wait: \"If list has more than 1 duplicate of the same number, return False.\" Means duplicates allowed as long as each number appears at most twice? Actually \"more than 1 duplicate\" means appears at least 3 times? Example: [1,2,2,3,3,4] is True; duplicates appear twice each, permitted. [1,2,2,2,3,4] -> duplicate 2 appears 3 times, so False. So rule: each number can appear at most twice.\n\nAlso consider ordering: ascending order may allow equal adjacent numbers in ascending sequence (non-decreasing). So we should check each consecutive pair non-decreasing. Additionally, exceed duplicate limit 2.\n\nReturn True for single element always sorted.\n\nEdge cases: empty list? Not specified, but we can treat empty as True. Also duplicates >2 contiguous but maybe duplicates separated? Example: [1,2,1,2,3]? Not sorted because not non-decreasing.\n\nImplementation: iterate through list, maintain previous element. Count occurrences using dictionary or just track previous duplicates: we can maintain a dict counts; if any number's count >2 return False. Check ordering: if current < prev: return False.\n\nAlso duplicates can be non-consecutive? But if list sorted, duplicates will be consecutive. So no issue. We'll keep dictionary.\n\nWe should also allow only integers and no negative numbers but not necessary to enforce.\n\nReturn bool.\n\nLet's craft docstring maybe expand.\n\nAdd tests? Not needed.\n\nWe need full function: signature, docstring, implementation. Provide in python block. Let's write.\n\nAlso note we should check duplicate count only after seeing duplicates.\n\nImplementation:\n\n```\ndef is_sorted(lst):\n    '''\n    Given positive integer list, returns True if list sorted (non-decreasing) and no value appears more than twice.\n    ...\n    '''\n    if not lst:\n        return True\n    counts = {}\n    prev = lst[0]\n    counts[prev] = 1\n    for num in lst[1:]:\n        if num < prev:\n            return False\n        counts[num] = counts.get(num, 0) + 1\n        if counts[num] > 2:\n            return False\n        prev = num\n    return True\n```\n\nYes.\n\nReturn example.\n\nOk.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef is_sorted(lst):\n    '''\n    Determine whether a list of non‑negative integers is sorted in\n    ascending (non‑decreasing) order and whether no integer appears\n    more than twice.\n\n    A list is considered sorted if every element is greater than or equal\n    to the previous one.  Duplicates are allowed, but a value may occur\n    at most two times; if any number appears three or more times the\n    function returns False.\n\n    Parameters\n    ----------\n    lst : list[int]\n        A list of non‑negative integers.\n\n    Returns\n    -------\n    bool\n        True if the list is sorted and no number appears more than twice,\n        otherwise False.\n\n    Examples\n    --------\n    >>> is_sorted([5])\n    True\n    >>> is_sorted([1, 2, 3, 4, 5])\n    True\n    >>> is_sorted([1, 3, 2, 4, 5])\n    False\n    >>> is_sorted([1, 2, 2, 3, 3, 4])\n    True\n    >>> is_sorted([1, 2, 2, 2, 3, 4])\n    False\n    '''\n    if not lst:\n        return True  # empty list is trivially sorted\n\n    counts = {}\n    prev = lst[0]\n    counts[prev] = 1\n\n    for num in lst[1:]:\n        # Check ascending order\n        if num < prev:\n            return False\n\n        # Track occurrence count\n        counts[num] = counts.get(num, 0) + 1\n        if counts[num] > 2:\n            return False\n\n        prev = num\n\n    return True\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 361,
+    "total_tokens": 1239,
+    "completion_tokens": 878,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b7a8cb25563ad156",
+  "object": "text_completion",
+  "created": 1786020567,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement monotonic check: returns True if list elements are strictly monotonically increasing or decreasing? The docstring says \"Return True is list elements are monotonically increasing or decreasing.\" It doesn't specify strictly or non-strict. Usually \"monotonically increasing\" means each element >= previous, or strictly increasing? Let's analyze examples: [1, 2, 4, 20] returns True. [1, 20, 4, 10] returns False. [4, 1, 0, -10] returns True. So both decreasing and increasing are allowed. For non-strict? There is no example with equal values. Could be non-strict. Let's treat as non-decreasing or non-increasing. But we need to handle duplicates. We can decide to consider non-strict: if all elements are >= previous, then it's increasing; if all elements are <= previous, then it's decreasing. If both conditions hold, then it's constant: e.g., [1,1,1] returns True. Implementation: if not list: return True. Compute two booleans: inc, dec. For each pair, if arr[i] < arr[i+1], then inc=True; else dec=True? Wait: the typical approach: iterate over pairs, if a[i] < a[i+1] then inc=True; else if a[i] > a[i+1] then dec=True; if both inc and dec are True, then not monotonic. The final check: if inc and dec: return False, else return True. But we also need to consider that if list is empty, we can return True. Or we can treat length 1 trivially True. Let's implement.\n\nEdge cases: Suppose list is empty: return True. All ones: inc False, dec False. So returns True. Good.\n\nBut we also need to consider that duplicates may be considered as monotonic. So we can keep as above.\n\nLet's produce final function:\n\ndef monotonic(l: list):\n    \"\"\"Return True if list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n    if len(l) <= 1:\n        return True\n    inc = False\n    dec = False\n    for i in range(1, len(l)):\n        if l[i] < l[i-1]:\n            inc = True\n        elif l[i] > l[i-1]:\n            dec = True\n        # else values equal, no change\n        if inc and dec:\n            return False\n    return True\n\nBut we need to check if we treat monotonic as strictly increasing or strictly decreasing. The example uses only increasing or decreasing. If we consider strict monotonic, we would need to check if any equal values produce False. But the docstring didn't mention strictness. It's ambiguous. But typical pattern \"monotonically increasing\" means non-strict. But we can mention that.\n\nLet's produce final code with docstring. Also we can add Quick type hints. Provide docstring. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef monotonic(l: list):\n    \"\"\"Return True if list elements are monotonically increasing or decreasing.\n    \n    A sequence is considered monotonic if it is either non‑decreasing or\n    non‑increasing.  A single element or an empty list is trivially\n    monotonic.\n\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n    # Empty or single‑element lists are trivially monotonic\n    if len(l) <= 1:\n        return True\n\n    # Track whether the sequence has seen a rise or a fall\n    inc = False\n    dec = False\n\n    for i in range(1, len(l)):\n        if l[i] < l[i - 1]:\n            inc = True\n        elif l[i] > l[i - 1]:\n            dec = True\n\n        # If both rises and falls have occurred, the sequence is not monotonic\n        if inc and dec:\n            return False\n\n    return True\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 198,
+    "total_tokens": 1133,
+    "completion_tokens": 935,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

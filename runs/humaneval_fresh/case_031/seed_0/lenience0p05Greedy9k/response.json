@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-987d5688e56b84ce",
+  "object": "text_completion",
+  "created": 1786018687,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement get_positive that takes list of numbers, returns only positive numbers. The function should preserve order and exclude zero. Should return list of positives. Should handle negative numbers and maybe floats. Should return list of ints. Should handle non-numeric? The docstring only lists positive numbers. Use list comprehension. Provide type hints. Provide docstring. Implementation: def get_positive(l: list): return [x for x in l if isinstance(x, (int, float)) and x > 0]. But maybe we want to preserve only numbers. The test example uses only numbers. So we can just return [x for x in l if x > 0]. That works. Provide docstring. Provide type hints. Provide explanation. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef get_positive(l: list):\n    \"\"\"\n    Return only positive numbers in the list.\n\n    The function iterates over the input list and keeps only the\n    elements that are strictly greater than zero.  Zero is not\n    considered positive, and negative numbers are removed.  The\n    order of the original elements is preserved.\n\n    Parameters\n    ----------\n    l : list\n        A list containing numeric values (int, float, etc.).\n\n    Returns\n    -------\n    list\n        A list containing only the positive numbers from `l`.\n\n    Examples\n    --------\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n    # Use a list comprehension to filter out non‑positive values.\n    return [x for x in l if isinstance(x, (int, float)) and x > 0]\n```\n\n**Explanation**\n\n1. The function iterates over the input list `l`.\n2. It checks whether each element is a numeric type (`int` or `float`) and that it is greater than zero.\n3. The list comprehension builds a new list containing only those elements that satisfy the condition.\n4. The result is returned, preserving the original order of the elements.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 225,
+    "total_tokens": 713,
+    "completion_tokens": 488,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

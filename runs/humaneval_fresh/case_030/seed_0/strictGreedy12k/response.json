@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-982a8e53f1338566",
+  "object": "text_completion",
+  "created": 1786003890,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to complete the function filter_by_prefix that takes a list of strings and prefix, returns a list of strings that start with the given prefix. It's straightforward: iterate, check str.startswith(prefix), return list. Also need to maintain order. The docstring shows examples; let's return list comprehension.\n\nBut it's a test; we need to fully implement the function body.\n\nAlso, we need to consider prefix could be empty string: then all strings should be returned? Probably yes. test not included, but typical semantics: all strings start with empty prefix. So return strings as is.\n\nAdditionally, we might want to handle None input? Not necessary.\n\nThus implement:\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]: return [s for s in strings if s.startswith(prefix)]\n\nBut ensure types import is fine.\n\nAdditionally, maybe include use of filter function? All good.\n\nAlso: keep typing.\n\nthe docstring indicates filter by prefix.\n\nTherefore final output:\n\n```python\nfrom typing import List\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    return [s for s in strings if s.startswith(prefix)]\n```\n\nMake sure to import List at the top (already imported). That’s all.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\"Filter an input list of strings only for ones that start with a given prefix.\n\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    # List comprehension keeps the original ordering.\n    return [s for s in strings if s.startswith(prefix)]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 200,
+    "total_tokens": 633,
+    "completion_tokens": 433,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,58 @@
+<|channel|>analysis<|message|>We need to find the number of times a substring appears in string, counting overlapping. Straight. But may have special cases: substring empty? How many times? In examples, substring 'a', string '' returns 0. For substring empty let's decide: searching empty substring typically yields len(string)+1 occurrences. But not requested; maybe return 0. Use while loop: iterate indices from 0 to len(string)-len(substring)+1. For each position, if string[i:i+len(substring)]== substring increment. That's simple. Complexity O(n*m). Use slicing.
+
+Alternatively could use str.find with start index advanced by 1 to allow overlap. Use while True: index = string.find(substring, start). If -1 break. Count++; start = index+1. This counts overlapping. Works even for empty substrings? find('','') returns 0 always; could infinite loop. So guard against substring empty: return 0.
+
+Return int.
+
+Write docstring. Implementation. Use while loop.
+
+Also include examples: test.
+
+Edge cases: string == '', substring '': we'll return 0. Good.
+
+Do not import modules. Simple.
+
+We must produce full function with signature, docstring, and body. Also maybe add optional type hints imported? Already signature includes.
+
+Ok. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def how_many_times(string: str, substring: str) -> int:
+    """Find how many times a given substring can be found in the original string.
+    Count overlapping matches.
+
+    Parameters
+    ----------
+    string : str
+        The string to search in.
+    substring : str
+        The substring to search for.
+
+    Returns
+    -------
+    int
+        The number of occurrences of *substring* in *string*,
+        counting overlapping matches.
+
+    Examples
+    --------
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not substring or not string:
+        # Empty pattern or empty text: no meaningful matches
+        return 0
+
+    count = 0
+    start = 0
+    while True:
+        pos = string.find(substring, start)
+        if pos == -1:
+            break
+        count += 1
+        # Advance by one so that overlapping matches are counted
+        start = pos + 1
+    return count
+```

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9c0e43d05451744c",
+  "object": "text_completion",
+  "created": 1786009702,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function maximum(arr, k). Provide sorted list of length k with maximum k numbers in arr. Output sorted ascending. Implementation: if k==0 return [].\n\nWe can use sorted arr descending, take first k, sort ascending as output. But let's consider complexity: array up to 1000. Simpler: sorted arr, take last k, then sort ascending? Sorted ascending gives list of all; largest k are at end. So final answer: sorted(arr)[-k:] ascending. But need to handle k=0: sorted(arr)[0:0]? That yields empty list. So safe: if k==0: return [] else: arr_sorted = sorted(arr); return arr_sorted[-k:] if k>0 else []? But arr_sorted[-k:] when k>0 will yield last k elements already ascending. For k=0, -0 is 0, arr_sorted[0:] entire list. Wrong. So handle. Implementation:\n\ndef maximum(arr, k):\n    \"\"\"Docstring repeated...\"\"\"\n    if k <= 0:\n        return []\n    arr_sorted = sorted(arr)\n    return arr_sorted[-k:]\n\nAlternate: to ensure sorted ascending: arr_sorted[-k:].\n\nBecause negative indexing: arr_sorted[-k:] returns last k elements. Works for k>0. For k==len(arr) returns full list sorted ascending. For k==0, use early return.\n\nEdge: This returns ascending values as required.\n\nBut maybe they expect another algorithm: find max k numbers better than sorting maybe using heap. But simple sorting fine: O(n log n) with small n.\n\nLet's produce final function.\n\nAlso docstring same as given or we can duplicate.\n\nReturn type: List[int].\n\nUse typing? Not necessary.\n\nLet's produce final answer inside triple-backticks.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n    if k <= 0:\n        return []\n\n    # Sort the array in ascending order and take the last k elements.\n    # Those are the k largest numbers, already sorted ascending.\n    sorted_arr = sorted(arr)\n    return sorted_arr[-k:]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 329,
+    "total_tokens": 974,
+    "completion_tokens": 645,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

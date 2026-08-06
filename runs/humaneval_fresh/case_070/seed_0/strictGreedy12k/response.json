@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9455eb2382558f29",
+  "object": "text_completion",
+  "created": 1786006401,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function search(lst) that returns the greatest integer that is greater than zero, and has a frequency >= the integer itself. If no such integer exists, return -1.\n\nExamples:\nsearch([4,1,2,2,3,1]) => 2\nMaybe 3 appears once, 2 appears twice => freq=2 >= 2 => candidate; 4 appears once => freq=1 <4; 1 appears twice => freq=2 >=1; but greatest integer among those: 2? Wait 1 also qualifies, 2 qualifies, 3 fails. 2 is greater. So correct.\n\nsearch([1,2,2,3,3,3,4,4,4]) => 3. Let's see: 4 appears 3 times, freq=3 >= 4? No, 3 >= 4 false. 3 appears 3 times freq=3 >=3 true. So 3 qualifies; 2 appears twice freq=2 >=2, 1 appears once freq=1>=1. Largest is 3.\n\nsearch([5,5,4,4,4]) => 5 appears twice freq=2 < 5; 4 appears 3 times freq=3 <4; So none qualifies => -1.\n\nEdge: non-empty list of positive integers (so >0). So just process. Implementation: count frequencies using collections.Counter or dict. Then iterate through items; for each number, if freq >= number and number>0: record. Then return max values if list not empty else -1. Complexity O(n). Also docstring as provided.\n\nTricky: \"greatest integer that is greater than zero\" maybe \"greater than zero\" means positive >0: list given as positive ints. But our function ensures candidate >0. So fine.\n\nReturn -1 if none. Use max with default? In Python 3.9, max(... default=-1). But better to compute.\n\nLet's craft:\n\ndef search(lst):\n    '''\n    ...\n    '''\n\nImplementation:\n\ndef search(lst):\n    '''\n    ... provided docstring\n    '''\n    from collections import Counter\n    freq = Counter(lst)\n    candidates = [num for num, cnt in freq.items() if num>0 and cnt>=num]\n    return max(candidates) if candidates else -1\n\nThat's fine.\n\nBut we could also implement more explicit to avoid imports? But it's fine.\n\nTest examples. Search([4,1,2,2,3,1]) => freq: {4:1,1:2,2:2,3:1}. candidates: 1 (cnt=2>=1), 2 (cnt=2>=2). max => 2.\n\nCheck second: freq: {1:1,2:2,3:3,4:3}. candidates: 1,2,3. max =>3.\n\nThird: freq {5:2,4:3}. candidates empty => -1.\n\nEdge: [0] if allowed? but spec says positive >0. So may ignore.\n\nPotential issues: duplicates, but Counter handles.\n\nShould we sort? not necessary.\n\nIf numbers large? fine.\n\nI think this is good.\n\nNow produce function fully.\n\nLet's write docstring exactly as given? Provide the same docstring or reformat? Provide the same. We can keep docstring identical to given. The prompt: \"Only the function body is missing; reproduce the full function (signature, docstring, and your implementation).\" So they want the entire function including docstring. Provide as final answer.\n\nLet's output the full function.\n\nBe careful: function will be named search. Provide signature def search(lst): docstring exactly as given (original). Then implement. Provide final code.\n\nLet's produce.\n\n<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef search(lst):\n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than \n    zero, and has a frequency greater than or equal to the value of the integer itself. \n    The frequency of an integer is the number of times it appears in the list.\n    If no such a value exist, return -1.\n    Examples:\n        search([4, 1, 2, 2, 3, 1]) == 2\n        search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3\n        search([5, 5, 4, 4, 4]) == -1\n    '''\n    from collections import Counter\n\n    freq = Counter(lst)\n    candidates = [num for num, count in freq.items() if num > 0 and count >= num]\n    return max(candidates) if candidates else -1\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 277,
+    "total_tokens": 1273,
+    "completion_tokens": 996,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

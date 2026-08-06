@@ -1,0 +1,18 @@
+<|channel|>analysis<|message|>We need to implement get_positive that returns only positive numbers. The function signature already has parameters: l: list. We need to iterate and return a new list of numbers >0. Should skip zeros. Use list comprehension. Ensure preserve order. Possibly filter also ensures it's numeric? But examples only ints. We'll cast? But list of numbers. Probably safer: test if isinstance(x, (int, float)) and x > 0.
+
+Write docstring unchanged. Provide implementation. Use list comprehension: [x for x in l if isinstance(x, (int,float)) and x > 0]. Return that.
+
+Rewrite function fully.
+
+Also consider returning list. Completion. Provide final code.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def get_positive(l: list):
+    """Return only positive numbers in the list.
+    >>> get_positive([-1, 2, -4, 5, 6])
+    [2, 5, 6]
+    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])
+    [5, 3, 2, 3, 9, 123, 1]
+    """
+    # Use a list comprehension to keep order and filter only strictly positive values.
+    # The check against (int, float) ensures that non‑numeric items are ignored.
+    return [x for x in l if isinstance(x, (int, float)) and x > 0]
+```

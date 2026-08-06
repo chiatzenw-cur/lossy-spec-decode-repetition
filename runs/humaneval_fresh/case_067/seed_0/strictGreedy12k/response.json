@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-924b9c743c25c5eb",
+  "object": "text_completion",
+  "created": 1786006217,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function digitSum(s) that returns sum of ASCII codes of upper characters only. So we sum ord(c) for c in s if c.isupper(). Let's test with examples. For \"abAB\": A=65, B=66 sum=131 correct. For \"abcCd\": 'C'=67 sum=67 correct. For \"helloE\": 'E'=69 sum=69 correct. For \"woArBld\": uppercase: 'A'=65, 'B'=66 sum=131 correct. For \"aAaaaXa\": uppercase: 'A'=65, 'X'=88 sum=153 correct. Yes.\n\nImplement function accordingly. Also handle empty string returns 0. Should handle any string. So:\n\ndef digitSum(s):\n    '''... same docstring.'''\n    total = 0\n    for ch in s:\n        if ch.isupper():\n            total += ord(ch)\n    return total\n\nThat's it. Add typing optional? not necessary. The docstring has mistake apostrophes but okay.\n\nLet's produce final function.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef digitSum(s: str) -> int:\n    \"\"\"\n    Task\n    Write a function that takes a string as input and returns the sum of the upper characters only\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n    total = 0\n    for c in s:\n        if c.isupper():\n            total += ord(c)\n    return total\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 223,
+    "total_tokens": 595,
+    "completion_tokens": 372,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

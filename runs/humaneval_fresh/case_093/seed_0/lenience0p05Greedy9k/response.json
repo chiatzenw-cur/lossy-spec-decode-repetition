@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8f16447735ce0083",
+  "object": "text_completion",
+  "created": 1786023005,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement any_int(x, y, z) that returns True if one of the numbers is equal to the sum of the other two, and all numbers are integers. Also, if they are not integers, return False.\n\nWe need to consider if any of the numbers is integer. So we need to check that all are ints. Use isinstance(x, int) and same for y and z. But note that Python bool is subclass of int. So we might want to treat bool as int? Usually we want to treat bool as int? But typical check: if isinstance(x, int) and not isinstance(x, bool) etc. But let's keep simple: if isinstance(x, int) and not isinstance(x, bool) etc. But the original problem didn't specify that. But probably they want to consider only integers. So we can ignore bool.\n\nEdge cases: if x+y+z==0, e.g., x=0, y=0, z=0. Then all three are integers, and sum of two equals the third. For example, x=0, y=0, z=0: 0+0=0, so yes. So we return True.\n\nAlso, if x=2, y=3, z=5: 2+3=5, so True.\n\nAlso, if x=3, y=2, z=2: 3+2=5, 3+2=5, 2+2=4, none equal 5. So false.\n\nAlso, if x=3, y=2, z=2: 3+2=5, 3+2=5, 2+2=4, none equal 5; false.\n\nAlso, if x=3, y=2, z=2: 3+2=5, 3+2=5, 2+2=4, none equal 5. So false.\n\nAlso, test with negative numbers: 3, -2, 1: 3+(-2)=1, so yes. So we return True.\n\nAlso, if x=3.6, -2.2, 2: not integers, so False.\n\nAlso, if x=3.6, -2.2, 6.8: 3.6+(-2.2)=1.4, 6.8? 3.6+6.8=10.4, etc. So false.\n\nAlso, we need to check that all are ints. So we check that all isinstance(x, int) and all not isinstance(x, bool). But if we treat bool as int, then 3, 0, 3? bool is int, but okay. But we can ignore.\n\nThen check if any of the numbers equal sum of other two. For each:\n\n- if x == y + z: return True\n- if y == x + z: return True\n- if z == x + y: return True\n\nReturn False.\n\nEdge cases: if x+y+z=0? But we only check the three conditions.\n\nWe also need to consider that the function returns True if sum of the other two equals the third. That is symmetrical.\n\nWe also need to consider if the input is a list of numbers? But the function expects 3 numbers.\n\nThus final implementation:\n\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    '''\n    if not (isinstance(x, int) and isinstance(y, int) and isinstance(z, int)):\n        return False\n    return x == y + z or y == x + z or z == x + y\n\nPotential improvement: use isinstance(x, bool) and exclude. But we can just use int.\n\nBut we might also want to check that x is not a float but integer. But bool is int, so we could treat bool as int. But it's fine.\n\nThus final code.\n\nBut the problem might want to consider that the function is part of a larger solution. But we can just implement as above.\n\nWe also need to include docstring and function body. The function body is missing.\n\nThus final answer: Provide full function.\n\nLet's produce final code.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef any_int(x, y, z):\n    \"\"\"\n    Return True if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Otherwise, return False.\n\n    Examples\n    --------\n    >>> any_int(5, 2, 7)\n    True\n    >>> any_int(3, 2, 2)\n    False\n    >>> any_int(3, -2, 1)\n    True\n    >>> any_int(3.6, -2.2, 2)\n    False\n    \"\"\"\n    # Ensure all three arguments are integers\n    if not (isinstance(x, int) and isinstance(y, int) and isinstance(z, int)):\n        return False\n\n    # Check the three possible equalities\n    return x == y + z or y == x + z or z == x + y\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 247,
+    "total_tokens": 1345,
+    "completion_tokens": 1098,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

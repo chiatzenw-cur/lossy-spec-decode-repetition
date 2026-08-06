@@ -1,0 +1,66 @@
+<|channel|>analysis<|message|>We need to complete the function is_prime(n). Provide docstring and implementation. Should correctly handle negative numbers? Typical prime definition for integer >1 only. Should return False for n <=1, and for >1 check up to sqrt(n). Could try efficient trial division: check divisible by 2 first, then odd i from 3 to sqrt+1 step 2. Or also use 2 and 3 special case. Could also use Miller-Rabin for speed but simple is fine. Provide typical docstring.
+
+Examples: is_prime(6)=False, 101 True, 11 True, 13441 True, 61 True, 4 False, 1 False. Implementation should match.
+
+Also should check for 0, negative. Provide code.
+
+Potential optimization: test n % 2 is 0, n % 3 is 0, then loop i=5; while i*i <= n; test n % i and n % (i+2). That is again efficient.
+
+I'll produce function is_prime(n) that returns bool. Should handle int input only? Possibly not check type. Provide docstring with examples.
+
+Edge: 0 returns False. 2 returns True. 3 returns True.
+
+Implementation details: values as given. Use integer sqrt. I may use sqrt from math. But iteration until i*i>n. Use i+=2 or i+=6 pattern. For readability, simple approach: if n <=1: return False; if n <=3: return True; if n%2==0 or n%3==0: return False; for i in range(5, int(n**0.5)+1, 6): if n%i ==0 or n%(i+2)==0: return False; Return True. That covers all.
+
+Return bool.
+
+Should ensure function uses Python 3. Provide final code.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def is_prime(n):
+    """Return True if *n* is a prime number, and False otherwise.
+
+    A prime is a positive integer greater than 1 that has no positive
+    divisors other than 1 and itself. The function correctly handles
+    small values, negative values, and zero.
+
+    >>> is_prime(6)
+    False
+    >>> is_prime(101)
+    True
+    >>> is_prime(11)
+    True
+    >>> is_prime(13441)
+    True
+    >>> is_prime(61)
+    True
+    >>> is_prime(4)
+    False
+    >>> is_prime(1)
+    False
+    >>> is_prime(0)
+    False
+    >>> is_prime(-5)
+    False
+    """
+    # 0 and 1 are not prime numbers
+    if n <= 1:
+        return False
+
+    # 2 and 3 are prime
+    if n <= 3:
+        return True
+
+    # eliminate multiples of 2 and 3 quickly
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+
+    # check for factors up to sqrt(n) using 6k±1 optimization
+    i = 5
+    # the loop stops when i * i exceeds n
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+```

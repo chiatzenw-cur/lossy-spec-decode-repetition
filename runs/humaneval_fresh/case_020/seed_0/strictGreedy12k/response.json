@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-af787ea53bc4b314",
+  "object": "text_completion",
+  "created": 1786003270,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function sort_numbers. Input is a space-delimited string of numberals from 'zero' to 'nine'. Valid choices are zero...nine. We need to return string with numbers sorted from smallest to largest. Example: 'three one five' -> 'one three five'. Need to map words to numeric values. Should maintain original order of predicates but sorted. There may be duplicates. Implementation: split string, map to ints, sort pairs and reconstruct. Could also use a dictionary mapping. Use .split() yields list tokens. We'll create mapping dict from word to int. Then sort tokens by mapping. Then join sorted tokens in space. Return string. Edge case: empty string? Probably return empty. Ensure non-numeric tokens? Not needed. We'll just map. Add docstring as given. Implementation simple.\n\nPotential tests: `'two five one'` -> `'one two five'`. Also duplicates. Should preserve sorted order but stable? doesn't matter. We'll use sorted with key mapping. Sorting preserves relative order of equal values? Yes stable. Good.\n\nLet's provide final function.\n\nAlso note that the docstring includes triple quotes inside docstring. We'll replicate.\n\nWe need to include from typing import List? Not used but could ignore.\n\nAdd return type annotation: returns str.\n\nImplement: def sort_numbers(numbers: str) -> str: The code within.\n\nEdge: maybe leading/trailing spaces? .split() handles.\n\nReturn string: ' '.join(sorted_numbers).\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\"Input is a space‐delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six',\n    'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n    if not numbers:\n        return \"\"\n\n    # Map each word to its numeric value.\n    word_to_value = {\n        \"zero\": 0,\n        \"one\": 1,\n        \"two\": 2,\n        \"three\": 3,\n        \"four\": 4,\n        \"five\": 5,\n        \"six\": 6,\n        \"seven\": 7,\n        \"eight\": 8,\n        \"nine\": 9,\n    }\n\n    # Split, validate, and sort.\n    words: List[str] = numbers.split()\n    # Ensure all words are valid (could raise a ValueError on invalid input)\n    for w in words:\n        if w not in word_to_value:\n            raise ValueError(f\"Invalid number word: {w}\")\n\n    # Sort using mapped numeric values.\n    sorted_words = sorted(words, key=lambda w: word_to_value[w])\n\n    return \" \".join(sorted_words)\n```",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 217,
+    "total_tokens": 828,
+    "completion_tokens": 611,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

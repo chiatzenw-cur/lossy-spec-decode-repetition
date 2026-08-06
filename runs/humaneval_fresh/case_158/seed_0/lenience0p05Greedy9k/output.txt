@@ -1,0 +1,75 @@
+<|channel|>analysis<|message|>We need to implement a function that checks if three sides form a right triangle. The triangle sides must satisfy triangle inequality: a + b > c, a + c > b, b + c > a. Also check that the sides are positive numbers. Also check that the Pythagorean theorem holds: i.e., a^2 + b^2 == c^2 for some ordering. But we can also check sorted: sides sorted ascending. Then check if sides[0]**2 + sides[1]**2 == sides[2]**2. Use float comparisons? Usually we use integer equality. But we can use math.isclose for floating. But spec: "Given the lengths of the three sides of a triangle. Return True if the three sides form a right-angled triangle" So we can treat as ints. We'll implement robust.
+
+Edge cases: if sides are not positive, return False. If not triangle, return False. If triangle inequality fails, return False.
+
+Also check that exactly one side is the hypotenuse? For right triangle, the hypotenuse is the longest side. So we can sort ascending.
+
+Implementation:
+
+def right_angle_triangle(a, b, c):
+    '''
+    Given the lengths of the three sides of a triangle. Return True if the three
+    sides form a right-angled triangle, False otherwise.
+    ...
+    '''
+    # Check positivity
+    if not all(isinstance(x, (int, float)) for x in (a, b, c)):
+        raise TypeError("All arguments must be numbers")
+    if not (a > 0 and b > 0 and c > 0):
+        return False
+    # Triangle inequality
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    sides = sorted([a, b, c])
+    if isinstance(sides[0], float) or isinstance(sides[1], float) or isinstance(sides[2], float):
+        return math.isclose(sides[0]**2 + sides[1]**2, sides[2]**2, rel_tol=1e-9)
+    return sides[0]**2 + sides[1]**2 == sides[2]**2
+
+But we need to import math. We can import math inside function. The function body should include import math. Provide docstring.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def right_angle_triangle(a, b, c):
+    """
+    Return True if the three sides (a, b, c) can form a right‑angled triangle,
+    False otherwise.
+
+    Parameters
+    ----------
+    a, b, c : int or float
+        The lengths of the three sides of the triangle.
+
+    Returns
+    -------
+    bool
+        True if the three sides satisfy the triangle inequality and
+        the Pythagorean theorem, False otherwise.
+
+    Notes
+    -----
+    * The function checks that the side lengths are positive and that the
+      triangle inequality holds.
+    * The sides are sorted in ascending order to identify the
+      longest side as the hypotenuse.
+    * For floating‑point inputs the result is compared with a tolerance
+      using ``math.isclose``.
+    """
+    import math
+    # Validate that all arguments are numeric
+    if not all(isinstance(x, (int, float)) for x in (a, b, c)):
+        raise TypeError("All arguments must be numbers")
+
+    # All sides must be positive
+    if not (a > 0 and b > 0 and c > 0):
+        return False
+
+    # Triangle inequality: sum of any two sides must be longer than the third
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+
+    # Sort the sides so that the longest side is the last element
+    sides = sorted([a, b, c])
+    # Check the Pythagorean theorem
+    if isinstance(sides[0], float) or isinstance(sides[1], float) or isinstance(sides[2], float):
+        return math.isclose(sides[0]**2 + sides[1]**2, sides[2]**2, rel_tol=1e-9)
+    return sides[0]**2 + sides[1]**2 == sides[2]**2
+```

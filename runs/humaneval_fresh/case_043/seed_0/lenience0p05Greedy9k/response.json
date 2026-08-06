@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-bfee55f7285d4b6c",
+  "object": "text_completion",
+  "created": 1786019539,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function incr_list(l: list). The function returns list with elements incremented by 1. The function description: \"Return list with elements incremented by 1.\" The examples show usage. We need to produce a function that returns a list where each element is increased by 1. The function should be generic, maybe numbers? But we can just use list comprehension. The function should be docstring. Should we include type hints? The function signature: def incr_list(l: list): returns list. The function may be simple. We can also use map. But we need to return new list. The function should be pure. We can also preserve original list. The function should raise error? Not necessary. So we implement:\n\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\"\"\"\n    return [x + 1 for x in l]\n\nBut we need to ensure only numeric types. The function may handle non-numeric types? But we can just add 1. But if list contains non-numeric, it will raise TypeError. But that's fine.\n\nWe can also provide docstring. Provide test examples. Provide final code.\n\nHowever, the function signature: def incr_list(l: list): we can add type hints like return list. But not necessary.\n\nWe can also add type hints: def incr_list(l: list) -> list: but not necessary.\n\nWe can also consider that the function may be used on lists of ints. But we can also use list comprehension.\n\nWe can also add type hints: def incr_list(l: list) -> list: but not necessary.\n\nWe need to produce the function body. We need to provide the full function: signature, docstring, and implementation. So we need to produce the code block.\n\nThus final answer: provide code block with function.\n\nLet's produce:\n\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\"\"\"\n    return [x + 1 for x in l]\n\nBut we need to include docstring with examples. The docstring includes examples. So we can include them. The docstring includes triple quotes. The docstring includes the examples. So we can replicate.\n\nWe'll produce:\n\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n    return [x + 1 for x in l]\n\nThat is correct.\n\nWe should also consider that the function may be used for lists of ints. But we can also use list comprehension. It's fine.\n\nThus final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n    return [x + 1 for x in l]\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 221,
+    "total_tokens": 954,
+    "completion_tokens": 733,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

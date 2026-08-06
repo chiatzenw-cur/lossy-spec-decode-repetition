@@ -1,0 +1,54 @@
+<|channel|>analysis<|message|>We need to implement remove_vowels. The function takes a string and returns a string without vowels. The examples show vowels: 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', maybe also 'y'? But the examples show 'a' and 'a' only. 'aaaaa' => ''. 'aaBAA' => 'B' (since 'B' is uppercase, 'A's are vowels). So treat vowels only. 'zbcd' => 'zbcd' (no vowels). 'abcdef' => 'bcdf' (removes 'a', 'e'). 'abcdef\nghijklm' => 'bcdf\nghjklm'. So newline preserved. So we need to remove all vowels. Implementation: iterate over string, keep char if not in vowels. Use a set. Use list comprehension. Keep newlines. Return final string. Also maybe we should consider that 'remove_vowels' may be used in a context where we want to preserve original string. Implementation straightforward.
+
+Edge cases: empty string returns empty string. Should we handle None? The function signature expects str. So we can assert or raise.
+
+We can also use regex: re.sub(r'(?i)[aeiou]', '', text). But we need to preserve original string. Use re.sub.
+
+Let's produce final code.
+
+Also we need to include docstring and function body. The function body: vowels = set('aeiouAEIOU').
+
+Return ''.join(ch for ch in text if ch not in vowels). Provide for docstring.
+
+Return final. Provide final code.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def remove_vowels(text):
+    """
+    Remove all vowels from *text* and return the resulting string.
+
+    The function considers the standard vowels: a, e, i, o, u,
+    both uppercase and lowercase. All other characters, including
+    whitespace and punctuation, are preserved.
+
+    Parameters
+    ----------
+    text : str
+        The string to be processed.
+
+    Returns
+    -------
+    str
+        A new string containing all non‑vowel characters from *text*.
+
+    Examples
+    --------
+    >>> remove_vowels('')
+    ''
+    >>> remove_vowels('abcdef\nghijklm')
+    'bcdf\nghjklm'
+    >>> remove_vowels('abcdef')
+    'bcdf'
+    >>> remove_vowels('aaaaa')
+    ''
+    >>> remove_vowels('aaBAA')
+    'B'
+    >>> remove_vowels('zbcd')
+    'zbcd'
+    """
+    # Set of vowels to filter out (case‑insensitive)
+    vowels = set('aeiouAEIOU')
+    return ''.join(ch for ch in text if ch not in vowels)
+```
+
+This implementation iterates over the input string, keeps only characters that are not vowels, and constructs a new string. The function is fully self‑contained and works with the provided examples.

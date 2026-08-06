@@ -1,0 +1,75 @@
+<|channel|>analysis<|message|>We need to implement function digitSum(s) that returns sum of upper characters only ASCII codes. But examples show "digitSum" returns sum of ASCII codes for upper-case letters? Let's examine.
+
+digitSum("abAB") => 131. Let's compute: 'A' ASCII 65, 'B' ASCII 66. Sum = 65+66=131. Yes.
+
+digitSum("abcCd") => 67. Uppercase letters: 'C' ASCII 67. Sum 67.
+
+digitSum("helloE") => 69. 'E' = 69. Sum 69.
+
+digitSum("woArBld") => 131. 'A' (65) + 'B' (66) = 131. Yes.
+
+digitSum("aAaaaXa") => 153. 'A' 65 + 'X' 88? Wait 'X' is 88. Sum 65+88=153. Yes.
+
+So function: iterate over string, check if char is uppercase letter (A-Z). If so, add ord(char) to sum. Return sum.
+
+Edge cases: empty string => 0. Should return 0.
+
+Also note: "upper characters only" maybe means uppercase letters only. So we may use .isupper() and .isalpha() but that includes uppercase letters only. But .isupper() will return true for uppercase letters only. But we also need to consider that .isupper() will be true for uppercase letters only. But we also need to consider that numeric characters may be considered uppercase? No. So we can use char.isupper().
+
+Also if string contains uppercase letters, we just sum.
+
+Return sum.
+
+Also docstring: "Task" maybe expects to return int. Provide docstring.
+
+Implementation: def digitSum(s): ... The code: sum = 0; for ch in s: if ch.isupper(): sum += ord(ch); return sum.
+
+Return sum.
+
+Also we could use sum(ord(ch) for ch in s if ch.isupper()).
+
+Edge: maybe we want to treat uppercase letters only. So we can use ord. Provide code.
+
+Also we might need to handle Unicode? Not needed.
+
+Return sum.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python
+def digitSum(s):
+    """
+    Return the sum of the ASCII codes of the upper‑case alphabetic characters in a string.
+
+    Parameters
+    ----------
+    s : str
+        The input string.
+
+    Returns
+    -------
+    int
+        The sum of the ASCII codes of the uppercase letters in ``s``.
+        If no such characters are present, the sum is 0.
+
+    Examples
+    --------
+    >>> digitSum("")
+    0
+    >>> digitSum("abAB")
+    131
+    >>> digitSum("abcCd")
+    67
+    >>> digitSum("helloE")
+    69
+    >>> digitSum("woArBld")
+    131
+    >>> digitSum("aAaaaXa")
+    153
+    """
+    total = 0
+    for ch in s:
+        if ch.isupper():
+            total += ord(ch)
+    return total
+```
+
+This function iterates over each character in `s`, checks whether it is an upper‑case alphabetic character (`str.isupper()`), and adds its ASCII code to the running total. The result is returned as an integer.

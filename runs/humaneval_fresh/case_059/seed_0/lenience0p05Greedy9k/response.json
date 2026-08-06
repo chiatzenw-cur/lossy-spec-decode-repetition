@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-8b50faea3a8c55f3",
+  "object": "text_completion",
+  "created": 1786020635,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement a function that returns sorted unique common elements for two lists: presumably intersection of lists. The function signature: common(l1: list, l2: list). Should produce list of unique elements that appear in both lists, sorted ascending. The function may have docstring, but we need to implement. The example uses list of ints. Should handle duplicates: we need to return sorted unique elements. So we can use set intersection. Then sort. Implementation: return sorted(set(l1) & set(l2)). But might need to handle elements that are not hashable? But typical lists of ints. So we can use set. But we need to return list of unique elements. The function returns sorted list. So code:\n\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n    \"\"\"\n    return sorted(set(l1) & set(l2))\n\nBut we need to consider that the function may be defined as a function that returns sorted list of unique elements. The docstring includes that. The function body: return sorted(set(l1).intersection(l2)). That is same.\n\nEdge cases: if l1 or l2 empty, return empty list. If l1 or l2 contains duplicates, they are removed. Good.\n\nWe might also consider that the function may need to preserve order? But sorted ascending. So fine.\n\nWe need to produce the full function. Provide the same docstring as above. Provide the implementation. The function body: return sorted(set(l1) & set(l2)). That is fine.\n\nPossible improvement: Use set comprehension. But fine.\n\nWe can also use list comprehension with sorted: [x for x in l1 if x in l2] but duplicates removed. But we want sorted unique.\n\nThus final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n    \"\"\"\n    return sorted(set(l1) & set(l2))\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 226,
+    "total_tokens": 811,
+    "completion_tokens": 585,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

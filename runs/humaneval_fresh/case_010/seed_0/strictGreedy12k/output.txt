@@ -1,0 +1,75 @@
+<|channel|>analysis<|message|>We need to complete the function rolling_max that takes a list of integers and returns a list of rolling maxima until that moment. Example: [1,2,3,2,3,4,2] yields [1,2,3,3,3,4,4]. Implementation: maintain current max and append as list. Edge cases: empty list should return empty list. Possibly numbers can be negative. Implementation straightforward.
+
+We need to fully reproduce function signature, docstring, and implementation.
+
+Also caretaker: might use isinstance? Anyway.
+
+Focus: implement. Use comprehension? But simplest: iterate.
+
+Edge: use initial max = -infinity or None then update.
+
+Let's implement:
+
+def rolling_max(numbers: List[int]) -> List[int]:
+    """...
+    """
+    result = []
+    current_max = None
+    for num in numbers:
+        if current_max is None or num > current_max:
+            current_max = num
+        result.append(current_max)
+    return result
+
+Docstring: maybe mention empty returns empty.
+
+Also unit test. Also maintain typing: use typing List: import typing.
+
+Return list.
+
+The function body is missing, but we need to output the full function.
+
+Let's produce final answer.
+
+<|end|><|start|>assistant<|channel|>final<|message|>```python
+from typing import List
+
+
+def rolling_max(numbers: List[int]) -> List[int]:
+    """
+    From a given list of integers, generate a list of rolling maximum
+    element found until the given moment in the sequence.
+
+    The *rolling maximum* at position *i* is the maximum among the
+    values ``numbers[0]`` through ``numbers[i]`` inclusive.
+
+    Parameters
+    ----------
+    numbers : List[int]
+        Input list of integers.
+
+    Returns
+    -------
+    List[int]
+        A list where each element is the maximum of the input up to that
+        position.  For an empty ``numbers`` list the result is an empty
+        list.
+
+    Examples
+    --------
+    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])
+    [1, 2, 3, 3, 3, 4, 4]
+    >>> rolling_max([])
+    []
+
+    """
+    result: List[int] = []
+    max_so_far: int | None = None
+
+    for num in numbers:
+        if max_so_far is None or num > max_so_far:
+            max_so_far = num
+        result.append(max_so_far)
+
+    return result
+```

@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9be0525ba3178ef0",
+  "object": "text_completion",
+  "created": 1786019743,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement the function. The function is named triangle_area(a, h). The docstring: \"Given length of a side and high return area for a triangle.\" So we need to compute area = (1/2)*a*h. The example: triangle_area(5,3) => 7.5. So return 0.5 * a * h. Should we cast to float? The function signature: def triangle_area(a, h). No type hints. We can return float computed. Should we support int or float? The function returns float. Should we handle negative? Not necessary. Provide docstring. Provide example. Provide implementation. Should we return float. That's fine.\n\nWe need to return area. So code:\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n    return 0.5 * a * h\n\nLet's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>```python\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n    # The area of a triangle is half the product of its base and height.\n    return 0.5 * a * h\n```\n",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 158,
+    "total_tokens": 448,
+    "completion_tokens": 290,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

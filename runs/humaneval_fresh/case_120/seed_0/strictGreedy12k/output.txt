@@ -1,0 +1,56 @@
+<|channel|>analysis<|message|>We need to implement a function that given list of two strings each consisting only '(' or ')' returns 'Yes' if some ordering results in balanced parentheses. Essentially we can choose concatenation order as either s1+s2 or s2+s1. Determine if either concatenated string is balanced. Balanced if scanning left to right cumulative sum of opening minus closing never negative, and final sum zero. So we can just implement. But maybe there is twist: Because both strings may individually not be balanced, but concatenated may be. So we simply check both orders. complexity O(n). Done.
+
+But maybe there is other nuance: For maximizing safety, consider all permutations; only two. We'll compute function is_balanced. Also maybe there exist scenario where concatenation yields a string of same length. Implementation straightforward.
+
+But maybe trick: Can't reorder inside strings. Good.
+
+Let's provide final function. Also include docstring.
+
+Edge: empty string? may appear? list length exactly two. could be empty values; handle accordingly. But algorithm still works: empty string cumulative sum zero.
+
+Implementation:
+
+def is_bal(lst):
+   sum=0
+  for c in lst:
+     if c=='(': sum+=1
+     else: sum-=1
+     if sum<0: return False
+  return sum==0
+
+Then return 'Yes' if is_bal(s1+s2) or is_bal(s2+s1). Provide final function.<|end|><|start|>assistant<|channel|>final<|message|>Here is the complete implementation:
+
+```python
+def match_parens(lst):
+    '''
+    You are given a list of two strings, both strings consist of open
+    parentheses '(' or close parentheses ')' only.
+    Your job is to check if it is possible to concatenate the two strings in
+    some order, that the resulting string will be good.
+    A string S is considered to be good if and only if all parentheses in S
+    are balanced. For example: the string '(())()' is good, while the string
+    '())' is not.
+    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.
+
+    Examples:
+    match_parens(['()(', ')']) == 'Yes'
+    match_parens([')', ')']) == 'No'
+    '''
+    def is_balanced(s: str) -> bool:
+        """Return True if s is a balanced parenthesis string."""
+        bal = 0
+        for ch in s:
+            if ch == '(':
+                bal += 1
+            else:  # must be ')'
+                bal -= 1
+            if bal < 0:   # more ')' than '(' at this point
+                return False
+        return bal == 0   # must end with zero balance
+
+    a, b = lst
+    # Check both possible concatenations
+    return 'Yes' if is_balanced(a + b) or is_balanced(b + a) else 'No'
+```
+
+This function works in linear time relative to the length of the two strings combined and correctly handles all edge cases.
