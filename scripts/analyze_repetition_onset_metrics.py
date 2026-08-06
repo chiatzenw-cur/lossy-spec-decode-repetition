@@ -61,13 +61,25 @@ BENCHMARKS: list[tuple[str, pathlib.Path, pathlib.Path]] = [
 # or count. Booleans are reported both as their raw value (in the detail rows)
 # and as a share (in the aggregate rows).
 NUMERIC_METRICS = (
-    "p", "q", "p_over_q", "u", "target_rank", "target_top1_prob", "target_top1_margin",
+    "p", "q", "p_over_q", "u", "target_rank", "target_top1_prob", "target_top1_shortfall",
     "target_entropy", "draft_entropy", "kl_target_draft", "kl_draft_target", "tv_distance",
     "consecutive_accepted_length",
 )
 BOOLEAN_METRICS = ("strict_would_accept", "lossy_would_accept", "actually_accepted", "lossy_only_accepted")
 
 RunKey = tuple[str, str, str, str]  # (benchmark, case, seed, tag)
+
+# target_top1_shortfall was renamed from target_top1_margin; older
+# proposals.jsonl files predate the rename and still use the old key. Same
+# quantity (top1_prob - p(x)) either name.
+_LEGACY_METRIC_NAMES = {"target_top1_shortfall": "target_top1_margin"}
+
+
+def get_metric(record: dict[str, Any], name: str) -> Any:
+    if name in record:
+        return record.get(name)
+    legacy = _LEGACY_METRIC_NAMES.get(name)
+    return record.get(legacy) if legacy else None
 
 
 def parse_args() -> argparse.Namespace:
@@ -170,7 +182,7 @@ def collect_onset_rows(
                     skipped["token_index_out_of_range"] += 1
                     continue
                 record = records[idx]
-                metrics = {name: record.get(name) for name in NUMERIC_METRICS}
+                metrics = {name: get_metric(record, name) for name in NUMERIC_METRICS}
                 metrics.update({name: record.get(name) for name in BOOLEAN_METRICS})
                 metrics["emission_source"] = record.get("emission_source")
                 onset_rows.append(
@@ -214,7 +226,7 @@ def compute_baseline(
                 if (benchmark, case, seed, tag, token_index) in excluded:
                     continue
                 for name in NUMERIC_METRICS:
-                    value = record.get(name)
+                    value = get_metric(record, name)
                     values_by_benchmark[benchmark][name].append(value)
                     values_overall[name].append(value)
                 for name in BOOLEAN_METRICS:

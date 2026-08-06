@@ -58,7 +58,7 @@ DEFAULT_METRICS = (
     "u",
     "target_rank",
     "target_top1_prob",
-    "target_top1_margin",
+    "target_top1_shortfall",
     "target_entropy",
     "draft_entropy",
     "kl_target_draft",

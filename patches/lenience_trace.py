@@ -240,7 +240,16 @@ class _Tracer:
                             "emission_source": source,
                             "target_rank": int(rank_l[i]),
                             "target_top1_prob": round(top1_l[i], 6),
-                            "target_top1_margin": round(top1_l[i] - p_l[i], 6),
+                            # top1_prob - p(x): how far the EMITTED token's own
+                            # probability falls short of the target's single best
+                            # guess. Exactly 0 when the emitted token IS top1
+                            # (target_rank == 0). NOT p(1) - p(2) -- this repo
+                            # never records the runner-up's probability, so a
+                            # "how contested was 1st vs 2nd" reading is not
+                            # something this field (or any other) can support.
+                            # Renamed from target_top1_margin, which invited
+                            # exactly that misreading.
+                            "target_top1_shortfall": round(top1_l[i] - p_l[i], 6),
                             "target_entropy": round(ent_l[i], 5),
                             "draft_entropy": None if draft_ent is None else round(draft_ent[i], 5),
                             "kl_target_draft": None if kl_pq is None else round(kl_pq[i], 5),
