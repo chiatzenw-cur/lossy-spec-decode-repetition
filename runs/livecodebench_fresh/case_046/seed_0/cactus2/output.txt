@@ -1,0 +1,273 @@
+<|channel|>analysis<|message|>We need to implement DP with subsets or bitmask. Since number of elements 14 max. Compute number of "good permutations" where consecutive elements have gcd or divisibility. We need to check if a[i] mod a[j] ==0 or a[j] mod a[i]==0. Equivalent to a[i] divides a[j] or divisible by a[j]. Equivalent.
+
+Constraints list n <= 14. Use bitmask DP: dp[mask][i] where dp[mask][i] is number of ways to treat product of first bits of subset, chosen positions such that the bit i-th element is the last such permutation (used mask). Classic DP 2^n * n. Use dp[mask] as array of length n. Or dp[mask][i] = ways to match. Then transition. For each mask, for each i, if len< n, cannot: we can keep dp[mask][i] = count; for each next j not in mask: if nums[i] is compatible with nums[j]; dp[mask|1<<j][j] += dp[mask][i].
+
+We can compute using DP over subsets: Pre-compatibility matrix values.
+
+Implementation: n <= 14, K = 1<<n.
+
+We compute dp[mask][i] as integer array of length n for each mask? We can use list of 2D array of ints: dp[mask][i]. But we may hold as 2D bool arrays.
+
+Simpler: Use list of lists of size K.
+
+But we may store (dp[mask][i] = 0 initially). Then for each i: dp[1<<i][i] = 1.
+
+For mask in 1..K-1: if mask not zero? we can iterate.
+
+For each i in 0..n-1 if mask bits containing i and dp[mask][i] > 0: for each (j not in mask) compute if compatible.
+
+After loops, answer = sum(dp[mask][i] for mask with full mask with all bits length n and i). Because had base mask
+Or we can iterate mask, but compute final sum: for all masks=K-1, K=2^n.
+
+Implementation: use adjacency matrix representation: bool[i][j] True if exists.
+
+Return ans mod 1e9+7.
+
+We need to output solution line. There is no big O for n small. Use loops to compute mask. Use bit iteration.
+
+Complexities fine.
+
+Edge cases: duplicates? E problem says numbers distinct, so no duplicates.
+
+Let's implement.
+
+Examples:
+
+Input: [2,3,6], => 2 via sets.
+
+Implementation straightforward.
+
+Now produce final solution. Use mod.
+
+Also use __setitem__.
+
+Ok produce code.
+
+Let's craft final response.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every position `i (0 ≤ i < n-1)` the two integers that stand next to each other must
+```
+coprime **only if** (a[i] % b[i+1] == 0 or b[i+1] % a[i] == 0)
+```
+So the whole problem is a *permutation problem*:  
+choose the order of the elements such that at each step some
+compatibility is satisfied between the current element and the last one.
+
+
+
+--------------------------------------------------------------------
+
+#### Observation
+
+The following are equivalent to the two possible divisibility tests:
+
+```
+if a[i] % a[j] == 0   =>  a[i] is a multiple of a[j]
+if a[j] % a[i] == 0   =>  a[j] is a multiple of a[i]
+```
+
+So we only need to know whether two numbers are *compatible*,
+i.e. whether we can place them consecutively.
+
+--------------------------------------------------------------------
+
+#### State variables
+
+```
+n ≤ 14  →  130 Thompson  →  fast enough for bit tricks
+```
+
+Let `mask` be a bitmask of `n` bits – positions of the numbers that have already
+been used (bit bit information is 1).  
+`dp[mask][i]` – number of ways to create a second valid partial
+sequence that the last chosen element is `i` (marked in
+`mask`).
+
+`dp[mask][i]` – number of ways to round up the permutation.
+
+--------------------------------------------------------------------
+
+#### Transitions
+
+*Initialization*  
+`dp[1<<i][i] = 1` for every `i`.  
+(Initially the only element is the `i`‑th element.)
+
+*Transition*  
+For an already chosen state `(mask , i)`:
+
+```
+for every j not in mask
+    if nums[i] and nums[j] are compatible
+        dp[mask | 1<<j][j] += dp[mask][i]
+```
+
+All operations are done modulo `1 000 000 007`.
+
+--------------------------------------------------------------------
+
+#### Result
+
+After all transitions, answer is the sum of all states for which the
+mask contains all bits:
+
+```
+ans = Σ dp[(1<<n)-1][i]   for every i
+```
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm outputs the number of special permutations,
+i.e. for every contract the array is considered.
+
+---
+
+##### Lemma 1  
+For every `mask` and `i` the set of all ways represented in
+`dp[mask][i]` are precisely all proper permutations of the indices
+`mask` whose final value is `i`.
+
+**Proof.**
+
+*Initialization*  
+When `mask = 1 << i` only one element is chosen, which is precisely
+`i`.  
+The base case allows no partial permutation except the empty one – all positions
+number of ways summing to 1 for this single element – a correct
+representation. ∎
+
+
+
+*Induction step*  
+Assume the lemma holds for all states with `k` bits.
+Consider any state `(mask, i)` with exactly `k+1` bits.
+Every such permutation ends with `i` at a certain position.  
+Let `t` be the element before this final `i`.  
+Removing the last element `i` from the permutation
+creates a removed `k`‑bit state – **without** the element `i`, and
+`last` is `t`.  
+Hence the proper subsequence is part of the set counted for *mask* with
+bit `t` removed (`k`‑bit state).  
+By induction hypothesis, the number of such experiences equals
+`dp[mask & ~(1<<i)][t]`.  
+During the transition we add the new element `i` to `dp[mask | …]`,
+and check that the representation of this final pair is correct,
+so the count is correct.  
+The algorithm stores exactly these result counts in **dp**, therefore
+the lemma holds for all states by induction. ∎
+
+
+
+##### Lemma 2  
+After finishing the DP, `dp` contains all exact permutations that have been
+constructed by the algorithm, with every two odd numbers being consecutive
+solutions respecting the condition.
+
+**Proof.**
+
+The loop iterates over all masks, so every prefix of the DP states
+is covered.  
+By Lemma&nbsp;1 each transition pushes the count of exactly the permutations
+ending with the unique element to the next state.   
+Consequently the final matrix for every mask that exactly the
+full set of integers is covered, giving
+*every* valid permutation that respects the adjacency
+operation. ∎
+
+
+
+##### Theorem  
+The algorithm returns the number of special permutations of `nums`.
+
+**Proof.**
+
+By Lemma&nbsp;2 the variable `dp` after the DP contains precisely all
+permutations of `nums` that satisfy the adjacency condition.
+The answer is the sum of all ways to finish in with the last bit equal
+for all indices, i.e. the number of ways in which it has the last one
+for each possible `i`.  
+Every such permutation is counted exactly once and thus counted once.
+Therefore the returned value is exactly the number of admissible
+permutations. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis  
+
+`bits` = 2^n ≤ 16384  
+`cnt = 2^n · n`  
+Total time:
+
+```
+O( 2^n · n · n )  ≤ 3600000 (for n = 14)
+```
+
+Space: `O( 2^n · n )`  →  ≤ 229 kB for the array.
+
+Overall both fit comfortably into the limits.  
+
+--------------------------------------------------------------------
+
+#### Reference Implementation  (Python 3)
+
+```python
+import sys
+from functools import lru_cache
+
+class Solution:
+    def specialPerm(self, nums: list[int]) -> int:
+        MOD = 1_000_000_007
+        n = len(nums)
+        M = 1 << n
+
+        # Compatibility matrix: if one number divides another
+        feas = [[False] * n for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                if i == j:
+                    continue
+                if nums[i] % nums[j] == 0 or nums[j] % nums[i] == 0:
+                    feas[i][j] = True
+
+        # DP table
+        dp = [[0] * n for _ in range(M)]
+
+        # Start state: each element alone
+        for i in range(n):
+            dp[1 << i][i] = 1
+
+        for mask in range(1, M):
+            for i in range(n):
+                if (mask >> i) & 1 == 0:
+                    continue
+                cur = dp[mask][i]
+                if cur == 0:
+                    continue
+                # next partner
+                rem = (~mask) & (M - 1)          # adjust to remove further ones
+                j = rem
+                while j:
+                    lsb = j & -j
+                    j ^= lsb
+                    nxt = (lsb - 1).bit_length()
+                    if feas[i][nxt]:
+                        dp[mask | lsb][nxt] = (dp[mask | lsb][nxt] + cur) % MOD
+
+        full_mask = M - 1
+        ans = sum(dp[full_mask][i] for i in range(n)) % MOD
+        return ans
+
+
+# Provided example tests
+if __name__ == "__main__":
+    solution = Solution()
+    print(solution.specialPerm([2,3,6]))   # Output: 2
+    print(solution.specialPerm([1,4,3]))   # Output: 2
+```
+
+The function follows exactly the algorithm proven correct above and
+conforms to the required complexity limits.

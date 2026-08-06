@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a1caacc6c81c7ba3",
+  "object": "text_completion",
+  "created": 1785979287,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function count employees >= target. The classic solution: count elements. Complexity O(n). Provide code in Python. Use typical library. Use type hints. Use List[int].\n\nMaybe add docstring. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**\n\nFor a company with `n` employees we are given an array `hours` that reports the number of hours each employee has worked.  \nThe user wants to know how many of those employees have worked **at least** `target` hours.  \nWe just need to count how many elements of `hours` satisfy `hours[i] >= target`.\n\n**Algorithm**\n```\ncnt ← 0\nfor every hour in hours:\n    if hour >= target:\n        cnt ← cnt + 1\nreturn cnt\n```\n\nThe constraint `n ≤ 50` is trivial, so a straightforward linear scan is enough.  \nTime complexity: **O(n)** (one pass over the array).  \nSpace complexity: **O(1)** (only a counter).\n\n**Correctness Proof**\n\nWe prove the algorithm returns the exact number of employees who worked at least `target` hours.\n\nLet `S` be the set of indices `i` such that `hours[i] ≥ target`.  \nDuring the scan, the algorithm values `cnt` only when `hour >= target`.  \nEach time `hour` is incremented in `cnt`, it occurs exactly once for each element of `S`.  \nHence after the loop, `cnt = |S|`.  \nSince `|S|` equal the number of employees whose hours meet the target, the algorithm returns the correct answer. ∎\n\n**Reference Implementation**\n\n```python\nfrom typing import List\n\nclass Solution:\n    def numberOfEmployeesWhoMetTarget(self, hours: List[int], target: int) -> int:\n        \"\"\"\n        Counts how many employees have worked at least the target number of hours.\n\n        Parameters\n        ----------\n        hours : List[int]\n            List of hours, each element represents the number of hours worked by an employee.\n        target : int\n            The minimum required hours.\n\n        Returns\n        -------\n        int\n            Number of employees whose hours meet or exceed the target.\n        \"\"\"\n        count = 0\n        for h in hours:\n            if h >= target:\n                count += 1\n        return count\n```\n\nThis satisfies the problem statement and runs in the required runtime and memory limits.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 415,
+    "total_tokens": 917,
+    "completion_tokens": 502,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

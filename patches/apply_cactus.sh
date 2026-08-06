@@ -20,7 +20,13 @@ REL="v1/sample/rejection_sampler.py"
 
 EXPECT_VERSION="0.26.0"
 UPSTREAM_SHA="840ec8995f909eae7525f1bfcda5b6f23dbe77ce3ccb964bec14c97932ba2e76"
-PATCHED_SHA="02492f03bdf90c9442bb4bca81c61b82c06ad34b733a295f9305326941a93068"
+# v2: full-residual fix. v1 (accept-only) applied gamma_x to the accept/reject
+# test but left post-rejection recovery sampling on the raw p residual -- a
+# hybrid with no correctness guarantee from either paper. Data collected under
+# v1 is tagged cactus_accept_only, not cactus; see the patch file's header
+# comment for the H_x construction that fixes this.
+PATCHED_SHA="4fa623a70332075cada34dbe585a05fc941db12fb3dd67edee3bd3923f779074"
+ACCEPT_ONLY_PATCHED_SHA="02492f03bdf90c9442bb4bca81c61b82c06ad34b733a295f9305326941a93068"
 # The other two patches' results, so a wrong-patch-applied state fails with a
 # specific, actionable message instead of "unrecognised file".
 LENIENCE_PATCHED_SHA="81a0947d7263675a07125b714b3093fbd82f91e3211a642a4d0ec448ad2b898d"
@@ -41,6 +47,11 @@ target="$pkg/$REL"
 got="$(hash_of "$target")"
 if [[ "$got" == "$PATCHED_SHA" ]]; then
   echo "already applied ($target matches the expected CACTUS sha256)"
+elif [[ "$got" == "$ACCEPT_ONLY_PATCHED_SHA" ]]; then
+  echo "the v1 (accept-only) CACTUS patch is currently applied to $target, not v2 (full-residual)" >&2
+  echo "reverse it first: patch -p1 -R -d \$(dirname \$(dirname \$(dirname \$(dirname \"\$pkg\")))) < $here/vllm-0.26.0-cactus-accept-only.patch" >&2
+  echo "(or just reinstall vLLM 0.26.0 fresh, then re-run this script)" >&2
+  exit 1
 elif [[ "$got" == "$LENIENCE_PATCHED_SHA" ]]; then
   echo "the Lenience patch is currently applied to $target, not CACTUS" >&2
   echo "reverse it first (patch -p1 -R -d ... < $here/vllm-0.26.0-lenience.patch), or reinstall vLLM 0.26.0 fresh" >&2
@@ -65,11 +76,12 @@ elif [[ "$got" == "$UPSTREAM_SHA" ]]; then
   find "$(dirname "$pkg")/vllm" -name '__pycache__' -type d -prune -exec rm -rf {} + 2>/dev/null || true
 else
   echo "unrecognised $REL" >&2
-  echo "  sha256              $got" >&2
-  echo "  pristine            $UPSTREAM_SHA" >&2
-  echo "  cactus              $PATCHED_SHA" >&2
-  echo "  lenience (wrong arm) $LENIENCE_PATCHED_SHA" >&2
-  echo "  spec-casc-opt (wrong arm) $SPEC_CASC_OPT_PATCHED_SHA" >&2
+  echo "  sha256                     $got" >&2
+  echo "  pristine                   $UPSTREAM_SHA" >&2
+  echo "  cactus (v2, full-residual) $PATCHED_SHA" >&2
+  echo "  cactus_accept_only (v1)    $ACCEPT_ONLY_PATCHED_SHA" >&2
+  echo "  lenience (wrong arm)       $LENIENCE_PATCHED_SHA" >&2
+  echo "  spec-casc-opt (wrong arm)  $SPEC_CASC_OPT_PATCHED_SHA" >&2
   echo "reinstall vLLM 0.26.0 to get back to a known state" >&2
   exit 1
 fi

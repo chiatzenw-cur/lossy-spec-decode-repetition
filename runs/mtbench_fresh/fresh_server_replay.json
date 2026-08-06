@@ -263,6 +263,832 @@
           "server_log": "logs/fresh_mtbench/lenience0p2_case_003_seed0_20260804T162149Z.log"
         }
       ]
+    },
+    {
+      "timestamp_utc": "2026-08-05T23:25:11.436432+00:00",
+      "arms": [
+        "spec_casc_opt"
+      ],
+      "lenience_factor": 0.2,
+      "command": [
+        "scripts/fresh_server_replay.py",
+        "--arms",
+        "spec_casc_opt",
+        "--spec-casc-alpha",
+        "0.5",
+        "--prompt-root",
+        "prompts/mtbench",
+        "--runs-root",
+        "runs/mtbench_fresh",
+        "--log-root",
+        "logs/fresh_extreme",
+        "--max-new-tokens",
+        "12000",
+        "--cases",
+        "case_001",
+        "case_002",
+        "case_003",
+        "case_004",
+        "case_005",
+        "case_006",
+        "case_007",
+        "case_008",
+        "case_009",
+        "case_010",
+        "case_011",
+        "case_012",
+        "case_013",
+        "case_014",
+        "case_015",
+        "case_016",
+        "case_017",
+        "case_018",
+        "case_019",
+        "case_020",
+        "case_021",
+        "case_022",
+        "case_023",
+        "case_024",
+        "case_025",
+        "case_026",
+        "case_027",
+        "case_028",
+        "case_029",
+        "case_030",
+        "case_031",
+        "case_032",
+        "case_033",
+        "case_034",
+        "case_035",
+        "case_036",
+        "case_037",
+        "case_038",
+        "case_039",
+        "case_040",
+        "case_041",
+        "case_042",
+        "case_043",
+        "case_044",
+        "case_045",
+        "case_046",
+        "case_047",
+        "case_048",
+        "case_049",
+        "case_050",
+        "case_051",
+        "case_052",
+        "case_053",
+        "case_054",
+        "case_055",
+        "case_056",
+        "case_057",
+        "case_058",
+        "case_059",
+        "case_060",
+        "case_061",
+        "case_062",
+        "case_063",
+        "case_064",
+        "case_065",
+        "case_066",
+        "case_067",
+        "case_068",
+        "case_069",
+        "case_070",
+        "case_071",
+        "case_072",
+        "case_073",
+        "case_074",
+        "case_075",
+        "case_076",
+        "case_077",
+        "case_078",
+        "case_079",
+        "case_080",
+        "--trace-proposals"
+      ],
+      "runs": [
+        {
+          "case": "case_001",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_001_seed0_20260805T215136Z.log"
+        },
+        {
+          "case": "case_002",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_002_seed0_20260805T215246Z.log"
+        },
+        {
+          "case": "case_003",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_003_seed0_20260805T215352Z.log"
+        },
+        {
+          "case": "case_004",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_004_seed0_20260805T215459Z.log"
+        },
+        {
+          "case": "case_005",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_005_seed0_20260805T215606Z.log"
+        },
+        {
+          "case": "case_006",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_006_seed0_20260805T215712Z.log"
+        },
+        {
+          "case": "case_007",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_007_seed0_20260805T215819Z.log"
+        },
+        {
+          "case": "case_008",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_008_seed0_20260805T215926Z.log"
+        },
+        {
+          "case": "case_009",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_009_seed0_20260805T220036Z.log"
+        },
+        {
+          "case": "case_010",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_010_seed0_20260805T220147Z.log"
+        },
+        {
+          "case": "case_011",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_011_seed0_20260805T220256Z.log"
+        },
+        {
+          "case": "case_012",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_012_seed0_20260805T220404Z.log"
+        },
+        {
+          "case": "case_013",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_013_seed0_20260805T220514Z.log"
+        },
+        {
+          "case": "case_014",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_014_seed0_20260805T220624Z.log"
+        },
+        {
+          "case": "case_015",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_015_seed0_20260805T220735Z.log"
+        },
+        {
+          "case": "case_016",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_016_seed0_20260805T220845Z.log"
+        },
+        {
+          "case": "case_017",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_017_seed0_20260805T220954Z.log"
+        },
+        {
+          "case": "case_018",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_018_seed0_20260805T221106Z.log"
+        },
+        {
+          "case": "case_019",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 75.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_019_seed0_20260805T221215Z.log"
+        },
+        {
+          "case": "case_020",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_020_seed0_20260805T221330Z.log"
+        },
+        {
+          "case": "case_021",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_021_seed0_20260805T221439Z.log"
+        },
+        {
+          "case": "case_022",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 80.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_022_seed0_20260805T221547Z.log"
+        },
+        {
+          "case": "case_023",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_023_seed0_20260805T221708Z.log"
+        },
+        {
+          "case": "case_024",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_024_seed0_20260805T221817Z.log"
+        },
+        {
+          "case": "case_025",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 90.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_025_seed0_20260805T221927Z.log"
+        },
+        {
+          "case": "case_026",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_026_seed0_20260805T222057Z.log"
+        },
+        {
+          "case": "case_027",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_027_seed0_20260805T222205Z.log"
+        },
+        {
+          "case": "case_028",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_028_seed0_20260805T222314Z.log"
+        },
+        {
+          "case": "case_029",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_029_seed0_20260805T222422Z.log"
+        },
+        {
+          "case": "case_030",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_030_seed0_20260805T222533Z.log"
+        },
+        {
+          "case": "case_031",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 81.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_031_seed0_20260805T222640Z.log"
+        },
+        {
+          "case": "case_032",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_032_seed0_20260805T222802Z.log"
+        },
+        {
+          "case": "case_033",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_033_seed0_20260805T222908Z.log"
+        },
+        {
+          "case": "case_034",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_034_seed0_20260805T223014Z.log"
+        },
+        {
+          "case": "case_035",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 72.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_035_seed0_20260805T223123Z.log"
+        },
+        {
+          "case": "case_036",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_036_seed0_20260805T223235Z.log"
+        },
+        {
+          "case": "case_037",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_037_seed0_20260805T223343Z.log"
+        },
+        {
+          "case": "case_038",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_038_seed0_20260805T223453Z.log"
+        },
+        {
+          "case": "case_039",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_039_seed0_20260805T223602Z.log"
+        },
+        {
+          "case": "case_040",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_040_seed0_20260805T223708Z.log"
+        },
+        {
+          "case": "case_041",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_041_seed0_20260805T223814Z.log"
+        },
+        {
+          "case": "case_042",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_042_seed0_20260805T223922Z.log"
+        },
+        {
+          "case": "case_043",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_043_seed0_20260805T224030Z.log"
+        },
+        {
+          "case": "case_044",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_044_seed0_20260805T224139Z.log"
+        },
+        {
+          "case": "case_045",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_045_seed0_20260805T224248Z.log"
+        },
+        {
+          "case": "case_046",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 74.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_046_seed0_20260805T224400Z.log"
+        },
+        {
+          "case": "case_047",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_047_seed0_20260805T224514Z.log"
+        },
+        {
+          "case": "case_048",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 75.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_048_seed0_20260805T224622Z.log"
+        },
+        {
+          "case": "case_049",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_049_seed0_20260805T224737Z.log"
+        },
+        {
+          "case": "case_050",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_050_seed0_20260805T224848Z.log"
+        },
+        {
+          "case": "case_051",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_051_seed0_20260805T224959Z.log"
+        },
+        {
+          "case": "case_052",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_052_seed0_20260805T225105Z.log"
+        },
+        {
+          "case": "case_053",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_053_seed0_20260805T225212Z.log"
+        },
+        {
+          "case": "case_054",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 66.0,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_054_seed0_20260805T225318Z.log"
+        },
+        {
+          "case": "case_055",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_055_seed0_20260805T225424Z.log"
+        },
+        {
+          "case": "case_056",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 74.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_056_seed0_20260805T225533Z.log"
+        },
+        {
+          "case": "case_057",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_057_seed0_20260805T225648Z.log"
+        },
+        {
+          "case": "case_058",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_058_seed0_20260805T225755Z.log"
+        },
+        {
+          "case": "case_059",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 72.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_059_seed0_20260805T225903Z.log"
+        },
+        {
+          "case": "case_060",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_060_seed0_20260805T230016Z.log"
+        },
+        {
+          "case": "case_061",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_061_seed0_20260805T230128Z.log"
+        },
+        {
+          "case": "case_062",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 74.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_062_seed0_20260805T230239Z.log"
+        },
+        {
+          "case": "case_063",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_063_seed0_20260805T230354Z.log"
+        },
+        {
+          "case": "case_064",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_064_seed0_20260805T230505Z.log"
+        },
+        {
+          "case": "case_065",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_065_seed0_20260805T230615Z.log"
+        },
+        {
+          "case": "case_066",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_066_seed0_20260805T230725Z.log"
+        },
+        {
+          "case": "case_067",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.1,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_067_seed0_20260805T230835Z.log"
+        },
+        {
+          "case": "case_068",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.7,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_068_seed0_20260805T230945Z.log"
+        },
+        {
+          "case": "case_069",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_069_seed0_20260805T231054Z.log"
+        },
+        {
+          "case": "case_070",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 68.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_070_seed0_20260805T231204Z.log"
+        },
+        {
+          "case": "case_071",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.9,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_071_seed0_20260805T231313Z.log"
+        },
+        {
+          "case": "case_072",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 69.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_072_seed0_20260805T231424Z.log"
+        },
+        {
+          "case": "case_073",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_073_seed0_20260805T231533Z.log"
+        },
+        {
+          "case": "case_074",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 73.6,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_074_seed0_20260805T231645Z.log"
+        },
+        {
+          "case": "case_075",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 71.8,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_075_seed0_20260805T231758Z.log"
+        },
+        {
+          "case": "case_076",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 72.5,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_076_seed0_20260805T231910Z.log"
+        },
+        {
+          "case": "case_077",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 67.3,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_077_seed0_20260805T232023Z.log"
+        },
+        {
+          "case": "case_078",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_078_seed0_20260805T232130Z.log"
+        },
+        {
+          "case": "case_079",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 70.4,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_079_seed0_20260805T232240Z.log"
+        },
+        {
+          "case": "case_080",
+          "seed": 0,
+          "arm": "spec_casc_opt",
+          "tag": "specCascOpt0p5",
+          "status": "ok",
+          "wall_time_seconds": 80.2,
+          "server_log": "logs/fresh_extreme/specCascOpt0p5_case_080_seed0_20260805T232351Z.log"
+        }
+      ]
     }
   ]
 }

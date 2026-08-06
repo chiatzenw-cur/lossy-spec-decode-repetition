@@ -1,0 +1,209 @@
+<|channel|>analysis<|message|>We need to implement function countBeautifulPairs: count unordered pairs (i<j) where first digit of nums[i] and last digit of nums[j] are coprime. We need to check examples.
+
+Problem constraints: digits <=101. let's analyze.
+
+Define function void count. We need only two single digits: first digit of digits of nums[i] (first digit). And last digit of nums[j] (last digit). That is between 1 and 9. So we can precompute for each index their first digit and last digit.
+
+Edge: 9 == digits, no zero? the last digit non-zero. But min 1 max 9.
+
+Then find all pairs. Approach: Count pairs where gcdup(first_digit, last_digit)==1. Complexity small. We can do O(n^2) for n <= 100. 100 choose 2 -> 4950.
+
+But we can just compute repeated. complexity fine.
+
+Simpler: Use Python math: gcd(a,b) = gcd(x,y). For n=100, 4950 = 4950 fine.
+
+Edge case: no decimal. Ok.
+
+So solution explanation: Manage.
+
+I'll produce code:
+
+class Solution:
+    def countBeautifulPairs(self, nums: List[int]) -> int:
+        best = None
+        # Use math
+        import math
+        better = 0
+        # For each index compute first_digit of nums[i], last_digit of nums[j]
+        modulo = (n=nums)
+        for i in range(len(nums)):
+            first_digit = int(str(nums[i])[0]) // first digit of representation
+            next...
+But we just need to produce code.
+
+Better: Accept 2^k.
+
+Compute using helper:
+
+def first_digit(x): 
+    x = abs(x)
+    while x >= 10: x//=10
+    return x
+
+Edge: code.
+
+Simpler: use int and loop.
+
+Let's produce code with explanation. In final solution: parse input.
+
+But note we might not need to convert to string.
+
+Better: We can compute first_digit via modular with all digits. Use int and loop:
+
+def first_digit(x):
+    while x >= 10:
+        x //=10
+    return x
+
+```
+t = 0
+for i in range(len(nums)):
+    for j in range(i+1, len(nums)):
+        if gcd(first_digit[i], last_digit[j]) == 1:
+            add to counter
+```
+
+But we need to store precomputed first and last in arrs.
+
+If we compute first and last in each iteration: for i in range(len(nums)): ... we can just compute first and last; but there is symmetrical l's operations.
+
+But we might need to compute first digit for each i. For last digit for each j we can precompute (b-l). For subtraction loops? But easier to just compute each. O(n) time.
+
+Ok.
+
+I'll produce solution handling.
+
+Edge.
+
+We need to produce "complete solution code in python".
+
+Edge: if allowed values as int? Accept.
+
+Now produce solution.
+
+Also we can use math.
+
+Also no external library.
+
+Ok.
+
+We must explanation like code.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+The definition of a pair is independent of the two numbers:
+
+* `I` first digit of `nums[i]`
+* `J` last digit of `nums[j]`
+
+We only need to know whether `gcd(I, J) == 1`.  
+Because every value is at most 9, the gcd can be used with a constant‑time operation.
+
+The whole algorithm is
+
+```
+count0 = 0
+for i = 0 .. n-1:
+    fi = first_digit(nums[i])          # first digit of "nums[i]"
+    best_j = last_digit of nums[j] for j > i
+
+    for j = i+1 .. n-1:
+        fj = last_digit(nums[j])  # last digit of "nums[j]"
+        if gcd(fi,  fj) == 1:
+            count0 += 1
+return count0
+```
+
+`first_digit` and `last_digit` are small helpers, each working in a
+`O(log10(nums[i]))` loop one by one (the number of visited digits is at most
+9 – 4 digits).
+
+`n <= 100`, so the outer loop runs `n·(n-1)/2 = 4950` iterations
+which is trivial for the time limits.
+
+The algorithm guarantees that every pair is counted exactly once  
+(`i` always smaller than `j`).
+
+---
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the number of all beautiful pairs.
+
+Let the algorithm output `ans`.
+
+*For every pair (i, j) with `i < j`*  
+Let `fi` be the first digit of `nums[i]` and `fj` be the last digit of `nums[j]`.  
+The inner loop ensures that `fi` and `fj` are used exactly once:
+the outer loop processes `i` only once, therefore the inner loop
+has `j = i+1…n-1`.  
+During the inner loop the algorithm adds `1` to `count0`
+iff `gcd(fi, fj) == 1`.  
+Hence, for each pair `(i, j)`  
+* if `yi` are coprime *the algorithm adds `1` to `count0`*,  
+* otherwise *the algorithm adds `0`*.
+
+Because a pair equals a *beautiful* pair definition,
+each such pair contributes exactly one to `count0`.  
+Conversely, if the algorithm adds `1` to `count0`, we have
+`i < j` and `gcd(fi, fj) = 1`, i.e. a beautiful pair.
+Hence every increment is in a bijection with a beautiful pair.
+
+Therefore, among all `i < j` the algorithm counts precisely the matches,
+exactly the number of beautiful pairs.
+Thus `ans = invariable`. ∎
+
+
+
+---
+
+#### Complexity Analysis
+
+```
+n = len(nums),       n ≤ 100
+```
+
+For each pair we do a constant‑time gcd check,  
+the total number of executed `gcd` operations is the number of unordered
+pairs `n·(n-1)/2 ≤ 4950`.
+
+```
+Time   :  O(n²)   (≤ 4950 operations)
+Memory :  O(1)
+```
+
+Both satisfy the limits easily.
+
+---
+
+#### Reference Implementation (Python 3)
+
+```python
+import math
+from typing import List
+
+class Solution:
+    def countBeautifulPairs(self, nums: List[int]) -> int:
+        # --- helper to compute first digit of an integer
+        def first_digit(x: int) -> int:
+            while x >= 10:
+                x //= 10
+            return x
+
+        # --- helper to get last digit (directly from division by 10)
+        def last_digit(x: int) -> int:
+            return x % 10
+
+        n = len(nums)
+        count = 0
+        for i in range(n):
+            fi = first_digit(nums[i])
+            for j in range(i + 1, n):
+                fj = last_digit(nums[j])
+                if math.gcd(fi, fj) == 1:
+                    count += 1
+        return count
+```
+
+The function follows exactly the algorithm proven correct above
+and conforms to the requested `solve` function signature.

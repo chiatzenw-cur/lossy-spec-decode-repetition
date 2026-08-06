@@ -1,0 +1,286 @@
+<|channel|>analysis<|message|>We need to produce solution logic to minimize |max(nums1)-min(nums2)|. Standard approach: sort array; keep two sorted. This is a partition with minimum difference between max of left and min of right. That is equal to find minimal difference between two consecutive sorted elements after sorting slice.
+
+Similarly, choose two arbitrary subarrays that partition entire array. But we can reorder elements arbitrarily. Essentially the only relevant thing is that we don't care about order of elements; the partition can be arbitrary; we just have two sets.
+
+Goal condition: minimize abs of max(num1)-min(num2). Equivalent to pick largest in nums1 and smallest in nums2. Essentially to minimize difference between some two numbers in sorted order.
+
+Observations: The elements must be split globally; we cannot partition set to form different values. But we can split into arbitrary sets. But we cannot use any of them twice.
+
+Observation: we can pick any two numbers from the original sorted list; they must be in separate groups: the first is sets of numbers: we can assign one element to maximize other set. Let's carefully reason: Since we can choose to assign any element to whichever order, we can think we just have to choose two numbers that belong to opposite groups. Because the minimize differences, we want to place two numbers that are near values with one group as the maximum of left group (which <= min of right). The better is equality? Let's analyze.
+
+If we have sorted ascending array: a1 <= a2 <= ... <= aN. Consider we partition into two groups: one group holds some elements that will be smaller numbers maybe, but we could leave some values outside groups. The minimal possible difference between max of left and min of right is equal to min of ai and a(i+1) difference across sorted array. Because we can choose a pair: one group contains both elements preceding further from another set? Actually for example, if we choose pair (a_i, a_{i+1}) => min difference of pair between higher and lower number. So to achieve that, we must be able to put them into groups such that a_i <= a_k and a_{i+1} > a_k? Wait we need all elements of left group less than or equal to max of left group. Actually left group maximum value equals maximum of left group; we can set max of left to set of the remaining element to pair. But we also could put some numbers outside the groups. In partition, we have both sets covering remainder. We cannot place any duplicates outside group, but there can be other elements between them.
+
+Therefore the minimal difference between a[i] and a[i+1] is achievable by the process: choose B = [values from array1] and C = [array2] such that min of B > max of C? Wait we want |max(K) - min(L) |.
+
+We want to minimize |max(X)-min(Y)|. That is difference of one edge between maximum x and min y. If we set X >= Y, we can choose X and Y as min of black minus max of other? Hmm.
+
+Simpler: Because we can partition so that max element set first is min of second group? Not exactly.
+
+Better approach: Choose two largest values in sorted array though order arbitrary. The minimal difference is sum of unique indices difference. Wait we need to ensure groups are disjoint. Actually we can choose any two numbers such that we can set them in two groups: one group contains one item with value 1, the other group contains other number and also possibly other numbers.
+
+But the min of the group = min indicating that within left group we have min value M, but right group can contain numbers: min = m. The bigger difference arises from difference of these two numbers.
+
+Thus the min difference is between consecutive comparison of sorted numbers: choose two indices i and j where a[i] <= a[j]. Actually we can set MP-between. Suppose we decide to put a[i] as min of second group, and a[i+1] as max of left group. Since the max of left group cannot be smaller than unchosen group? For partition to be contiguous, we must create left = max of left, and right = min of right. If left group has all elements less than or equal to some x, other group has all elements greater at least one. Example: If array sorted, ascending; if we preserve sorted order between group assignment: we can choose an index k to partition from four: The numbers are sorted one by one. But we can keep them in arbitrary order.
+
+Observation: For minimal difference between max and min of groups, we can use the last element of left group with smallest element of right group. That's the minimal difference between some smaller element in left and a right element that can be greater. The minimal difference between two adjacent elements is efficient.
+
+Note that if there is a number that is larger than min of other set and the other one is smaller, it's consistent.
+
+Proof: Suppose we sort a, then sort domain: we check if we choose elements i<j. Then we can set {sz} group such that min_{group2} is subset of [a[j]; it's fixed. But we need it from difference pair.
+
+Thus we can choose the minimal diff between any two consecutive numbers: code.
+
+Thus algorithm: sort a, get minimum diff between any two consecutive numbers. Complexity O(n log n). For tie? Example: array [10,1,100] sorted 1,10,100: mean differences 9,90. Diff=9. We need to output 9. Works.
+
+Edge case: duplicates? Suppose array [1,1]. Set sorted 1,1 difference 0. So minimal diff=0. We get answer 0 but partition partly? We can assign: {1} and {1}. That difference 0. Works.
+
+Edge: array [3,1]. Sorted 1,3 diff 2. After partition, have 1,3 difference 2. But we could assign diff > 2. So output 2. Should be correct? Check: 3:2. Max left group x? Wait but we can split. Suppose group1: {1,3} group2: {3}, diff: max0 =3. Wait we want min difference: we can set group1:{1}, group2:{3} max group1=1, min group2=3 diff 2. That matches.
+
+So algorithm: sort. Then compute min difference between consecutive numbers.
+
+Complexities: O(n log n), n up to 1e5. Sorting fine.
+
+Thus final answer: min dm = abs(a[i] - a[i+1]) etc.
+
+Potential nuance: We'll use bisect? No.
+
+Edge case: if array sorted ascending; min diff across pairs. But also we need "both sets non-empty" allow each group works.
+
+Thus algorithm described.
+
+Proof: Since there may be extra numbers beyond the boundary, they belong to whichever group as minimal-by. But if we choose two numbers such that one is exactly as max of left group while some bigger numbers might exceed it? Wait.
+
+Spec: Suppose we sort array [1,5,9,10]. We want difference between max of group1 (index <= k) and min of group2 (index > k). The minimal possible difference between all adjacent elements inside sorted array. For any element i and j, we set j = i+1 perhaps? Wait we might need contiguous left groups? We can set i and j of right group. Because j > k difference. But we cannot have j smaller than j? but j might be bigger. Hmm.
+
+Better simpler: The minimal difference between two sub-sets cannot be simultaneously >2 or less? Wait we can just consider partition edges. The two sorted array numbers sorted: A[0] <= ... <= A[n-1]. The closest reaching difference maybe smaller. Suppose we have A[0] < A[1] < M. The minimal difference between any two elements as long as they are distinct. But consider we can partition the two numbers; other numbers may be assigned either way.
+
+Now if there is a difference between two positions, we can pair them as outermost for inner groups outside but we can keep two smaller solutions? Suppose we have set A[0], A[1] (min diff 1). Then size of first group is max; we want max of left group = A[1] <= other group B get min product with X maybe those but it's not atomic. But we can chain them: If we take group1: {a1, x | b1 etc]. But if we split, the maximum of left group is at most a1? Actually min of left group is unusual. But we can treat that group1 contains all elements less than or equal to some element, and the other pair includes the rest. So we'd have min diff between adjacent sorted elements. This is minimal difference.
+
+We must also consider that we might have greater mismatch if we have inequality. For maximum difference we cannot choose less than low? The minimal diff between any two elements is minimal.
+
+Hence solution: sort, find min diff.
+
+Complexities: O(n log n).
+
+Implementation: class Solution.
+
+Test to ensure no duplicates: suff.
+
+Return integer.
+
+Potential negative? Not.
+
+Thus finalize.
+
+Now I'll craft final message: Provide explanation of complexity and code.
+
+Let's produce final response.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every partition of the multiset `nums` we have two sets  
+
+* `nums1` – it has its own maximum value `max(nums1)`
+* `nums2` – it has its own minimum value `min(nums2)`
+
+The value of the partition is  
+
+```
+|max(nums1) - min(nums2)|
+```
+
+The two groups must be non‑empty (they contain exactly the elements of the
+original multiset), but each element can be placed in any of the two groups.
+
+--------------------------------------------------------------------
+
+#### 1. Observation
+
+While we may put all elements of a particular value into the same group,
+the next pair of numbers that we will choose to split are the best possible
+choices.  
+
+*If the two groups are sorted and the smallest element of the second
+group can be made only smaller and the largest element of the first
+group can be made larger, the value of the partition is always the
+difference between the *largest* element of the left group and the
+*smallest* element of the right group.*  
+Consequently
+
+```
+minimum over all 4-groups on the k‑th cut is
+   max( left group ) | minimum( right group )
+```
+
+If we sort the array, the positions of the left and the right groups are
+such that no other element bigger than the right group can stay in the left
+group – otherwise the smaller difference would be larger to the
+right group.  
+Therefore the only useful drops are
+
+```
+Take sorted array:  a[0] ≤ a[1] ≤ … ≤ a[n‑1]
+The minimal number of the partition is at the smallest
+difference between consecutive elements
+```
+
+Because we can always choose two consecutive elements in *that* sorted
+order by putting the left part of the array together in the left group,
+and the right part of the array together in the right group.
+Hence the answer is
+
+```
+minGap = min( a[i+1] – a[i] ) for i = 0 … n‑2
+```
+
+--------------------------------------------------------------------
+
+#### 2. Algorithm
+
+```
+sort(nums)
+answer = +∞
+for i = 0 … n-2:
+    answer = min(answer, nums[i+1] - nums[i])
+return answer
+```
+
+--------------------------------------------------------------------
+
+#### 3. Correctness Proof  
+
+We prove that the algorithm always returns the minimum possible
+value of a partition.
+
+---
+
+##### Lemma 1  
+Let `a[0] ≤ a[1] ≤ … ≤ a[n‑1]` be the array in sorted order.  
+For any partition of the multiset into two non‑empty groups `G1` and `G2`
+the value of the partition is
+
+```
+| max(G1) – min(G2) |       (1)
+```
+
+**Proof.**
+
+The partition consists of the two groups.  
+The maximum of the first group depends only on the values inside the single
+group, and `max(G1)` is the largest among them, whereas `min(G2)` is the
+smallest among the elements of the second group.  
+The expression `|max(G1) – min(G2)|` is exactly the min of absolute
+difference between the respective two border values. ∎
+
+
+
+##### Lemma 2  
+For every partition of the array by positions in the sorted array `a`,
+there exists a partition
+continuous in the sorted array giving the same value of the partition.
+
+Let the partition into groups `G1` and `G2` be described by some
+partition:
+
+```
+{G1}  → some subset of the left side (not necessarily contiguous)
+{G2}  → some subset of the original array
+```
+
+In any optimal partition we may consider the position `i` of the
+`a[i]` that is *not* the maximal element of the left group, and the
+rightmost element of the left group is at position `j`.  
+Replacing it by any other element we can keep the same value
+( `max(G1)` and `min(G2)` do not change).
+
+**Proof.**  
+
+No contradiction – we can keep the two groups adjacent; hold
+`max(G1)` and `min(G2)` independently to the same values.  
+Therefore the algorithm can always pick the right maximal element
+in the left group and the left minimal element in the right group by
+contiguous partition. ∎
+
+
+
+##### Lemma 3  
+Let `d` be the minimum of `a[i+1] – a[i]`.  
+No partition can yield a value smaller than `d`.
+
+**Proof.**  
+By Lemma&nbsp;1 the value of a partition depends on two values;
+`max`. The elements of `max(G1)` and `min(G2)` cannot be smaller than
+one of the smallest possible pairs in the sorted array.  
+For each pair `low` and `high` from the array, the smallest possible
+difference of that pair is `|high – low|`.  
+The smallest possible difference is **not** smaller than the smallest
+gap among consecutive elements – otherwise two distinct elements would
+be smaller than each other.  
+Therefore it is at least `minGap = d`. ∎
+
+
+
+##### Lemma 4  
+Every partition of the sorted array into two subsets this way yields
+distance `|max(G1) – min(G2)|`, where the array consisting of the
+left part of the partition plus the narrowed left part limits the
+difference to the minimum of consecutive differences.
+
+**Proof.**  
+Let the partition be between the positions of `a[k]` and `a[t]` with
+`k < t`.  
+By Lemma&nbsp;2 any element is strictly smaller or larger than the
+adjacent element.  
+Hence the distance between the two consecutive candidates is at least
+`a[t+1] - a[t]` (for `a[t+1]` where `t+1 = q`).  
+The minimum difference that can be achieved by any partition is
+obtained exactly when the cut happens *between* consecutive elements, consisting
+the minimal difference that the two selected elements have. ∎
+
+
+
+##### Theorem  
+The algorithm outputs the minimum possible value of a partition.
+
+**Proof.**  
+Let `d` be the minimum distance between consecutive sorted elements (  
+`d` computed by the algorithm).  
+*Lemma&nbsp;3* shows that no partition yields a value smaller than `d`.  
+*Lemma&nbsp;4* shows that a partition with the real minimum `d`
+exists: the set of elements left of `a[i]` and `a[i+1]`
+with the maximal element of the left group and the minimal element of the right
+include the pair with distance `d`.  
+Therefore the algorithm obtains a valid partition with the minimum
+possible value, completing the proof. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4. Complexity Analysis  
+
+*Sorting* : `O(n log n)`  
+*Scanning* : `O(n)`  
+Overall time: `O(n log n)`  
+Memory usage: the input array itself ( `O(1)` additional space).
+
+--------------------------------------------------------------------
+
+#### 5. Reference Implementation (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    def findValueOfPartition(self, nums: List[int]) -> int:
+        # The length of nums is at least 2.
+        nums.sort()
+        # minimum difference between any two consecutive elements
+        min_delta = 10 ** 18
+        for i in range(len(nums) - 1):
+            d = nums[i + 1] - nums[i]
+            if d < min_delta:
+                min_delta = d
+        return min_delta
+```
+
+The program follows exactly the algorithm proven correct above
+and conforms to the required function signature.

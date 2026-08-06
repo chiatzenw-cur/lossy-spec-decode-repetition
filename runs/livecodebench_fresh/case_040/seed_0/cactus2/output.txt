@@ -1,0 +1,337 @@
+<|channel|>analysis<|message|>We need to produce solution logic. We have dataset: we have initial positions variable each marble: position array is integer array. We can move all marbles at position a given element to another moving position. There may be many moving operations that happen repeatedly.
+
+Important to capture declines after multiple moves. This is essentially a graph where each marble may find its final position after transformations. For infinite steps? But we can mimic that each marble at a given location transitions to a new map each time the current location is moved.
+
+Process: maintain dict mapping each position to a position (moved to). But state may be inter-dependent; we need to transform each marble at any point; multiple moves may involve same positions the same as direct move operations (like moving two same from positions). Consider mapping from original to final. But we can process all moves sequentially: Each day, move all marbles at current platform event. Since we cannot see intermediate marble we can switch. But effectively the final position of an marble will be its initial level after all moves that go through its starting point again. But we can simulate: For each marble, start with first occurrence; we don't need to know which m is moved.
+
+Simpler: process all moves in order: maintain map from current position to final destination order (like mapping). But we have multiple marbles at that location; may move all at same time, but may still have multiple marbles at values.
+
+Simpler: state: we maintain a dictionary mapping current location to final location after all moves. We may define mapping of each position to its "current" final location maybe index. But for large number of m, we cannot because removal of all at same location? Simpler: treat each marble's final position as the index of the final position after performing all following transformations. The process can be seen as following: each move starting with some car that contains all at positions that have been at that position. There's no future path duplication after each move? But we could simulate using map of direction that accumulate arrangements: like operator: newPos = maps from target to some list to final. Actually to map entire final positions, we can use DSU from present to final positions for each step: Move all marbles at position x into position y, so we need to union sets of steps? Wait.
+
+Better: Suppose we currently compute final positions for a flipped mapping? But we can iterate using union mapping from current position to final position. Edge: We maintain a dictionary mapping from a local index to final relocation. In a simulation, we can maintain an array of follower counts. But we have to manage for each marble's position quickly.
+
+Simpler: treat convert each marble's final position as the element after all operations that have been moved. But the mapping of current position to final positions can be determined by performing a forward chain from current node: from initial node pos, we follow until last node is pos that no further move.
+
+We can precompute final positions by mapping on the fly. But we need dynamic updates because map of present to final may not be static after all moves: We can compute all intermediate mapping from original positions to final positions in one pass? but we need to evaluate via simulation on large graph edges.
+
+We can treat each linear transformation: Each finger/war: after all moves, we push marbles to separate set of positions defined by final positions. Because the movement sequence is deterministic of the journey order: For each marble, we need the allowed moves to follow: When a marble at position p equals moveFrom[0], we transition to moveTo[0]. If p == moveFrom[1], all marbles at that place become moved to moveTo[1]; But first we may have moved some marble at that spot that had moved earlier? For example the marble might move to dispenser. The order is: At each step, we iterate all marbles at positions; after attempts, the marbles may move to new places. So we need to think about following chain: For each marble at position p, it will eventually reach position final only if and also possibly stays on ones due to a particular path defined by its move list.
+
+Strategy: Use simulation step by step but track number of marbles at each position. We know the rolls. We can maintain dictionary mapping position to count, where we process steps: for each move, for given position p, move all marbles of count p to new pos. If counter collected, we simply move all of pos to new pos.
+
+But we also need to track for each marble's state for final positions after fast simulation? Actually we could just place each ball as distinct: we just keep counts. So we can maintain dict {pos: 0} initial count for each marble. After last move, we will have initial counts and maybe final positions sorted. That will answer. But we need to know distinct positions for each marble at each step, but we don't need to differentiate the marbles across positions? For the final answer we just list positions with at least one marble; but we might need to keep one marble? But output will be [1,2,3] indices? Wait we need number of positions such that they may have at least one marble. But it's all balls; we just need to track which a ball has at least one marble after all moves. But we only need to list reachable vertices, not counts.
+
+Thus naive algorithm: We maintain mapping from position to count of marbles. Initially count = number of parcels (x). Then for each move from start to end, we move all marbles from current start to new end: path = dict.get(p, sum). That may use set. But we need to handle up to 100k steps and each move can get a count from pos to new pos. That's O(total_count). Each step we assign counts to initial count of bunch. Complexity: each pair step is O(1) simulation.
+
+But updating count per move: code: dict.get('from', 0) and len dictionary. After building, we compute final set of occupied positions.
+
+But there is nuance: when moveers may be moved after the same position or we are at final positions? Eg: Suppose at start, vehicle at pos p. So we want to move all marbles at v= p to new pos. That we just need to put counts for new pos y. That duplication or addition of same vector? But adding with duplicates? That's fine.
+
+But what about the "bunch" of marbles: Suppose after first step, we had at pos e that now has gone marble from some c. But definition is: "after building all moves, we treat each m as new position but hold count." This is our simulation.
+
+But is the example requiring we compute remaining positions after all moves? Yes.
+
+Edge case: Suppose moveFrom [1] same as target after previous steps? Eg: 1:2,1:3? Because we moved from 1 into 2. After second step, we might want to move any m from 1 to 3? But we didn't get that because we have zero mapping. But removal could simulate that still from 1 before any in step. But the rule: "there is at least a marble in moveFrom[i] at the moment we want to apply the i^th move." Means each reaction at step 1. So at start we have 1 marble at pos1. After first step, moving to pos2, maybe have r at pos1? But after second step, we might have 1 again removed. So we can't change someone else.
+
+So we can't handle infinite loops, but total number of moves may be up to 1e5. Our algorithm can be efficient.
+
+Complexities: Each step we maintain a dictionary or map as (value->count). We could maintain map of new positions to items with counts. We also need to treat that the resulting we maintain no map of from because we've already moved all marbles from that pos to new pos. We can simply remove count and update counts.
+
+Edge: After first step we might be at p with no more marbles at pos start. So we need to update counts.
+
+We need to start with counts: map of each initial position: we can add counts of each arrival; but if duplicates we have duplicates. Actually we need to maintain counts of each marble at each position. So we can store map[i] as set of marble counts? They are integers; but we cannot add duplicates? But we can keep duplicates for later ones and see if we might have duplicates.
+
+But we only need to store number of marbles per pos, which is unique across positions: we can count number of marbles by using a map. We might have duplicates in place so we can maintain a count. But we need to separate each iteration.
+
+However, algorithm: To compute final positions we might only need to use unique positions. But with duplicates, we need to track per m. Wait: each step we process positions, we may move all marbles from a place to new pos, but that may accumulate duplicates in same position. But we already considered that at the end of step we will just hold count of marbles there. So we only need to gather counts.
+
+Implementation: iterate coordinates with int map. For each step we create get newPos with large counts. but complexity fine.
+
+Thus code:
+
+```
+def relocateMarbles(self, nums: List[int], moveFrom: List[int], moveTo: List[int]) -> List[int]:
+    if not nums or not moveFrom:
+        return [val for val in nums]
+```
+
+But we need to handle overlapping sp.
+
+Ok maintain dict; 
+
+But if we treat each step as all marbles at positions where they have non-zero counts; we process that step: if pos is next moveFrom, we move all to new pos. Add m to new pos. That duplicates in same pos (by adding). But we may want to keep counts. Since we only need final positions, we can just maintain list of counts suff.
+
+But if we currently have all at pos? We just move all in a step; we can update size of map accordingly: We'll use shift values. Use mapping dictionary:
+
+```
+pos_to_count = {}
+for i in nums:
+    pos_to_count[i] = pos_to_count.get(i, 0) + 1
+```
+
+Now iterate:
+
+def process(s):
+    cur = pos_to_count.get(moveFrom[i], 0)
+    if cur:
+        ops_data = pos_to_count.get(moveFrom[i], 0)
+        pos_to_count[moveFrom[i]] = 0
+        # add to dest
+        pos_to_count[moveTo[i]] = pos_to_count.get(moveTo[i], 0) + ops_data
+
+    If dest: after addition, could be large.
+
+But if we skip the 0.
+
+But we also need to maintain mapping for new positions maybe further moving later.
+
+Edge Cases: The location may move if we move from 1 and again cause further to move at later times. If we have moved from 1 to 2 and later we might also move from 1 to 3? Actually we now have no marbles at 1 after move, so there will be no marbles at 1. But this might happen on next step where 'moveFrom[i] is 1' again: so just resetting. But there is no marble at 1 after move; So no duplicates.
+
+But if we have a marble at 1 that moved further by a chain that might have moved to 2 again (i.e., from 2 to 1 again), we might have 2 again.
+
+We will maintain the mapping as we update counts arbitrarily; but we will always have the same count consistent.
+
+Ok.
+
+Now complexity: Up to 100k steps may have far more? But we need to store mapping. Implementation is O(n + m). Works.
+
+But there's a potential issue: Suppose we have 100k steps and we have many positions; but we can handle in O(n+m) hash.
+
+Also ensure that the time for each movement must be constant time.
+
+Edge Cases: The test might have duplicates but we simulate correctly.
+
+Thus final code uses dictionary.
+
+Finally produce output: sorted list of positions where integer count >0. That means we need to sort list.
+
+Edge case: Input may be empty? but constraints: lengths >=1. Input may not have arrays. But we handle.
+
+Let's test with example.
+
+Test: terms: nums=[1,6,7,8], moveFrom: [1,7,2], moveTo: [2,9,5], find final positions:
+
+Process: In each step, create map; we fill counts: 1:1,6:1,7:1,8:1. Then loop: test:
+
+At first, pop from 1: 1. put to 2: [0,1,2,...]. So 2 becomes 1 further; pos 1: 0. So counts now: 1:0.. 2:1.. 6:1.. 7:1.. 8:1.
+
+Step 2: from 7: 1: Remainder: 7:1->9; 9 1. So [2:1,3:1,9:1,6:1,8:1]. Good.
+
+Step 3: from 2: 1: 1: 2 => 5. So [5:1,6:1,8:1,9:1]. Yes.
+
+Now output: sorted [5,6,8,9]. Yes.
+
+Lets test second example: 1,1,3,3, moves from 1 to 2: 1: 1 => pop both. Must remove 1 -> 6 (both 2). So mark: [2:2,3:2]. No moves: positions 2 far away, 3: 2. Next: convert[3] -> 2: 3 -> 2. So final: [2:4]. So [2].
+
+Edge: if there is any leftover that no move left after some steps: we will use map of positions with count >0. So final sorted.
+
+Thus final solution.
+
+But hold on: We are not using requirement for that each marble's final position is unique. So we abide.
+
+Let's produce final solution summarizing algorithm. Complexity O((n+m) *|map|).
+
+But maybe there’s an alias: eventual mapping as long long numbers we can maintain Map by dictionary mapping.
+
+Ok produce final answer now.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For each marble we know its current position `x`.  
+During the simulation we call the state of the whole collection a *map*:
+
+```
+position  →  number of marbles that are on that position
+```
+
+During the i‑th step every marble that is on `moveFrom[i]` is moved to
+`moveTo[i]`.  
+After that step `moveFrom[i]` should the number of marbles of that
+position be `0` (still counted in the map) – the marbles that start on this
+position disappear from that position and are now on `moveTo[i]`.
+
+Because the test case guarantees that at each step there is at least one marble
+on the requested position, all operations are well‑defined – no error
+points are produced.
+
+The classical solution is
+
+| step | how we perform it | what we do |
+|------|-------------------|------------|
+| **`-1`** | build the map from the initial number of marbles | build `pos_to_cnt` |
+| **`i`** | for every `moveFrom[i]` (`m`) it moves all marbles from that `m`
+            to new position `new` | make a small amount of colour to `new` |
+| **`-1`** | after all steps finish, check all recorded positions | keep only the ones with a count `> 0` |
+
+The algorithm runs in *O(num_marbles + num_steps)* time and has constant
+time for every step.
+
+--------------------------------------------------------------------
+
+#### Algorithm
+```
+relocateMarbles(nums, moveFrom, moveTo):
+
+    # 1. read initial positions
+    pos_to_cnt = {}
+    for q in nums:
+        pos_to_cnt[q] = pos_to_cnt.get(q, 0) + 1
+
+    # 2. perform the *exact* sequence of moves
+    for i in range(len(moveFrom)):
+        start = moveFrom[i]
+        available = pos_to_cnt.get(start, 0)          # cast to false if 0
+        if available:
+            # remove all marbles at this position
+            pos_to_cnt[moveFrom[i]] = 0
+            # move all marbles to a new position
+            pos_to_cnt[moveTo[i]] = pos_to_cnt.get(moveTo[i], 0) + available
+
+    # 3. collect the final positions
+    res = [pos for pos, count in pos_to_cnt.items() if count > 0]
+    res.sort()
+    return res
+```
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the correct set of positions for all
+marbles after the sequence of moves.
+
+--------------------------------------------------------------------
+##### Observations
+
+* In the beginning, each marble has `m` individual its position.
+* Direction is done **on the *current* maps**,
+  no marble is moved after the start of a step.
+* The set of marbles at each *current* position is deterministic
+  (`cnt[pos]`).
+
+--------------------------------------------------------------------
+##### Lemma 1  
+During the whole simulation (`m = 0 … |moveFrom|-1`) after processing
+step `i` the collection `pos_to_cnt` contains exactly the number of marbles
+present at each position in the real world.
+
+*Proof.*
+
+Proceed by induction over `i`.
+
+*Base:*  
+Before any part of the simulation, `pos_to_cnt` was built from the initial
+array `nums`.  The resulting row is the initial “exact” map.
+
+*Induction step:*  
+Assume there is some step `i` representing the exact marble distribution.
+During the step `i`, the algorithm checks that there are at least one
+marble in the corresponding position.
+`available` is the number of marbles that are there.
+Everything is removed by `pos_to_cnt[start] = 0` and added to
+`dest` by precisely `available`.  
+Therefore the reproducing map contains the real numbers as the moving
+additional marbles are moved to the front of the real positions. In the
+evolution at the step `i+1` the distribute is further and the simulated
+counts are identical.
+
+∎
+
+--------------------------------------------------------------------
+##### Lemma 2  
+After all `m` steps `pos_to_cnt[pos]` equals the length of the set of
+marbles that finally end up in position `pos`.
+
+*Proof.*
+
+By Lemma&nbsp;1, after `max(m)` steps the final position equals real
+million after each step, therefore after the whole sequence
+`pos_to_cnt` contains that. ∎
+
+
+
+--------------------------------------------------------------------
+##### Lemma 3  
+The algorithm outputs a sorted list of positions that are occupied
+where the final position is used.
+
+*Proof.*
+
+By Lemma&nbsp;2 the list `res` contains every distinct state of the
+current position.  
+The algorithm `|s|` only appends a position if it does **not** have zero
+marbles – i.e. whether at least one marbles the collection contains.
+At the end `res.sort()` is O(`|s| log |s|`).
+
+This is the intended answer.
+
+∎
+
+
+
+--------------------------------------------------------------------
+##### Theorem  
+`solve(-1) = provide the sorted list of positions which
+are occupied after the entire simulation – exactly as required.
+
+*Proof.*
+
+Theorem uses the algorithm's properties of the algorithm
+from Lemma&nbsp;3, which is exhaustive.
+
+∎
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis  
+
+*Let* `n = len(nums)`, `m = len(moveFrom)`  
+*Both building and iteration are linear.*
+
+```
+Time   :  O(n + m)
+Space  :  O(n + m)   (the map of the positions, also available in the worst
+                     limit over the whole puzzle)
+```
+
+--------------------------------------------------------------------
+
+#### Reference Implementation (Python 3)
+
+```python
+from typing import List, Dict
+
+class Solution:
+    def relocateMarbles(self, nums: List[int],
+                    moveFrom: List[int],
+                    moveTo: List[int]) -> List[int]:
+        """
+        * Restoring the yields the final positions after the sequence of moves.
+        * Works as much as 10^5 RAM, no recursion is unnecessary.
+        """
+        # Mappings to counts
+        pos_to_cnt: Dict[int, int] = {}
+
+        # ---- Step 1 : read initial numbers
+        for n in nums:                     # sum will add up to len(nums)  <= 1e5
+            pos_to_cnt[n] = pos_to_cnt.get(n, 0) + 1
+
+        # ---- Step 2 : process every (from, to) step
+        for i in range(len(moveFrom)):
+            p = moveFrom[i]
+            ng = moveTo[i]
+            num_g = pos_to_cnt.get(p, 0)
+            if num_g == 0:
+                continue                       # already at 0, nothing to do here
+            # add the marbles to the new destination
+            pos_to_cnt[ng] = (pos_to_cnt.get(ng, 0) + num_g)
+            # remove the marbles from the original place
+            pos_to_cnt[p] = 0.0                 # dist to 0
+
+        # ---- Step 3 : collect
+        res = [pos for pos, cnt in pos_to_cnt.items() if cnt > 0]
+        res.sort()
+        return res
+```
+
+The code follows exactly the algorithm proven correct above. The length
+limit: ≤ 1 000 by the problem statement’s constraint, but by design it
+handles 10⁵ guarantees and has no overflow for the values of the
+positions.

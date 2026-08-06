@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-92c2053d73a805e8",
+  "object": "text_completion",
+  "created": 1785969426,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to calculate: 5 movies price 20 each: 5*20 = 100. 3 books price 30: 3*30 = 90. 2 books price 45: 2*45 = 90. Sum: 100+90+90 = 280. So total cost $280. Provide answer.<|end|><|start|>assistant<|channel|>final<|message|>Let’s break it down:\n\n| Item | Price per item | Quantity | Sub‑total |\n|------|---------------|----------|-----------|\n| Sci‑fi novel | $20 | 5 | \\$20 |\n| History book | $30 | 3 | \\$30 |\n| Philosophy book | $45 | 2 | \\$45 |\n\n**Total cost**\n\n\\[\n\\begin{aligned}\n\\text{Total} &= 5 \\times 20 \\;+\\; 3 \\times 30 \\;+\\; 2 \\times 45 \\\\\n&= 100 \\;+\\; 90 \\;+\\; 90 \\\\\n&= \\$280\n\\end{aligned}\n\\]\n\nSo, Benjamin went to a bookstore and purchased books for **\\$280**.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 131,
+    "total_tokens": 373,
+    "completion_tokens": 242,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

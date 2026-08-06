@@ -173,6 +173,932 @@
           "server_log": "logs/fresh_livecodebench/lenience0p2_case_008_seed0_20260804T164108Z.log"
         }
       ]
+    },
+    {
+      "timestamp_utc": "2026-08-06T02:00:43.944387+00:00",
+      "arms": [
+        "cactus"
+      ],
+      "lenience_factor": 0.2,
+      "command": [
+        "scripts/fresh_server_replay.py",
+        "--arms",
+        "cactus",
+        "--cactus-alpha",
+        "2.0",
+        "--prompt-root",
+        "prompts/livecodebench",
+        "--runs-root",
+        "runs/livecodebench_fresh",
+        "--log-root",
+        "logs/fresh_extreme",
+        "--max-new-tokens",
+        "12000",
+        "--cases",
+        "case_001",
+        "case_002",
+        "case_003",
+        "case_004",
+        "case_005",
+        "case_006",
+        "case_007",
+        "case_008",
+        "case_009",
+        "case_010",
+        "case_011",
+        "case_012",
+        "case_013",
+        "case_014",
+        "case_015",
+        "case_016",
+        "case_017",
+        "case_018",
+        "case_019",
+        "case_020",
+        "case_021",
+        "case_022",
+        "case_023",
+        "case_024",
+        "case_025",
+        "case_026",
+        "case_027",
+        "case_028",
+        "case_029",
+        "case_030",
+        "case_031",
+        "case_032",
+        "case_033",
+        "case_034",
+        "case_035",
+        "case_036",
+        "case_037",
+        "case_038",
+        "case_039",
+        "case_040",
+        "case_041",
+        "case_042",
+        "case_043",
+        "case_044",
+        "case_045",
+        "case_046",
+        "case_047",
+        "case_048",
+        "case_049",
+        "case_050",
+        "case_051",
+        "case_052",
+        "case_053",
+        "case_054",
+        "case_055",
+        "case_056",
+        "case_057",
+        "case_058",
+        "case_059",
+        "case_060",
+        "case_061",
+        "case_062",
+        "case_063",
+        "case_064",
+        "case_065",
+        "case_066",
+        "case_067",
+        "case_068",
+        "case_069",
+        "case_070",
+        "case_071",
+        "case_072",
+        "case_073",
+        "case_074",
+        "case_075",
+        "case_076",
+        "case_077",
+        "case_078",
+        "case_079",
+        "case_080",
+        "case_081",
+        "case_082",
+        "case_083",
+        "case_084",
+        "case_085",
+        "case_086",
+        "case_087",
+        "case_088",
+        "case_089",
+        "case_090",
+        "--trace-proposals"
+      ],
+      "runs": [
+        {
+          "case": "case_001",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 75.1,
+          "server_log": "logs/fresh_extreme/cactus2_case_001_seed0_20260806T000124Z.log"
+        },
+        {
+          "case": "case_002",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 82.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_002_seed0_20260806T000239Z.log"
+        },
+        {
+          "case": "case_003",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_003_seed0_20260806T000401Z.log"
+        },
+        {
+          "case": "case_004",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_004_seed0_20260806T000529Z.log"
+        },
+        {
+          "case": "case_005",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_005_seed0_20260806T000700Z.log"
+        },
+        {
+          "case": "case_006",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_006_seed0_20260806T000828Z.log"
+        },
+        {
+          "case": "case_007",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_007_seed0_20260806T000959Z.log"
+        },
+        {
+          "case": "case_008",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 91.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_008_seed0_20260806T001116Z.log"
+        },
+        {
+          "case": "case_009",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 83.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_009_seed0_20260806T001247Z.log"
+        },
+        {
+          "case": "case_010",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 69.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_010_seed0_20260806T001410Z.log"
+        },
+        {
+          "case": "case_011",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 79.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_011_seed0_20260806T001520Z.log"
+        },
+        {
+          "case": "case_012",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_012_seed0_20260806T001639Z.log"
+        },
+        {
+          "case": "case_013",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_013_seed0_20260806T001756Z.log"
+        },
+        {
+          "case": "case_014",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.8,
+          "server_log": "logs/fresh_extreme/cactus2_case_014_seed0_20260806T001907Z.log"
+        },
+        {
+          "case": "case_015",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 69.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_015_seed0_20260806T002022Z.log"
+        },
+        {
+          "case": "case_016",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 92.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_016_seed0_20260806T002131Z.log"
+        },
+        {
+          "case": "case_017",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 68.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_017_seed0_20260806T002303Z.log"
+        },
+        {
+          "case": "case_018",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_018_seed0_20260806T002411Z.log"
+        },
+        {
+          "case": "case_019",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_019_seed0_20260806T002526Z.log"
+        },
+        {
+          "case": "case_020",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 91.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_020_seed0_20260806T002657Z.log"
+        },
+        {
+          "case": "case_021",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 72.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_021_seed0_20260806T002828Z.log"
+        },
+        {
+          "case": "case_022",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_022_seed0_20260806T002941Z.log"
+        },
+        {
+          "case": "case_023",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_023_seed0_20260806T003109Z.log"
+        },
+        {
+          "case": "case_024",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 78.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_024_seed0_20260806T003224Z.log"
+        },
+        {
+          "case": "case_025",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_025_seed0_20260806T003342Z.log"
+        },
+        {
+          "case": "case_026",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 89.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_026_seed0_20260806T003459Z.log"
+        },
+        {
+          "case": "case_027",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 78.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_027_seed0_20260806T003629Z.log"
+        },
+        {
+          "case": "case_028",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 89.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_028_seed0_20260806T003747Z.log"
+        },
+        {
+          "case": "case_029",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 82.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_029_seed0_20260806T003916Z.log"
+        },
+        {
+          "case": "case_030",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.8,
+          "server_log": "logs/fresh_extreme/cactus2_case_030_seed0_20260806T004039Z.log"
+        },
+        {
+          "case": "case_031",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 76.1,
+          "server_log": "logs/fresh_extreme/cactus2_case_031_seed0_20260806T004157Z.log"
+        },
+        {
+          "case": "case_032",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 71.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_032_seed0_20260806T004313Z.log"
+        },
+        {
+          "case": "case_033",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_033_seed0_20260806T004424Z.log"
+        },
+        {
+          "case": "case_034",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_034_seed0_20260806T004535Z.log"
+        },
+        {
+          "case": "case_035",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 79.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_035_seed0_20260806T004646Z.log"
+        },
+        {
+          "case": "case_036",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_036_seed0_20260806T004805Z.log"
+        },
+        {
+          "case": "case_037",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 69.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_037_seed0_20260806T004936Z.log"
+        },
+        {
+          "case": "case_038",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_038_seed0_20260806T005045Z.log"
+        },
+        {
+          "case": "case_039",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_039_seed0_20260806T005213Z.log"
+        },
+        {
+          "case": "case_040",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_040_seed0_20260806T005341Z.log"
+        },
+        {
+          "case": "case_041",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 79.8,
+          "server_log": "logs/fresh_extreme/cactus2_case_041_seed0_20260806T005456Z.log"
+        },
+        {
+          "case": "case_042",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.8,
+          "server_log": "logs/fresh_extreme/cactus2_case_042_seed0_20260806T005616Z.log"
+        },
+        {
+          "case": "case_043",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 67.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_043_seed0_20260806T005734Z.log"
+        },
+        {
+          "case": "case_044",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 75.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_044_seed0_20260806T005841Z.log"
+        },
+        {
+          "case": "case_045",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 71.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_045_seed0_20260806T005956Z.log"
+        },
+        {
+          "case": "case_046",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_046_seed0_20260806T010107Z.log"
+        },
+        {
+          "case": "case_047",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_047_seed0_20260806T010218Z.log"
+        },
+        {
+          "case": "case_048",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_048_seed0_20260806T010349Z.log"
+        },
+        {
+          "case": "case_049",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 87.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_049_seed0_20260806T010518Z.log"
+        },
+        {
+          "case": "case_050",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_050_seed0_20260806T010645Z.log"
+        },
+        {
+          "case": "case_051",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 73.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_051_seed0_20260806T010756Z.log"
+        },
+        {
+          "case": "case_052",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 91.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_052_seed0_20260806T010909Z.log"
+        },
+        {
+          "case": "case_053",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 71.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_053_seed0_20260806T011041Z.log"
+        },
+        {
+          "case": "case_054",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_054_seed0_20260806T011152Z.log"
+        },
+        {
+          "case": "case_055",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 85.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_055_seed0_20260806T011323Z.log"
+        },
+        {
+          "case": "case_056",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 78.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_056_seed0_20260806T011448Z.log"
+        },
+        {
+          "case": "case_057",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 89.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_057_seed0_20260806T011606Z.log"
+        },
+        {
+          "case": "case_058",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 89.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_058_seed0_20260806T011736Z.log"
+        },
+        {
+          "case": "case_059",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 76.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_059_seed0_20260806T011904Z.log"
+        },
+        {
+          "case": "case_060",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 68.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_060_seed0_20260806T012020Z.log"
+        },
+        {
+          "case": "case_061",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 79.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_061_seed0_20260806T012129Z.log"
+        },
+        {
+          "case": "case_062",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_062_seed0_20260806T012249Z.log"
+        },
+        {
+          "case": "case_063",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 91.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_063_seed0_20260806T012406Z.log"
+        },
+        {
+          "case": "case_064",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 69.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_064_seed0_20260806T012537Z.log"
+        },
+        {
+          "case": "case_065",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.1,
+          "server_log": "logs/fresh_extreme/cactus2_case_065_seed0_20260806T012646Z.log"
+        },
+        {
+          "case": "case_066",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 73.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_066_seed0_20260806T012756Z.log"
+        },
+        {
+          "case": "case_067",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 88.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_067_seed0_20260806T012909Z.log"
+        },
+        {
+          "case": "case_068",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_068_seed0_20260806T013037Z.log"
+        },
+        {
+          "case": "case_069",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 69.7,
+          "server_log": "logs/fresh_extreme/cactus2_case_069_seed0_20260806T013148Z.log"
+        },
+        {
+          "case": "case_070",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 79.0,
+          "server_log": "logs/fresh_extreme/cactus2_case_070_seed0_20260806T013258Z.log"
+        },
+        {
+          "case": "case_071",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 72.1,
+          "server_log": "logs/fresh_extreme/cactus2_case_071_seed0_20260806T013417Z.log"
+        },
+        {
+          "case": "case_072",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 78.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_072_seed0_20260806T013529Z.log"
+        },
+        {
+          "case": "case_073",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 92.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_073_seed0_20260806T013647Z.log"
+        },
+        {
+          "case": "case_074",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 75.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_074_seed0_20260806T013820Z.log"
+        },
+        {
+          "case": "case_075",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 84.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_075_seed0_20260806T013935Z.log"
+        },
+        {
+          "case": "case_076",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 90.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_076_seed0_20260806T014059Z.log"
+        },
+        {
+          "case": "case_077",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 68.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_077_seed0_20260806T014230Z.log"
+        },
+        {
+          "case": "case_078",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 87.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_078_seed0_20260806T014338Z.log"
+        },
+        {
+          "case": "case_079",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 77.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_079_seed0_20260806T014506Z.log"
+        },
+        {
+          "case": "case_080",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 91.9,
+          "server_log": "logs/fresh_extreme/cactus2_case_080_seed0_20260806T014623Z.log"
+        },
+        {
+          "case": "case_081",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_081_seed0_20260806T014755Z.log"
+        },
+        {
+          "case": "case_082",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 82.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_082_seed0_20260806T014909Z.log"
+        },
+        {
+          "case": "case_083",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 78.2,
+          "server_log": "logs/fresh_extreme/cactus2_case_083_seed0_20260806T015032Z.log"
+        },
+        {
+          "case": "case_084",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 71.5,
+          "server_log": "logs/fresh_extreme/cactus2_case_084_seed0_20260806T015150Z.log"
+        },
+        {
+          "case": "case_085",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 66.8,
+          "server_log": "logs/fresh_extreme/cactus2_case_085_seed0_20260806T015302Z.log"
+        },
+        {
+          "case": "case_086",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 74.1,
+          "server_log": "logs/fresh_extreme/cactus2_case_086_seed0_20260806T015408Z.log"
+        },
+        {
+          "case": "case_087",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 70.3,
+          "server_log": "logs/fresh_extreme/cactus2_case_087_seed0_20260806T015523Z.log"
+        },
+        {
+          "case": "case_088",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 86.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_088_seed0_20260806T015633Z.log"
+        },
+        {
+          "case": "case_089",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 80.4,
+          "server_log": "logs/fresh_extreme/cactus2_case_089_seed0_20260806T015759Z.log"
+        },
+        {
+          "case": "case_090",
+          "seed": 0,
+          "arm": "cactus",
+          "tag": "cactus2",
+          "status": "ok",
+          "wall_time_seconds": 83.6,
+          "server_log": "logs/fresh_extreme/cactus2_case_090_seed0_20260806T015920Z.log"
+        }
+      ]
     }
   ]
 }

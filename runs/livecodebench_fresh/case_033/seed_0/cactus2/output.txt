@@ -1,0 +1,226 @@
+<|channel|>analysis<|message|>We need to implement isFascinating. Problem typical: find if 3*x concatenates numbers (exactly 9 digits) with all digits 1-9.
+
+Maybe easier: produce string of three numbers: a + b + c. Ensure no zeros: length 3, num1=3, num2=3? Provide 3-digit numbers each? For 1999? 100 <= 1999? Wait n is 100 to 999 inclusive, but 100 to 999 leads to 30 to 100? Actually 100 <= n <= 999, product 3*n produce 99 to 999. The largest 3*n exceed 999. But still within 9 digits; we will get string of concatenation length 3*3=9? Wait, padded: For example n=100, s='100','200','300'. They count to 9 digits -> no zeros. But the number: we need to guarantee each of 3 numbers: digits 1-9 digits individually; we don't need to check that all digits appear in single-digit? Let's carefully review. Problem states that the resulting number contains all digits from 1 to 9 exactly once. That means three separate decimal digits may come from digits 1-9. So we must place number exactly 9 digits values. Because for n 100-999; if n=100, leading 100 has 3 digits; but 2 * n = 200, has 3 digits; 3*n = 300. So concatenated string of 9 digits: '100200300' counts 9 digits. But we require 1-9 unique. So no zeros.
+
+But we may add (maybe 3*n might exceed 999, e.g., 100->300 -> 300? Wait n=99. Actually 100*3=300. But 100*3=300 does 300, 3 digits. But domain: only 100..999.
+
+Ok.
+
+Proof: string length of number of twiddled numbers: 3*3=9 for seldom perfect 9 digits. So to produce 9-digit string.
+
+But must be careful for lengths: product may exceed 900 (2*9=18?). In 100-999, 3*n can be 300-2997. So 499? 3*n > 999, max > 999 -> 3 digits but digits up to 4. For example, n= 999 => 3*n=2997; digits 3,3-digit. 3*999>999 but 3-digit number 2997; digits 9,9,9,? no.
+
+But we are fine. For string of length 9. So we can treat as we can just compute string; but if needed sum of digits after converting to non-zero digits may produce '1' and '0' leading? But 999's digits include duplicates? '111111'?
+
+Ok.
+
+Implementation: We need to check 3 digits 1..9 each appears exactly once.
+
+Here is function:
+
+def isFascinating(n: int) -> bool:
+    tri = s1 x2 x3
+    if len(tri) != 9: return False
+    if '0' in tri: return False
+    total = set(tri)
+    return len(total)==9 and total == set('123456789')
+
+Simplify: Use str(n) and str(2*n), etc.
+
+But consider 1 and 2 may produce ones with leading digits? But we don't need indicating leading zeros. str(2*n) will be 3 digits: m -> 10 etc. For 90 range might be 2-digit numbers, 2*100=200 -> still 3 digits. So no need to pad.
+
+So algorithm:
+
+- g = str(n).join? Actually string concatenation of digits.
+
+Solution program:
+
+def isFascinating(n: int) -> bool:
+    res = string(s,2*n+3*n)
+    for i in range(9):
+        if res[i] != '0' (bad). At least 9 char.
+
+But note: 2*n might double produce digits like '2' for example 100, '200', '300' so 9 digits indeed.
+
+Thus we can implement.
+
+Edge: n == 100? But 100 may produce 3-digit strings but we need 3 digits all one's? Provided output will be '000's'.
+
+Consider 9-digit 0?? yes.
+
+Now test sample 1: n=192 => 120 and 360; but we check with sample.
+
+Edge: n= 100? no leading zeros. Accept.
+
+Ok.
+
+Let's craft explanation: We simply reason.
+
+Will produce final code.
+
+Also, we need to include ability of tests.
+
+Will produce final answer.
+
+Test by simple prints: m=192 test, print.
+
+Ok.
+
+But reference: algorithm works.
+
+Let's produce code details:
+
+def isFascinating(self,n): # parse n
+
+max=999 -> no
+
+s='string': int(n). We can convert to str; str(2*n) etc.
+
+Ok.
+
+Let's produce final answer.
+
+<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For a 3‑digit integer `n` we have to check  
+`n | 2*n | 3*n` (the three numbers concatenated together).
+
+The resulting string must
+
+* contain **exactly 9 digits**, which is guaranteed when `n` is 3–digit
+  and `2 * n` and `3 * n` are integers and not longer than 3 digits
+* each of the digits `1 … 9` appear exactly once, and  
+  no digit `0` is allowed.
+
+The task is therefore a simple “foreach the numbers, concatenate and
+check”.
+
+--------------------------------------------------------------------
+
+#### 1. Algorithm
+```
+concatenated = str(n) + str(2*n) + str(3*n)
+
+if len(concatenated) != 9        # any length other than 9 is wrong
+    return False
+if the number contains the digit '0'         # zero not allowed
+    return False
+
+digits_to_check = set('123456789')
+if set(concatenated) != digits_to_check:
+    return False
+
+return True
+```
+
+--------------------------------------------------------------------
+
+#### 2. Correctness Proof  
+
+We prove that the algorithm returns *True* iff the input `n`
+is a “fascinating” number.
+
+---
+
+##### Lemma 1  
+If `n` is a 3‑digit integer and `2*n` and `3*n` are integers, the
+concatenated string has exactly 9 characters.
+
+**Proof.**  
+All three numbers are 3‑digit numbers.  
+The concatenation of three 3‑digit strings therefore has exactly 9
+characters. ∎
+
+
+
+##### Lemma 2  
+If the algorithm returns *True*, then `n` is a fascinating number.
+
+**Proof.**  
+Assume the algorithm returns *True*.  
+Then the third produced string consists of exactly 9 characters
+(Lemma&nbsp;1) and all of them are non‑zero and are exactly the
+digits `1…9`.  
+We have
+
+* the concatenated string contains three 3‑digit numbers,
+* it contains all digits `1…9` without any `0`, and
+  so the digits are each once;
+* the five conditions in the problem statement are satisfied.
+
+Thus `n` is a fascinating number. ∎
+
+
+
+##### Lemma 3  
+If `n` is a fascinating number, the algorithm returns *True*.
+
+**Proof.**  
+Assume `n` is fascinating.  
+Then `n`, `2*n`, and `3*n` are concatenated to a string of
+exactly 9 digits that contains every digit `1…9` exactly once and
+no `0`.  
+The algorithm checks exactly the three conditions that differentiate
+a “fascinating” number:
+
+1. `len(concatenated) != 9` – false, because the sequence has length
+   9.
+2. `‘0’ in concatenated` – false, because no `0` appears.
+3. `set(concatenated) != digits_to_check` – false, because the set
+   has exactly those nine digits.
+
+Thus every test passes and the algorithm returns *True*. ∎
+
+
+
+##### Theorem  
+The algorithm returns *True* if and only if the given integer `n` is a
+fascinating number.
+
+**Proof.**  
+*If* part – Lemma&nbsp;2.  
+*Only if* part – Lemma&nbsp;3.  
+Therefore the algorithm is correct. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 3. Complexity Analysis
+
+The algorithm performs a constant amount of work:
+
+* Each conversion to a string is O(1) (8‑digit numbers in the worst
+  case).
+* The following checks are O(1) as well.
+
+Hence
+
+```
+Time   : O(1)
+Memory : O(1)
+```
+
+--------------------------------------------------------------------
+
+#### 4. Implementation
+```python
+class Solution:
+    def isFascinating(self, n: int) -> bool:
+        # Python's int-to-string is legal; we don't need special padding
+        tot = "".join(str(x) for x in (n, 2*n, 3*n))
+
+        # Check that the string consists of exactly 9 digits
+        if len(tot) != 9:
+            return False
+
+        # Check that no digit is 0
+        if '0' in tot:
+            return False
+
+        # All must be exactly 1..9 exactly once
+        return set(tot) == set("123456789")
+```
+
+The function `isFascinating` follows exactly the algorithm proven
+correct above and conforms to the required signature.

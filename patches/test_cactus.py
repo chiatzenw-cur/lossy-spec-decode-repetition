@@ -7,10 +7,16 @@ Checks, in order:
    every other patch here),
 2. the gamma_x FORMULA (min(p + sqrt(2*alpha*p*(1-p)), 1)) is correct against
    hand-computed values, including alpha=0 recovering p exactly -- CPU only,
-3. the *kernel* applies gamma_x correctly in the actual accept test, and
-   alpha=0 is bit-identical to the unmodified strict kernel line.
+3. H_x, the full proposal-conditioned target distribution, is a valid
+   distribution (rows sum to 1) matching H_x(x)=gamma_x and H_x(y!=x)=
+   p(y)*(1-gamma_x)/(1-p(x)) -- CPU only,
+4. the post-rejection RECOVERED token is actually sampled from [H_x - q]_+,
+   not the raw [p - q]_+ residual a v1 version of this patch used (data from
+   that version is tagged cactus_accept_only, not cactus) -- needs a GPU,
+5. the *kernel* applies gamma_x correctly in the actual accept test, and
+   alpha=0 is bit-identical to the unmodified strict kernel line -- needs a GPU.
 
-(3) needs a GPU and is skipped without one; (1) and (2) are not.
+(4) and (5) need a GPU and are skipped without one; (1)-(3) are not.
 """
 
 from __future__ import annotations
@@ -104,6 +110,98 @@ def test_gamma_formula() -> None:
     print("  ok  gamma formula matches hand-computed values, including the alpha=0 and cap cases")
 
 
+def h_x_row(p_row: list[float], drafted_idx: int, alpha: float) -> list[float]:
+    """CPU mirror of rejection_sample()'s H_x construction, for one position,
+    for hand-verification: H_x(x) = gamma_x, H_x(y!=x) = p(y)*(1-gamma_x)/(1-p(x))."""
+    p_x = p_row[drafted_idx]
+    gamma_x = gamma(p_x, alpha)
+    scale = (1.0 - gamma_x) / max(1.0 - p_x, 1e-6)
+    row = [p * scale for p in p_row]
+    row[drafted_idx] = gamma_x
+    return row
+
+
+def test_h_x_is_valid_distribution() -> None:
+    """CPU-only: H_x is CACTUS's full proposal-conditioned target distribution
+    (Hao & Mou 2026), not just a reweighted accept test for the drafted token.
+    A v1 version of this patch implemented only the accept/reject test and left
+    post-rejection recovery on the raw p residual -- a hybrid with no
+    correctness guarantee from either paper. Data collected under that version
+    is tagged cactus_accept_only, not cactus. This checks the row is a valid
+    distribution (sums to 1) and matches H_x(x)=gamma_x / H_x(y!=x)=p(y)*(1-
+    gamma_x)/(1-p(x)) against hand-picked (p_row, idx, alpha)."""
+    cases = [
+        ([0.5, 0.2, 0.2, 0.1], 0, 0.0),  # alpha=0 -> H_x == p exactly
+        ([0.5, 0.2, 0.2, 0.1], 0, 0.5),
+        ([0.1, 0.6, 0.2, 0.1], 1, 0.25),
+        ([0.7, 0.1, 0.1, 0.1], 0, 1.0),
+    ]
+    for p_row, idx, alpha in cases:
+        row = h_x_row(p_row, idx, alpha)
+        total = sum(row)
+        assert abs(total - 1.0) < 1e-9, (p_row, idx, alpha, row, total)
+        expected_gamma = gamma(p_row[idx], alpha)
+        assert abs(row[idx] - expected_gamma) < 1e-9, (row[idx], expected_gamma)
+        if alpha == 0.0:
+            assert all(abs(a - b) < 1e-9 for a, b in zip(row, p_row)), (row, p_row)
+        print(f"  ok  p_row={p_row} idx={idx} alpha={alpha}: H_x sums to {total:.6f}, H_x(x)={row[idx]:.6f}")
+    print("  ok  H_x is a valid distribution (rows sum to 1), matches the paper's formula, alpha=0 == p exactly")
+
+
+def test_recovered_token_uses_h_x_residual() -> None:
+    """GPU: the post-rejection recovered token must be sampled from
+    [H_x - q]_+ (Hao & Mou 2026's r_x), not the raw [p - q]_+ residual the v1
+    accept-only patch used. Both toy cases below are built so exactly one
+    vocab entry has positive residual mass, making the recovered token
+    deterministic regardless of the Gumbel draw -- no RNG control needed."""
+    import torch
+
+    if not torch.cuda.is_available():
+        print("  skip  no CUDA device; recovery test not run")
+        return
+    from types import SimpleNamespace
+
+    from vllm.v1.sample.rejection_sampler import sample_recovered_tokens
+
+    device = "cuda"
+    p = torch.tensor([[0.5, 0.5, 0.0, 0.0]], device=device)
+    q = torch.tensor([[0.9, 0.033, 0.033, 0.034]], device=device)
+    draft_token_ids = torch.tensor([0], dtype=torch.int32, device=device)
+    cu_num_draft_tokens = torch.tensor([1], dtype=torch.int32, device=device)
+    meta = SimpleNamespace(generators={})
+
+    def h_x(alpha: float) -> torch.Tensor:
+        p_x = p[:, 0]
+        variance_term = (2.0 * alpha * p_x * (1.0 - p_x)).clamp_min(0.0)
+        gamma_x = (p_x + variance_term.sqrt()).clamp(max=1.0)
+        scale = (1.0 - gamma_x) / (1.0 - p_x).clamp_min(1e-6)
+        h = p * scale.unsqueeze(-1)
+        h[:, 0] = gamma_x
+        return h.contiguous()
+
+    def recovered(target_probs: torch.Tensor) -> int:
+        out = sample_recovered_tokens(
+            1, [1], cu_num_draft_tokens, draft_token_ids, q.contiguous(), target_probs, meta, device,
+        )
+        return int(out[0].item())
+
+    # alpha=0.0: H_x == p exactly. residual [p-q]_+ = [0, 0.467, 0, 0]: only
+    # token 1 has positive mass, so it is picked regardless of RNG.
+    got = recovered(h_x(0.0))
+    assert got == 1, f"alpha=0.0 recovery should deterministically pick token 1, got {got}"
+    print("  ok  alpha=0.0: H_x==p, recovered token is the sole positive-residual index (1)")
+
+    # alpha large enough to saturate gamma_x=1.0: H_x(0)=1.0, H_x(else)=0, so
+    # residual [H-q]_+ = [0.1, 0, 0, 0]: only token 0 (the DRAFTED token
+    # itself) has positive mass. The accept-only patch would still have
+    # recovered from raw [p-q]_+ = [0, 0.467, 0, 0] here -- token 1 -- which
+    # is exactly the fidelity gap this version fixes.
+    got = recovered(h_x(1.0))
+    assert got == 0, f"alpha=1.0 (gamma saturated) recovery should deterministically pick token 0, got {got}"
+    print("  ok  alpha=1.0 (gamma saturated): recovered token is 0, NOT 1 -- differs from the")
+    print("      accept-only patch's raw-p residual, which is exactly the bug this version fixes")
+
+
 def test_kernel_matches_gamma() -> None:
     """Drive the V1 verify kernel directly: no model, no server, no sampler.
 
@@ -173,7 +271,14 @@ def test_kernel_matches_gamma() -> None:
 
 def main() -> int:
     failures = 0
-    for test in (test_alpha_plumbing, test_negative_alpha_rejected, test_gamma_formula, test_kernel_matches_gamma):
+    for test in (
+        test_alpha_plumbing,
+        test_negative_alpha_rejected,
+        test_gamma_formula,
+        test_h_x_is_valid_distribution,
+        test_recovered_token_uses_h_x_residual,
+        test_kernel_matches_gamma,
+    ):
         print(f"{test.__name__}:")
         try:
             test()

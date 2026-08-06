@@ -1,0 +1,21 @@
+<|channel|>analysis<|message|>We need to evaluate each review on 1-5 scale. 1 poor negative, 3 neutral, 5 positive.
+
+1: review vibe mostly positive: "phenomenal, cinematography, acting, plot, everything top-notch" => Positive. So rating 5.
+
+2: movie reveals early va. Negative: "lack of another, I was disappointed, plot predictable, characters one-dimensional, worst one to have been released in 2022." => 5.
+
+3: movie is "okay" - some parts enjoyed, some part lackluster, overall ordinary. So maybe - neutral. So 3.
+
+Thus output array: [5,4,3]
+
+Wait we must check that "extremely negative" doesn't match rating 1? Usually 1 is very negative; 2 is very negative but not near; 3 is neutral; 4 is positive; 5 is positive. The list three: explanation: it's quite ordinary, but may still have some positive aspects. That is neutral/positive. So maybe 3.
+
+We only have 5: 5 low or 5. But we have no independent review? We should adopt scale: 1 negative, 3 neutral, 5 positive, no mention of 2 or 3? Actually 1 is very negative, 3 is neutral, 5 is very positive. The third is okay, not strongly negative or positive. So 3.
+
+Also for rating 2 and 4 maybe 2 or 4. But not needed.
+
+Thus final answer JSON array: [5,4,3] But we need 5. Did we misinterpret? The rating 2: "worst one" - but seldom considered negative? The 4 is enough, not 5.
+
+We should produce array of integers. In JSON array. Ensure echo. No quotes.
+
+Thus final.<|end|><|start|>assistant<|channel|>final<|message|>[5, 4, 3]

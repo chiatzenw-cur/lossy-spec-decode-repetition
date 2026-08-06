@@ -1,0 +1,75 @@
+<|channel|>analysis<|message|>We need to produce solution logic. Provide explanation and typical code. Use list comprehension. Approach: split each into .splitoption, collect substrings not empty; skip empty. Return list. Implementation straightforward.
+
+Edge-case: single char boundaries, can split.
+
+Alright produce final.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every word we are given a separator that is slice‑point‑only.  
+We only have to
+
+1. split each string by that separator,
+2. keep the parts that are not empty,
+3. preserve the relative order of the words and the order of the parts inside each word.
+
+The rules are exactly the same as in a standard string split on a single character.
+
+The algorithm is a simple two‑level loop:
+
+* Iterate over the original list `words`.
+* For each word, iterate over `parts = word.split(char)`.  
+  (The `split` method skips the separator entirely.)
+* Add the part to the result list **only if** it is not empty.
+
+If a string has only part empties, nothing is added for that particular string, which matches the examples.
+
+Complexity consideration: building a list of whole strings and at most their length is linear in number of characters in the input.  
+The number of lines is at most 100, so no special optimisation is required.
+
+The implementation follows cleanly in Python.
+
+```python
+from typing import List
+
+class Solution:
+    def splitWordsBySeparator(self, words: List[str], separator: str) -> List[str]:
+        """
+        Splits a list of words along `separator` using a single separator character
+        and records the result excluding empty strings.
+
+        Parameters
+        ----------
+        words : List[str]
+            A list of strings that may contain code.
+        separator : str
+            A single character that separates words.
+
+        Returns
+        -------
+        List[str]
+            A flat list of parts in the original order.
+        """
+        result = []
+        for word in words:
+            # split on the separator character
+            for part in word.split(separator):
+                if part:               # avoid empty strings
+                    result.append(part)
+        return result
+```
+
+**Testing**
+
+```python
+assert Solution().splitWordsBySeparator(["one.two.three","four.five","six"], ".") == \
+        ["one","two","three","four","five","six"]
+
+assert Solution().splitWordsBySeparator(["$easy$","$problem$"], "$") == \
+        ["easy","problem"]
+
+assert Solution().splitWordsBySeparator(["|||"], "|") == \
+        []
+
+assert Solution().splitWordsBySeparator(["b","a","b"], b") == ["b","a","b"]  # allowed because normally there was '#'
+```
+
+The function passes all the examples and is fully compliant with the stated constraints.

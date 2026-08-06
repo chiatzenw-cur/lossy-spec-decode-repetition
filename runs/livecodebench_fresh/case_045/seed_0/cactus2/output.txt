@@ -1,0 +1,279 @@
+<|channel|>analysis<|message|>We need to implement function maximal number of pairs using reversed reversable pairs. Since strings distinct, we can pair with string reversed. Example: If len(list words)=3, length 2 each. For each word we can find its reverse. It's basically counting pairs. Approach: Use a set or dictionary to map string to index. For each word, if reverse exists, we can pair up. Also we need to ensure no repeated pairs. Since sizes are twice, we pair each pair once, thus 2-lists. Approach: loop over words in order; for each token, check if reverse not used. But we can create boolean used array. Start empty; for each i: if reversed==some index j and not used. If seen earlier. But keep simple: bitset or dictionary: map w->i; for i, j: if j is echo: if rev not in used. Implementation:
+
+- Use dictionary maps string->idx -> bool.
+- Also use variable: pairs = 0
+- For each i in range(len(words)):
+    - w = words[i]
+    - rev = w[::-1]
+    - if rev in words_set? Actually that explanation: we only need to avoid consecutive identical pairs. So we can use unordered_map of string and values used to check.
+
+Simpler: iterate over all indices. For each w, compute rev; if rev != w and exists and is not used before maybe, but we have pattern 'in words only once': For any pair we will pair if we find rev, and not used. This will count duplicates. So we can keep track of used. Use a set.
+
+Pseudo:
+
+if len(words) == 0: return 0
+friends = {}
+for i in range(len(words)):
+    words[i], and we want to find both index and maintain.
+
+Better: At first we can set `seen[words[i]] = true`, but we can't use duplicate.
+
+But use dictionary of string to index for each. We'll keep a boolean map.
+
+When we iterate, code counter for w.
+
+We need to store visited set and track used.
+
+Pseudo:
+
+used = {"w":False} for x in words.
+
+We store with presence; we can use boolean array.
+
+Simpler: use dictionary mapping word->index for all words. Then for each word
+    digest = len(words)
+    visited = [False]*len(words)
+    For each i | if not visited[i]: check rev; if rev in word index and not visited[j] then increment pop:
+    if rev not in item_index: continue
+    j = word_idx[rev]
+    if j != i and not visited[j]:
+        pairs++ - visited[i]+ visited[j]=True
+    else skip
+But there is no requirement to not use same letters? yes.
+
+Simpler: For each word in words: if rev not in visited? But we can't rely on word positions.
+
+We can also check for all reverse: but we don't have to maintain allowed pair as we go. Our simple approach: use dictionary mapping string to index.
+
+Pseudo:
+
+def duplicate_counts(words):
+    counts=0
+    pos= {w:i for i,w in enumerate(groups)}
+    used = set()
+    for i, w in enumerate(words):
+        if i in used: continue
+        rev = w[::-1]
+        if rev in pos and pos[rev] != i: 
+            j = pos[rev]
+            if j not in used:
+                counts+=1
+                used.add(i)
+                used.add(j)
+    return counts
+
+Edge: we also consider that if rev != w. But still distinct and there might be scenario where rev is w but not identical? For s length 2 not symmetrical. Eg "a" etc. Also if reversed is same, no tie. But it's said string of length 2 distinct. So fast.
+
+We can also check if there's word "xy" reversed: 2 -> "yx". The above loops will find pair once and break.
+
+Will using a queue of bool only same. I think.
+
+Test with examples: Example 1: words: "cd","ac","dc","ca","zz" diff. Let's test each: "cd": rev ascii list 2, "dc": rev "bc"? Wait reversed? It's one letter? Provided output: "cd" reversed "dc"; "ac" appears "ca". So it's good.
+
+ Works.
+
+Let's test: Input: "ab","aa","ba": reversed "ba" => pair; yes.
+
+Hence solution.
+
+Now complexity: naive O(n).
+
+Edge: Some string may have duplicates? Not required.
+
+Implementation:
+
+- function: (complete) function.
+
+Let's produce final answer.
+
+Ok. But the problem: The phrases: "value is a pair of strings such that we pair them if word[i] is equal to opposite string of words[j]" and "0 <= i < j < words.length" includes that i < j. So considered pair only once. We want count pairs that can be formed; pair counts as we can't have unions.
+
+Ok.
+
+We produce final solution: code.
+
+Now produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every word we are allowed to pair it with the word  
+`reverse(word)` **if that word is also in the array**.  
+Each word may be used at most once, we want maximum number of pairs.
+All strings are distinct, so a word can only appear once in the array.
+
+The only difficulty is that an affinity is symmetric, therefore we can
+pair the two words in a single step – we cannot depend on the order
+and we must guard the pair from being reused.
+
+--------------------------------------------------------------------
+
+#### Algorithm
+1. *Detect the reverse of each word*.
+2. Keep a boolean array `used[0 … n-1]` – initially `False`.
+3. For every word at index `i`
+   * if `used[i]` is `True` – a pairing is already carried out – skip.
+   * if `rev` (the word in reverse order) is in the array
+       * let `j = index_of_reverse_time`
+       * if `j` is different from `i` and not already used,  
+          * `used[i] = used[j] = True`  
+          * `pairs++`  (the pair is a simple undirected pair)
+4. Record the final count.
+
+No other `O(n)` considerations are necessary.
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm outputs the maximum number of pairs.
+
+---
+
+##### Lemma 1  
+If a word contains a pair with its reverse, the algorithm will pair
+them together.
+
+**Proof.**
+
+When *i* is processed, the algorithm checks whether `used[i]` is no
+itself (initial state of the algorithm).  
+If `rev` exists, `j` is the index of the reversed word.  
+The algorithm checks that `j` is still unused (because `j` is not yet
+processed or otherwise).  
+Because `rev` and `word` differ (strings are distinct, `rev == word` only
+when `word` repeats the same length‑2 string but cannot happen),
+the algorithm sets `used[i] = used[j] = True` and schedules the pair.  
+Thus the pair is added once. ∎
+
+
+
+##### Lemma 2  
+The strategy used by the algorithm never creates a duplicate pair
+such that the participant is reused.
+
+**Proof.**
+
+Whenever a word is paired with a partner that its reverse (= `rev`
+word) exists, the pair is marked as `used` for both components.  
+After that a future break (`/` see `for i in range(n)`): we can
+become in the loop: if `used[i]` is `True` we skip this inner
+operation.  The two sides of the crossing already considered, therefore
+the pair cannot be reused. ∎
+
+
+
+##### Lemma 3  
+If a pair is formed by a candidate pair,
+the maximum number of pairs can be generated by pairing this pair with
+each pair of its own elements.
+
+**Proof.**
+
+With no restriction on `i` and `j`, we get each pair counted at most once because
+the algorithm only toggles the pair when it is *not used*.
+The enumeration of pairs goes down to *the sorted list of length-2
+weights* and uses the unique assignment of each word to `used`.
+Hence any optimal strategy to consider pairings yields exactly the same
+count.  (Because the algorithm uses the same rule besides the global
+graph; no other factor will be missed.)
+
+∎
+
+
+
+##### Lemma 4  
+The total number of pairs returned by the algorithm is maximal.
+
+**Proof.**
+
+We must prove that this algorithm produces a maximum cardinality matching.
+We examine the graph of the two strings; each vertex is an edge, and both
+edges are two “edge”?  
+Two edges of the same reverse term are described as “pairs”.  
+The graph cannot have values >1 because each position is unique.  
+Therefore any pair can be ignored in the algorithm, independent of the
+relationships of the algorithm.  
+The algorithm says: *If an adjacent pair exists, use it.*  
+Therefore we can create a maximum matching strategy that for every subset
+`i` that for the next friend still there is relatively many unmatched pairs.  
+Any other factor goes into at least one place; the algorithm selects it,
+all **two** cases.
+
+Consider any other occurrence:
+- For any `i (j ≠ i)` we only have an already computed pair for either `i` or `j`.  
+- For any pair, we discard & ` used` may be used.
+
+Therefore, the algorithm has found a total optimum of `|A|/2` pairs.
+(We can prove by repeated iteration on smaller graphs.)
+
+∎
+
+
+
+##### Theorem  
+The algorithm returns the maximum number of pairs that can be formed
+from the given array length `n` satisfying the required and
+string pairs condition.
+
+**Proof.**
+
+*Existence.*  
+By Lemma&nbsp;1 the algorithm always creates a valid pair for every
+valid pair in the array.  
+*Optimality.*  
+By Lemma&nbsp;2 every pair uses distinct entries never changed, so no
+`used` can be used more than once.  
+By Lemma&nbsp;4 no more pairs can be extracted – hence the algorithm produces a
+maximum cardinality matching.  Hence it is optimal. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis  
+
+Let `n = |words|` (`n ≤ 50`, `words[i] ≤ 2`).  
+* Building the pairs: `O(n)`  
+* Checking for a conflict: `O(n)` or `O(1)` but with `dict` we satisfy the
+  same `O(n)` by looking up each element.  
+
+The algorithm’s complexity is `O(n)` time and `O(n)` additional space.
+With `n ≤ 50` this is trivial.
+
+--------------------------------------------------------------------
+
+#### Reference Implementation  (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    def maximumNumberOfStringPairs(self, words: List[str]) -> int:
+        """
+        Returns how many pairs can be formed from the word array:
+        Two words are a pair if one is the reverse of the other.
+        No word can be used more than once.
+        """
+        n = len(words)
+        # Map each word to its index (O(1) lookup)
+        index = {w: i for i, w in enumerate(words)}
+
+        used: List[bool] = [False] * n
+        pairs = 0
+
+        # Ensure each match is counted at most once
+        for i, w in enumerate(words):
+            if used[i]:
+                continue
+            rev = w[::-1]
+            # Locate the new string
+            j = index.get(rev)
+            if j is None or j == i or used[j]:
+                continue
+            # Mark both as used
+            used[i] = used[j] = True
+            pairs += 1
+
+        return pairs
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required function signature.

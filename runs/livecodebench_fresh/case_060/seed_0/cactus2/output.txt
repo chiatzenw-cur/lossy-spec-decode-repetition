@@ -1,0 +1,61 @@
+<|channel|>analysis<|message|>We need to implement function count employees >= target. The classic solution: count elements. Complexity O(n). Provide code in Python. Use typical library. Use type hints. Use List[int].
+
+Maybe add docstring. Provide final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For a company with `n` employees we are given an array `hours` that reports the number of hours each employee has worked.  
+The user wants to know how many of those employees have worked **at least** `target` hours.  
+We just need to count how many elements of `hours` satisfy `hours[i] >= target`.
+
+**Algorithm**
+```
+cnt ← 0
+for every hour in hours:
+    if hour >= target:
+        cnt ← cnt + 1
+return cnt
+```
+
+The constraint `n ≤ 50` is trivial, so a straightforward linear scan is enough.  
+Time complexity: **O(n)** (one pass over the array).  
+Space complexity: **O(1)** (only a counter).
+
+**Correctness Proof**
+
+We prove the algorithm returns the exact number of employees who worked at least `target` hours.
+
+Let `S` be the set of indices `i` such that `hours[i] ≥ target`.  
+During the scan, the algorithm values `cnt` only when `hour >= target`.  
+Each time `hour` is incremented in `cnt`, it occurs exactly once for each element of `S`.  
+Hence after the loop, `cnt = |S|`.  
+Since `|S|` equal the number of employees whose hours meet the target, the algorithm returns the correct answer. ∎
+
+**Reference Implementation**
+
+```python
+from typing import List
+
+class Solution:
+    def numberOfEmployeesWhoMetTarget(self, hours: List[int], target: int) -> int:
+        """
+        Counts how many employees have worked at least the target number of hours.
+
+        Parameters
+        ----------
+        hours : List[int]
+            List of hours, each element represents the number of hours worked by an employee.
+        target : int
+            The minimum required hours.
+
+        Returns
+        -------
+        int
+            Number of employees whose hours meet or exceed the target.
+        """
+        count = 0
+        for h in hours:
+            if h >= target:
+                count += 1
+        return count
+```
+
+This satisfies the problem statement and runs in the required runtime and memory limits.

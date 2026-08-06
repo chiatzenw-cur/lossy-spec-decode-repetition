@@ -1,0 +1,130 @@
+{
+  "timestamp_utc": "2026-08-05T23:53:46.309765+00:00",
+  "backend": "vllm",
+  "tag": "specCascOpt1",
+  "mode": "lossy",
+  "lossy_method": "spec_casc_opt",
+  "lossy_parameters": {
+    "spec_casc_alpha": 1.0
+  },
+  "lenience_factor_in_force": {
+    "path": "/tmp/lossy-spec-decode-lenience-1003",
+    "value": 1.0,
+    "mtime_utc": "2026-08-05T23:52:42.173282+00:00"
+  },
+  "acceptance_rule": "defer to strict p/q test iff max_u q(u) < max_u p(u) - 1*TV(p,q), else accept unconditionally",
+  "taxonomy": {
+    "family": "speculative cascades [OPT] (Narasimhan et al. 2025)",
+    "alpha": 1.0,
+    "note": "training-free relaxed target distribution; see arXiv:2607.08690 for a practical comparison against mentored decoding / lenience"
+  },
+  "lenience_factor_expected": null,
+  "lenience_factor_announced_by_server": {
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/specCascOpt1_case_024_seed0_20260805T235242Z.log",
+    "lines": [],
+    "factors": [],
+    "distinct_factors": []
+  },
+  "spec_casc_alpha_in_force": {
+    "path": "/tmp/lossy-spec-decode-spec-casc-alpha-1003",
+    "value": 1.0,
+    "mtime_utc": "2026-08-05T23:52:42.173282+00:00"
+  },
+  "spec_casc_alpha_announced_by_server": {
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/specCascOpt1_case_024_seed0_20260805T235242Z.log",
+    "lines": [
+      "[SPEC-CASC-OPT PATCH] pid=1180846 alpha=1.0 (/tmp/lossy-spec-decode-spec-casc-alpha-1003)",
+      "(EngineCore pid=1181044) [SPEC-CASC-OPT PATCH] pid=1181044 alpha=1.0 (/tmp/lossy-spec-decode-spec-casc-alpha-1003)"
+    ],
+    "alphas": [
+      1.0,
+      1.0
+    ],
+    "distinct_alphas": [
+      1.0
+    ]
+  },
+  "model": "gpt-oss-20b",
+  "draft_model": "nebius/EAGLE3-gpt-oss-20b",
+  "seed": 0,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_new_tokens": 18000,
+  "input_tokens_archived": 13613,
+  "prompt_case": "case_024",
+  "prompt_source_id": "zai-org/LongBench-v2:train:67040276bb02136c067cd8ae",
+  "reference_answer": "B",
+  "endpoint": "http://127.0.0.1:30000/v1/completions",
+  "server_request_ordinal": 1,
+  "fresh_server_asserted": true,
+  "engine_totals_before_first_request": {
+    "vllm:spec_decode_num_drafts_total": 0.0,
+    "vllm:prompt_tokens_total": 0.0,
+    "vllm:generation_tokens_total": 0.0,
+    "vllm:request_success_total": 0.0
+  },
+  "vllm": {
+    "version": "0.26.0",
+    "commit_id": "g568afb3a1",
+    "site_packages": "/home/chiatzen/lossy-spec-decode-repetition/.venv-vllm/lib/python3.12/site-packages",
+    "verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "de32559fa494f8b4b88df34874793001d066492cd034f88e046fcd63af0de85d",
+        "matches_lenience_patch": false
+      },
+      "vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": {
+        "sha256": "bfaec14e220cf669ddfd2b3ef6d2c556dc8fae60ef71e65a2e7ae068fb386a2a",
+        "matches_lenience_patch": false
+      }
+    },
+    "lenience_patch_applied": false,
+    "spec_casc_opt_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "de32559fa494f8b4b88df34874793001d066492cd034f88e046fcd63af0de85d",
+        "matches_spec_casc_opt_patch": true
+      }
+    },
+    "spec_casc_opt_patch_applied": true,
+    "cactus_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "de32559fa494f8b4b88df34874793001d066492cd034f88e046fcd63af0de85d",
+        "matches_cactus_patch": false
+      }
+    },
+    "cactus_patch_applied": false
+  },
+  "git_commit": "7f63add201dd60fe77013b7682ba1df2b6bcd2d2",
+  "git_dirty": true,
+  "command": [
+    "/home/chiatzen/lossy-spec-decode-repetition/scripts/run_experiment_vllm.py",
+    "--mode",
+    "lossy",
+    "--prompt-root",
+    "prompts/longbench_v2",
+    "--runs-root",
+    "runs/longbench_v2_fresh",
+    "--cases",
+    "case_024",
+    "--seeds",
+    "0",
+    "--tag",
+    "specCascOpt1",
+    "--temperature",
+    "1.0",
+    "--top-p",
+    "1.0",
+    "--max-new-tokens",
+    "18000",
+    "--timeout",
+    "7200.0",
+    "--server-url",
+    "http://127.0.0.1:30000",
+    "--server-log",
+    "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/specCascOpt1_case_024_seed0_20260805T235242Z.log",
+    "--assert-fresh-server",
+    "--lossy-method",
+    "spec_casc_opt",
+    "--spec-casc-alpha",
+    "1"
+  ]
+}

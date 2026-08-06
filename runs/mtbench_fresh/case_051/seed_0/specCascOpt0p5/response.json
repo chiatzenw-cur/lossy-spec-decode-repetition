@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-ba00ee13d9e5621f",
+  "object": "text_completion",
+  "created": 1785970263,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to evaluate each review on 1-5 scale. 1 poor negative, 3 neutral, 5 positive.\n\n1: review vibe mostly positive: \"phenomenal, cinematography, acting, plot, everything top-notch\" => Positive. So rating 5.\n\n2: movie reveals early va. Negative: \"lack of another, I was disappointed, plot predictable, characters one-dimensional, worst one to have been released in 2022.\" => 5.\n\n3: movie is \"okay\" - some parts enjoyed, some part lackluster, overall ordinary. So maybe - neutral. So 3.\n\nThus output array: [5,4,3]\n\nWait we must check that \"extremely negative\" doesn't match rating 1? Usually 1 is very negative; 2 is very negative but not near; 3 is neutral; 4 is positive; 5 is positive. The list three: explanation: it's quite ordinary, but may still have some positive aspects. That is neutral/positive. So maybe 3.\n\nWe only have 5: 5 low or 5. But we have no independent review? We should adopt scale: 1 negative, 3 neutral, 5 positive, no mention of 2 or 3? Actually 1 is very negative, 3 is neutral, 5 is very positive. The third is okay, not strongly negative or positive. So 3.\n\nAlso for rating 2 and 4 maybe 2 or 4. But not needed.\n\nThus final answer JSON array: [5,4,3] But we need 5. Did we misinterpret? The rating 2: \"worst one\" - but seldom considered negative? The 4 is enough, not 5.\n\nWe should produce array of integers. In JSON array. Ensure echo. No quotes.\n\nThus final.<|end|><|start|>assistant<|channel|>final<|message|>[5, 4, 3]",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 232,
+    "total_tokens": 633,
+    "completion_tokens": 401,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

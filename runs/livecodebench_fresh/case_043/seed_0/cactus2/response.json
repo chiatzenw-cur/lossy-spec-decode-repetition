@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-9c8b8f140ddf5dc2",
+  "object": "text_completion",
+  "created": 1785977918,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to implement function sumOfSquares. We want to sum squares of nums[i] where i divides max length i; element i defined as 1-indexed. So we need to check if n % i == 0. let's produce code. Additionally example 1: nums[1] is 1 since 1 divides 4; 2 divides 4; 4 divides.\n\nPython list is 0-indexed; indices i-1. So we compute for i from 1 to n: m = n % i; if m == 0 then sum += nums[i-1] ** 2.\n\nReturn 0.\n\nComplexity: O(n). No issue.\n\nEdge cases: n=1 -> sum=nums[1]^2.\n\nWe'll include imports and solve.\n\nReturn final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**\n\nFor the 1‑indexed array `nums`\n\n* `nums[i]` is *special* when its 1‑based index `i` divides the array length `n`\n  (`n % i == 0`).\n* We need the sum of the squares of all `nums[i]` that are special.\n\nThe array length is at most 50, so a simple brute‑force scan is perfectly fine.\n\n\n\n--------------------------------------------------------------------\n\n#### Algorithm\n```\nn ← length of nums\nanswer ← 0\nfor i from 1 to n:          # i is the 1‑based index\n    if n % i == 0:\n        answer ← answer + nums[i-1]²   # list is 0‑based, uses index i-1\nreturn answer\n```\n\n--------------------------------------------------------------------\n\n#### Correctness Proof  \n\nWe prove that the algorithm returns the required sum.\n\n---\n\n##### Lemma 1  \nFor any `i` with `1 ≤ i ≤ n`, the algorithm adds `nums[i-1]²` to `answer`\n**iff** `i` divides `n`.\n\n**Proof.**\n\n*If `i` divides `n`*  \nThe algorithm evaluates `n % i == 0`.  \nBecause the divisor condition holds, the test succeeds, so `ans` is added\nby `nums[i-1]²`.\n\n*If `i` does not divide `n`*  \n`n % i == 0` is false, so `answer` is unchanged – no addition is executed.\n\n∎\n\n---\n\n##### Lemma 2  \nAfter the loop finishes, `answer` equals the sum of the squares of all\nspecial elements of `nums`.\n\n**Proof.**\n\nAt each iteration the loop processes a distinct index `i`.  \nBy Lemma&nbsp;1 after that iteration the two cases are covered:\n\n* `i` is special → `answer` is incremented by the square of `nums[i]`.\n* `i` is not special → `answer` is decreased by nothing.\n\nThe algorithm adds exactly the squares of all and only special indices,\ntherefore after the final iteration **`answer` equals the desired sum**. ∎\n\n---\n\n##### Theorem  \n`value = list(…, maxLength)` etc.` returns `sumOfSquares(...)`\nin the problem statement.\n\n**Proof.**\n\nThe algorithm terminates after `n` iterations (7 ≤ 50).  \nBy Lemma&nbsp;2 the returned value equals the sum of square of all special\nelements.  \nThe algorithm outputs the required value. ∎\n\n\n\n--------------------------------------------------------------------\n\n#### Complexity Analysis\n\n*Time*: For each of the `n` indices we perform \\(O(1)\\) work.  \n`Time   = O(n)` (only one loop).\n\n*Memory*: Only `answer` is kept.  \n`Memory = O(1)`.\n\n\n\n--------------------------------------------------------------------\n\n#### Reference Implementation  (Python 3)\n\n```python\nfrom typing import List\n\nclass Solution:\n    def sumOfSquares(self, nums: List[int]) -> int:\n        n = len(nums)\n        ans = 0\n        # i is 1‑based index\n        for i in range(1, n + 1):\n            if n % i == 0:\n                ans += nums[i - 1] * nums[i - 1]\n        return ans\n```\n\nThe function follows exactly the algorithm proven correct above and\nconforms to the requested signature.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 492,
+    "total_tokens": 1379,
+    "completion_tokens": 887,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

@@ -1,0 +1,290 @@
+<|channel|>analysis<|message|>We need to analyze problem: We have three cards of letters a, b, c in some order. We can perform at most one operation: either swap two cards, or pick two cards same, but swap of any two can change positions. We can pick any pair. After operation, we want string "abc". So we need either initial string = "abc" or we can change one of the other permutations to "abc" with one swap.
+
+Observation: swap two cards; two original state and another's positions; we need condition that if string is "abcd", we can get to "abc". We only have 3 swaps, non-ordered. As we saw, from sample: "acb" -> "abc" (swap, swapping adjacent positions 2 and 3). "bca" -> "sq"? Wait "bca" to "abc" -> impossible because no single swap cannot: we need to transform from "bca" to "abc". Permutation exists: swapping 3 and 1? Let's examine: bca -> bca. If we swap positions 1 and 2 = order "cba": swapping front 2, get "cba". That equals "db"? Another sequence: If we swap 1 and 3, swapping b to c: "cba". Wait "bca": swap first and third: c b a? Actually positions: 1: b, 2: c, 3: a. Swap (b,a) => cba. That's "bars"? Let's check: a at 1, c at 2, b at 3: that's "acb"? Wait "cba" as string: "cba". So not "abc". But to get "abc", we need 2: b, 3: c, 1: a from output. Could we swap two cards to get "abc"? Let's test: bca -> need 3 counter. Let's test all possible swaps:
+Define swapping pair (i,j) produce string. Swap positions 1 (b) with 2 (c): "cba". swap (1,3): "acb" (swap b with 2? Wait "acb": swap 1-b with 3-a -> "air"? Let's simulate: bca -> "acb", yes. So only two moves of the string. Now from remainder 8, "cba" and "acb" are not equal to "abc". So no combination yields "abc". So final statement: not possible.
+
+Second: "cab" maybe "cab" similar? We can then maybe any three? Unclear.
+
+The problem statement says if you can make same after at most one operation. We are to output "YES" or "NO" accordingly.
+
+Thus we need to check for each given string? But there are 3!! Let's analyze constraints: t <= 6. Each test case string length 3. So they ask for t test cases. We just need to output X for any of 3! **6**.
+
+We can just brute iterate over all possible swaps from input string. Since n<=3, we can first examine if total diff between input string and target string "abc" is a position? If 0 difference matches with 0 or 1 swap needed. There might be algorithm: If s=="114" => 0 else we need to find if there's some swap (swap two indices) that transforms s into target and also return "YES" <= 1.
+
+But simpler: just compute all 3! combos: Each arrangement of indices 0:1. No duplicates -> 3 options. For each swap, we can produce string. However, we also know that we can do at most one swap (i.e. can't take more than one operation). So we can just produce one sequence of characters: simply choose any two indices (including 0,1) and produce new string as new order. Also we can also optionally perform zero operation: we just keep original. So candidate strings = (original s, plus any swap alphabetically). If any of these candidate strings equals "abc", we answer "YES". Else "NO".
+
+Edge Cases: The original string is all distinct. However, the problem reduces to: diff positions between strings each differ relative to target. We can treat as an algorithm: If string has four characters? Wait we only have one letter? Provided output has all constraints.
+
+This is trivial.
+
+But there are variant of the 3-known solution: There are 8 permutations of the simple string "abc" that orientation? Actually with X: maybe the winner is "YES" if the reversed string is equal to "abc"? No no, we just abide.
+
+Let's derive an algorithm to be more robust: There are 5 ways of choosing letters that might allow AB? Actually if one can match string by 0 swapping, we need to filter.
+
+But we have the path possibly domain: we check if the string length equals 3. That's given. So we can simply do:
+
+if s == "abc" => YES
+
+else if s == "acb" ??? Wait if s = "acb" and m? Because we can only swap "c" and "b" to get "abc". So yes.
+
+If s == "bac" and s[2] = "c"? Actually we can swap with "a" and "b" etc. So yes.
+
+Also there is case "bca" or "cab" or "cba" or "ba" Wait. Let's check: "bca" can be "cab" after swap? Let's compute:
+
+From earlier analysis: bca -> swapped with c? Let's test width. "bca" = a pound. So we get two possibilities: swap first-two, "cba" (positions 1 and 2). Swap first-3, "acb". Swap third+2, "bac". So only these. The remaining still "abc". So none of these fits "abc". So not "YES".
+
+Similarly "cab" => swapped with 2: "cab" -> "cba" after swap. Hmm. Let's test "cab" => a: s[1]=c, third=(b). swap pair (1,3) yields "bac". But we still not "abc". So not "YES".
+
+But "cba" can be? Let's do a: "cba" -> swap first two: "bca"? Actually swapping 1 and 3 => "a"? Wait cba: cba: index1=4. swap 1 (3) with 2 (b): "bca". swap 2 with 3 -> "baa"? Wait mis.
+
+But we just need to test all. Provided "cba" yields "bac", "cab", "abc"? Wait cba reverse of abc. Let's test: s="cba": flipping left will produce "good"? Actually with third index? Let's compute quickly: swapped indices 1 and 3: cba->aa? Actually swapping char (c) and (a) yields "abc"? Let's test: swapping 0 and 2: cba -> "abc"? Actually start at 0 'c', 1 'b', 2 'a' yields "a"? Let's swap 0 and 2: cba -> "a"? Wait swap: c's positions 0 and 2: 'a', 'b', 'c' -> "acb" or 'bac'? Wait let's do step: old indices: [0] 'c', [1] 'b', [2] 'a'. Shift index 0 to new = a, swap 2 by 1. So result: a at index0, b at index1, c at index2. So "abc". That's correct because reversing 0 and 2 and leaving original order yields "abc". So yes, output "YES".
+
+Thus we can brute down.
+
+Edge Cases: Input string may have any letters repeated that target is not? but for test case outside but we are given 3! permutations; we already considered.
+
+Thus the trivial solution: For each test case: read s; print "YES" if s is 'abc' OR s is 'acb' or 'bac' or 'cab' or 'cba' or 'bca' ??? Let's test scenario: it says best to differentiate real; each case we just choose to test with 'take'?
+
+However, operations: There is also "any permutation" but we can only do one swap. So we can produce all 3 valid up to 3 permutations: assignment: from 'abc', we can obtain any string with one swap.
+
+We may also consider positions of 2,3,2? Let's treat all 3^3=3=6 trivial. Actually you can just check all permutations.
+
+But problem statement says we can choose any pair; So no "swap" only.
+
+Thus final solution: For each test case, read string s. print "YES" if there exists a pair (i,j) (0<=i<j currently, or 2? Actually i=0, j=1, or 1,2 etc.), and if s is same as char(s) or s with swapped after one swap. If we insert any pair, we check.
+
+Pseudo:
+
+target = "abc"
+for i in range(n):
+    for j in range(i+1, n):
+        s_list = list of s
+        s_list[i],s_list[j] = s_list[j], s_list[i]
+        if "".join(s_list) == target: print "YES" else eventually "NO".
+But we also need to check if s==target. That is done.
+
+Hence, we can create simple test.
+
+Complexities trivial.
+
+Now also we can output "YES" or "NO".
+
+Edge-case: all we need to check. That is trivial.
+
+We'll produce solve.
+
+Ok let's generate final solution code.
+
+We also can briefly mention algorithm:  if s==target or s==prestring will produce answer.
+
+But check: If we have 3 letters, but there is description; we can instruct.
+
+Algorithm: for test case in t: read s. For each pair (i,j) in 0,1,2: for each pair swap 0..2, find string s. If any string equals target, print "YES" else "NO". quick.
+
+Thus implement.
+
+Time complexity: O(t * 6) <= 36.
+
+Now produce final answer code.
+
+Let's prepare final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every test case we are given a string of length `3` that contains exactly the
+letters `a , b , c` in some order.  
+We may perform **at most one** operation
+
+```
+choose two positions and swap the two cards
+```
+
+The goal is to obtain the string `abc`.  
+We have to output `"YES"` if we can obtain it, otherwise `"NO"`.
+
+
+
+--------------------------------------------------------------------
+
+#### 1.  Observations
+
+* If the string is already equal to `abc`, we can return it without any
+  operation → answer is `"YES"`.
+
+* For a string of length 3 there are only three actions that replace the
+  current string by a new one:
+
+  1. `swap(0,1)`
+  2. `swap(0,2)`
+  3. `swap(1,2)`
+
+  (the other swaps are equivalent to one of them, because e.g. swapping
+  0 and 1 gives the same string in both orders).
+
+  So we can simply generate all possible results of the first `3`
+  operations (plus the original string) and see if the string `abc`
+  occurs.
+
+  The total number of possible strings is `4` (the original and the
+  three swaps).
+
+* Because the input contains only three distinct letters, all permutations
+  are simple – we are not dealing with any special cases.
+
+--------------------------------------------------------------------
+
+#### 2.  Algorithm
+For each test case
+
+```
+target = "abc"
+if s == target:                # already finished
+        answer = "YES"
+
+else
+        exists = False
+        for i in (0,1,2):
+            for j in (i+1,1,2):
+                s' = list(s)
+                s'.swap(String(x), String(y))
+                if s'.join() == target:
+                        exists = True
+                        break
+        answer = "YES" if exists else "NO"
+```
+
+`split()` is straightforward – iterate over all `i=0,1,2`
+(i≤j≤ i+1).
+
+When a swap produces a string we have to print `"YES"` if there is any
+such `i,j`.
+
+--------------------------------------------------------------------
+
+#### 3.  Correctness Proof  
+
+We prove that the algorithm outputs “YES”  
+iff there exists a way to obtain the string `abc`
+with at most one reversal of two different cards.
+
+---
+
+##### Lemma 1  
+If the original string is already `abc`, the algorithm outputs `"YES"`.
+
+**Proof.**  
+The algorithm checks `s == target`, which holds for this case.
+The algorithm returns `"YES"`. ∎
+
+
+
+##### Lemma 2  
+For a string `s` that is not equal to `abc`, the algorithm will output
+`"YES"` **iff** the string `abc` can be obtained by executing one swap of
+two distinct cards in `s`.
+
+**Proof.**  
+*The algorithm checks all possible swaps.*  
+The operation can be performed only by swapping two card positions.
+There are exactly three different pairs of indices (`(0,1)` , `(0,2)`,
+`(1,2)`).
+For each pair the algorithm exchanges the produced string.
+
+This is exactly the definition of “one possible swap”.  
+If any of those swapped strings equals `abc`, the algorithm
+raises `possible = True` and the final answer is `"YES"`.  
+If none of the swaps yields `abc`, the algorithm prints `"NO"`.
+
+Thus the algorithm outputs `"YES"` exactly when a single swap of
+two positions can produce `abc`. ∎
+
+
+
+##### Theorem  
+For every test case the algorithm outputs `"YES"` iff  
+- either the string `abc` is already present, or
+- the string `abc` can be obtained by performing one swap of
+  two distinct cards.
+
+**Proof.**  
+
+*If the algorithm outputs `"YES"`*  
+By Lemma&nbsp;1 the output `"YES"` is reachable when the string is already
+`abc`.  
+Otherwise it outputs `"YES"` to satisfy Lemma&nbsp;2 – a swap turn
+`abc` into the required string.
+
+*If the algorithm outputs `"NO"`*  
+Assume by contradiction that one of the two allowed moments can reach
+`abc` possible.
+If `abc` is already present, by Lemma&nbsp;1 a solution would
+be detected, so the algorithm would not output `"NO"` – contradiction.
+If `abc` is reachable only after one operation,
+Lemma&nbsp;2 shows that this possibility leads to a correct
+output of `YES`.  
+Hence the algorithm cannot output `"NO"` when a solution exists.
+∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4.  Complexity Analysis
+
+For one test case there are only `3 + 1 = 4` strings examined,
+the first available in O(1) time if used.
+
+Memory usage:  
+`O(1)` – all strings are of length 3.
+
+--------------------------------------------------------------------
+
+#### 5.  Reference Implementation  (Python 3)
+
+```python
+import sys
+
+# -------------------------------------------------------------
+
+def solve() -> None:
+    data = sys.stdin.read().strip().split()
+    if not data:
+        return
+    t = int(data[0])
+    out = []
+    target = "abc"
+
+    idx = 1
+    for _ in range(t):
+        s = data[idx]
+
+        # (0) case: already finished
+        if s == target:
+            out.append("YES")
+            idx += 1
+            continue
+
+        # (1) one swap
+        found = False
+        # try all 3 possible swaps
+        for i in range(3):
+            for j in range(i + 1, 3):
+                lst = list(s)
+                lst[i], lst[j] = lst[j], lst[i]
+                if "".join(lst) == target:
+                    found = True
+                    break
+            if found:
+                break
+
+        out.append("YES" if found else "NO")
+
+        idx += 1
+
+    sys.stdout.write("\n".join(out))
+
+# -------------------------------------------------------------
+if __name__ == "__main__":
+    solve()
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required input/output format.

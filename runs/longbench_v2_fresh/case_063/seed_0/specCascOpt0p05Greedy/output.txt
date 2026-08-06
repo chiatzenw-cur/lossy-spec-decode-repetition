@@ -1,0 +1,663 @@
+<|channel|>analysis<|message|>We need to find which player won the most times among the options A, B, C, D: player_0, player_2, player_4, player_6. We have the round results, each with winner number and number of winners. But we also have each player’s choices. For each round, the target is given. Winner if choose closest. But we have the winner number for the round (the chosen number that won). That is the winning number. But we need to know which player chose that number. If multiple players share same number, winner_num indicates number of winners. But each round likely many players may tie? But we need to find which player among the four had the winning number more times than others. We can see for each round, check if each listed player's number equals the winning number. But if multiple players might tie, count all winners? The question: "Which player won the most times in the game?" Typically means who has most rounds where they were a winner. In the case of ties, that player still counts. This data could be derived manually. We should parse round_records winners: Provide winning number and winner_num. But we only need to see each player's pattern of chosen numbers: recorded in player_data.records.
+
+We have players 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. We only care 0,2,4,6.
+
+We also have round_records: list of 20 rounds: each with "winner" number and "winner_num" count. Note winner_num > 1 only occurs where multiple equal.
+
+We need to see for each round if among those players any selected the winning number. If more than one of the four players selected the winning number (unlikely), they all would be winners.
+
+We need to count for each player how many rounds they won.
+
+Given we have all the players' records numbers, we can do mapping.
+
+Let's list round numbers 1 to 20, with winner number, winner_num and which players:
+
+Also note the player numbers from 0-9 each.
+
+Better to build mapping from round to winner num and players selected that number across all 10 players. But we only need for 0,2,4,6. Let's construct the table manually.
+
+First, compile player records lists for each of the four players:
+
+Player 0 records: given under player_0 -> "records": 
+[30, 24, 18, 12, 15, 5, 4, 8, 5, 2, 2, 10, 25, 35, 20, 18, 8, 10, 12, 50]
+
+Player 2: records:
+[33, 25, 15, 22, 8, 5, 4, 6, 4, 3, 2, 50, 20, 50, 20, 17, 12, 10, 12, 7]
+
+Player 4: records:
+[40, 25, 18, 12, 15, 10, 8, 5, 4, 2, 2, 8, 50, 22, 30, 18, 20, 10, 12, 50]
+
+Player 6: records:
+[50, 25, 17, 12, 15, 5, 8, 3, 4, 5, 3, 8, 40, 23, 25, 18, 12, 10, 8, 7]
+
+So each has 20 numbers. The rounds correspond to indices.
+
+Now we have round_records winner numbers and winner_num for each round 1-20:
+
+Let’s list:
+
+Round 1: winner 30, winner_num 1
+Round 2: winner 20, winner_num 1
+Round 3: winner 15, winner_num 1
+Round 4: winner 12, winner_num 6
+Round 5: winner 7, winner_num 1
+Round 6: winner 5, winner_num 5
+Round 7: winner 3, winner_num 1
+Round 8: winner 3, winner_num 1
+Round 9: winner 3, winner_num 3
+Round 10: winner 3, winner_num 2
+Round 11: winner 3, winner_num 3
+Round 12: winner 20, winner_num 1
+Round 13: winner 25, winner_num 2
+Round 14: winner 22, winner_num 1
+Round 15: winner 20, winner_num 5
+Round 16: winner 15, winner_num 1
+Round 17: winner 8, winner_num 1
+Round 18: winner 10, winner_num 7
+Round 19: winner 5, winner_num 2
+Round 20: winner 10, winner_num 1
+
+Now for each round, determine if each of our players selected the winning number.
+
+We need to check conflicts: four players may or may not all have winning number. Some rounds have winner_num > 1: e.g., round4 winner_num6 meaning 6 players had number 12: target number maybe 9.67, target closest 12. So player_0 had 12, player_2 had 18, etc. But let's check.
+
+We'll process round by round:
+
+I'll create a table:
+
+Round | Winner | winner_num | details:
+
+Given the players' numbers:
+
+Player0 choice per round:
+
+I'll refer to indices 1-20 for convenience.
+
+Player0:
+1:30
+2:24
+3:18
+4:12
+5:15
+6:5
+7:4
+8:8
+9:5
+10:2
+11:2
+12:10
+13:25
+14:35
+15:20
+16:18
+17:8
+18:10
+19:12
+20:50
+
+Player2:
+1:33
+2:25
+3:15
+4:22
+5:8
+6:5
+7:4
+8:6
+9:4
+10:3
+11:2
+12:50
+13:20
+14:50
+15:20
+16:17
+17:12
+18:10
+19:12
+20:7
+
+player4:
+1:40
+2:25
+3:18
+4:12
+5:15
+6:10
+7:8
+8:5
+9:4
+10:2
+11:2
+12:8
+13:50
+14:22
+15:30
+16:18
+17:20
+18:10
+19:12
+20:50
+
+player6:
+1:50
+2:25
+3:17
+4:12
+5:15
+6:5
+7:8
+8:3
+9:4
+10:5
+11:3
+12:8
+13:40
+14:23
+15:25
+16:18
+17:12
+18:10
+19:8
+20:7
+
+Now analyze each round:
+
+Round1: winner 30. Which players chose 30? Player0: 30 yes. Player2: 33 no. Player4: 40 no. Player6: 50 no. So only player0 won round1. Count1: p0 +1.
+
+Round2: winner 20. Which players? Player0: 24 no. Player2: 25 no. Player4: 25 no. Player6: 25 no. No one among them chose 20. So none of the four players won. So 0 each.
+
+Round3: winner 15. Player0: 18 no. P2: 15 yes. P4: 18 no. P6: 17 no. So only p2 wins. Count p2 +1.
+
+Round4: winner 12 winner_num=6 meaning six players had 12. Check among them: P0: 12 yes. P2: 22 no. P4: 12 yes. P6: 12 yes. Also have other players in other accounts, but we just need those four: p0, p4, p6. So p0, p4, p6 each win this round. Count +1 for each.
+
+Round5: winner 7. Which players: P0: 15 no. P2: 8 no. P4: 15 no. P6: 15 no. So none win.
+
+Round6: winner 5, winner_num=5. Which players choose 5: P0:5 yes. P2:5 yes. P4:10 no. P6:5 yes. So p0, p2, p6 win. P4 not.
+
+Round7: winner 3 winner_num=1. Check: P0:4 no. P2:4 no. P4:8 no. P6:8 no. None win.
+
+Round8: winner 3 winner_num=1. P0:8 no. P2:6 no. P4:5 no. P6:3 yes? Wait P6 round8:3. Yes p6 wins. So p6 +1.
+
+Round9: winner 3 winner_num=3. Which players: P0:5 no. P2:4 no. P4:4 no. P6:4 no. So none.
+
+Round10: winner 3 winner_num=2. Any pick 3: P0:2 no. P2:3 yes. P4:2 no. P6:5 no. So p2 wins.
+
+Round11: winner 3 winner_num=3. P0:2 no. P2:2 no. P4:2 no. P6:3 yes? Wait P6 round11:3 yes. So p6 wins.
+
+Round12: winner 20. P0:10 no. P2:50 no. P4:8 no. P6:8 no. So none.
+
+Round13: winner 25, winner_num=2. Which players: P0:25 yes. P2:20 no. P4:50 no. P6:40 no? Wait p4 round13:50. So only p0 wins? Maybe other players who also 25? But among our four only p0 selects 25. So p0 +1.
+
+Round14: winner 22. P0:35 no. P2:50 no. P4:22 yes. P6:23 no. So p4 +1.
+
+Round15: winner 20, winner_num=5. Which players: P0:20 yes. P2:20 yes (round15:20). P4:30 no. P6:25 no. So p0, p2 win. (P4 not)
+
+Round16: winner 15. P0:18 no. P2:17 no. P4:18 no. P6:18 no. So none win. Wait but player6 could maybe have 15? No his record shows 18.
+
+Round17: winner 8. P0:8 yes. P2:12 no. P4:20 no. P6:12 no. So p0 +1.
+
+Round18: winner 10, winner_num=7. Which players: P0:10 yes. P2:10 yes. P4:10 yes. P6:10 yes. That's all four players win. Also other players maybe also 10. But among the four all win. So p0, p2, p4, p6 +1 each.
+
+Round19: winner 5, winner_num=2. Which players pick 5: P0:12 no. P2:12 no. P4:12 no. P6:8 no. None of the four. Wait but winner 5 others maybe? Player6 had 8; but none of our four have 5. So none.
+
+Round20: winner 10. P0:50 no. P2:7 no. P4:50 no. P6:7 no. None of the four.
+
+So counts:
+
+Let's tally:
+
+Player0 wins: rounds 1,4,6,13,15,17,18. Also maybe round? Let's double-check:
+
+- R1: yes
+- R4: yes
+- R6: yes
+- R8: no for P0
+- R9: no
+- R10: no
+- R11 no
+- R13 yes
+- R15 yes
+- R17 yes
+- R18 yes
+- others no
+
+So total for P0: rounds 1,4,6,13,15,17,18 = 7 rounds.
+
+Check also round? Round?? Let's verify round15 we counted yes. Round18 yes. That's 7.
+
+Now player2 wins: rounds 3,4? Wait 4 was 12 but P2 didn't pick 12. So not. Actually 4 winner 12 but P2 choice was 22, so no. Round6 we counted yes. Round10 yes (3). Round13? Did P2 pick 25? No 20. So no. Round15 yes (20). So let's list:
+
+Rounds where P2 had winner number:
+
+- R3 (15) yes.
+- R6 (5) yes.
+- R10 (3) yes? Wait round10 winner 3, P2 had 3 yes, correct.
+- R12 no.
+- R15 (20) yes.
+- R18 (10) yes.
+
+Also R4? no. R13? no. So counts: R3, R6, R10, R15, R18 = 5 rounds.
+
+Wait also round8? Winner 3 but P2 had 6 no. R11 winner 3 but P2 had 3? Wait R11 winner 3, P2 had 3? No, round11 record for player2: 3? Wait reviewing player2 records list: at index 11 (round11) is 3? Let's check above: Player2 records: [33,25,15,22,8,5,4,6,4,3,2,50,20,50,20,17,12,10,12,7]. Actually round10 is index 10? Wait we have 1-based.
+
+Let's index carefully:
+
+We'll create mapping:
+
+Round i (1-indexed)
+
+List player2 record at index i:
+
+1:33
+2:25
+3:15
+4:22
+5:8
+6:5
+7:4
+8:6
+9:4
+10:3
+11:2
+12:50
+13:20
+14:50
+15:20
+16:17
+17:12
+18:10
+19:12
+20:7
+
+So indeed round10:3 yes. Round11:2, not 3. So not win. Round13:20, winner 25, so not. Round14:50, winner 22, no. Round15:20, winner 20 yes. Round18:10, yes. So total 6? Wait we had also round3? Yes round3 15, yes. Round6 5, yes. And round18 10 yes. So we have rounds 3,6,10,15,18 = 5 rounds. Did we miss a round? Let's also check round4? no. Round12? no. So 5 rounds.
+
+But I earlier counted 5. Good.
+
+Now player4 wins: rounds:
+
+- Round4 (12) yes.
+- Round8? winner 3 no.
+- Round13? winner 25 but player4 had 50, so no.
+- Round14: winner 22, player4 had 22? Actually player4 round14 had 22 yes. (Check above: round14 record for player4 is 22 yes). So win.
+- Round15: winner 20, but player4 had 30 no. So no.
+- Round18: winner 10, player4 had 10 yes. So win.
+- Round16: winner 15, player4 had 18 no.
+- Round1? 30 no.
+- Round5? 7 no.
+
+Let's list systematically:
+
+Round1: P4:40 no.
+Round2: P4:25 no.
+Round3: P4:18 no.
+Round4: P4:12 yes.
+Round5: P4:15 no.
+Round6: P4:10 no.
+Round7: P4:8 no.
+Round8: P4:5 no.
+Round9: P4:4 no.
+Round10: P4:2 no.
+Round11: P4:2 no.
+Round12: P4:8 no.
+Round13: P4:50 no.
+Round14: P4:22 yes.
+Round15: P4:30 no.
+Round16: P4:18 no.
+Round17: P4:20 no.
+Round18: P4:10 yes.
+Round19: P4:12 no.
+Round20: P4:50 no.
+
+Thus count: R4, R14, R18 => 3 wins.
+
+But we should also check round? Wait round15 winner 20 and P4 had 30, so no.
+
+Thus p4 has 3 wins.
+
+Now player6 wins:
+
+Round list:
+
+player6 records each round: [50,25,17,12,15,5,8,3,4,5,3,8,40,23,25,18,12,10,8,7]
+
+Now check:
+
+R1 winner 30: no.
+R2 winner 20: no.
+R3 winner 15: no (guest? Wait 15? player6 has 17, so no).
+R4 winner 12: player6 had 12 yes.
+R5 winner 7: player6 had 15 no.
+R6 winner 5: player6 had 5 yes.
+R7 winner 3: player6 had 8 no.
+R8 winner 3: player6 had 3 yes.
+R9 winner 3: player6 had 4 no.
+R10 winner 3: player6 had 5 no.
+R11 winner 3: player6 had 3 yes.
+R12 winner 20: player6 had 8 no.
+R13 winner 25: player6 had 40 no.
+R14 winner 22: player6 had 23 no.
+R15 winner 20: player6 had 25 no.
+R16 winner 15: player6 had 18 no.
+R17 winner 8: player6 had 12 no.
+R18 winner 10: player6 had 10 yes.
+R19 winner 5: player6 had 8 no.
+R20 winner 10: player6 had 7 no.
+
+Also round4,6,8,11,18: That’s 5 wins. Wait also round? Did we have round? Let's verify round15: winner 20, p6 25 no. So correct.
+
+Thus p6 wins 5 rounds: rounds 4,6,8,11,18. But we earlier counted p6 wins +1 on round4 (mine at earlier). Round6 yes. Round8 yes. Round11 yes. Round18 yes. So 5 wins.
+
+Now we have counts:
+
+p0:7 wins
+p2:5 wins
+p4:3 wins
+p6:5 wins
+
+Thus the most wins is player_0 with 7. Among answer options: A: player_0; B: player_2; C: player_4; D: player_6. So answer is A.
+
+But we need careful: Did we miscount any round where p2 or p6 could have wins? Also need to double-check round numbers for p0: we counted 7 wins: R1, R4, R6, R13, R15, R17, R18. Let's verify each:
+
+- R1: winner 30 p0 30 yes; correct.
+- R4: winner 12 p0 12 yes; correct.
+- R6: winner 5 p0 5 yes; correct.
+- R13: winner 25 p0 25 yes; correct.
+- R15: winner 20 p0 20 yes; correct.
+- R17: winner 8 p0 8 yes; correct.
+- R18: winner 10 p0 10 yes; correct.
+
+Also check if any other round where p0 equals winner number? Let's inspect round7? winner 3, p0 4 no. Round8 winner 3 p0 8 no. Round9 winner 3 p0 5 no. Round10 winner 3 p0 2 no. Round11 winner 3 p0 2 no. Round12 winner 20 p0 10 no. Round14 winner 22 p0 35 no. Round16 winner 15 p0 18 no. Round19 winner 5 p0 12 no. Round20 winner 10 p0 50 no. So indeed 7 wins.
+
+Now we need to carefully confirm that those winning numbers indeed correspond to winners: e.g., round13 winner 25 had winner_num 2 meaning two players selected 25. Which players did? Among our players, only p0 selected 25; p2 selected 20; p4 selected 50; p6 selected 40. But some other players in general selected 25: we see round13 other player responses: [24, 35, 23, 35, 22, 50, 25, 35, 40, 32] from round_records. Among them, there is a "25" choice from player with index? Let's see: there is one 25 among other players: 25 at position 7 (player at some id). So there are maybe two winners: p0 and that player. But p0 counted.
+
+Round15 winner 20 winner_num 5; among our players: p0 chosen 20, p2 20. Others? Round15 responses: [18,18,18,15,25,18,18,19,17,18]; no 20. Wait it's from the list of responses, but there is no 20. Did we mis-synced? Look at round_records show: round 15 responses [18,18,18,15,25,18,18,19,17,18] yes no 20. But winner_num 5 indicates 5 persons selected 20? Actually 20 is not present in responses? Wait I may have mismatched round numbers: The round_records array order correspond to rounds 1-20. Let's confirm mapping. Provided round_records list: first record corresponds to round 1. Up to record 20. Let's double-check round 15 record: The 15th number after 'round_records' array: we need to count.
+
+Given round_records: array of 20 elements:
+
+Indices:
+
+1: {responses: ..., winner 30}
+2: winner 20
+3: winner 15
+4: winner 12
+5: winner 7
+6: winner 5
+7: winner 3
+8: winner 3
+9: winner 3
+10: winner 3
+11: winner 3
+12: winner 20
+13: winner 25
+14: winner 22
+15: winner 20
+16: winner 15
+17: winner 8
+18: winner 10
+19: winner 5
+20: winner 10
+
+Now check round15 - responses: "responses": [18, 18, 18, 15, 25, 18, 18, 19, 17, 18]. That is 10 responses. None is 20. Wait but winner 20... hmm that's contradictory. Let's examine precision: Are these editorially correct? Let's look at the data provided: For round 15: "responses": [18,18,18,15,25,18,18,19,17,18] winner 20 winner_num 5. That's weird; if responses don't include 20, winners can't be 20. But maybe responses truncated? Actually those responses likely are the chosen numbers from other players (player_0 to some? Stage? But there are 10 players, so 10 responses. The 10 chosen numbers include one which is not 20. Wait but there is a 20 present? No. I see a 25, but no 20. So maybe the winner number 20 was chosen by players who are not included in the responses list? That seems wrong. Let's double-check round_records for round 15: maybe it's mis-index or offset. Let's check the actual responses list for round 9 had [10,3,4,4,4,3,5,4,2,3], winner 3. That matches round 9 with 3. Ok.
+
+Take round 12: responses [50,40,8,8,50,50,40,20,25,10], winner 20. That includes 20 at position 8, matches winner.
+
+Round 13: responses [40,17,50,50,25,50,20,50,35,25], winner 25. Fine.
+
+Round 14: responses [24,35,23,35,22,50,25,35,40,32], winner 22. Contains 22 at position 5.
+
+Round 15: responses [28,40,20,23,20,20,25,20,30,20], winner 20. Wait this is the 15th record above: Actually I see that the 15th record's responses are [28, 40, 20, 23, 20, 20, 25, 20, 30, 20]. Let's re-check: Did I mis-read earlier? The problem statement partially had two lists of round_records; The initial snippet after "round_records" shows each record, but we need to map correctly. Let's carefully review the round_records entries:
+
+Given the JSON content:
+
+ round_records: [
+    {
+      "responses": [
+        35,
+        33,
+        33,
+        33,
+        33,
+        50,
+        30,
+        67,
+        33,
+        40
+      ],
+...
+    },
+    {responses: [20,25,25,25,42,25,25,24,28,25]},
+    {responses: [18,18,21,18,17,21,18,18,15,40]},
+    {responses: [12,18,22,12,12,18,15,12,12,12]},
+    {responses: [8,15,10,15,10,15,15,8,8,7]},
+    {responses: [5,10,5,5,5,10,6,8,8,5]},
+    {responses: [3,4,4,8,5,6,8,4,4,5]},
+    {responses: [6,6,10,3,4,4,5,8,4,2]},
+    {responses: [10,3,4,4,4,3,5,4,2,3]},
+    {responses: [10,3,5,5,5,5,2,3,5,2]},
+    {responses: [25,2,2,2,3,3,3,25,2,50]},
+    {responses: [50,40,8,8,50,50,40,20,25,10]},
+    {responses: [40,17,50,50,25,50,20,50,35,25]},
+    {responses: [24,35,23,35,22,50,25,35,40,32]},
+    {responses: [28,40,20,23,20,20,25,20,30,20]},
+    {responses: [18,18,18,15,25,18,18,19,17,18]},
+    {responses: [15,20,10,12,12,12,12,12,8,12]},
+    {responses: [12,10,15,12,10,10,10,10,10,10]},
+    {responses: [5,12,12,5,12,8,12,12,8,8]},
+    {responses: [40,7,50,10,7,7,8,50,7,50]}
+  ],
+
+These are the round records. Let's match them with round numbers.
+
+We should recalc with correct ordering starting at Round1. Each record corresponds to an index: 1-20. Let's index:
+
+Round 1 responses [35,33,33,33,33,50,30,67,33,40] winner 30 (given). Great.
+
+Round 2 responses [20,25,25,25,42,25,25,24,28,25] winner 20.
+
+Round 3 responses [18,18,21,18,17,21,18,18,15,40] winner 15.
+
+Round 4 responses [12,18,22,12,12,18,15,12,12,12] winner 12.
+
+Round 5 responses [8,15,10,15,10,15,15,8,8,7] winner 7.
+
+Round 6 responses [5,10,5,5,5,10,6,8,8,5] winner 5.
+
+Round 7 responses [3,4,4,8,5,6,8,4,4,5] winner 3.
+
+Round 8 responses [6,6,10,3,4,4,5,8,4,2] winner 3.
+
+Round 9 responses [10,3,4,4,4,3,5,4,2,3] winner 3.
+
+Round 10 responses [10,3,5,5,5,5,2,3,5,2] winner 3.
+
+Round 11 responses [25,2,2,2,3,3,3,25,2,50] winner 3.
+
+Round 12 responses [50,40,8,8,50,50,40,20,25,10] winner 20.
+
+Round 13 responses [40,17,50,50,25,50,20,50,35,25] winner 25.
+
+Round 14 responses [24,35,23,35,22,50,25,35,40,32] winner 22.
+
+Round 15 responses [28,40,20,23,20,20,25,20,30,20] winner 20.
+
+Round 16 responses [18,18,18,15,25,18,18,19,17,18] winner 15.
+
+Round 17 responses [15,20,10,12,12,12,12,12,8,12] winner 8.
+
+Round 18 responses [12,10,15,12,10,10,10,10,10,10] winner 10.
+
+Round 19 responses [5,12,12,5,12,8,12,12,8,8] winner 5.
+
+Round 20 responses [40,7,50,10,7,7,8,50,7,50] winner 10.
+
+Now we must check earlier matches. Our earlier mapping of rounds for winners largely matched in first 15 but we misread some. Let's cross-check using this correct data.
+
+We need to recompute counts for each player with accurate round mapping.
+
+We'll list all rounds 1-20 winner numbers:
+
+1: 30
+2: 20
+3: 15
+4: 12
+5: 7
+6: 5
+7: 3
+8: 3
+9: 3
+10: 3
+11: 3
+12: 20
+13: 25
+14: 22
+15: 20
+16: 15
+17: 8
+18: 10
+19: 5
+20: 10
+
+Now we need to evaluate each player's chosen number for each round to see if they match the round's winner number.
+
+We also know winner_num but not necessary; but we may need to consider ties: as long as player's number equals winning number, they win; even if multiple players choose winner number, all those win. So essentially check equality.
+
+Let's recalc for each player.
+
+Prepare table of players' choices per round:
+
+We'll reference from earlier.
+
+Player0 values:
+
+1 30
+2 24
+3 18
+4 12
+5 15
+6 5
+7 4
+8 8
+9 5
+10 2
+11 2
+12 10
+13 25
+14 35
+15 20
+16 18
+17 8
+18 10
+19 12
+20 50
+
+Player2:
+
+1 33
+2 25
+3 15
+4 22
+5 8
+6 5
+7 4
+8 6
+9 4
+10 3
+11 2
+12 50
+13 20
+14 50
+15 20
+16 17
+17 12
+18 10
+19 12
+20 7
+
+Player4:
+
+1 40
+2 25
+3 18
+4 12
+5 15
+6 10
+7 8
+8 5
+9 4
+10 2
+11 2
+12 8
+13 50
+14 22
+15 30
+16 18
+17 20
+18 10
+19 12
+20 50
+
+Player6:
+
+1 50
+2 25
+3 17
+4 12
+5 15
+6 5
+7 8
+8 3
+9 4
+10 5
+11 3
+12 8
+13 40
+14 23
+15 25
+16 18
+17 12
+18 10
+19 8
+20 7
+
+Now evaluate each round:
+
+Round1: winner 30. Who has 30? p0 only Y. p2 33 no. p4 40 no. p6 50 no. So p0 win.
+
+Round2: winner 20. p0 24 no. p2 25 no. p4 25 no. p6 25 no. None.
+
+Round3: winner 15. p0 18 no. p2 15 yes. p4 18 no. p6 17 no. So p2 win.
+
+Round4: winner 12. p0 12 yes. p2 22 no. p4 12 yes. p6 12 yes. So p0, p4, p6 win.
+
+Round5: winner 7. p0 15 no. p2 8 no. p4 15 no. p6 15 no. So none.
+
+Round6: winner 5. p0 5 yes. p2 5 yes. p4 10 no. p6 5 yes. So p0, p2, p6 win.
+
+Round7: winner 3. p0 4 no. p2 4 no. p4 8 no. p6 8 no. None.
+
+Round8: winner 3. p0 8 no. p2 6 no. p4 5 no. p6 3 yes. So p6 win.
+
+Round9: winner 3. p0 5 no. p2 4 no. p4 4 no. p6 4 no. None.
+
+Round10: winner 3. p0 2 no. p2 3 yes. p4 2 no. p6 5 no. So p2 win.
+
+Round11: winner 3. p0 2 no. p2 2 no. p4 2 no. p6 3 yes. So p6 win.
+
+Round12: winner 20. p0 10 no. p2 50 no. p4 8 no. p6 8 no. None.
+
+Round13: winner 25. p0 25 yes. p2 20 no. p4 50 no. p6 40 no. So p0 win.
+
+Round14: winner 22. p0 35 no. p2 50 no. p4 22 yes. p6 23 no. So p4 win.
+
+Round15: winner 20. p0 20 yes. p2 20 yes. p4 30 no. p6 25 no. So p0, p2 win.
+
+Round16: winner 15. p0 18 no. p2 17 no. p4 18 no. p6 18 no. None.
+
+Round17: winner 8. p0 8 yes. p2 12 no. p4 20 no. p6 12 no. So p0 win.
+
+Round18: winner 10. p0 10 yes. p2 10 yes? Wait p2 round18 = 10 yes. p4 10 yes. p6 10 yes. So all four win.
+
+Round19: winner 5. p0 12 no. p2 12 no. p4 12 no. p6 8 no. None.
+
+Round20: winner 10. p

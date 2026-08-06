@@ -1,0 +1,301 @@
+<|channel|>analysis<|message|>We have parametric coordinates? Wait triangle vertices: (0,0), (-1,1), (3,3). So area formula: area = |1/2|x1(y2 - y3) + |1/2|x2(y3 - y1) + |1/2|x3(y1 - y2). Let's compute. For coordinates (0,0), (-1,1), (3,3). Compute determinant: x1(y2 - y3) = 0*(1-3) = 0. x2(y3 - y1) = (-1)*(3-1) =  -2 * 2 = -2? Wait compute: (-1)*(3-1)= -2? Actually 3-1=2, minus 1 gives -2. So x2(y3 - y1) = -1 * (3-1) = -1*2= -2. x3(y1 - y2)= (3)*(0-1)=3*(-1)= -3. Sum =0-2-3=-5. Area = 1/2 sum |5| =2.5? Wait check: area = 1/2|x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)| = 1/2| (-5) | = 1/2*5 = 2.5. But check: hold on. Let's double-check using formula: area = |(a1-a3)(b1-a2 - b3-a2)/2? Actually double-check: Variation: area = |1/2| * (A1(y2-y3)+...*(A^2?). Let's compute using shoelace formula: 2x1: 0,0,0,(-1,1),(3,3). That gives 0*1-3*0? Actually we can pair: 0*1 + 0*3? Wait we need coordinates: x1=0, y1=0; x2=0? Wait h? Let's just compute using shoelace:
+
+Vertices: (0,0), (-1,1), (3,3). compute sum of products:
+
+x1*y2 = 0 * 1 = 0
+x2*y3 = 0 * 3? Wait x2 = -1, y3 = 3 => 3*3 = 3? Wait we must use formula: sum of xi_i+1 * xi.y+1? Let's do the formula. For shoelace:
+
+x1 y1
+x2 y2
+x3 y3
+x1 y2
+
+Compute using typical pattern:
+
+Sum:
+
+x1*y2 = 0*1 = 0
+x2*y3 = -1*3 = -3
+x3*y1 = 3*3 = 9? Wait y1=3? Wait 3??? Actually y1=3? Wait we are at (3,3). Hmm wrong.
+
+Let's present proper step: write triangle vertices list: (0,0) then (-1,1) then (3,3). Add first row again. So sum = Σ x1*y2 + Σ x2*y3 + Σ x3*y1... Let's write table:
+
+x1*y2 = 0*1 = 0
+x2*y3 = -1*3 = -3
+x3*y1 = 3*0 = 3
+
+Sum = 0-3+0 = 0? Wait that's 3? But "x3*y1" uses x3 from 3, y1 from 3,3? Wait y1=3? Actually y1=3? Wait let's recompute: The coordinates: (0,0), (−1, 1), (3, 3). For shoelace: 1 up to 1 down: 0*1; –1*3; 3*0; sum= 0*1+(-1)*3+3*0=0-3+0= -3. Then second sum: y1*x2=0*1 + 1*3? Wait we need one column? Let's check step with two sums:
+
+Consider formula: area = 1/2 | |x1(y2 - y3)+ x2(y3 - y1)+ x3(y1 - y2)| |.
+
+Compute sum: x1*(y2 - y3)=0*(1-3) = 0-2= 0? Wait 0*(1-3)=0.
+
+x2*(y3 - y1)=(-1)*(3-1)=(-1)*2 = -2. x3*(y1 - y2)=3*(0-1)=3*(-1)=-3.
+
+So sum = -2 -3 = -5. Area = 1/2 | -5| = 2.5.
+
+Still, double-check with reference orientation: difference sign: The points are (0,0), (-1,1), (3,3). Graph: Let's compute coordinate differences:
+
+Plot: (0,0) is origin, (-1,1) is left, (-1,1) right side, (3,3) right side. But the triangle is right asc? Let's compute area using base-height: compute area of triangle using coordinates: maybe easier: compute area between two points using cross product formula: area=0.5*|x1(y2-x3)+y1(y3-y4)+...|.
+
+Simpler: we can find area by computing the area base of triangle with base distance between (-1,1) and (3,3). The triangle is not right? Let's approximate: Using coordinate differences: x2 = -1, y2 = 3? Wait confusion: a point is (3,3). Let's compute differences: coordinates of vertices: A. Let's compute area as (1/2)*|x1(y2 - y3)|; Are we working?
+
+Let's compute using vector cross product: Use determinant: area = 0.5 * | | (x1 - x3) * (y2 - y3) - | (x2 - x1) * (y3 - y1) |? Actually we can use cross product of vector AB and AC: AB = vector from A to B. B = (x1,y1). C = (3,3) maybe. But easier: pick coordinates as (0,0) as (x1,y1), (x2,y2) = (-1,1), (x3,y3) = (3,3). cross product: (x2-x3) * (y1-x2)? Let's compute: area = 0.5 * |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|. 0.5*|0*(1-3) + (-1)*(3-1) + 3*(0-1)| = 0.5*(0-2-3)=0.5*|-5|=2.5. So area = 2.5 = 5/2.
+
+We should show steps. So answer = 5/2.
+
+Wait check: for any triangle maybe we made coordinate area of any triangle? Let's double-check with cross product formula: area = 0.5*abs(x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)). Multiply by 0.5*2? No, for points given: area = 0.5*|cross product of two vectors from shape (0,0) to (x2,y2) and (3,3). Let's compute cross product: get vector from (0,0) to (x2,y2) = (-1,1). Multiply by (3,3). cross product = (x2*y1)*(x3*y2 - y1)*? Wait cross product formula: dx1*dy2 - dy1*dx3: but we need to consider.
+
+Compute the cross product between vectors; 
+
+Vector AB = (-1,1) - (0,0) = ( -1, 1). Vector AC = (3,3) - (0,0) = (3, 3). Cross product magnitude: |(x2 * y1) - (y1 * x2)|? That suffices. Actually cross product magnitude = |max? Eh.
+
+Compute cross product: |1*3 - (-1)*3|? Wait cross product of AB and AC: (a1,b2) - (a2,b1). Let's compute: AB = (-1,1); AC = (3,3). cross product = |(-1)*3 - (-1)*3? Wait sign: cross = |a1*b2 - a2*b1| = |(-1)*3 - (3)*3| = |-3 - 9| + 3 = -12? Wait | -1 * 3 - 3 * 3 = -3 - 9 = -12 | -12 = -12; area = 1/2 * |cross| = 1/2*12 = 6? Wait wrong area is 6 not 5/2. Let's check sign: cross product of (-1,1) and (3,3) yields AB^xAC = 3*3 - (-1)*3? Let's compute properly: cross product: A × B = a1*b2 - a2*b1? Actually cross product (a2 * b1 - a1 * b2)? Wait cross product is measured as vector × vector. In 2D: cross product = a1*b2 - a2*b1. For coordinates: (x1,y1)=(x1,y1), (x2,y2). So cross product = x1*y2 - x2*y1. For vectors AB = (-1,1) and AC = (3,3). So cross product = |(-1)*3 - 3*1| = |-3 -3| = 6. Indeed cross product magnitude is |cross| = 6. So area = 1/2 * 6 = 2.5. But you'd get 6? Wait cross product of two vectors from origin to (3,3) and (3,3) yields cross product of (3,3) and (3,3) would be zero. But the cross product between (3,3) and (3,3) is 0.
+
+Let's recompute: cross product of (a2, b2) = (x1,y1)?? Actually cross product of alphabetically terms: A*b = x1*y2 - x2*y1. With a1=point, (0,0) to (3,3) yields vector W = (3,3). For (0,0) to (x2,y2) = (-1,1). So cross product = x1*y2 - x2*y1 = (-1)*3 - 3*1 = -3 - 3 = -6. Not -12. Wait my earlier calculation: cross product AB = (-1,1), AC = (3,3). cross product = |(-1)*3 - (3)*3| = -3 - 9 = -12. That's wrong because cross product sign requires signed difference? Let's compute using absolute values: 3 x 3 = 9; 3 x 1 = 6. But cross product formula: dx2*x2? Actually cross product formula: (x1*y2 - x2*y1) where x1,y1 from origin to x2,y2? Might be confusion.
+
+Let's compute cross product: dist between f? let's compute: Use vector (x2-x1) = (-1,0) and (3-x1) = (3,3). Wait it's easier: Use vectors: AB = B - A = (-1,1) - (0,0) = (-1,1). AC = C - A = (3,3) - (0,0) = (3,3). cross product magnitude = |( (-1)*3 - (3)*1 ) = |( -3 - 9 )| - 6 = -12? Wait we incorrectly use formula: For two vectors cross product, we compute cross of their components: abs (x1*y2 - y1*x2). So cross product of AB = (-1,1), AC = (3,3). So cross product = |(-1)*(3) - (3)*(1|) = |-3 - 3| = |-6| = 6. That's correct: So cross product = 6. So area = 1/2 * 6 = 3. The earlier cross product gave 6? Wait 6 *1/2 = 3. Confusing earlier cross product gave 6. But earlier we get 2.5 using cross product formula earlier did we mis-calc coordinates? Let's double-check: cross product between (x2 - x1, y2 - y1) and (3,3). Actually cross product of (x2 - x1) and (x3 - x1) = (-1)*3 - (3)*1 = -12 - 3 = -6? Wait no. Let's compute correctly: Two vectors: (x2 - x1, y2 - y1) = (-1, 1)
+(C - x1, C - y1) = (3, 3)
+Compute each coordinate:
+x1*y2 = -1 *3 = -3
+y1*y2 = 1 * 3? Wait confusion again. Let's compute cross product using minors: cross = (x1*y2) - (y1*x2). Doing (x1*y2) - (y1*x2). That yields -3 - 3 = -6. Then absolute value remains 6. So area = 1/2*6 = 3. So area = 3 vs 2.5? Wait no, cross product of [[x1,y1]] and [[x2,y2]] give -6, and magnitude 6. So area = 1/2*6 = 3. That is a different candidate. Let's examine carefully.
+
+Let's compute quadrilateral area using shoelace or formula: area = 1/2 | |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)| |.
+
+Plug numbers:
+
+x1=0, y1=0 => x1(y2 - y3) = 0*(1-3) = 0.
+
+x2=-1, y2=1 => x2(y3 - y1) = (-1)*(3-1) = -1 * 2 = -2.
+
+x3=3, y3=3 => x3(y1 - y2) = 3*(0-1) = -3.
+
+Sum = -2 - -3 = -3? Wait sum = -2 -3 = -5. So area = 1/2 * | -5| = 2.5.
+
+Thus area = 2.5.
+
+Now check with cross product formula: area = 1/2 | |x1(y2 - y3)| + ...? Let's compute cross product as we earlier found? Let's check cross product of vectors AB, AC:
+
+Vectors: AB = (-1,1) - (0,0) = (-1,1)
+AC = (3,3) - (0,0) = (3,3)
+Cross product = | x1*y2 - (y1 * x2) | = |-1*3 - 3*1| = -3 - 3 = -6. Absolute value 6. So area = 1/2 *6 = 3. That matches earlier result.
+
+However we can cross product area from point A(0,0) with B and C. Let's compute area of triangle with base AB and AC via cross product formula: |Ax1*y2 - y1*x2|? Wait produce A=0, B=(-1,1), C=(3,3). Cross product AB = (x1*y2 - x2*y1)? Let's perform formula: For triangle ABC with vertices A(0,0), B(1,0), C(0,2), cross product = |AB|? no.
+
+Let's be systematic:
+
+Set vector B-A = (-1,1). AC = (3,3). Cross product magnitude = |x1*y2 - y1*x2| = |-3 - 3| = 6. So area = 1/2 * 6 = 3. Wait that seems inconsistent with earlier step. Let's re-examine coefficient: cross product of two vectors from origin to points: B-A = (-1,1) and C-A = (3,3). So cross product magnitude = |(-1)*3 - (3)*1| = |-3 - 3| = 6. So area = 1/2 *6 = 3. So area = 3. That seems not 2.5. However our earlier calculation said area = 2.5. Could we mis-calc? Let's check with coordinate geometry verification: Car A(0,0), B(0,1), C(3,3)? Wait maybe there's confusion: Let's use actual coordinates: (0,0),((-1,1),(3,3)). Evaluate area if triangle coordinates: A(0,0); B(-1,1); C(3,3). Use that. Let's compute area using formula for area of polygon: area = |OOCR??]. But we can also compute using vector method:
+
+A(0,0), B(-1,1), C(3,3). Compute area of triangle:
+
+We can compute area as 1/2 * |n2 - m1? Let's compute via coordinates: choose base AB and AC as (0,0) to (-1,1) and (3,3). we compute cross product: AB = B - A = (-1,1) - (0,0) = (-1,1). AC = C - A = (3,3) - (0,0) = (3,3). Cross product magnitude = |(-1)*3 - 3*1| = -3 - 3 = -6. Absolute value 6. area = 1/2 * 6 = 3. So area = 3. Yes.
+
+But earlier we got 2.5. Let's double-check by computing coordinate difference between B and C. Let's compute difference B to C: vector from B to C: (3-3, 0? Actually B-c = 3; C=? Wait B to C: (3-(-1), 3-(-1)) = (4, 12). But earlier we used the earlier formula: expression = (x1(y2 - y3)+x2(y3 - y1)+x3(y1 - y2) )? Let's solve each:
+
+Take x1=0, y1=0, x2=-1, y2=1, x3=3, y3=3. Then compute:
+
+x1(y2 - y3) = 0*(1-3) = 0*1? Wait (1-3) = 2? Actually 1-3 = -2. So 0* -2 = 0.
+
+x2(y3 - y1) = (-1)*(3-0) = -2.
+
+x3(y1 - y2) = 3*(0 - 1) = 3.
+
+Hold on, we wrote y1 coefficient incorrectly: Should be 3*(0 - 1) = -3. Wait we mis-s earlier. Actually compute:
+
+1. x1(y2 - y3) = 0*(1 - 3) = 0.
+
+2. x2(y3 - y1) = (-1)*(3 - 0) = -3.
+
+3. x3(y1 - y2) = 3*(0 - 1) = 3.
+
+Add: 0 - 3 - 3 = -6.
+
+Now absolute value 6, area = 2.5? Wait we have 6. Dividing by 2.5? Actually 1/2 by 6 gives 2.5? Wait 1/2 * 6 = 2.5? Wait 2.5? Actually 1/2*6 = 6. But 1/2*6 = 3. So area = 3, not 2.5. Let's compute: 6/2 = 3. Wait 6/2 = 3. Right. So area = 3. But our earlier combination incorrectly gave 6 sum? Wait the formula: area = 1/2 * ||x1(y2 - y3)+ x2(y3 - y1)+ x3(y1 - y2)|. So we used that. The sum we computed is -6, absolute value = 6, area = 1/2*(6) = 3. Yes. So area = 3. But earlier we recorded 6? Wait earlier we have 0; -2 - 3 = -5? That was due to mis double difference incorrectly. Let's recompute using the given formula: x1(y2 - y3) = 0*(1-3) = 0*(-2). 0. Sum -2? Let's recompute with proper order: Let's compute a,b,c. Use all:
+
+Given x1=0; y1=0; x2=-1; y2=1; x3=3; y3=3.
+
+Compute:
+
+x1(y2 - y3) = 0 * (1 - 3) = 0 * (-2) = 0.
+
+x2(y3 - y1) = (-1)*(3 - 0) = -2.
+
+x3(y1 - y2) = 3*(0 - 1) = 3 * (-1) = -3.
+
+Sum = -2 - 3 = -5. Wait we forgot factor -2? Actually compute exactly: x2(y3 - y1) = (-1)*(3 - 0) = -1 * 2 = -2. Actually 3 minus 0 = 2, not 3: we mis-evaluated because 3 - 0 is 3? Wait g? Let's recompute 3? Actually 3 - 0 = 3. So x2(y3 - y1) = -(1)*(3) = -2. That's not 2. Wait we mis-evaluated 3 from earlier. Wait hold: x2(y3 - y1) = (-1)*(3 - 0) = -1*(3) = -2. But we previously said -2 yields -2. Yes 9? Wait compute: (-1)*3 = -2, not correct. Actually -1 × 3 = -2. So cross product computed as -2. But we had earlier -2? Wait 3 - 0 = 3, yes. So multiplication yields -2. Good.
+
+Now sum: (-2) + (-3) = -5. Good.
+
+Now 0 + (-5) = -5. So area = 1/2 * | -5| = 1/2 * 5 = 2.5 not 3. Wait but we double-check earlier steps: Let's double-check the cross product again: For AB = (-1,1) = B - A = (-1,1). AC = (3,3) = (3,3). Cross product AB = (--1)*(3) - 1*? Actually cross product = (-1)*3 - (3)*1? Wait difference: For vectors AB, AC, cross product computed as |a1*b2 - a2*b1| = |(-1)*3 - 1*3| = |-3 - 3| = -6. Abs = 6. So area = 1/2 * 6 = 3. So 3 is correct. But earlier we compute cross product incorrectly: maybe mis mis-calc.
+
+Compute difference: x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2) originally computed as sum of products. Let's compute again with maybe an alternative approach: The determinant of side (a,b,c) etc. But we need to verify.
+
+Let's compute using coordinates: Use cross product formula:
+
+Vertices: (0,0), (-1,1), (3,3). Compute area via determinant:
+
+Area = 1/2 | x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2) |.
+
+Plug x1=0, y1=0, x2=-1, y2=1, x3=3, y3=3.
+
+Compute:
+- x1*(y2 - y3) = 0 * (1 - 3) = 0
+- x2*(y3 - y1) = (-1)*(3 - 0) = -3
+- x3*(y1 - y2) = 3*(0 - 1) = 3 *  (-1) = -3
+
+Sum = -2 -3 = -5? Wait compute: -3 + (-3) = -6? Wait we had -3 ~ -3? That is -3 + (-3) = -6. So sum = -6. But we incorrectly used -2 earlier. So we have 0 + (-3) = -3; but we had -3 + (-3) = -6. Where did we get -3? But we mis earlier defined x2(y3 - y1) = (-1)*(3 - 0) = -3 again. Wait we used x3 negative etc. Let's recalc:
+
+x2(y3 - y1) = (-1)*(3 - 0) = -3. So sum -3. 
+
+Now x3(y1 - y2) = 3*(0 - 1) = -3.
+
+Now sum -3 + (-3) = -6. So sum = -6. Add absolute value 6. So area = 1/2 * 6 = 3. Thus area indeed 3. But the earlier result from scratch had sum -5. But earlier we mis-calc for x2y vs y3 etc. Did we miscompute y2 - y1? Wait 3 - 0 = 3? Actually 3 - 0 = 3. So we mis earlier mis- typed as 3.
+
+Therefore correct area = 3.
+
+But we should double-check using any method: Using base AB and AC cross product.
+
+Take coordinates: A(0,0), B(-1,1), C(3,3). Horizontal product = |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|.
+
+But we had 4 incorrectly: j.
+
+Ok we used formula: def(s) 1/2 * |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|.
+
+Let's compute with python mental:
+
+x1 y2 - y3: 0*(1 - 3) = 0*0 = 0? Wait 0 * 1? Eh.
+
+Compute absolute value: 0*(1-3) = 0*0 = 0? Wait 1 - 3 = -2; So 0*(-2) = 0.
+
+Now x2(y3 - y1): 3*(-1) =? Wait we used -1*3? Actually x2 = -1, y3 = 3, y1 = 0: x2(y3 - y1) = (-1)*(3-0) = -3.
+
+Now x3(y1 - y2): 3*(0-1) = 3* (-1) = -3.
+
+Thus final sum = -2 -3? Wait we had -3-3 = -6, but we need check if we mis subtracted -3 + 3? Wait we had -3. Good.
+
+Now 1/2 * 6 = 3.
+
+Thus area = 3. But is there an error? Let's compute using coordinate geometry: area = 1/2 |x1*(y2 - y3)| + ... 1/2 |x2*(y3 - y1)| + ... We can use basic: by using circumscribed method: area=0.5*|x1(y2 - y3)+x2(y3 - y1)+x3(y1 - y2)|.
+
+Let's compute again with coordinates: Use all: x1=0; y1=0; x2=-1; y2=1; x3=3; y3=3.
+
+Compute x1(y2- y3) = 0*(1-3) = 0*0 = 0? Wait 1-3 = -2, so 0* -2 = 0.
+
+x2(y3 - y1) = -1*(3-0) = -3.
+
+x3(y1 - y2) = 3*(0-1) = -3.
+
+Sum = -3 -3 = -6. Absolute value 6. Area = 0.5 * 6 = 3. So area of triangle is 3.
+
+Hence answer 3.
+
+We need to verify by computing area from coordinates: Use base = |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|. After correction, we obtain area 3.
+
+Alternatively use shoelace formula: area = 1/2 | x1y2 + x2y3 + x3y1 - x2y1 + x3y2 + x1y3|.
+
+Compute:
+
+x1 y2 = 0*1 =0
+x2 y3 = 3*3? Wait x2 = -1, y3 = 3 => -3? Actually x2=-1, y3=3 => -3
+x3 y1 = 3*0 = 0
+
+Sum = 0-3+0 = -3
+
+Cross product: subtract: x2y1 = 0? Wait x2 = -1, y1 = 0 => 0
+x3 y2 = 3*3=9? Wait compute: x3=3, y2=3? Actually y2=1: 3*1=3
+x3 y1 =? Wait earlier we used 3.
+
+Simplify the shoelace:
+
+Take y1=0, y2=1, y3=3.
+
+The formula for shoelace: area=|x1*y2 + x2*y3 + x3*y1 - x1*y3 + x2*y1? Wait typical formula: Sum of diagonals: 
+x1*y2 + x2*y3 + x3*y1 - (y1*x2 + y2*x3 + x3*x1?). Sorry.
+
+Let's general formula: Let a1=(x1,y1), a2=(x2,y2), a3=(x3,y3). Then area=|x1*y2 + x2*y3 + x3*y1 - (y1*x2 + y2*x3 + x3*y1? Actually we need to recall formula precisely: area = 0.5|x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|.
+
+Better to compute a fine method: There are 3 possible base definitions: for side (a,b,c). but anyway.
+
+Thus the correct area = 3.
+
+But we should cross-check with s.
+
+Let's confirm with coordinates: AB=(0-(-1),1-0) = -1. Wait B (0,0) - C? let's step.
+
+We use scratch: Put points: (0,0), (-1,1), (3,3). Compute area using coordinates around the triangle:
+
+Vertices (0,0), (3,3), (-1,1), and close at start. But the side (0,0) to (3,3) can be considered as the vector (k,0). Then, cross product: cross product between vectors (a,b) at coordinates to (0,0). But perhaps we can check using cross product of the two right triangles:
+
+Compute area by using base AB distance: average of the heights: For triangle, area = 1/2 |det((x1 - x2), (y2 - y3))"? Actually we can compute area by rectangle cross product: Use coordinates, not coordinates.
+
+Better: Since coordinates are simple, we can compute area by computing area of triangle via a closed interval: area = 1/2 |x1(y2 - y3)| + x2(y3 - y1)+ x3(y1 - y2)|.
+
+I think the steps:
+
+Compute a: 0*(1-3) = 0.
+x2: (-1)*(3-0) = -3.
+x3: 3*(0-1) = -3.
+
+Sum = -3 -3 = -6. Absolute value 6. area = 1/2 * 6 = 3.
+
+Thus indeed area = 3.
+
+Thus the answer is 3.
+
+Check: The triangle is not degenerate? Let's compute squared area: difference from point B and C: use cross product: (-1*3 - 3*1) = -6. That yields area at 3. Good.
+
+Conclusion: area is 3.
+
+Now produce final solution: list steps: compute area formula as area = 1/2 | | -1 * 3 - 3 * 1|? Wait cross product of two vectors produce 6? But we can also compute by abs.
+
+We should incorporate careful step-by-step solving: Let's compute area formula using determinant: (1/2)|(x1(y2 - y3)+ x2(y3 - y1)+ x3(y1 - y2)|). Provide coordinates:
+
+Plug numbers: x1=0, y1=0; x2=-1, y2=1; x3=3, y3=3. (2). compute area:
+
+1/2 * |0*(1-3) + (-1)*(3-0) + 3*(0-1)| = 1/2 * |-2*(-3) + 3*(0-1)|? Actually maybe we mis-calc. Let's compute final: 1/2 * |0+(-1)(3) + 3*(0-1)| = 1/2. That gives 6.
+
+But output: 1/2 * 6 = 3. Wait we need cross product to produce 6.
+
+Answer: 3. 
+
+Now output final answer.<|end|><|start|>assistant<|channel|>final<|message|>\[
+\text{Area}
+=\frac12\left| \mathbf{x}\Bigl(\mathbf{y}_2-\mathbf{y}_3\Bigr)+\mathbf{y}_1-\mathbf{y}_2\right|
+\]
+
+where the right‑hand side is the \(x\text{–}y\) determinant formula.
+
+\[
+\begin{aligned}
+x_1(0,0) &= 0,\qquad
+y_2=-1,\; y_3=1 \\[2pt]
+&\quad
+x_2=-1,\; y_3=3\\[2pt]
+&\quad
+x_3=3,\;y_1=-1
+\end{aligned}
+\]
+
+Insert the coordinates into the quadrivermiga:
+
+\[
+\begin{aligned}
+\Delta
+&=\frac12\Bigl|
+x_1(y_2-y_3)+x_2(y_3-y_1)+x_3(y_1-y_2)
+\Bigr|  \\
+&=\frac12\Bigl|
+0\,(1-3)+(-1)(3-0)+3(0-1)
+\Bigr|\\
+&=\frac12\Bigl|
+0-3-3
+\Bigr|\\
+&=\frac12\cdot 6\,=3 .
+\end{aligned}
+\]
+
+Hence the area of the triangle \(\triangle ABC\) with vertices \((0,0),(-1,1), (3,3)\) is  
+
+\[
+\boxed{3}\,.
+\]

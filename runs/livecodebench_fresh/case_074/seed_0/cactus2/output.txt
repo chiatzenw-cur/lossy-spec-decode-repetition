@@ -1,0 +1,477 @@
+<|channel|>analysis<|message|>We need to produce solution logic: find max sum of pair of numbers whose largest digit and highest digit equal. Actually it's "maximum digit in both numbers" equal. So we maintain mapping of maximum digit to least 2 numbers? But we want maximum sum.
+
+Define for each number its maximum digit d: highest digit among its digits. Then get for each d bucket of pairs with maximum digit d. We need final sum pair of numbers with max d. In each bucket we need to pair two numbers maximum sum; we can simply store longest two pairs. So algorithm: for each arr item: compute max digit d; if bucket not present, set entry [a,b] or keep two largest values. We'll track best= max value for each bucket. Or echo with biggest. We'll compute max_contri. Actually we have 2 <= nums.length <= 100. So normal algorithm: for each node, compute max_digit again. But we can brute: For each index i: for j in range(i+1, len): if maxdigit of i equals maxdigit of j: compute sum = a[i]+a[j]; sum = max. And record. Complexity 100^2 fine.
+
+Let's propose efficient solution: compute leading up to O(25). Implementation details:
+
+- compute max digit: str(x) or while loop with digits:
+
+```
+def max_digit(num):
+    max_digit = -10
+    for ch in str(num):<br>
+      d = int(ch)
+    if max_digit < d: max_digit=d
+    return max_digit
+```
+
+Simpler: just iterate over string and char; max_digit maybe int.
+
+But we don't need best two values to avoid lose.
+
+Implementation:
+
+```
+def max_sum(self, nums):
+    best=0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if max_digit(nums[i]) == max_digit(nums[j]):
+                best = max(best, nums[i]+nums[j])
+    return best if best else -1
+```
+
+But we need to consider had base being even if none. Should also handle negative base maybe 0.
+
+But we can compute result as something akin to 499? Let's think: if we found sum max > -1 -> return best else -1. But 0 may not be sum if all numbers 0? but numbers >=1. So best remainder 0 is safe.
+
+Edge: what if there is a pair with zero sum? Both values <=0 but numbers >=1. So fine.
+
+Implementation complexity: O(n^2 * log lchars) but none produce large but fine.
+
+Let's craft final solution:
+
+```
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        def max_digit(num):
+            nonlocal max_digit_cached? Wait not needed.
+
+            m = 0
+            while num:
+                k = num % 10
+                if k > m: m = k
+                num //= 10
+                if m == 9: break   # no need to check further
+            return m
+
+        ans = -1
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if max_digit(nums[i]) == max_digit(nums[j]):
+                    ans = max(ans, nums[i]+nums[j])
+        return ans
+```
+
+This is correct.
+
+But we also need to fully import from typing. Good.
+
+Let's propose final code:
+
+```
+from typing import List
+
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        def max_digit(x: int) -> int:
+            md = -1
+            while x:
+                d = x % 10
+                if d > md: md = d
+                x //= 10
+                if md == 9: break
+            return md
+        alphabet = -1
+        best = -1
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if max_digit(nums[i]) == max_digit(nums[j]):
+                    total = nums[i] + nums[j]
+                    if total > best:
+                        best = total
+        return best
+```
+
+But we have to print best array and 1 may not exist if all pairs not found. But we can just return best.
+
+Let's produce final answer: with DP and explanation.
+
+Better to incorporate approach: We could also fix improvements: maintain dictionary mapping max_digit to pair of numbers. Since we efficient and maintain ability of two letters counts, we can for each number compute its max digit; for each bucket, if bucket has two numbers or we keep two maximum numbers: we keep two largest values seen. For each number -> keep in dictionary: if max_digit is not present: we maintain pair of values. else we maintain two largest values.
+
+Implementation:
+
+```
+def maxSum(self, nums: List[int]) -> int:
+        mmax = {}
+        for num in nums:
+            d = max_digit(num)
+            if d not in mmax:
+                mmax[d] = [num, -1]
+            elif num > mmax[d][0]:
+                mmax[d][1] = mmax[d][0]  # mark previous bigger
+                mmax[d][0] = num
+            else:
+                mmax[d][1] = max(num, mmax[d][1])
+```
+
+But width minima??
+
+But better to keep two largest numbers. We maintain two largest as var, record.
+
+Then for each d, if max_digit of largest pair sum = if lengths >1-output 0? But we need sum of any pair.
+
+So final sum: if populations < 2: ignore; else compute sum = mmax[d][0] + mmax[d][1]. If within earlier: best = max(best, sum). So we compute maxAcross all buckets. Complexity: O(n). That is more efficient; but we can still say straightforward.
+
+But we can keep simplicity. But simpler: use dictionary with dmap. Works.
+
+Edge-case: Suppose arr length 100, max digit 0 = no filters? but numbers >=1.
+
+Edge case: 0 for digits None but numbers >=1; so fine.
+
+Let's craft solution elegantly with guard dictionary.
+
+But we also have to fill the mapping each number. We need to return the min sum.
+
+Ok.
+
+Let's produce final solution.
+
+Pseudo:
+
+```
+def maxdigit(num):
+    d = 0
+    while num:
+        d = max(d, num % 10)
+        num//=10
+    return d
+```
+
+ works.
+
+But be mindful of numbers 1: cnt 0? In loop we will have while loops. Ex: 1 -> 5==1? Sorry.
+
+Need to be careful with num=0 cause empty digits. we can compute method accordingly.
+
+Better: For num in range: only we handle dividing by zeros.
+
+But if number from 1 to 10^4 inclusive.
+
+Ok.
+
+Now main: For each number, compute its maximum digit. Create dictionary mapping: max_digit -> list of integer values? But we need high sum; we can store two largest values. For each number we maintain two largest numbers: we iterate tours.
+
+Simpler: Use dictionary of best pair of values. Actually we need to store all pair numbers: For each digit d, we might extract top two values: result = max_{k1,k2} max_val.
+
+Ok.
+
+Implementation details:
+
+```
+def maxSum(self, nums: List[int]) -> int:
+    best = -1
+    curr = {}
+    for num in nums:
+        d = max_digit(num)
+        if d not in curr:
+            # start with first two
+            curr[d] = [num, -float('inf')]
+        else:
+            # record that we can keep two largest.
+            curr[d][0] = max(num, curr[d][0])
+            curr[d][1] = min(num, curr[d[1], but not forced)...
+
+Simpler: On each dp we will create dict d->list of coordinates with maximum digit. But we can create seen list as list with two largest numbers but it's fine.
+
+Better: Use default times:
+
+```
+initial = [0]*2 
+```
+
+But we need to track.
+
+Pseudo:
+
+```
+def get metropolis(d):
+    curr[d] = [num, -inf]  # store first as min.
+    curr[d] = [num, -inf]
+```
+
+But big.
+
+Simpler: Use common dictionary: d->list of pair of the two largest values.
+
+Even simpler: We'll maintain two largest integers per d: we keep two largest values separate. For each d, we have two best values (i.e., max and second). Add new number in sequence.
+
+Pseudo:
+
+```
+def max_sum_with_d(d):
+    cur[d] = {minvar, maxvar}
+```
+
+But we can't use dictionary where two values. But use list of two values.
+
+Implementation:
+
+```
+elif d not in best_nums:
+    best_nums[d] = [num]
+else:
+    best_nums[d].append(num)
+```
+
+But we will maintain and track matured maximum in final.
+
+Suppose we iterate all numbers. But each dictionary may produce more than many elements. But after all counts we will process; there are at most 100 values.
+
+But we can also store at most two sets; that's okay.
+
+Ok let's unify algorithm:
+
+```
+def max_sum(nums):
+    best = -1
+    X = {}
+    for num in nums:
+        d = max_digit(num)
+        arr_keys = dict
+        if d not in X:
+            # first two
+            X[d] = [num, -1]
+        else:
+            # adjust: insert new number into arr
+            # recalc old val0, val1
+            if num > X[d][0]:
+                X[d][0] = num
+                X[d][1] = max(X[d][1], X[d][0])
+            else:
+                X[d][1] = max(num, X[d][1])
+```
+
+But can't be this because we need to maintain four variables? Actually we keep two largest numbers. We'll fill either.
+
+Time: We'll track the best values: best44 maybe.
+
+Pseudo quick:
+
+```
+def max_sum_par(d):
+    for d in X:
+        arrs = [arr for arr in X if d==arr].difference
+```
+
+Ok.
+
+Let's think: we can bigger: For each number, compute d; when we reach new number, we keep two largest numbers for all z:
+
+```
+bucket d.setdefault(d, []).append(num)
+```
+
+But need to keep sorted.
+
+Simpler: just add all numbers, compute min(d). Then after sorting, we need pair.
+
+Simpler: Use dictionary: d-> list of numbers. After building, we need to identify maximum sum using two largest members, but scanning extra pairs can be. If we don't need to optimize by building all pairs: there may be less than 100 numbers, worst case building each dataset: duplicates.
+
+Thus overall naive algorithm: nested loops fine.
+
+Therefore final solution: Use a single loop efficient but simple. The problem might produce 10^4 small arrays.
+
+But we can use two loops.
+
+Let's propose code:
+
+```
+def maxSum(self, nums: List[int]) -> int:
+    def max_pair(x: int) -> int:
+        try:
+            return max(int(ch) for ch in str(x))
+        except? Not needed.
+
+    n = len(nums)
+    max_sum = -1
+    for i in range(n):
+        for j in range(i+1, n):
+            if max_pair(nums[i]) == max_pair(nums[j]):
+                best = nums[i]+nums[j]
+                if best > max_sum:
+                    max_sum = best
+    return max_sum
+```
+
+Edge-case: if max_sum could not be updated above -1, best return -1.
+
+Yes.
+
+Time complexity: O(n^2) = 10k*10k=1d maybe > but earlier allowed 100*100 = 10000, fine.
+
+But we need to implement with heap. We'll ask early.
+
+Let's produce final solution code.
+
+Ready.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every integer `x` we can look at its decimal digits and  
+d is the largest digit that appears in the representation of `x`.
+
+```
+x = 27
+digits  = 2, 7                →  d = 7
+```
+
+Two numbers are *compatible* for the required task when their
+maximum digit is the same.  
+We have to find the maximum sum of two compatible numbers  
+(or return `-1` if there is no such pair).
+
+The constraints are tiny (`n ≤ 100`), so a simple `O(n²)` algorithm is
+more than sufficient.
+
+
+
+--------------------------------------------------------------------
+
+#### Algorithm
+```
+function maxSum(nums):
+    best = -1                                          # we will use -1 as the "no pair" value
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if maxDigit(nums[i]) == maxDigit(nums[j]):
+                best = max(best, nums[i] + nums[j])
+    return best
+```
+
+`maxDigit` is a helper that multiplies all digits of a number and
+returns the largest of them.
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the required maximum sum.
+
+---
+
+##### Lemma 1  
+For any pair of indices `(i, j)` with `i<j` the algorithm
+checks whether the pair `(nums[i], nums[j])` has equal maximum digit
+and updates `best` as `max(best , nums[i] + nums[j])`.
+
+**Proof.**
+
+The outer loop iterates over all `i` from `0` to `n‑1`.  
+When the inner loop processes a specific `i`, it considers all indices
+`j` with `i < j < n`.  
+The if‑statement checks `maxDigit(nums[i]) == maxDigit(nums[j])`,
+hence the new assignment to `best` is written exactly when the
+changed maximum digits can be equal.
+∎
+
+
+
+##### Lemma 2  
+Let `P` be the maximum sum of all numbers with the same maximum digit
+between `nums`.  
+If there is at least one pair, `best` equals `P` after the loops finish.
+
+**Proof.**
+
+By Lemma&nbsp;1 every compatible pair satisfies `maxDigit(nums[i]) == maxDigit(nums[j])`.
+When the algorithm updates `best` it executes:
+
+```
+best = max(best, sums of all compatible pairs considered so far)
+```
+
+The set of all matching pairs at (i) and (j) is a *partial* set of all
+matching pairs, so if we process all pairs, `best` will be the maximum of
+the sums of all matching pairs.
+Because `P` is defined as the maximum of any such pair, `best = P` after
+all iterations. ∎
+
+
+
+##### Lemma 3  
+If the array contains no compatible pair, `best` remains `-1`.
+
+**Proof.**
+
+An array contains a pair that will test the condition of the
+`if` statement iff the pair is compatible.
+If that never happens, `best` is never updated and stays the
+initialised value `-1`. ∎
+
+
+
+##### Theorem  
+The function `maxSum` returns
+
+* the maximum sum  
+  of all numbers that contain the same maximum digit in *any* pair, **or**
+* `-1` if no such pair exists.
+
+**Proof.**
+
+*If a pair exists:*  
+By Lemma&nbsp;2, after the loops `best` equals the maximum sum of
+all passwords that share the same last digit, which is exactly what the
+result formula requires.  
+In this case the algorithm returns `best` the correct sum.
+
+*If no pair exists:*  
+Lemma&nbsp;3 guarantees that `best` remains `-1`, which is the
+required return value.
+
+Thus, in all cases the printed answer is correct. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis
+
+The outer loops examine each of the `n(n-1)/2` pairs
+(`n ≤ 100`).
+
+*Time* : `O(n²)`  (≤ 10 000 operations)  
+*Memory*: `O(1)` – only a few integer variables are used.
+
+--------------------------------------------------------------------
+
+#### Reference implementation (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        def max_digit(x: int) -> int:
+            """Return the largest decimal digit of the integer x."""
+            md = 0
+            while x:
+                if x % 10 > md:
+                    md = x % 10
+                    if md == 9:          # quick exit
+                        return 9
+                x //= 10
+            return md
+
+        best = -1
+
+        # examine every pair only once
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if max_digit(nums[i]) == max_digit(nums[j]):
+                    best = max(best, nums[i] + nums[j])
+
+        return best
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required DS/Function relation.

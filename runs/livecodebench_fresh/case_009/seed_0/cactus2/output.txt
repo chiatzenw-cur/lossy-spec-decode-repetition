@@ -1,0 +1,696 @@
+<|channel|>analysis<|message|>We need to analyze problem: For each pair (i<j), b_i^b_j = 2^{a_i}^{2^{a_j}} = b_j^b_i? Wait we should compute a_i = exponent of 2: b_i = 2^{a_i}. But b_i^b_j is a power of b_i times exponent b_j, but b_j can be large too; but they ask how many pairs satisfy equality.
+
+Observation: condition a^b^c? Wait mixing values: b_i = 2^{a_i}, b_j = 2^{a_j}. 2^{a_i}^{2^{a_j}} = 2^{a_I * 2^{a_j}}? No. Actually exponentiation: a^b = b_i^b_j = (2^{a_i})^{b_j} where b_j = 2^{a_j}.
+
+Therefore exponent = 2^{a_j} = 2^{a_j}. So product is 2^{a_i * 2^{a_j}}.
+
+Similarly, b_j^b_i = 2^{a_j * 2^{a_i}}.
+
+Thus multiplication: equal iff a_i * 2^{a_j} = a_j * 2^{a_i}.
+
+Thus number of positive integers a_i, a_j such that a_i * 2^{a_j} = a_j * 2^{a_i}. Since a_i, a_j are integers.
+
+Consider growing from parity. Might consider b_i = 2^{a_i}, etc.
+
+Simpler: we can solve equation: a_i * 2^{a_j} = a_j * 2^{a_i}.
+
+Let’s express it as a_i / a_j = 2^{a_i - a_j}.
+
+Similarly a_i / a_j = 2^{a_i - a_j}. So positive ratio indicates that a_i / a_j > 1 and power of two; or vice versa.
+
+Hence a_i > a_j <=>
+
+Case 1: Suppose a_i = a_j. Then equation holds: a_i / a_j = 1 = 2^{a_i - a_i} = 2^0 = 1. Both sides. So equality holds for all pairs where a_i equal: essentially all pairs with exactly same a_i values. Because a_i / a_i same value. So all pairs that are equal are counted.
+
+For equal values we need non-zero numbers. Since a_i=1, a_j=1, etc. So all pairs with same a count.
+
+Now, if a_i != a_j. Let's consider a_i > a_j. Then any a_i > a_j leads to a_i / a_j > 1. We need that (i/a_j) == 2^{a_i - a_j}. That's an integer.
+
+Since a_i, a_j are integers. Let delta = a_i - a_j > 0. Let y = a_i / a_j.
+
+Then we have y = 2^{delta}. This is x = y. X must be integer.
+
+But given y = a_i / a_j (increase), but also y * 2^{a_j} = a_i * 2^{delta}? But we just need y = 2^{delta}. So basically we need a_i to be one of the numbers with at most a_i in ratio a power of two.
+
+But we require that a_i/d a_j equals 2^{delta}. Let's analyze: Suppose a_i = a_j * 2^{delta}. But also k = a_i - a_j = indicating a0 = ?
+
+We have found a_i = a_j * 2^{delta}. And a_i - a_j = delta. Example: a_j=1, a_i=2 => delta = 1, 2^1=2, a_i=2*1=2. So indeed a_i=2; check: 1 * 2^{1} = 2? Let's test: a1=2, a_j=1: a1=2, b_j=1 => 2*1=2? Actually compute: 2^4? Wait.
+
+Let's test a_i (1), a_j (4). 2^1=2; 2^4=16; second argument a_j value 4. Next diff: delta = 3? No 4-1=3? It's one way? Let's check using property: Suppose a_i=2, a_j=1? 3 factor. 1*2^3=8? Wait 2=8; no.
+
+Better: For a_i=6, a_j=2. Expression: (6)*(2^{2})=2*2^{4}=8? 6*2^{2}=6*4=24, 2*2^{4}=2*16=32. It's not equal. So sum of pair may not hold. Let's verify.
+
+But we need pair.
+
+Let's brute force a set of pair (i, j) with positive a_i > a_j with some condition. Compute relation: y = a_i/d = a_j. Wait we need a_i / a_j = 2^{delta} where Δ = a_i - a_j. So a_i/d = 2^{delta}. That basically means a_i = a_j * 2^{delta}. Equivalent to a_i / a_j = 2^{delta}, but also a_i - a_j = delta. So we must have a_i = a_j * 2^{delta} and a_i - a_j = delta. That simultaneously holds if a_i = a_j + 2^{delta}. So we need to find a_i such that a_j = a_i / 2^{delta}? No.
+
+Let's derive: a_i = a_j * 2^{delta}, with a_i - a_j = delta. Let's analyze: a_i = a_j * 2^{delta} => delta = d. So a_i = a_j * 2^{d}, difference = a_j * 2^{d} - a_j = a_j * (2^{d} -1). Setting equal to delta: a_j * (2^{d} - 1) = d. For given d positive, we can solve for integer a_j d > 0.
+
+Equation: a_j * (2^{d} - 1) = d. So a_j = d / (2^{d} - 1). Since d <= 1e9 maybe.
+
+Compute for small d: d=1 -> a_j=1/(2-1)=1 -> a_j=1 -> a1= a1*1 = 1? Let's compute: a_j=1 -> a1=1*2=2 works. d=2 -> a_j = 2/(2^2-1)=2/3=not integer. So no solution. d=3 -> a_j=3/(5-1)=3/4=0.75 no.
+
+d=4 -> a_j=4/(16-1)=4/15 no.
+
+Thus only d=1 gives integer solution. So only a_i = a_j * 2^1 and a_i - a_j = 1. So a_i = a_j +1. That matches positive integer above? Example a_j=1, a_i=2. Check: 1*2^{2}=2 (2), and 2*2^{1} is 2 ? Wait using p eq? Let's compute properly: a_i = 2; a_j=1; a_i * 2^{a_j} (=2 * 2^{1} = 4) to same as a_j * 2^{a_i}=1*2^2=4. So we can get 2 each. So our equation holds! Example pair 1,2 qualifies? Yes for inner arrays.
+
+Hence the only pair with diff>=1 cause equality divisible by 2^? Wait shape is as earlier but check d=1 only.
+
+What about a_j = 2? Then a_i = 3? Evaluate: d=1 => a_i=3 => but a1=2, a2=3: 2*2^{3}=16 | 3*2^{2}=12 -> diff. So not equal.
+
+Let's test algorithm: a_i = a_j + 1.
+
+But previously we found a_i = a_j + 1? Let's test: a_j=2, a_i=3 => 2*2^{3} = 120? Wait 2*256?? Actually 2*2^{3}=16. 3*-2^2? Wait m=3. 3*2^2=12. Not equal.
+
+What about a_j=2, a_i=3: 2*2^{3}=16, 3*2^{2}=12 -> not equal.
+
+Hence term fails.
+
+Wait earlier example a_j=2, a_i=2? Wait we computed a_i=2? Let's check a_i = a_j + 1 indeed: 1 and 2; difference d=1. So our equation a_i = a_j + 2^{d} - 1. But d=1.
+
+Thus our derived solution for integer d works.
+
+But we found also for n = arrays with indices 20 maybe works some pair.
+
+Let's compute more general: a_i ∈ {a_j, a_i X?}. Let's derive general analytic: condition a_i * 2^{a_j} = a_j * 2^{a_i}.
+
+We can cross-check with Python for small random numbers.
+
+Let's brute for small a values in range of 1..100.
+
+Compute expectation.
+
+But I can produce tasks.
+
+We'll do solve.
+
+Ok let's generate function to test.
+
+We will implement function to check if 2_X = 2_X and compute counts.
+
+But we also need to think about number of pairs independent: for each ai, we may know if a_i equals a_j? So which basically all pairs have equality if they are equal? Wait Example sample shows input 1 2 4? Let's compute 4: values: 0? Wait a=1? Actually example: 1 2 3? No.
+
+We need to read sample.
+
+Let's search quickly mentally: For example 2 4 3 1 3 2? hmm.
+
+The test given bigger.
+
+But we need produce output 0 for first test: all containing 1? Let's test: Input: 1 test case. This implies the outputs: 0 for 1 second test.
+
+But that's weird.
+
+Let's parse sample:
+
+Input: 5
+
+1
+
+2
+
+4
+
+3 1 3 2
+
+2
+
+1000 1000
+
+3
+
+1 1 1
+
+19
+
+2 4 1 6 2 8 5 4 2 10 5 10 8 7 4 3 2 6 10
+
+Maybe each test case: single line integer n then then n values.
+
+Let's parse:
+
+Test1: n=1? Wait input lines: 5 (t) ; then 1; then 2 ; then 4 ; then 3 1 3 2 ; then 2 ; then 1000 1000 ; then 3 ; then 1 1 1 ; then 19 ; then other numbers.
+
+So first test: n=1 but then next read: 2? Wait confusion:
+
+For n=1, array has 2 values of length 1? But [string] length? Let's read '2' maybe after the sample? Hard.
+
+Let's treat as: '1' < '2' > '4' = '3 1 3 2' . Actually first test: n=1, a=2 => list l= [2]. So algorithm would output 0. Actually compute: n=1 => no pair > 0.
+
+Second test: n=4? Then a=3,1,3,2. That's 4 numbers, 1 3 2 4? Wait but sample: n=4, a length 4. Output 2.
+
+Third test: n=2 (??). 1000 1000. They produce 1. (sign corresponds to counts equal pairs? Actually single pair exists because 1 pair with equal a, would be counted? For e.g., 1000 1000 with a_i = 1000, boot.
+
+Let's review.
+
+Second test: with tally 3 1 3 2: [1,3,2,3]. Check: pair 1: "i=1 compare"? Yes.
+
+We need determine pair positions where a_i^b_j = a_j^b_i? Only if a_i= a_j or a_i= a_j+1? Let's attempt to calculate pairs with same a.
+
+Let's compute # pairs with same a:
+
+In a four numbers: 1,3,2,3. There are 2 pairs (two 3's). So we get count (2 choose 2) = 1. But missing 1 pair. Wait we need 2 pairs. So there might need another pair that 1 vs 2? Let's test a_i=1, a_j=2 difference 1. 1 * 2^{2} = 4; 2*2^{1} = 4. So pair exists. So answer 2 matches. The same a and between 1 and 2 produce additional crossing.
+
+Therefore we have 2 pairs equal a, So 3 pairs: 1 and 2 results in (2,2) as 4. So 1+2=3? Wait there are 2 pairs. So intersection of sum 1 and 1 + 2 = 3? Wait we gave 2 pairs? Let's compute correctly: pair 1 -> 3 duplicate, 2 pairs of 3's. Actually we have only one pair: (index 2; index 3, 3's=3). So count=1. Then there is 1 vs 2. So answer=2. Good. So we need to consider pair difference 1 as well.
+
+Therefore we have additional patterns: pairs with difference 1 produce pair where e.g., (1,2) but sum of equal? Actually 1 and 2 produce extra pair. Indeed 1< j? Wait 1 vs 2.
+
+Thus condition a_i = a_j + 1 produce pair 1 and 2.
+
+Hence the only case where a_i != a_j is when difference is 1 (i.e., min exponents).
+
+Therefore problem reduces to: For positive set of values a, count of pairs where a_i == a_j or a_i == a_j + 1. Wait but also pair difference 1 for each pair, but ascending difference? We may produce pairs of values with difference 1. Let's test.
+
+Edge: a_i=1, a_j=2. So difference 1 pair. For a_i=2, a_j=1. So difference 1 pair as well. So counted at (i,j) with i<j. Should be 1 or 2? Eg pair (i= index 1, j= index2) with a_i=2, a_j=1: a_i=2, a_j=1: difference 1 but pair still counted.
+
+But we want count pairs of (i,j) such that #1-of < 2-of? Wait we don't have duplicate counts. So a_i != a_j ensures XOR a_i != a_j, and we require pair differences 1. For all number of pairs (i,j) with difference 1 between those 1 and 2? but if difference 1 is also possible because from difference 1 to positive magnitude 1, yes.
+
+But that case: a_i = a_j + 1? That would be 1 = 2? Let's test: a_i=3 (a_j=2?). a_j=2? So a_i=3 and a_j=2 difference 1. So it is a_i = a_j+1. z a_j=2 and a_i=3. That's still counted as a_i != a_j difference 1. That works. So product of difference 1 can also produce pair.
+
+But check earlier reasoning with a_j=1, a_i=2: difference 1 yes.
+
+Thus we earlier found that only difference 1, a_i= a_j+1? Wait we found a_i= a_j or a_i == a_j+1. But [a_z] = [c_j+1] [since difference 1 ] qualifies.
+
+Hence for each pair (i,j) where ai > aj, we need two difference 1. So pair difference 1 exists indeed.
+
+But is there any other pair where difference 1? But we saw that only pair (1,2) works. With a_j=1 and a_i=2 => 1+ diff? Wait 2*a_j? Actually 2/1=2 times 2=2? Wait test: 2^2 = 4.
+
+Check again for a_j=3, a_i=2: 2 ^ 3 = etc not equal.
+
+So property holds if a_i= a_j (any) and a_i > a_j >1? Wait difference 1 "a_i = a_j+1".
+
+Let's test with a_c=3 and a_j=2: sum 2 vs 3: 2*2^3=4? Wait: 2*2^3=16. 3*2^2=12. 16 != 12. That's fail. So no pair 2–3, but 2? Wait earlier check difference 1 fails.
+
+Let's analyze requirement: "a_i divide a_j exact ratio". Let's test that: For difference 1 it's required a_i = a_j + 1? Let's test for a_j=2, a_i=3 occurs 2*2^3=16 vs 3*2^2=12 => not equal. So no.
+
+Thus our earlier relation indicates that a_i= a_j +1? Example a_j=1, a_i=2: 2*2^1=4? Yes 2*2^1=4. 3*2^2=12. Wait no.
+
+Let's check again just: For a_j=1, a_j=2, difference 1: produce 2*2? difference 1: 2*2^1=4. Wait 2*2^1=4? No.
+
+But we should compute a_i to a_j and a_j defined as a_ number. Sequence: 2: 2*2^3=8?? Actually 2 raised to 8. No.
+
+Let's compute '2' stands? Wait original formula: n = 2^{a_i} and 2^{a_j}.
+
+Then multiply by d:
+
+Do we have actual pseudo? "b_i = 2^{b_i}" Wait they indicated earlier: b_i = 2^a_i. So b_i = 2^{a_i}.
+
+Now compute b_i^b_j = (2^{a_i}^{2^{a_j}}) results equal to (2^{a_j})^b_i? Wait definitions:
+
+Let b_i = 2^{a_i}. 
+Let b_j = 2^{a_j}.
+Let us compare pair (b_i,a) with (b_j,b). Represent as: (b_i, b_j) = (b_i, b_j). Evaluate: b_i^b_j = (2^{a_i})^{2^{a_j}} = 2^{a_i * 2^{a_j} }.
+
+Similarly, b_j^b_i = (2^{a_j})^{2^{a_i}} = 2^{a_j * 2^{a_i} }.
+
+Hence algebra: a_i * 2^{a_j} = a_j * 2^{a_i}.
+
+This is the condition we need.
+
+We test duplicates earlier. Suppose a_i = a_j = 2.
+
+Equation: 2 * 2^{2} = 2* 2^2 =4.
+
+Ok.
+
+Now we just need to solve triple: a_i=a_j? No.
+
+Ok.
+
+So given a_i > a_j (i.e., j bigger). We check if such a_i / a_j = 2^{a_i - a_j}. Suppose a_i=a_j+1. Then a_i= a_j+1. a_j >0? We check ratio. Let's attempt:
+
+a_i= a_j+1, = a_j /? Actually a_d = a_j? But difference 1 means a_i = a_j + 1 => a_i = a_j.1+1? Wait a_i ≡ a_j + 1.
+
+The integral of (a_i * 2^{a_j}) = a_j * 2^{a_i}. Let's find polynomial:
+
+Let x = a_j. Then equation: (x+1) * 2^{x} = x * 2^{x+1} = x * 2^{x} * 2. So y = x * 2^{x} * 2. So left side is (x+1) * 2^{x}. Dividing by 2^{x} we get x+1 = 2x => x=1? Wait 2x+? 2x+? Actually x+1 = 2x => x=1.
+
+Compute: Suppose a_j=1, a_i=2. Midline: 2*2^1? Wait 2 has 2^1? Eh.
+
+Let's compute: (a_j = 1, a_i = 2). LHS: a_i * 2^{a_j} = 2 * 2^{1} = 2 * 2 = 4. RHS: 1 * 2^{2} = 4. Both equal. So indeed a_i=2, a_j=1 difference 1. Yes.
+
+Hence we found a_i=2,x. So formulas hold. But the existence of a_i=2 is tied to a_j=1.
+
+Thus pair difference 1 derived for this particular y. That's not necessary to hold for all other pairs of one difference. Because for a_i=3, a_j=2, difference 1 and a_i=3, a_j=2 gives difference 1 only but not equality.
+
+Ok, realize earlier equation derived from equation: a_i = a_j * 2^{delta}. Let's find values. Suppose a_i= a_j; delta=0. Let a_i = a_j; delta=0 trivial.
+
+So for δ=0 we require all a_i equal.
+
+For δ>0, check if a_i = a_j*2^{delta} and a_i - a_j = delta.
+
+We'll test:
+
+Let a_j = 1, delta=1: a_i=1*2^1=2; a_i - a_j =1; dot=1 good. So solution.
+
+a_j = 2, delta=2: a_i=2*2^2=8; a_i - a_j=8-2=6; delta=2. Not equal.
+
+Thus other solutions not produce counter.
+
+Thus maybe only δ=1. So solution is that a_i ≠ a_j +1 given a_j=1? Let's test for a_j=2, delta=1: a_i=2*2^1=4; a_i - a_j = 4-2=2; delta=1. fails.
+
+Thus potential only pairs where a_i=1 and a_j=2. For a_i=1 present, a_j=2 we compute? That would require a_i=7? Let's compute.
+
+But maybe we need a_j=1 then a_i=2. So a_i=2, a_j=1 is the only pair needed.
+
+Thus only pairs difference 1 yields when 1 and 2 are present. Are there any other pair values with difference 1 but not satisfying? E.g., 1 and 3: difference 2 not 1. So no.
+
+Thus we can deduce: The only pairs with a_i≠a_j are [1 and 2]. Actually any a_i=y? but there might be value of (1, 2) fails only if difference 1 but difference 1 not produce.
+
+Let's verify again: Suppose we have a_i=1, a_j=2: diff 1 with a_i=2 and a_j=1. So condition holds. But a_i=1, a_j=2 fails? Let's compute: b_i=2^1=2, b_j=2^2=4. So a_i=1 and a_j=2. Evaluate 1*2^2 = 2*2^1? Wait 2*2? Actually 1*2^2=4; 2*2^1=4. So hold! So it's a_i=1,b_j=2. Good.
+
+Thus case with diff 1 works if a_i=2 and a_j=1.
+
+Given that 1 and 2 are the only values? Actually if a_i=2, a_j=1 qualifies. That is indeed.
+
+Thus pairs crossing between 1 and 2 can be counted. Equivalent to pair (indices 1 and 2). But we must keep counts for each occurrence: Suppose count[1] = x, count[2] = y. Then (x, y) pairs.
+
+But we only need to count pairs of (i<j) that correspond to pair (a_j i). Negative difference? So yes.
+
+Therefore answer is: number of pairs (i,j) with a_i != a_j but to satisfy equality we need a_i vs. a_j == 1 and 2? Example earlier counts: we had 2 pairs of a=3 entries, plus 2 vs 1? Wait we computed 1 and 2 pair. So yes.
+
+Thus algorithm: count pairs where both same value; answer = sum_{v} freq[v] * (freq[v]-1)/2.
+
+Additionally also count pairs where the difference between values is exactly 1 and 1 and 2? Wait let's test with sample where a_i=3 and a_j=2 but not equal? Suppose we had indices [2,3]? But 2 and 3? Let's examine. Example 2,3: compute 2*2^3=8; 3*2^2=12. 8<12.
+
+Thus no pair.
+
+Check s=j=2 gives a=2, a=1 pair gives 2*2^? etc.
+
+Therefore answer = sum & (unique a). Since only 1 and 2 pair produce equality. But the problem states a_i positive integers up to 1e9. e.g., a=1 & 2 maybe produce pair. So count_{m} pairs includes up to 1+2 pair.
+
+Additionally we only need to avoid duplicates; yes because we also counted pair combination of 1's with 2. So counts: Pair count = + count[1] * count[2] ?
+
+But there may be case where a_i=2? But also a_i=3; we would produce pair 1 and 3? No.
+
+Thus we can only add pairs where a_i= a_j+1? We computed fails for 1 and 3, difference 1 not 1 and 3 difference 2.
+
+Hence only pair difference 1 is only for 1 and 2.
+
+But we also must check if a_i=1 and a_j=1 is allowed? yes equal.
+
+Thus easiest: if we add 1 to any pair? Wait other indices produce pairs with 2??
+
+Alternate possibility: result independent of pair difference 1 but also slope? Let's test on other small values:
+
+Take array a=[5,1,5,1,2]. a_i=5, a_j=1 produce factor? 5*2^1=5*2=10; 1*2^5=32; not equal.
+
+Hence we only have pair (1,2) pair.
+
+Therefore we can compute answer for Code.
+
+Let commit.
+
+But we should handle input reading: t test cases.
+
+Hence final: For each test case:
+
+- Read n.
+- Build list of values a.
+- Compute freq mapping.
+- ans = sum_{v} freq[v] * (freq[v]-1)/2 for ties.
+- answer += count[1] * count[2] (if a_i=1 and a_j=2).
+- Confirm we considered pairs (i,j) where a_i==a_j? But might still j < i? For i<j duplication yes.
+
+But context: Suppose there are 1 & 1 & 2? Actually 1-1: count[1] combos 2. So indeed there are pairs of 1 with 2.
+
+Edge: a_i=2 -> diff 1, no pair.
+
+Thus algorithm stands.
+
+The given sample: Another test case: [1 1 1] output should be 1. Is our counts? freq_eq = 1. sum = 1. Good.
+
+Second last test case: [1000 1000] maybe number of duplicates: freq[1000] has 2 pairs = 1. Indeed, produce 1. Good.
+
+Third test case: [5 1 3 2]. Wait we counted 3 pairs? Actual.
+
+Let's compute: For list a: [1,3,2,? Actually it says 3 1 3 2: n=4 maybe: top: 3 1 3 2? So first test a: [1,3,2]? Wait '3 1 3 2' lists a = [3,1,3,2] but we only have 3 numbers? But we inadvertently mis.
+
+Ok we will answer with algorithm.
+
+Thus solution produce.
+
+Time O(t) per test: - O(n). Manage memory.
+
+Edge: large < 10^9, we don't need to store counts for large numbers.
+
+Let's produce final code.
+
+Also test with sample with 19 tests given as sample.
+
+Will answer accordingly.
+
+Ok produce final solution.
+
+<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every note we know its integer representation
+
+```
+b[i] = 2^a[i]          ( a[i] > 0 )
+```
+
+The motif of two notes `(b[i], b[j])` is written inside the problem as
+
+```
+b[i] ^ b[j]   =   (2^a[i]) * 2^b[j]  (i.e. a[i] * 2^{a[j]})          (the terms are often written as “power of")
+```
+
+The same is true for `(b[j], b[i])`.
+
+```
+b[i] ^ b[j] = b[j] ^ b[i]     ⇔
+a[i] · 2^{a[j]}   =   a[j] · 2^{a[i]                  (1)
+```
+
+For each of the given test cases we have to count the number of pairs  
+`(i , j)` with `i < j` and the product on the left equals the product on the right.
+
+
+
+--------------------------------------------------------------------
+
+#### 1.  Observation
+
+*For a fixed pair `a[i] , a[j] (a[i] > a[j])`**
+
+Both counts in (1) are powers of 2,
+(1) can only be true if
+
+```
+a[i] = a[j]   (any are equal)
+```
+
+(aka a[i] and a[j] are the same integer)
+or
+
+```
+a[i] = a[j] * 2^{a[i] - a[j]}.          (2)
+```
+
+All of them are positive integers.  
+Let the later value `d = a[i] – a[j]` and
+`a[i] = a[j] · 2^{1}`:
+
+```
+a[i] = 2·a[j]    and   a[i] – a[j] = d
+```
+
+```
+2·a[j] – a[j] = d          →   a[j] = d
+```
+
+The only integer value of `d` that makes this linear system consistent
+is
+
+```
+d = 1,  then  a[j] = 1,  a[i] = 2
+```
+
+So the only **different** pair of values that produces a valid
+equation is `(a = 2 ,  a = 1)`.
+
+Consider the pair `(a = 1 , a = 2)` – In both directions the associativity
+property is correct:
+
+```
+a[i] = 2   a[i] = 1    →  2 * 2^1 = 2 * 2 = 4
+                      1 * 2^2 = 2 * 2 = 4
+```
+
+Every other pair (≥ n) with one difference is impossible (the test
+`a[i] - 2 = 1` does not hold for `d = 2`).
+
+Thus no pair with an *arbitrary* difference (but not 0) is a valid
+solution.
+
+--------------------------------------------------------------------
+
+#### 2.  Counting the pairs
+
+Let
+
+```
+cnt[v]   – number of times value v occurs in a[]
+```
+
+*Pairs with equal numbers*
+
+All pairs of indexes with the same value contribute to the answer:
+
+```
+cnt[v] * (cnt[v] – 1) / 2      (each type contributes one way only)
+```
+
+*Pairs with values `1` and `2`*
+
+The only pairs with values different must be exactly the numbers `1`
+and `2`.  
+Each combination of an `1` with a pair of `2` (one has to be in the pair
+orders `(i , j)`)
+
+```
+cnt[1] * cnt[2]
+```
+
+Therefore
+
+```
+answer = Σ cnt[v] * (cnt[v]-1) / 2
+pair 12  =  cnt[1] * cnt[2]
+```
+
+The real `cnt[1] * cnt[2]` is added because the two values actually
+may appear in the sequence in *any order* – so we can count all unordered
+pairs.
+
+--------------------------------------------------------------------
+
+#### 3.  Correctness Proof  
+
+We prove that the algorithm described above is true for every admissible
+input.
+
+---
+
+##### Lemma 1  
+If `a[i] = a[j]`, then all two indices `i < j` satisfy the required condition.
+
+**Proof.**
+
+For a pair `a[i] = a[j]` the equation becomes
+
+```
+a[i] * 2^a[i] = a[i] * 2^a[i]     (obviously true)
+```
+
+The condition is trivially true. ∎
+
+
+
+##### Lemma 2  
+For any pair of indices `i < j` with `a[i] ≠ a[j]` the pair satisfies the
+required condition **iff** the multiset `{a[i] , a[j]}` consists of
+`{1, 2}`.
+
+**Proof.**
+
+Assume `a[i] ≠ a[j]`.  
+Let `d = |a[i] – a[j]|` – rename the equation (1) with
+
+```
+a[i] = a[j] + d   (**the pair to be examined*)
+```
+
+Using the inequality in the previous order we can do this
+by using `a[i] - a[j]` (or the reverse) doing the same analysis.
+
+Let's test (1) with `a[i] > a[j]`
+(1) without loss:  m = a[i],  n = a[j].
+
+Use:
+
+```
+m = n * 2·^(m‑n)            (2)
+```
+
+Set `d = m - n` → `m = n*2^d`  
+and `d = m- n`
+
+From (2) we have `m = n * 2^d`.  
+- RHS: `m-n = n * 2^d - n = n * (2^d-n)`.
+- If `d = 1`, then `m = n*2^1 = 2n`.  
+  So `d = 2n – n` holds, we need `2n - n = n` implies `n = 1`, `m = 2`.  
+
+For any other `d` we get `n * (2^d - 1) < d`, with `d ≠ 1`.
+
+So only the single solution is the one `{1 , 2}`. ∎
+
+
+
+##### Lemma 3  
+Let `cnt[v]` be the number of times a value `v` occurs with frequency
+≥ 1.  
+The number of pairs in which `a[i] = a[j]` equals
+
+```
+cnt[v] * (cnt[v] – 1) / 2 .
+```
+
+**Proof.**
+
+Every pair of indices of (possibly same) values requires the values to be
+unordered – choosing 2 elements from the array of length `cnt[v]`.  
+Exactly the unordered pairwise count of a set of size `cnt[v]` is
+`cnt[v] choose 2`. ∎
+
+##### Lemma 4  
+For the given values `i < j` the pair `(a[i], a[j])` contains a measurable
+distance of `1` and \(1\) and `2` produce the required equality, therefore
+
+```
+cnt[1] * cnt[2]
+```
+
+counts all unordered pairings with two numbers `1` and `2`
+in the required disjoint order.
+
+**Proof.**
+
+`(1,2)` is counted only once, because the solutions of (1) are
+exactly the set `{1,2}` as per Lemma&nbsp;2.  
+Hence at most one unordered pair of numbers belonging to the set
+`{1,2}` is allowed, which we can form with each of both
+`cnt[1]` and `cnt[2]` occurrences— giving the
+`cnt[1] * cnt[2]` two sign‑pairs. ∎
+
+
+
+##### Lemma 5  
+
+The algorithm outputs
+
+```
+answer = Σ cnt[v] * (cnt[v]-1)/2 + cnt[1] * cnt[2]
+```
+
+**Proof.**
+
+The algorithm enumerates all `v` in the input, builds the frequency
+counts.
+
+The algorithm recursively checks all the tuples of equal values.
+
+All pairwise counting is attained by sum of frequencies in `cnt[v]`
+(Lemma&nbsp;3) and a summation of the pair `(1,2)` (Lemma&nbsp;4).
+
+**Proof** is complete: The algorithm sub-additions between groups coming from the first evidence, the definition of the
+sum of distinct values, and add the single element `i` `#2`
+consistently. The algorithm is the only case that doesn't
+fail. ∎
+
+
+
+##### Theorem  
+For every test case the algorithm outputs `answer`,
+the number of pairs of indices `(i , j)` with `i < j`
+containing either the proper form of coprime eigenvalues.  
+The algorithm is correct.
+
+**Proof.**
+
+For an arbitrary solution the pairs have at least one common value.
+If `i > j` we simply swap the arguments for moderation to `i < j`.
+
+All pairs being equal are guaranteed:  
+By Lemma&nbsp;1
+
+```
+If a[i] = a[j] =>  the equation is true.  
+```
+
+All pairs that mark all terms of the pair are `1` and `2`.  
+By Lemma&nbsp;2
+
+```
+If a[i] ≠ a[j] and the other sub‑identity is satisfied
+```
+
+Both satisfy inequality.
+
+The number of (1,2) pairs found by `cnt[1] * cnt[2]` is correct.
+
+**Lemma&nbsp;4** ensures end of the sum.
+
+Therefore the final count equals the total number of pairs with
+a `b[i] ≠ b[j]` that and equation is satisfied. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4.  Complexity Analysis
+
+For every test case we read the input once.
+
+```
+building the frequency map :  O(n)
+calculate the answer     :  O(number_of_distinct values)
+```
+
+The total number of distinct values does not exceed the number of
+elements, i.e. it is also `O(n)`.  
+Hence
+
+```
+Time   :  O(n)      ( n – total number of pairs across all test cases )
+Memory :  O(number_of_distinct_values)  ≤  O(n)
+
+```
+
+The total n over all test cases is ≤ 2·10^5, therefore the program
+fits easily into limits.
+
+--------------------------------------------------------------------
+
+#### 5.  Reference Implementation  (Python 3)
+
+```python
+import sys
+
+def solve() -> None:
+    data = sys.stdin.read().strip().split()
+    if not data:
+        return
+    it = iter(data)
+    t = int(next(it))
+    out_lines = []
+
+    for _ in range(t):
+        n = int(next(it))
+        values = [int(next(it)) for _ in range(n)]
+
+        counts = {}
+        for v in values:
+            counts[v] = counts.get(v, 0) + 1
+
+        ans = 0
+        # equal pairs
+        for v, c in counts.items():
+            if c > 1:
+                ans += c * (c - 1) // 2
+
+        # pairs involving 1 and 2
+        cnt1 = counts.get(1, 0)
+        cnt2 = counts.get(2, 0)
+        ans += cnt1 * cnt2
+
+        out_lines.append(str(ans))
+
+    sys.stdout.write("\n".join(out_lines))
+
+if __name__ == "__main__":
+    solve()
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required input/output format.

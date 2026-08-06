@@ -1,0 +1,130 @@
+{
+  "timestamp_utc": "2026-08-06T01:09:02.769649+00:00",
+  "backend": "vllm",
+  "tag": "cactus2",
+  "mode": "lossy",
+  "lossy_method": "cactus",
+  "lossy_parameters": {
+    "cactus_alpha": 2.0
+  },
+  "lenience_factor_in_force": {
+    "path": "/tmp/lossy-spec-decode-lenience-1003",
+    "value": 1.0,
+    "mtime_utc": "2026-08-06T01:07:56.629807+00:00"
+  },
+  "acceptance_rule": "accept iff gamma_x / q(x) >= u, where gamma_x = min(p(x) + sqrt(2*2*p(x)*(1-p(x))), 1)",
+  "taxonomy": {
+    "family": "CACTUS (Hao & Mou 2026)",
+    "alpha": 2.0,
+    "note": "training-free relaxed target distribution, boost depends only on p(x) and alpha, never on q -- see arXiv:2607.08690 Finding 1 for why this behaves similarly to mentored decoding / lenience. Residual (post-rejection) sampling is left as unmodified strict p, not CACTUS's own pi_res == pi_rej, matching this repo's existing lenience patch's beta=1 simplification precedent."
+  },
+  "lenience_factor_expected": null,
+  "lenience_factor_announced_by_server": {
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/cactus2_case_051_seed0_20260806T010756Z.log",
+    "lines": [],
+    "factors": [],
+    "distinct_factors": []
+  },
+  "cactus_alpha_in_force": {
+    "path": "/tmp/lossy-spec-decode-cactus-alpha-1003",
+    "value": 2.0,
+    "mtime_utc": "2026-08-06T01:07:56.629807+00:00"
+  },
+  "cactus_alpha_announced_by_server": {
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/cactus2_case_051_seed0_20260806T010756Z.log",
+    "lines": [
+      "[CACTUS PATCH v2, full-residual] pid=1214375 alpha=2.0 (/tmp/lossy-spec-decode-cactus-alpha-1003)",
+      "(EngineCore pid=1214586) [CACTUS PATCH v2, full-residual] pid=1214586 alpha=2.0 (/tmp/lossy-spec-decode-cactus-alpha-1003)"
+    ],
+    "alphas": [
+      2.0,
+      2.0
+    ],
+    "distinct_alphas": [
+      2.0
+    ]
+  },
+  "model": "gpt-oss-20b",
+  "draft_model": "nebius/EAGLE3-gpt-oss-20b",
+  "seed": 0,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_new_tokens": 12000,
+  "input_tokens_archived": 334,
+  "prompt_case": "case_051",
+  "prompt_source_id": "livecodebench/code_generation_lite:test.jsonl:2856",
+  "reference_answer": null,
+  "endpoint": "http://127.0.0.1:30000/v1/completions",
+  "server_request_ordinal": 1,
+  "fresh_server_asserted": true,
+  "engine_totals_before_first_request": {
+    "vllm:spec_decode_num_drafts_total": 0.0,
+    "vllm:prompt_tokens_total": 0.0,
+    "vllm:generation_tokens_total": 0.0,
+    "vllm:request_success_total": 0.0
+  },
+  "vllm": {
+    "version": "0.26.0",
+    "commit_id": "g568afb3a1",
+    "site_packages": "/home/chiatzen/lossy-spec-decode-repetition/.venv-vllm/lib/python3.12/site-packages",
+    "verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "4fa623a70332075cada34dbe585a05fc941db12fb3dd67edee3bd3923f779074",
+        "matches_lenience_patch": false
+      },
+      "vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": {
+        "sha256": "bfaec14e220cf669ddfd2b3ef6d2c556dc8fae60ef71e65a2e7ae068fb386a2a",
+        "matches_lenience_patch": false
+      }
+    },
+    "lenience_patch_applied": false,
+    "spec_casc_opt_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "4fa623a70332075cada34dbe585a05fc941db12fb3dd67edee3bd3923f779074",
+        "matches_spec_casc_opt_patch": false
+      }
+    },
+    "spec_casc_opt_patch_applied": false,
+    "cactus_verifier_files": {
+      "vllm/v1/sample/rejection_sampler.py": {
+        "sha256": "4fa623a70332075cada34dbe585a05fc941db12fb3dd67edee3bd3923f779074",
+        "matches_cactus_patch": true
+      }
+    },
+    "cactus_patch_applied": true
+  },
+  "git_commit": "7f63add201dd60fe77013b7682ba1df2b6bcd2d2",
+  "git_dirty": true,
+  "command": [
+    "/home/chiatzen/lossy-spec-decode-repetition/scripts/run_experiment_vllm.py",
+    "--mode",
+    "lossy",
+    "--prompt-root",
+    "prompts/livecodebench",
+    "--runs-root",
+    "runs/livecodebench_fresh",
+    "--cases",
+    "case_051",
+    "--seeds",
+    "0",
+    "--tag",
+    "cactus2",
+    "--temperature",
+    "1.0",
+    "--top-p",
+    "1.0",
+    "--max-new-tokens",
+    "12000",
+    "--timeout",
+    "7200.0",
+    "--server-url",
+    "http://127.0.0.1:30000",
+    "--server-log",
+    "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_extreme/cactus2_case_051_seed0_20260806T010756Z.log",
+    "--assert-fresh-server",
+    "--lossy-method",
+    "cactus",
+    "--cactus-alpha",
+    "2"
+  ]
+}

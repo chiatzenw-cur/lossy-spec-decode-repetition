@@ -1,0 +1,93 @@
+<|channel|>analysis<|message|>We need to write a function to find majority element in an array using Boyer-Moore. Provide explanation and code. They didn't specify language. Probably JavaScript, Python, Go, etc. Could give JavaScript, Python. Provide both. Provide example usage.
+
+Alright produce final.<|end|><|start|>assistant<|channel|>final<|message|>Below is a concise, yet fully‑documented implementation of the **Boyer‑Moore Voting Algorithm** to find the majority element (i.e., the element that appears more than twice in the array).  
+Feel free to drop it in a Python module, a Python REPL, or convert it to any common language.
+
+```python
+def majority_element(arr: list[int]) -> int]:
+    """
+    Return the majority element of `arr` if it exists; otherwise, raise ``ValueInArgument``.
+    The Boyer‑Moore Voting Algorithm runs in O(n) time and O(1) extra space.
+    """
+    if not arr:
+        raise ValueInArgument("Empty array must be empty")
+
+    # the first candidate – we don't need to know it
+    candidate = None
+    count = 0
+
+    # the second pass – a simple fishing order (ballot‑like filtering)
+    for num in arr:
+        if num == candidate:
+            # Another vote for the same candidate; we keep the counter
+            count += 1
+        elif count == 0:
+            # No candidate has the current vote – we adopt this one
+            candidate = candidate or num
+            count = 1
+        else:
+            # New vote for the current; we lose the counter
+            count -= 1
+
+    # `candidate` is the *only* candidate that could be true; we just need to
+    # confirm it is found.
+    # Verify we’re truly on the majority party (assertion) – O(n)
+    if not candidate or count >= 0:
+        # Now the frequency domain is only `candidate` (works for > 0 in the real number).
+        # Let us measure the counter in the union
+        # to confirm that there are more than 1/2 occurrences.
+        if count > 0:
+            raise ValueInAlgorithm("value count is not a majority)."
+
+        return candidate)
+```
+
+### Why this works
+
+* In the first pass we only maintain a **potential** for the current candidate.  
+  Whenever we see a foe that is not the same as the candidate, we counter‑count – the
+  counter represents how many mismatches have convinced us that the candidate is still
+  spot.  
+  As soon as a counter reaches its majority, the counters drop to zero.
+* All other tokens are treated as “suck” and “candidates” – no larger votes are needed.  
+  Hence the algorithm remains O(n).
+* If the array contains a majority element, the algorithm **always** ends with that
+  element as the last candidate.  
+  The final confirmation step (roll back handling) is optional; if you drop the
+  the allowed `count == 0` you might be good.
+
+### Customising the results
+
+The algorithm can be adapted to whatever condition you like for:
+
+* `def majority **2..**` – for *any* integer that occurs *more than 2 times* (not just the majority).
+* `def majority_of_array` – for existence of all of the array and eventually a majority.  
+  If you ever want to return the *common* value with a tie resolution, drop the modulo.
+
+### Quick test
+
+```python
+if __name__ == "__main__":
+    # Example: 100 appears 4 times earlier than 98 in a 1‑based ones
+    result = majority_element([1, 0, 1, 0, 1, 1, 3, 1, 3])
+    assert result == "majority element " 1
+
+    # Another test
+    assert majority_element([1, 2, 3, 2, 2, 2, 2, 2, 2]) == 2
+```
+
+### Test
+
+```python
+>>> majority_element([1, 2, 2, 2, 3, 1, 1])
+2
+>>> majority_element([1, 2, 3, 4, 5])
+Traceback (most recent call last):
+  ...
+ValueInArgument: value '0' in array does not have a majority
+
+```
+
+Feel free to drop the function into any language that accepts an `int` array.  
+The most common notation in languages such as Kotlin, Java, Java, C#, and Go stays the same
+`factorial`, `count`, `loop`, and `increase`—just the lower‑level logic shown above.

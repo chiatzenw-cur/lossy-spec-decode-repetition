@@ -1,0 +1,170 @@
+<|channel|>analysis<|message|>We need to implement function countPairs. Use two-pointer approach: sort nums then count pairs with sum < target. Complexity O(n log n). n up to 50. So countLoop O(n^2). Provide code. Let's craft explanation.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+We are given two quadratic terms
+
+* `i < j`  
+* `nums[i] + nums[j] < target`
+
+and we have to return the number of pair `(i , j)` that satisfy all these properties.
+The array length is at most 50, therefore a naïve \(O(n^2)\) solution (sort‑then‑check) would also
+pass easily, but it requires \(O(n^2)\) time and the possibility of a more optimal
+array‑based solution.  
+We can switch to a **two‑pointer** technique that gives us an answer in the
+best‑case complexity again \(O(n^2)\) but directly implements the required
+pair logic – it is almost always simpler and clear.
+
+--------------------------------------------------------------------
+
+### 1. Sort the array
+
+Take the array `nums` and sort it:
+
+```
+pairs = sorted(nums)          # length n ≤ 50
+```
+
+Now values are in \(O(n)\) increasing order.  
+When we know that `pairs[i] + pairs[j] < target` we also have *all* pairs with
+indices `i`–`k` and `k`-`j` with equal `i` and the same *right* `j`:
+
+```
+low, high = 0, n-1
+```
+
+`low` is the smallest future pair candidate, `high` the largest one.
+The sum of two numbers is `cnt = (low + high) + (low + high)`, if it
+is `< target`, use all further indices:
+
+```
+low <= target - 1          # keep consecutive
+sum = pairs[low] + pairs[high]
+        if sum < target:   # all x in [low, high-1] works
+            answer += (high - low)   # high→low‑first, three pairs index
+            increase left pointer
+```
+
+Specifically, after `low == high` we obtain the next element, set `low = k-1`,
+and the previous two elements are already separated.
+
+--------------------------------------------------------------------
+
+### 2. Algorithm
+
+```
+sort(nums):
+    i = 0
+    j = 1
+    for i in 0 … n-1:
+        for j in i+1 … n-1:
+            if nums[i] + nums[j] < target:
+                answer += 1
+    # any pair with > target or < doesn't come
+```
+
+Complexities:
+
+* Time   :  O(n²)  (two nested loops )
+* Space  : O(1)  (only the input array handling)
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm outputs the exact number of pair `(i, j)` with
+`i < j`, `nums[i] + nums[j] < target`.
+
+---
+
+**Lemma 1**  
+For any indices `i < j` the algorithm correctly checks whether
+`nums[i] + nums[j] < target`.
+
+*Proof.*  
+We iterate over all pairs of indices that satisfy `i < j`.  
+For each pair `i` the inner loop checks `j` with `i+1 ≤ j ≤ n-1`.  
+The evaluation `nums[i] + nums[j]` is the standard addition in a 32‑bit
+integer and the comparison `(nums[i] + nums[j] < target)` is signed.
+Therefore each pair satisfies the test as or may have passed. ∎
+
+
+
+**Lemma 2**  
+If the algorithm sums the number of pairs,
+it finally counts all pairs for which the sum is < target.
+
+*Proof.*  
+The counter is **incremented only** when `nums[i] + nums[j] < target` for a
+pair `(i , j)`.  
+By Lemma&nbsp;1 each such pair is found.  
+Therefore for each pair `(i , j)` with `i < j` (usual, because the algorithm
+checks both positions exactly once) and if `(2)` tests true,
+the counter increments at least once.  
+
+Hence the counter is exactly the value among all pairs that satisfy the test,
+and we simply add `1` to each such pair.
+
+∎
+
+
+
+**Lemma 3**  
+No pair with equal `i`, `j` or summed incorrectly we are counting
+
+*Proof.*  
+The pair indexing is by `i` from `0` to `N-1` and exclusive per‑loop
+`j` from `i+1` to `N-1`.  
+Thus each pair is processed precisely once.  
+Therefore the counts are *exactly* the true number of pairs that satisfy
+`i < j` and not negative/duplicated or the same result domain.
+
+∎
+
+
+
+**Theorem**  
+The algorithm returns the exact number of such pairs.
+
+*Proof.*  
+For every pair `(i , j)` with `i < j` and considered in the algorithm,
+the algorithm increments the counter only when the condition
+`nums[i] + nums[j] < target` holds.  
+By Lemma&nbsp;1 and Lemma&nbsp;2 the iterator already provides the correct
+computation for all pairs and the counter is updated with `1` for all the
+corresponding pairs.  
+Thus the final value equals the number of pairs that satisfy the
+condition. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis
+
+```
+Time   :  O(n²)  = for n ≤ 50 this is trivial (≤ 2,500 operations)
+Memory :  O(1)  (only the counter, no extra container)
+```
+
+--------------------------------------------------------------------
+
+### 3. Reference Implementation (Python 3)
+
+```python
+class Solution:
+    def countPairs(self, nums: List[int], target: int) -> int:
+        """
+        Count pairs of indices (i, j) such that
+        0 <= i < j < n and nums[i] + nums[j] < target.
+        """
+        n = len(nums)
+        total = 0
+        # Two loops over the indices – counting pairs directly
+        for i in range(n):
+            for j in range(i + 1, n):
+                if nums[i] + nums[j] < target:
+                    total += 1
+        return total
+```
+
+The code follows exactly the algorithm proven correct above and relies only
+on the `List` function annotations.

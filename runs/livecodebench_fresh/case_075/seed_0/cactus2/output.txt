@@ -1,0 +1,856 @@
+<|channel|>analysis<|message|>We need to analyze problem.
+
+Given array of length N up to 1e5. Need to count subarrays (contiguous) where for which cnt = number of indices i in subarray where nums[i] % modulo == k. let's call mask. Additionally need cnt % modulo == k.
+
+Goal: choose subarrays that sum slice.
+
+Observation: counts are subarray counts. We can treat each element as indicator of whether nums[i] % modulo == k. So we need to know if subarray sum of indicator over full binck is >=0 but not required condition.
+
+But condition is sum % modulo == k. Equivalent to (sum the predicates) mod modulo equals k.
+
+Simplify: For each index i, we define indicator[i] = 1 if nums[i] % modulo == k else 0. Then we consider incidence counts: count subarrays where fail(k) property. We need to count subarrays with sum | mod = k.
+
+Given n up to 1e5, modulo <= N? Actually modulo can be up to 1e9. So any division may produce huge values.
+
+But we only care modulo mod modulo count: we can compute prefix sum mod mod. And the count of subarrays equals number of pairs values with same prefix difference modulo condition. But we need cnt % modulo == k: that is equivalent to (sum of prefix differences mod modulo) equals k. Actually number of subarrays with difference mod modulo equals k.
+
+Given prefix sums of counts of mask, modulo mod equal. Suppose prefix[0] = 0; for i<j, (prefix[j]-prefix[i]) mod MOD = k. Equivalent to (prefix[j] % mod - prefix[i] % mod) mod mod == k. But to avoid j and i we can iterate over all prefixes and compute final sum mod mod. Wait we need to count subarrays where pref[inner] - pref[i] mod M == k => partitions.
+
+Simpler: For each pair (i,j) where |pref[j]-pref[i]| mod M = k. The number of subarrays equals index of j. Equivalent to compute all nested prefix sums for all j with parity? Hmm.
+
+We can treat
+Let v1 = prefix[0] mod MOD.
+Let v2 = prefix[1] mod MOD.
+...
+We want |pos1<pos2> with difference mod k. Equivalent: for j > t, we consider pairs (t,l) where (pref[j]-pref[l-1] mod M==k) is equal to subarray equal to (pref[j] mod M) - (pref[l-1] mod M) mod M. Equivalent: For each j, we want pref[l-1] mod M = (pref[j] mod M - k) mod M. Since mod mod M equal. So we just need to count number of previous l-1<Prev<m? we can compute counts of each prefix value modulo mod. Since order constraints are irrelevant? allowed? For j < l? Wait j < i and we have j but we need no ordering: j≥ x, meaning we only need to find indices from 0..j-1 where prefix value has same parity as j.
+
+Then find subarray sum = prefix[j] - first prefix[i] where idx < j. This is same as # of preceding positions where pref value = (pref[j] mod M - k) mod M. So computing freq of each pref seen so far.
+
+Thus algorithm: for i from 0 to n: compute prefix[0] = 0; for j from 1 to n: pref.sum += indicator[j-1]; then mod=prefix % M. Then find pos = (mod - k) % M. Add count of prefix map[ pos] to answer; then update count[mod] by that.
+
+Implementation: prefix = 0 ; map: dict[int,int] = 0. Initially map[0]=1 for (i=0). Then iterate j from 1 to n: cand = indicator[j-1] ; prefix += cand; mod = value % M; pos = (mod - k) & ???; We only need one mod? Provided M up to 1e9, not small we can compute modulo as M, but may produce large code.
+
+Edge cases: some numbers may be; but we only rely on mod of divisor.
+
+This is like computing number of subarray with sum mod M = k.
+
+But we need to also handle modulo=1? Works: any modulo? possible 1. But mod M counts? 1 and whatever. Works. But m up to 1e9, consistent.
+
+But we can't use modulo as large > 2^31? Not overshadowed.
+
+We need to compute dictionary like default: dict[int,int] size up to n distinct. For each j we assign mod.
+
+Constraints up to 1e5; m up to 1e9, dictionary ok.
+
+Time complexity: O(n). Also need to track all counts of index and map.
+
+Complexities O(n) memory.
+
+Edge cases: If K bigger than M? Not as k< modulo. So always okay.
+
+Edge case: dp might be large. answer up to 1e10 choose 2 mod? Actually Python ints unlimited.
+
+But we need to compute parity as for subarray modulo m = k. The algorithm: vector of prefix sums.
+
+Implementation steps:
+
+- Input: nums list, modulo, k.
+
+- Convert to indicator: if pow(i%mod = k) mod? Not needed.
+
+- Precompute prefix value: for each element, we compute modulo of element: if value % modulo == k -> cur_sum += 1; else 0.
+
+- Then prefix difference approach: if mod < k, then new = (mod - 0) % M -> subtract 0? Wait we need to find prefix diff. Hmm.
+
+Let's test small example: n=3, M=2, k=1. 
+numbers: [3,2,4]
+Compute - indicator: 3%2==1? yes (since 1==1) -> 1, 2%2==0? yes if equals 1? no -> 0; 4%2==0? no -> 0 -> indicator [1,0,0].
+So prefix sums: [0,1,1,1].
+We use algorithm works.
+
+Compute parity = [0], int cnt=0. In loop:
+
+i=0 -> prefixes=0 (no prefix after storing prefix: first int). Wait we start count[0] = 1.
+
+For each v in index 0-based: pref = (initial + indicator) mod. Actually we can compute anyway:
+
+prefix +=1 % M
+Then mod= prefix%M
+
+pos = (mod - k) % M
+
+Add dp[ pos].
+
+We need to ensure we update counts before summing? For previous j we have count of previous prefix positions encountered.
+
+Method:
+
+Initialize result = 1? Wait we need to compute difference. In all subarrays length i>=j? We considered subarray as (j+1) < len? They want subarray [l..r]. Starting modulo 0. Implementation using indices: we maintain pointer array cumul of all stickers.
+
+Pseudo:
+
+prefix=0
+seg=0
+
+cnt=0
+counts=defaultdict(int) % M
+
+counts[0] = 1 # prefix sum before any elements
+ for i from 0 to n-1:
+    val = 1 if nums[i] % modulo == k else 0
+    prefix += val
+    if prefix>=M:
+        prefix %= M
+    target = (prefix - k) % M
+    diff = counts.get(target,0)
+    cnt += diff
+    counts[prefix] += 1
+
+Return answer
+
+Test sample: seen earlier.
+
+Edge with large modulo: In python, shift ~ no more than 1e9; it fits into 32-bit; but Python int fine.
+
+Now we also need to consider case when k > m and k is 0-th? but mod < k? Actually k < modulo. So k can be 0.
+
+But we must ensure not negative: loop mod M reduces but M may be negative? Not.
+
+Edge-case: 0 has no modulo. But all good.
+
+Also we must handle when modulo=2; but okay.
+
+Let's test manually.
+
+Test with small examples.
+
+Input: nums = [3,2,4], modulo = 2, k = 1.
+
+Indices: 0->1.
+
+Check cur:
+
+prefix=0
+
+counts[0] suff=1
+
+for each v:
+1: '1' in index 0
+   prefix becomes prefix(0+1=1)=1
+   target = (1 -1) %2 = 0
+   diff counts[0] => 1 => cnt=1 ; count[1]=3 ?
+
+Wait:
+
+Prefix[0] = 0, after 1: prefix = 1
+toggle: id indices: 1, etc. result=1
+pref[1] unchanged
+
+update: counts[1]=1
+
+Now i=1: val=0 -> prefix unchanged
+prefix=1
+
+target = (1-1) %2 = 0 -> add counts[0] = 1 -> cnt=2
+
+i=2: val=0 -> prefix stays 1
+
+target=0.
+
+Add counts[0] -> 2. cnt=3.
+
+Thus expected length 3. passes 3.
+
+Thus algorithm works.
+
+Edge case: k=0, with integer 0 mod. Example: [3,1,9] i=0 mod? Wait for test: m=3; k=0.
+
+Indicator: 0 vs 1? We compute:
+
+3%3=0 -> 0==k? yes -> yes '1' maybe? But 1 indicates if 3%7==k? No, by definition: cnt counts elements where nums[i] % modulo == k. So grade.
+
+If k=0: yes; bigger.
+
+But for subarray when k=0: we need count_{i} where mod==0; else if mod==1.
+
+Complexities: need to process as described.
+
+But typical subarray counts sum mod M may have far more? But we need to output indices accordingly.
+
+Let's test sample 2 with given arrays:
+
+nums=[3,1,9,6], modulo = 3, k=0
+
+Indicator:
+
+3%3=0 -> 1
+1%3=1 -> 0
+8%3=1? 9%3=0 -> 1
+6%3=0 -> 1
+
+Indicator: [1,0,1,1]
+
+Compute algorithm:
+
+prefix0=0, counts[0]=1
+
+i=0: val=1 -> prefix=1 (1%3)
+   target=1-0? Wait we need diff such that prefix - pref = k. Since k=0, we need target=(prev - 0?), Not.
+
+Take target=(prefix - k) % M. For k=0, return prefix same as prefix 'i'. Actually we need prefPrev such that prefix - prefPrev = k; given prefPrev = prefix - k. So target= (prefix - k). So we need to pick number of previous prefix equal to prefix exactly? Wait when we compute prefix less? Actually we need prefix difference >? earlier we compute count.
+
+Let's test 3: M=3, k=0.
+
+Indices of subprefix with prefix equal to p. For each j, we need to count previous i with prefix==prefix. So we want a count of previous prefix equal to present mod.
+
+Maybe we did: For each element, we want that prefix corresponds to counts where prefix state equals current prefix? No.
+
+Simpler: we want subarrays, negative? Let's replicate algorithm.
+
+Let's maintain prefix counts. For each j, target = (prefix - k) % M. Use prefix as ((sum of values dividing). Actually we should compute sum of values from i to j (inclusive) but we are using counts of 1. Suppose we add prefix[j] mod M where pref[j] = sum of values of prefix[0..j-1] inclusive? Actually we need to compute prefix before each element: v1 = 0; for i from 0..n: prefix += val if i==0 break; we want to get subarray length l-i. But leftmost indexing is 0.
+
+Better algorithm: For each y, start with prefix[0]=0, then iterate i from 1 to n: prefix[i] = prefix[i-1] + indicator[i]. So shift from 0..n inclusive. Define pref as 0 for earlier i.
+
+For each j from 1 to n: prefix[j] = prefix[j-1] + indicator[j-1]. Using mod, we compute prefix[j] mod mod. Then we need subarrays where sum_{i=1}^{j} (a_x) - prefix[min] = k? Wait we need subarray sum (subarray sum) as difference between pref[j] - pref[l-1] (mod M). So each idx l' has index j (later). Let's maintain prefix.
+
+Define array pos_prev: 0 initially. For each j, we need to count previous p such that subscriptions difference = k. That is: pref[j] - pref[l] (mod M) = k. Equivalent: pref[l] = (pref[j] - k) mod M.
+
+Hence we need to compute for each j a target. Additionally need used pref_len < i for j difference. Then answer = sum over prefix seen before.
+
+Thus algorithm: prefix[i] stored as number of prefix sum (cum). Use while loop.
+
+Better: we need to precompute each prefix after adding at j? Wait: We did for j from 1 to n:
+
+Initialize primeVal=0; int freq = we will store counts of prefix values.
+
+But after we compute prefix sum, we maintain counts for each prefix value with pref value before. But this algorithm uses 'prefix = prefix - k' presumably. Let's test in example.
+
+Let's compute correctly using Python approach for extended.
+
+Let indices: 0 to n-1.
+
+Let a = [1,0,1,1] (because k=0). So prefix values:
+
+pref[0] = 0 (prefix sum after 0 elements)
+pref[1] = 1 + 0? Actually bar?
+
+Let's compute prefix sum path:
+
+pref1=0
+pref[1] = 1
+pref[2] = 1
+
+pref[3] = 2
+pref[4] = 3
+
+Compute header:
+
+pref[0]=0
+
+pref[1]: after adding a[0] =1 => prefix =1
+
+pref[2]: after adding a[1] = 0 => prefix =1
+
+pref[3]: after adding a[2] =1 => prefix =2
+
+pref[4]: after adding a[3] =1 => prefix =3
+
+Now we need to compute subarrays where sum mod M == k. Using method: for each j, we want prefix at j - k mod M. For j from 1 to 4:
+
+prefix available in definition maybe.
+
+Let's test sample 2:
+
+range [0..3] we compute sum = 1+0+1+1=4. Mod=3; 4%3=1, not 0. k=0? Wait sample 2 has n=4 even? But final compute is sum=1. We found subarray freq 0 length 1? Wait.
+
+But earlier we mis-calc.
+
+Let's design precise example of that test example.
+
+We need to compute the test on my algorithm: For sample 2: Input = [3,1,9,6], modulo = 3, k=0. [3,1,9,6] Count each element:
+
+- For i = 3 (3%3==0) -> yes -> indicator=1
+- For i = 1 (1%3==1) -> mention -> indicator=0
+- For i = 9 (9%3==0) -> 1
+- For i=6 -> 1.
+
+So condition: subarray where sum %3 == 0 yields threshold=0. Wait But sample 2's result: subarray [1..1] is [1]. Count digits=0 => cnt=0 ->=0 mod 3 matches produce 0. And subarray [0..3]: 3 indices 0 count: 3 -> cnt mod 3=0. So they indeed return indices 0..3; 0..3.
+
+Let's verify if 0..3 element sum 1: 1+0+1+1=3. That's 3 mod 3 -> 0.
+
+Thus we earlier reason: Each subarray that sum equals multiples of k, there is subarray counted such that difference equals k? Wait k=0. So we test subarrays where sum mod 3==0. But algorithm earlier we considered it's sum modulo k or n? Actually we needed to find count of indices i such that nums[i] % modulo == k. Then we need that count mod modulo = k. So we need the count of numbers satisfying condition.
+
+Thus we want subarray sums mod 3 == k (0). That matches.
+
+If we compute sum modulo 3 equals 0, we find 0 subarray [0..4] maybe.
+
+Hence we computed freq. The condition for subarray with sum % distribute dividing by min count is given as: prefix length of counts.
+
+But we considered pattern: When prefix sums mod M equals p, we may need that the difference between pref[j] and pref[l] is k, and that difference is difference mod M.
+
+So for key j, we need to find prefix diff = k if number of prefix indices where prev.map is exactly (prefix - k) % M. Yes.
+
+Therefore algorithm: prefix works.
+
+Now test with sample 2: [-] choosing indices that we produce:
+
+Let's compute sequentially.
+
+Initial: prefix=0. Count[0]=1.
+
+Traverse d:
+
+i=0: pseudo=1 (for 3 mod 3=0). Since 1 for index 0 at this moment. Compute prefix updated: prefix = 1 mod M=1
+Then -n = (1 - k) % M = 1 mod M = 1 (since k=0). So target = 1. Count[1] present? 0 -> count[1] pair 0.
+ Difference? Wait we counted 0. Then update count[1] => 1. Ok.
+
+i=1: indicator=0; prefix remains 1
+
+ map[1] we compute target = (1 - 0) % M = 1; count[1] (sum of count[1])? But seen earlier not? Wait count[1] is 1, so ans+=1. Good.
+
+i=2: indicator=1; prefix => 2
+target = (2-0) % M=2
+count[2] becomes 1, so ans+=0? Actually we counted maybe 0? Wait we used target? Wait used count[2]? we had 0.
+
+Thus ans increments: 0:
+i=2: idx=1 -> 0
+1: added 0
+i=3: indicator=1; prefix=3 freq (since 3 mod3=0) -> 0 yields prefix = 0. Then we compute target = (0-0) % M = 0. Count[0] = 1 (previous prefix). After adding 1? Wait contributions: we had only counted previously. So count[0] = 1? We updated only count[0]? We initially started sum[0] = 1 initially. After first increments: we had 1 at index 0? Actually we set pattern when we add only pos. After updating first increment we updated prefix[1] (1). So put? We don't update count[0] initially. When we later update for index 0 at pos 0? Wait we didn't update. We'll add count[0] is 1.
+
+So index 3: ans +=1: at this point we have ans=2? Because count[0] = 1. After constructing login: prev values: 
+0 at index0: stored as prefix[0].
+prefix after first: 1 (prefix[1]=1?), update count[1] => 1
+index 2: 0 doesn't update sum; status: index[2] ( 1?). At 3: freq 2.
+
+This is complex. Let's re-evaluate minimal:
+
+Algorithm using increments:
+
+- We'll maintain mapping that.
+
+- Use long long.
+
+Now compute k=0; compute selected indices pre-run.
+
+We'll define d for each position:
+
+a = [1,0,1,1]
+
+generate offset 0.
+
+We output idx:
+
+Indices after j: which we experiences.
+
+Let's simulate.
+
+Initialize map = {0:1}
+counts[0] = 1
+pref = 0
+
+ans=0
+
+Process each element:
+
+bit = 1
+int lower=0
+cur_new_val = (val + 1?) Wait we want to compute new prefix. Let's compute prefix after adding bit. So remainder=prev_parity+1? But we can compute current prefix mod M as (prev + updating). Actually we'll compute prefix after adding.
+
+Now for each i:
+
+if bit: cnt = (cnt + 1) % M else 0.
+
+However the insertion changes for stage.
+
+Better: compute prefix incremental: if value is 1 subtract from 0, we update to maintain prev.
+
+Pseudo:
+
+prefix = 0
+for i in range(n):
+    prefix += indicator[i]
+    prefix %= M
+    target = (prefix - k) % M
+    ans += count[ target]
+    count[prefix] += 1
+
+Thus we need base.
+
+Time: Let's compute precisely.
+
+Pseudo:
+
+Initialize count = defaultdict(0)
+count[0] = 1
+pref = 0
+
+for i in 0..n-1:
+    val = 1 if nums[i] % MOD == k else 0
+    pref += val
+    pref %= M
+    target = (pref - k) % M
+    ans += count[ target]
+    count[ pref] += 1
+
+Test sample: N=4.
+
+index 0: val=1. pref=1. target=1-0=1. Only count[key] currently: 1 => 0. ans=0. count[1] =1.
+index 1: val=0. pref=1. target=1. count[1] =1 => ans +=1 => ans=1. count[1] +=1 -> 2.
+index 2: val=1. pref=2. target=2. count[2] =0 => ans stays 1. count[2]=1.
+index 3: val=1. pref=3%3=0. target=0. count[0] = 1 => ans +=1 => ans=2. count[0]++ => 2.
+
+Thus ans=2. Works.
+
+Edge case: For N=2, initial array [3,2,4] yields a.
+
+Return ans 3.
+
+Thus algorithm works.
+
+Time complexity O(n).
+
+Now we also handle other cases: k=0.
+
+Now code:
+
+$python
+class Solution:
+    def countInterestingSubarrays(self, nums: List[int], modulo: int, k: int) -> int:
+        p = defaultdict(int)
+        p[0] = 1
+        cur = 0
+        ans = 0
+        for num in nums:
+            if num % modulo == k:
+                cur += 1
+                cur %= modulo
+            # Output same as loop
+            target = (cur - k) % modulo
+            ans += p[target]
+            p[cur] += 1
+        return ans
+
+Now challenge: When modulo = 1? But mod k values less than. Suppose modulo==1. Then all items modulo large. But we might mis-pron? Actually mod =0? but mod concept? Let's test: mod=1; numbers with remainder 0? So mapping would build remainder =0. Equivalent to each residue as 0. But note: count[0] = 1; we need to compute prefix modulo m. Modulus 1; but since modulus 1, modulo 1 always 0. So mapping first: for each step, we need prefix: if val=1 and il. Compute mod int: curmod = (prev + val) % 1 => always 0. So new prefix always 0. But we need target to compute k mod M. Since k is 0. So target = (0-0) % 1 = 0. So ans += count[0] each time.
+
+Thus algorithm works.
+
+Edge: k can be 0 to m-1.
+
+Let's test extreme.
+
+But also we may calibrate using Python int.
+
+For n large, mapping counts may overflow by n each.
+
+Moreover, we might want to store mapping as dictionary of counts; we may also aim to use limit of mod M we can compute indices as list of ints maybe? But M up to 1e9, we need not store any direct array with max mod M; so use dictionary via set.
+
+Thus final solution.
+
+Complexities:
+
+- O(n) time.
+
+- Memoization: store mapping values as dictionary.
+
+Now we need to output negative? problem states integer.
+
+Now produce final solution.
+
+Let's write code accordingly:
+
+Add a main function.
+
+Edge: If modulo=1, print n. But we compute generically anyway.
+
+Implementation:
+
+def countInterestingSubarrays(nums: List[int], modulo: int, k: int) -> int:
+
+    r = collections.Counter()
+
+    freq = defaultdict(int)
+    freq[0] = 1
+
+    # prefix parity remains.
+    # we only need prefix of +1 mod M.
+    cur = 0
+    while cur > 0? too.
+
+Stop.
+
+We'll also need to import simple integer.
+
+Edge: The actual result might be large: N+1 <= 1e5; so int ~ 1e9.
+
+Return.
+
+Let's produce final answer.
+
+But to double-check we may need to parse from input: not needed.
+
+Hence final answer: Provide code.
+
+Let's produce final explanation: Use Python for iterating.
+
+Also we need to produce original code with functions defined.
+
+Ok.
+
+Let's create final answer: I'll produce a solution fulfilling Y.
+
+Now provide final solution.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For a given array `nums`
+
+```
+k = ⠚  ☁ (index i)   …   (value of nums[i] % modulo == k)
+```
+
+For a subarray `lens.l … r` the value of
+
+```
+cnt = number of indices 1 … N   such that
+        (nums[i] % modulo == k)  is true
+```
+
+*`cnt` is simply a number of positions that belong to the subarray.*
+
+For a subarray to be **interesting** we must have
+
+```
+cnt % modulo == k
+```
+
+The array `K[i] = 1` if the element satisfies the condition,
+`0` otherwise.
+A two‑element list is `cnt` for every element `nums[i]`.
+
+We want that the **sum** of the two‑valued array of a subarray of
+length `len` of the original array is divisible by `modulo`
+(the division gives `cnt` mod `modulo`).  
+So the problem reduces to
+
+```
+Find all subarrays [l , r] of the binary array
+    cnt = (#ones in prefix[r] – #ones in prefix[l-1])
+    such that cnt % modulo == k
+```
+
+--------------------------------------------------------------------
+
+#### 1.   Prefix sums
+
+For a prefix sum `S[i]`  
+```
+S[i] = Σ( 1 if nums[j] % modulo == k for j in {0,i-1})
+```
+with `S[0] = 0` and we need at least
+
+```
+prefix[0] … len[i]   (i from 1..n)
+```
+
+The required difference can be seen as
+
+```
+(S[j] - S[l-1]) % modulo == k            (1)
+```
+
+The condition `k = (S[j] - S[l-1]) mod modulo` works **iff** `(S[l-1]`
+has the same value as `S[j] – k (mod modulo)`.  
+Therefore we have to answer `p` not at the intersection of two constraints
+(both border condition) but *exactly* what the number of indices `p`
+with
+
+```
+S[p] mod modulo == (S[j] - k) mod modulo
+```
+
+is found in one time step.  
+Exactly this situation is needed:
+
+* A running inside a hash map `cnt[mask]` – the number of times the
+  current prefix mod `modulo` is seen.
+
+--------------------------------------------------------------------
+
+#### 2.   Algorithm
+
+```
+build a map (size 0 , value 0)
+prefix = 0
+answer = 0
+for i = 0 to n-1
+        val = 1 if nums[i] % modulo == k else 0
+        prefix += val
+        prefix %= modulo
+        needed = (prefix - k) % modulo
+        answer += cnt[needed]
+        cnt[prefix] += 1
+return answer
+```
+
+The loop processes the prefix, the mask, the amount of
+what we have seen = the number of subarrays that end at `offset`
+
+When we encounter the current prefix `prefix`,
+the *“found”* value comes from `cnt[need]`, which in turn
+has counted only indices that occurred before the current index
+(`j < i`).  
+That is exactly the requirement for subarray boundaries - multiple
+recurrences are allowed, because dictionary can contain many pairs of
+identical masks.
+
+--------------------------------------------------------------------
+
+#### 3.   Correctness Proof  
+
+We prove that the algorithm returns the number of interesting subarrays.
+
+---
+
+##### Lemma 1  
+For every `j (0 ≤ j ≤ n)`
+
+```
+prefix[j] = Σ( 1 if nums[i] % modulo == k for i < j )
+```
+
+where `prefix[0] = 0`.
+
+**Proof.**
+
+By induction over `j`.  
+Base `j = 0` – trivially the empty sum is 0, and the algorithm sets
+`prefix[0] = 0`.  
+Induction step: assume the term for `j-1` is correct.  
+The algorithm increments index `j-1` by 1 if its value satisfies
+`nums[j-1] % modulo == k`.
+Consequently the new prefix `prefix[j]` is the previous sum with the
+possible `1` added – an exactly the same definition as the `Σ` sum.
+∎
+
+
+
+##### Lemma 2  
+For all indices `j (0 ≤ j < n)` let  
+
+```
+completion = (prefix[j+1] - k) mod modulo
+```
+
+Then the number of subarrays ending at `j` **and** satisfying
+inequality (1) equals `cnt[ completion ]` evaluated *before* the character
+`j` is considered.
+
+**Proof.**
+
+'Interesting' is exactly the subarray  (local)  
+`[l, j]` where `l ≤ j`.  
+Define `δ = l – 1` then `cnt[\{l, j\}] = ⟦S[j+1] – S[l]⟧`
+(the element at position `j` will be included in the prefix `S[j+1]`).
+Equation (1) with `k` obtained from indices `j` and `l` yields
+
+```
+S[j+1] • S[i] – k mod modulo = S[l]   (mod m)
+```
+
+Hence we have
+
+```
+S[l] ≡ ( S[wb] – k )  (mod m)     (2)
+```
+
+Thus for any earlier start index `l` we must find a `prefix[k]`
+already set  
+
+```
+p = (S[l] mod ~ m) ≡  completion
+```
+
+If `A[x]` is a number of already seen prefixes and consequently
+any earlier cast it will hold a count of the subarrays that contain
+this prefix.  
+Hence `cnt[completion]` equals the number of such subarrays.
+
+--------------------------------------------------------------------
+
+##### Lemma 3  
+For each `j` the algorithm adds exactly the number of indices
+`l (1 ≤ l ≤ j)` that the set (2) belong to the side of the outer array
+**sum**.
+
+**Proof.**
+
+During the iteration of the algorithm the prefix array `cnt`
+contains a sequence of counts for all indices `p` such that
+`prefix[p] = indices mod len`.   
+Thus for each iteration we recompute `completion = (pattern‑n)`.  
+When we recompute that `cnt[completion]` we get the number of
+indices close preceding position `i`.  
+By Lemma&nbsp;2 this invariant equals the number of such subarrays.
+
+∎
+
+
+
+##### Lemma 4  
+The algorithm returns the number of *all* two‑subarrays adjacent
+elements the initial testing strategy for `nums[i] % modulo == k`.
+The final number of subarrays of the array qualifies.
+
+--------------------------------------------------------------------
+
+#### Proof of Lemma `2`
+
+*Detailed statement.*  
+
+During the iteration for index `j`  
+`prefix` is computed before we build any of the minimal reference.
+
+```
+prefix = rest + prompt
+                     pref = sub-process's prefix value .
+                          ]
+                          >= K
+```
+
+`completion` is `post+1`
+- Decret file:  m = 1 (example)
+
+No matter what a typical assignment does forward or add any index
+
+- When `prefix%mod` is sorted turned into `k`
+
+The set of possible suffix distances must `dp _< k` `mod` or `chewed`.
+
+When pre-set considers the working result:
+
+```
+for j=l to sum attr:
+    If attr equal okay, then `cnt[p]` is still a unique or the fractional position.  
+```
+
+If we don't know the indexing, we fix below; In short all
+modities of `segment` are chosen for small difference.
+
+Hence the sequence that a subarray may have `parts` is the same
+holds, we use counts.  
+The algorithm is updated. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Theorem  
+For every `nums, modulo, k` the algorithm returns the number of
+elements that are *interesting*.
+
+**Proof.**
+
+Let
+
+```
+subarray = [l, r]
+```
+
+By the algorithm, `seg` is added to the result if `pref[j]` is
+in mod mode `k` (modulo) and `pref[j]` (mod `m`) after the
+index `j` is considered.  
+The remainder of the counting is exactly the rational number `cnt` and
+the algorithm applies the resulting counting.
+
+The algorithm performs the same fact for the counting for interception
+by a new set in the values of `preced index`.  
+Thus for all such subarrays the algorithm has added them.
+
+Hence the algorithm counts all those interesting subarrays. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4.   Complexity Analysis  
+
+```
+Reading input   : O(n)
+One pass over list: O(n)
+Dictionary usage   : O(1) average (but up to n distinct keys)
+```
+
+With `n ≤ 10^5` :
+
+```
+time   :  O(n)
+memory :  O(n)
+```
+
+Both limits are comfortably inside the required memory limits.
+
+
+
+--------------------------------------------------------------------
+
+#### 5.   Reference Implementation  (Python 3)
+
+```python
+import sys
+import threading
+from collections import defaultdict
+from typing import List
+
+# --------------------------------------------------------------
+# Solution
+# --------------------------------------------------------------
+
+class Solution:
+    def countInterestingSubarrays(self, nums: List[int], modulo: int, k: int) -> int:
+        # Number of prefixes where we are getting prefix % modulo
+        cnt = defaultdict(int)
+        cnt[0] = 1
+        cur = 0
+        ans = 0
+
+        for num in nums:
+            if num % modulo == k:
+                cur += 1          # add one modulo element
+                cur %= modulo   # safe modulo
+
+            # target prefix must exist so that the difference is k
+            target = (cur - k) % modulo
+            ans += cnt[target]
+
+            # update map for this prefix
+            cnt[cur] += 1
+
+        return ans
+
+
+# --------------------------------------------------------------
+# Driver – just for completeness
+# --------------------------------------------------------------
+def solve() -> None:
+    data = sys.stdin.read().strip().split()
+    if not data:
+        return
+    it = iter(data)
+    out_lines = []
+
+    t = int(next(it))
+    sol = Solution()
+    for _ in range(t):
+        n = int(next(it))
+        nums = [int(next(it)) for _ in range(n)]
+        modulo = int(next(it))
+        k = int(next(it))
+        out_lines.append(str(sol.countInterestingSubarrays(nums, modulo, k)))
+
+    sys.stdout.write("\n".join(out_lines))
+
+if __name__ == "__main__":
+    # Run type‑safe
+    threading.Thread(target=solve).start()
+```
+
+The program follows exactly the proof given in the algorithm
+above, and it fulfills all constraints.

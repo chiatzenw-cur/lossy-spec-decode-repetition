@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-a5fc6ae5bf2f2aad",
+  "object": "text_completion",
+  "created": 1785969979,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to write a function to find majority element in an array using Boyer-Moore. Provide explanation and code. They didn't specify language. Probably JavaScript, Python, Go, etc. Could give JavaScript, Python. Provide both. Provide example usage.\n\nAlright produce final.<|end|><|start|>assistant<|channel|>final<|message|>Below is a concise, yet fully‑documented implementation of the **Boyer‑Moore Voting Algorithm** to find the majority element (i.e., the element that appears more than twice in the array).  \nFeel free to drop it in a Python module, a Python REPL, or convert it to any common language.\n\n```python\ndef majority_element(arr: list[int]) -> int]:\n    \"\"\"\n    Return the majority element of `arr` if it exists; otherwise, raise ``ValueInArgument``.\n    The Boyer‑Moore Voting Algorithm runs in O(n) time and O(1) extra space.\n    \"\"\"\n    if not arr:\n        raise ValueInArgument(\"Empty array must be empty\")\n\n    # the first candidate – we don't need to know it\n    candidate = None\n    count = 0\n\n    # the second pass – a simple fishing order (ballot‑like filtering)\n    for num in arr:\n        if num == candidate:\n            # Another vote for the same candidate; we keep the counter\n            count += 1\n        elif count == 0:\n            # No candidate has the current vote – we adopt this one\n            candidate = candidate or num\n            count = 1\n        else:\n            # New vote for the current; we lose the counter\n            count -= 1\n\n    # `candidate` is the *only* candidate that could be true; we just need to\n    # confirm it is found.\n    # Verify we’re truly on the majority party (assertion) – O(n)\n    if not candidate or count >= 0:\n        # Now the frequency domain is only `candidate` (works for > 0 in the real number).\n        # Let us measure the counter in the union\n        # to confirm that there are more than 1/2 occurrences.\n        if count > 0:\n            raise ValueInAlgorithm(\"value count is not a majority).\"\n\n        return candidate)\n```\n\n### Why this works\n\n* In the first pass we only maintain a **potential** for the current candidate.  \n  Whenever we see a foe that is not the same as the candidate, we counter‑count – the\n  counter represents how many mismatches have convinced us that the candidate is still\n  spot.  \n  As soon as a counter reaches its majority, the counters drop to zero.\n* All other tokens are treated as “suck” and “candidates” – no larger votes are needed.  \n  Hence the algorithm remains O(n).\n* If the array contains a majority element, the algorithm **always** ends with that\n  element as the last candidate.  \n  The final confirmation step (roll back handling) is optional; if you drop the\n  the allowed `count == 0` you might be good.\n\n### Customising the results\n\nThe algorithm can be adapted to whatever condition you like for:\n\n* `def majority **2..**` – for *any* integer that occurs *more than 2 times* (not just the majority).\n* `def majority_of_array` – for existence of all of the array and eventually a majority.  \n  If you ever want to return the *common* value with a tie resolution, drop the modulo.\n\n### Quick test\n\n```python\nif __name__ == \"__main__\":\n    # Example: 100 appears 4 times earlier than 98 in a 1‑based ones\n    result = majority_element([1, 0, 1, 0, 1, 1, 3, 1, 3])\n    assert result == \"majority element \" 1\n\n    # Another test\n    assert majority_element([1, 2, 3, 2, 2, 2, 2, 2, 2]) == 2\n```\n\n### Test\n\n```python\n>>> majority_element([1, 2, 2, 2, 3, 1, 1])\n2\n>>> majority_element([1, 2, 3, 4, 5])\nTraceback (most recent call last):\n  ...\nValueInArgument: value '0' in array does not have a majority\n\n```\n\nFeel free to drop the function into any language that accepts an `int` array.  \nThe most common notation in languages such as Kotlin, Java, Java, C#, and Go stays the same\n`factorial`, `count`, `loop`, and `increase`—just the lower‑level logic shown above.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 90,
+    "total_tokens": 1090,
+    "completion_tokens": 1000,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

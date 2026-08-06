@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-b3b8b57f47c322b2",
+  "object": "text_completion",
+  "created": 1785969696,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to produce a simple website HTML with a button that uses JavaScript to display a random joke from a list of 4. Use a button element, an event listener, and a variable that holds the selected joke. Simpler: use let's say the JavaScript button triggers meme random selection. Provide CSS, and use a simple script. Should be minimal? Provide code. The user wants \"Write a simple website\". So I will supply complete HTML page with text, event listener, usage. Provide final.<|end|><|start|>assistant<|channel|>final<|message|>Below is a **single‑file** HTML page that you can drop into a file (e.g. `index.html`) and open it in any modern browser.  \nJust hit “Tell me a joke” button and you’ll see a random joke from a 4‑item list.\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Random Joke Generator</title>\n  <style>\n    body {font-family: Arial, sans-serif; margin: 2rem;}\n    #joke {margin-top: 1.5rem; font-size: 1.2rem;}\n    #result {font-size: 1.3rem; border: 1px solid #ccc; padding: 1rem; padding: 2rem; margin-top: 1rem;}\n    button {\n      padding: 0.75rem 1.5rem;\n      font-size: 1rem;\n      cursor: pointer;\n      border: none;\n      border-radius: 4px;\n      background: #28a745;\n      color: white;\n    }\n    button:hover { background: #218838; }\n  </style>\n</head>\n<body>\n\n  <h1>Random Joke Generator</h1>\n\n  <button id=\"jokeBtn\">Tell me a joke</button>\n\n  <div id=\"joke\"></div>\n\n  <script>\n    // List of jokes\n    const jokes = [\n        \"Why did the scarecrow win chess?  He was a win!\\n\",\n        \"Why did the coffee file a complaint? Because it had a grumpy sprawl.\",\n        \"How do you keep a desk full?   Keep the rack a light, salty, and bright.\",\n        \"What’s the best way to get a boxer?  A Sleep-???  |    # for someone             |\n    ]\n\n    // Helper: choose a random joke from the list\n    const addUserCamera = function() {\n      const button = document.getElementById('jokeBtn');\n      const jokeDisplay = document.getElementById('joke');\n\n      if (button) {\n        button.addEventListener('click', function () {\n           const joke = jokes[Math.floor(Math.random() * 4)];\n           jokeDisplay.textContent = joke;\n        });\n      }\n    </script>\n</body>\n</html>\n```\n\n**How it works**\n\n1. The List `jokes` holds the 4 jokes.  \n2. The `<button>` listener adds a `click` event to the button.  \n3. When the button is clicked, we use `Math.random()` to pick a random index from the jokes array (0-4).  \n4. The result shows the joke in the `<div id=\"joke\"></div>`.\n\nFeel free to tweak the jokes, styling or the button label to match your taste. Enjoy!",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 94,
+    "total_tokens": 810,
+    "completion_tokens": 716,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

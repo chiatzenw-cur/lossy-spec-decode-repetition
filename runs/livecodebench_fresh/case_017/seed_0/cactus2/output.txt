@@ -1,0 +1,164 @@
+<|channel|>analysis<|message|>We need to implement function to compute diff array. The constraints n <= 50 length 50. We can compute prefix and suffix suffix distinct elements. Use set+dict or using set.
+
+Maybe simpler: For each i, compute suffix size = size of distinct parts in resulting suffix array: i+1 .. n-1. We slice.
+
+Similarly prefix: counts up to index i. We can compute prefix distinct counts maintain map from prefix to distinct sizes.
+
+We'll implement:
+
+def distinctDifferenceArray(nums):
+    n=len(nums)
+    res=[0]*n
+    for i in range(n):
+        # prefix: distinct elements from nums[0..i]
+        prefix_dist = len(set(nums[:i+1]))
+        # suffix: distinct elements from nums[i+1..n-1]
+        suffix_dist = len(set(nums[i+1:]))
+        res[i] = prefix_dist - suffix_dist
+    return res
+
+But we must handle n up to 50. Complexity trivial.
+
+Alternatively we can implement dynamic: compute prefix order with order of appearance of unique count.
+
+Let's produce final solution solution that explanation and code.
+
+I'll produce code:
+
+class Solution:
+    def distinctDifferenceArray(self, values: List[int]) -> List[int] -> ??? but maybe we need building.
+
+We should watch: input at name "nums" but better signature: def distinctDifferenceArray(self, nums: List[int]) -> List[int]: correct.
+
+Edge: cases no indices? Quick.
+
+Complexities O(n^2).
+
+Implement final.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For a position `i` we want the number of distinct elements in
+
+```
+prefix  = nums[0 … i]
+suffix  = nums[i + 1 … n-1]
+```
+
+and we output  
+
+```
+diff[i] = |prefix| – |suffix|
+```
+
+`n` is at most 50, so we may safely code this in an `O(n²)` way and keep
+the logic simple and readable.
+
+
+
+--------------------------------------------------------------------
+
+#### Algorithm
+```
+for i = 0 … n-1:
+        prefix  = all elements of nums[0 … i]
+        suffix  = all elements of nums[i+1 … n-1]
+        diff[i] = len(set(prefix)) – len(set(suffix))
+```
+
+`len(set(range))` gives the number of distinct elements.
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm outputs the correct “distinct difference array”
+for every input array `nums`.
+
+---
+
+##### Lemma 1  
+For every index `i` the value `len(set(nums[0 … i]))` equals the number of
+distinct elements of the prefix `nums[0 … i]`.
+
+**Proof.**
+
+`set(nums[0 … i])` contains all distinct elements of that prefix; the
+maximal cardinality of the set is not larger than the sum of distinct
+elements.
+
+* Kripke: We are adding elements exactly once to the allowed set.  
+Thus no subsequence of the inserted elements does not contain more than the
+true distinct values; thus the set size equals the number of distinct
+elements. ∎
+
+
+
+##### Lemma 2  
+Similarly, for every index `i` the value `len(set(nums[i+1 … n-1]))`
+equals the number of distinct elements of the suffix `nums[i+1 … n-1]`.
+
+**Proof.**
+
+The same argument as in Lemma&nbsp;1: we take the suffix, so it only
+contains distinct elements belonging to it. ∎
+
+
+
+##### Lemma 3  
+For any `i` the algorithm outputs `diff[i] = |prefix| - |suffix|`.
+
+**Proof.**
+
+By Lemma&nbsp;1 the value `len(set(nums[0 … i]))` equals `|prefix|`.  
+By Lemma&nbsp;2 the value `len(set(nums[i+1 … n-1]))` equals `|suffix|`.  
+The algorithm writes `len(set(...)) - len(set(...))`; thus the written
+value is exactly the required difference. ∎
+
+
+
+##### Theorem  
+For every array `nums` the function `distinctDifferenceArray`
+returns the correct “distinct difference array”.
+
+**Proof.**
+
+By Lemma&nbsp;3 the algorithm computes each `diff[i]` exactly as the
+definition demands.  
+The output array is therefore the array of all correct differences. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis
+
+Let `n = len(nums)`.  
+The scan over `i` calls a set on slices of length `≤ n`:
+
+```
+Time   : O(n²)     (n = 50, easily < 2 000 000 operations)
+Memory : O(n) to hold the two temporary sets
+```
+
+Both are far below the required limits.  
+
+--------------------------------------------------------------------
+
+#### Reference Implementation (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    def distinctDifferenceArray(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        res = [0] * n
+        for i in range(n):
+            # prefix = nums[0 : i+1] inclusive
+            pref_dist = len(set(nums[0:i + 1]))
+            # suffix = nums[i+1 : n]  exclusive
+            suff_dist = len(set(nums[i + 1:]))
+            res[i] = pref_dist - suff_dist
+        return res
+```
+
+The code follows exactly the algorithm proven correct above.

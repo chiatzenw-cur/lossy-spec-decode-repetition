@@ -1,0 +1,27 @@
+<|channel|>analysis<|message|>We need to extract from the provided text: the book title, author, year of publication, main character. The output format: "main character, book, author, year of publication", one book per line.
+
+Let's parse each:
+
+a) "Harry Potter and the Philosopher's Stone". Author: J.K. Rowling. Year: 1997. Main character: Harry.
+
+b) "The Lord of the Rings: The Fellowship of the Ring". Author: J.R.R. Tolkien. Year: 1954. Main character: Frodo.
+
+c) "The Prism Galaxy Chronicles: The Awakening of the Starcaster". Author: L.E. Starlighter. Year: 2028. Main character: Zylo.
+
+We should output just lines:
+
+Harry, Harry Potter and the Philosopher's Stone, Harry, Rowling, 1997? Wait we need "main character, book, author, year of publication". So format: "Harry, Harry Potter and the Philosopher's Stone, Harry Potter". Actually "author" is J.K. Rowling. We shouldn't put the title word. So "Harry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997". That is correct.
+
+(There's a typo: "Harry Potter" might be repeated but we only book.
+
+Wait their output: "Harry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997". Yes correct.
+
+Ensure no other lines. Just one line each, separated by newline. Probably not need to wrap in quotes or anything. Just plain lines.
+
+Also potential oversight: "Harry Potter & Philip's Stone" incorrect line for Books? S. But for paragraph a: "Harry Potter and the Philosopher's Stone". Ok.
+
+Also keep authors: J.K. Rowling, J.R.R. Tolkien, L.E. Starlighter.
+
+Thus final answer.<|end|><|start|>assistant<|channel|>final<|message|>Harry, Harry Potter and the Philosopher's Stone, J.K. Rowling, 1997
+Frodo, Frodo Baggins, The Lord of the Rings: The Fellowship of the Ring, J.R.R. Tolkien, 1954
+Zaylo, The Prism Galaxy Chronicles: The Awakening of the Starcaster, L.E. Starlighter, 2028

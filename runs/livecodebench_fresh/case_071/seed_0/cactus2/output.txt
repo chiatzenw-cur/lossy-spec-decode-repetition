@@ -1,0 +1,337 @@
+<|channel|>analysis<|message|>We need to produce solution logic to maximize longest subsequence with equal elements after applying operations (choose one index no more than element, and +/-k). Essentially we can transform each element to new value within some interval inclusive. It's similar to maximum number of elements can be equal to some value v using an allowed increment <= k. Need to reorder integer values.
+
+We are given array sorted descending? Wait n up to 1e5.
+
+Observation: For each element i, we can choose state range [l_i, r_i] = [nums[i]-k, nums[i]+k]. We can choose the note which we cannot change (duplicate exceed?) Actually we want maximum beauty; we will choose same value for as many indices as possible. We need to assign each index to a value v in the range [l_i, r_i] such that number of indices v equals v is maximal. That suggests we can treat the variable: we can pick any target value v and count how many indices can have value v. Since each index can be assigned to any value in its interval. So the best beauty is max over v of count of intervals that like vi.
+
+However, we can necessarily choose any integer within [-10^ .. values]. Because for each i we can choose any integer in [l_i, r_i]. We can choose any integer within their range inclusive. So we just need to find maximum overlap of intervals.
+
+Therefore, we can treat the intervals as in [l_i, r_i] inclusive; we need to find maximum (maybe number density) of contiguous overlapping positions, but these intervals can double count value at integer; integer fluctuations? It's just intervals; each element has interval covering many integers. We can treat that it's a flat set of positions. The maximum cardinality is the dimension of maximum number of intervals that cover at least one endpoint (since all integer values). Actually for a point v that is integer? But number of endpoints can be large positive. But is standard union intersection of intervals to minimize count? The problem is to find the maximum number of intervals that can both contain v simultaneously. The maximum allowable "v": we can use any integer v, no restriction. So we need to compute maximum intersection coverage of intervals across all integer points. That's even simpler: we can treat as continuous intervals, compute maximum number of interval overlaps. That's like we can convert to difference |L_i - l_i| etc.
+
+Since we can use integer values within each interval, it's the same as interval's intersection. So we just need maximum overlapping across any integer value. That can be done by scanning intervals for start point and threshold.
+
+We can do 1e5 positions. For each interval [l_i, r_i], we can include at each integer (but x might be larger). Use sweep/hist to "count" segments. Since we can use sweep large range? We can use array linear if we shift by max frequency using coordinate mapping. We can compute frequency using a difference map to separate events of each interval. Since rails type handling, we can use Kruskal for order constraints: For each interval, we add +1 to point l_i and -1 to point r_i+1. We get difference counts. Then we sort all **unique points** and process.
+
+We need efficient O(n log n) sorting.
+
+Edge cases: deficits: we iterate d intervals; differences; first point may be negative; we sort marks.
+
+So algorithm:
+
+def maximumBeauty(s):
+    n = len(nums)
+    intervals = []
+    for a in nums:
+        l0 = a - k
+        r0 = a + k
+        intervals.append((l0, r0+1))
+    # use indicating
+    sort points.
+
+We add +1 to l_i and -1 to r_i+1 (maybe absolute). But "positions" could be large negative, but x range up to 1e5 -2k. So we can use Python int.
+
+Implementation steps:
+
+- Use map diff; but reading from numpy array? But we can just use list of pairs.
+
+- Build boundary list: for each interval:
+    diff[ l_i ] += 1
+    diff[ r_i + 1 ] -= 1
+But we need alphabet (usual but (r_i+1) not inclusive). We'll just track neighbors and aggregator. But this may produce -1 at intervals but many indices, difference map second sorted difference uses map or dictionary. We'll use dictionary diff.
+
+After first pass: for every l_i, list r.v.
+
+We'll accumulate to diff array; but we might need to convert one key? But we have keys from multiple intervals; we can add increments.
+
+Then we can iterate through sorted key list of p sorted.
+
+Let cur=0; for last; but we need sorted. We'll keep sorted of k ascending: for key in sorted key: if key==last? But naive.
+
+Edge: Since we have r_i+1 difference; counts might be between any two thresholds.
+
+But for m up to 1e5, we need O(n log n) sorting. Use dictionary details: sum of key may produce 1e5+ maybe but that's fine.
+
+Let's craft code:
+
+import random, bisect? I'll just use variables.
+
+Time complexity O(n log n). m up to 1e5.
+
+Set events: positions may be negative; but we treat as int.
+
+Now produce final answer: maximum over indices.
+
+Take sample: Sorted steps.
+
+Return track. That would produce final answer.
+
+Now we need to produce final answer explanation: Implementation details: Bound.
+
+The algorithm:
+
+1. Gather all intervals, each [l_i, r_i].
+2. Build difference map: start: +1; end: -1.
+3. For maximum we can adjust for inclusive behavior; but also need that the indexes are integers, and adding -1 at i+1 ensures integer affinity.
+
+We will produce correct maximum count: answer = max over positions, where we can just at each point we see shift of largest count.
+
+Edge-case: When disc overflow: difference cannot be used; but we use dictionary.
+
+Implement:
+
+def maximumBeauty(List[int], k):
+    # array sorted
+    filter = defaultdict(len)...
+
+But not necessary.
+
+But there is nuance: Actually only one transformation per index? Wait x 0-indexed. Enough. The operations mention that we can choose any integer in range [nums[i] - k, nums[i] + k]. This is inclusive but unlimited.
+
+Hence we guarantee matches.
+
+Thus algorithm is correct.
+
+Our code:
+
+def maximumBeauty(ax in sorted)...
+
+Ok.
+
+Let's produce final solution. Possibly there is better dynamic adaptation.
+
+Edge case: subsequence with equal elements but we can choose any indices, but elements same values. But the sequence defined by indices is still sorted. We just need subsequence of equal elements. Not required to be contiguous length or indices. So it's a set of maximum r such that we can assign each index to a value v.
+
+Hence all operations removed.
+
+Now produce final code. Use 'from collections import defaultdict', 'bisect'
+
+Let's produce final answer. We'll produce thorough explanation and code.
+
+Also tests with sample.
+
+Ok finalize.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every element we are allowed to change its value
+exactly once – we may replace `nums[i]` by
+
+```
+[i] ∈ [nums[i] - k , nums[i] + k]
+```
+
+We have to build an **arbitrary** sequence of equal elements (eliminating
+any element that already has a different value) and only obtain the
+maximum possible length of that subsequence.
+
+--------------------------------------------------------------------
+
+#### 1.  Observations
+
+* For a fixed value `v` we can choose **any** element that can be
+  changed to `v`.  
+  In the original `nums[i]` we can choose `v` iff
+
+```
+nums[i] - k ≤ v ≤ nums[i] + k            (1)
+```
+
+  So for each `i` we get a range
+
+```
+[ li , ri ]           where  li = nums[i] - k ,  ri = nums[i] + k
+```
+
+  So a feasible value `v` is exactly **a point that lies at
+  intersection of the intervals `[li , ri]` for some indices.**
+
+* The number of indices that can keep a chosen value `v` is therefore  
+  the maximal number of interval endpoints that contain a single value
+  `v`.  
+  In other words:
+
+```
+maximum beauty =   maximum intersection size of the intervals
+    among all integer values v.
+```
+
+--------------------------------------------------------------------
+
+#### 2.  Algorithm – O(n log n)
+
+```
+weighted sweep operations
+
+for each interval [l , r]:
+    dx   at l = +1
+    dx   at r+1   = -1          (because the interval ends with r; this is
+                                                  the usual "difference add" trick)
+
+For every distinct point in sorted order:
+    cur += delta[p]       // current overlapping interval value
+    update answer
+```
+
+* `dx` is stored in a dictionary (`prefix diff` method).  
+  The total number of distinct “tunes” (positions) is `O(n)` – we have
+  two extra points touched by each interval: `O(n)` altogether.
+
+* Each point is processed exactly once, so the answer is the maximum
+  count after that sweep.
+
+The algorithm follows the classic "overlap diagram" technique – well known
+for the concept of maximum “interval overlap”.
+
+--------------------------------------------------------------------
+
+#### 3.  Correctness Proof  
+
+We prove that the algorithm returns the maximum achievable beauty.
+
+---
+
+##### Lemma 1  
+For a fixed value `v` the set of indices that can stay at value `v`
+is exactly the set of intervals `[li , ri]` that contain `v`.  
+Number of such indices = `|{ i | li ≤ v ≤ ri }|
+```
+
+**Proof.**
+
+*Necessity:* If `nums[i]` was changed to `v` the claim `li ≤ v ≤ ri`
+⇔ `nums[i] can be changed to v` is satisfied by definition of
+`li` and `ri`.
+
+* Sufficiency:* Suppose an index `i` satisfies `li ≤ v ≤ ri`.  
+Then `nums[i] - k ≤ v ≤ nums[i] + k` and can be changed to `v`.  
+Thus `V` can be kept. ∎
+
+
+
+##### Lemma 2  
+Let `C(v)` be the number of indices that can be changed to `v` (for the
+maximum possible `v`).  
+`C(v)` is the maximum number of intervals that contain `v`.  
+
+**Proof.**
+
+From Lemma&nbsp;1 exactly the same intervals containing `v`
+appear in step&nbsp;1.  
+The count of such indices is just the count of intervals that
+contain `v` – the definition of intersection. ∎
+
+
+
+##### Lemma 3  
+During the sweep over the sorted points the variable `cur` equals
+the number of intervals containing the current element *that point*
+belongs to by its own point.
+
+**Proof.**
+
+While scanning the points, the algorithm adds exactly the delta of
+the “intervals start”.
+The moment of the first point that is a start of a new interval is
+`cur += +1`.  
+When we move over the point that is the **next** endpoint of an interval,
+its `-1` is inserted, and the element becomes excluded.
+Therefore the added number of active intervals equals the number of
+intervals overlaps in the whole interval until the next point on the
+line. Hence `cur` is the number of intervals that contain any point in
+the current interval of the seen sorted configuration. ∎
+
+
+
+##### Lemma 4  
+The algorithm stores the maximum possible `cur` over the whole scan.
+
+**Proof.**
+
+Assume each `x` of the sorted further points corresponds to a real or
+border position.  
+For every `x` we could have any `v` that lies in the interval
+`[x, missing]`, but `cur` is exactly the number of intervals that contain
+all `v` inside that interval.  
+Thus the maximum over all seen elements `cur` is the maximum over all
+possible `v`.  
+The algorithm inspects all maxima and updates `ans`. ∎
+
+
+
+##### Theorem  
+The algorithm returns the maximum beauty of the array after applying
+any number of operations.
+
+**Proof.**
+
+By Lemma&nbsp;1 that the maximum beauty is equal to the **maximum
+overlap of all intervals**.  
+By Lemma&nbsp;3 the runtime of `cur` during the sweep contains **at least**
+the true overlap count for every optimal `v`.  
+By Lemma&nbsp;4 and `ans` is the maximum over all remembered `cur`,
+therefore we find an `answer` equal to the maximum achievable number of
+indices that can keep a common number.  
+Hence `ans` equals the required beauty. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### 4.  Complexity Analysis
+
+```
+Let N = len(nums).
+```
+
+*Building out the increments and to find the unique points*  
+  `O(N)` time, `O(N)` memory.  
+
+*Sorting & sweeping*  
+  `O(N log N)` time, `O(N)` space.  
+
+With `N ≤ 10^5` the algorithm easily fits into the time limits.  
+
+--------------------------------------------------------------------
+
+#### 5.  Reference Implementation  (Python 3)
+
+```python
+from collections import defaultdict
+import sys
+from typing import List
+
+class Solution:
+    def maximumBeauty(self, nums: List[int], k: int) -> int:
+        # ----- build interval lists -----
+        delta = defaultdict(int)          # we will hold +1 at l, -1 at r+1
+        for a in nums:
+            l = a - k
+            r = a + k
+            delta[l] += 1
+            delta[r + 1] -= 1   # “interval ends on r”, so we keep this point at r+1
+
+        # ----- sweep through all distinct points -----
+        all_points = sorted(delta.keys())
+        best = 0
+        cur = 0
+        for p in all_points:
+            cur += delta[p]
+            if cur > best:
+                best = cur
+        return best
+
+# The following helper function `run` is included in the
+# submission environment when many test problems are included; import
+# can be omitted if you only submit the function.
+# -----------------------------------------------------------------------
+if __name__ == "__main__":
+    tests = [
+        ([4, 6, 1, 2], 2, 3),
+        ([1, 1, 1, 1], 10, 4),
+    ]
+
+    for obj in tests:
+        sol = Solution()
+        out = sol.maximumBeauty(obj[0], obj[1])
+        print(f"out={out}, expected={obj[2]}")
+```
+
+The code follows exactly the algorithm proven correct above.

@@ -1,0 +1,38 @@
+<|channel|>analysis<|message|>We have a problem: exclusive colors, percentages, conditional overlap. We need probability that they would like neither blue nor green. Let total proportion. Use inclusion-exclusion: P(blue or green) = P(blue)+P(green)-P(blue and green). So 0.58 + 0.45 - 0.22 = 0.81. That is probability he prefers at least one of the two. Then probability neither = 1 - 0.81 = 0.19. So answer: 19%. The answer: 0.19 or 19%. Could express as 19%. Provide reasoning. No trick. Straight.<|end|><|start|>assistant<|channel|>final<|message|>The events are
+
+- \(B\) = “student likes blue”  
+- \(G\) = “student likes green”
+
+These probabilities are reported as  
+
+\[
+P(B)=0.58,\quad P(G)=0.45,\quad P(B\cap G)=0.22.
+\]
+
+We need to find the probability that a student likes **neither** blue nor green:
+
+\[
+P(\text{neither}) = 1-P(B\cup G).
+\]
+
+### Using inclusion–exclusion
+
+\[
+P(B\cup G)=P(B)+P(G)-P(B\cap G).
+\]
+
+\[
+P(B\cup G)=0.58+0.45-0.22=0.81.
+\]
+
+So
+
+\[
+P(\text{neither}) = 1-0.81 = 0.19.
+\]
+
+\[
+\boxed{0.19\;\text{or}\;19\%}
+\]
+
+Thus, a randomly chosen student has a 19 % chance of liking neither blue nor green.

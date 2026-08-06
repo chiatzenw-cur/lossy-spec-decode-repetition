@@ -1,0 +1,197 @@
+<|channel|>analysis<|message|>We need to implement DP to count number of distinct integer sets (each integer used at most once). Sum powers of numbers (exact squares, cubes, etc). Generally, for n <= 300, x <= 5.
+
+We need to compute size up to maximum number of combinations from 1..limit. So we need minimal set of values = i^x <= n. Since considering integer i^x. So we can iterate over all items i in [1, sqrt(n) for x=2]? Wait condition general: sum of x^th power n. The largest positive integer (base) can be 1 to floor(nupf). Each term is base^x. So we need all candidates in [1, floor(nupf) ].
+
+Need to count number of ways to select subsets of chosen values that sum to n, with at most one. So it's classic integer partition: we want number of subsets of cardinality classes.
+
+We can just compute via DP: dp[sum:], dp[sum]=count of ways to sum to s using distinct elements. Use dp[0] init=1. For each number [i^x] among these values, iterate and values used to sums descending. Easy.
+
+Implementation: dp[0]=1; for i from 1..limit: coeff = pow(i, x); for s in range(n, modulo coeff): dp[s] = (dp[s] + dp[s - coeff]) % MOD.
+
+After processing all primes, answer is dp[n].
+
+But S = n up to 300. Units fine.
+
+But example and we produce 1 answer for sample 1: 10 two^2: 10 not list? 10: 3^2 + 1^2 = 10. 25? 10? Explanation: We can produce 4 positive code. So algorithm.
+
+We must handle that we cannot pair same number (like repeated). So subset size ensures each unique even. So dp ensures we only iterate using each value once; no duplicates.
+
+Edge Cases: n=1, x=1 => dp[1] = 1.
+
+Edge: we need to reduce base being even? Eg n=250, x=5. example.
+
+But we only need to compute all pow(i, x) <= n.
+
+Implementation details for n up to 300; use sqrt pow for 1..sqrt(n). But n up to 300, pow 5 maybe bigger; but we still compute pow. We can loop i from 1 to n inclusive and multiply.
+
+Note: if we only rely on numbers up to sqrt(n) for x=2, exponent computed directly. But we can loop up to int(n**(1/x)) if num==1? No.
+
+Simpler: We iterate i from 1 to n inclusive. For each value r=pow(i, x), if r not exceed n, include.
+
+We need to check for overflow: p up to 300^5 = 300^5 = 2.43e11 > 2^63 maybe overflow; but maybe int can handle? Python int unlimited maybe.
+
+But we need to check for r > n first. We can compute while True: if r > n: break. For each use.
+
+Implementation though.
+
+Complexities: O(n * sum <= n^2). So O(n) in loops. Good.
+
+Edge: But input may be large if n=300, x small but still loops small.
+
+Ok.
+
+Let's produce final answer.
+
+We'll include reasoning: enumerated numbers and summation.
+
+Let's craft final answer.
+
+But the question: "Given two positive integers n and x. Return the number of ways n can be expressed as the sum of the x^th power of unique positive integers, in other words, the number of sets of unique integers [n_1, n_2, ..., n_k] where n = n_1^x + n_2^x + ... + n_k^x. Since the result can be very large, return it modulo 10^9+ 7." So we need fast.
+
+We implement DP as subtracting from list.
+
+Let's implement.
+
+Also provide explanation. Provide final code. Use test harness for 10 and 4.
+
+Ok.
+
+Let's produce final answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**  
+
+The problem is a classic “subset sum” problem.  
+Write all the values `i^x` that can be taken (they are ≤ `n`), four for each integer or only once one by one.  
+The set of chosen values must sum to `n` and we never choose the same value twice.
+
+We have to maximise the number of different ways; this is a classic *subset counting*
+performed DP.  
+
+`dp[s]` will contain at how many ways `s` can be obtained from the already processed
+numbers.  
+The transition is
+
+```
+dp[s] += dp[s - val]        //   current value  val = sum(val, val)
+```
+
+so that
+
+* `dp[0] = 1` (empty subset gives sum `0`)
+* for every consecutive candidate `val` we pair it with all positions of the
+  array `dp[s]` in non‑increasing order (to keep `val` distinct – i.e. to use
+  each value at most once).
+
+The algorithm is linear in `n` (size of the dp array) and the number of
+value candidates, which is a few dozen for `n ≤ 300` and `x ≤ 5`.  
+All operations are `O(1)` per step and the final answer is returned modulo
+
+```
+MOD = 1,000,000,007
+```
+
+---
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the number of distinct subsets of unique
+integers whose `x`‑th power is exactly `n`.
+
+**Lemma.**  
+After processing all `i` such that `i^x ≤ n` (i.e. after the loop)
+`dp[s]` equals the number of subsets of these values whose sum is exactly `s`.
+
+*Proof.*  
+Initially `dp[0] = 1` (empty subset, because the empty set can be built from
+zero elements).  
+Each iteration considers a fixed value `val`.  
+All other solutions are rendered before this iteration.  
+The inner contributions are:
+
+```
+dp[s] += dp[s - val]
+```
+
+which counts the number of ways that are using *exactly* one copy of the
+current value `val`.  For each `s` we keep the old count and a new copy of
+binary changes that use the value `val`.  
+No other `dp` values change from the current `val`.  
+Thus afterwards `dp[s]` contains the old works (all subsets that still do not
+use `val`) and the new ways (all subsets that use `val`).  
+Because `val` has never appeared before *and* multiplied only once,
+the list `dp` represents we tangible new subsets.
+
+By induction over the numbers of processed values we reach the
+required lemma. ∎
+
+
+
+**Theorem.**  
+The sequence `dp[n]` equals the number of distinct sets of unique
+integers whose `x`–th power equals `n`.
+
+*Proof.*  
+By Lemma 1, after the `k`‑th iterate, `dp[n]` counts **all** subsets of the
+numbers `i^x` that are available, respecting that all values have been
+used only once.  
+All `i` values with positive `x`‑th power are considered,
+because the construction stops when `value `val > n`.  
+Therefore the number represented by the algorithm is exactly the number of
+distinct subsets of the set of indices whose `x`‑th power of any non‑duplicate
+elements is `n`, which is precisely the desired count. ∎
+
+
+
+---
+
+#### Complexity Analysis
+
+*Let `m = number of values × n`*  
+At most `m ≈ 300` size for the DP array.
+
+*States* : `dp` has `n+1` entries (`≤ 301`).  
+*Transitions* : For each value from `1` to `floor(n⌉^(1/x))`, we iterate over
+`n` values.  
+ Runtime time: `O(n * maxValue)` – the number of real x‑valued numbers
+`≤ n`, but because a huge power of `x` is at most `n/L`, the worst case
+is < 300.  
+So the time complexity is `O(n * n)` where `n ≤ 300`, and `≤ 100 000`.
+Memory consumption: `O(n)` for the DP array.
+
+---
+
+#### Reference Implementation (Python 3)
+
+```python
+from typing import List
+
+class Solution:
+    MOD = 1_000_000_007
+
+    def numberOfWays(self, n: int, x: int) -> int:
+        # DP array: dp[s] = number of ways to sum to s
+        dp = [0] * (n + 1)
+        dp[0] = 1
+
+        # Enumerate unique positive integer values that <= n after exponentiation
+        for base in range(1, n + 1):
+            value = base ** x
+            if value > n:
+                break
+            # The typical subset‑sum DP: iterate in decreasing order
+            for s in range(n, value - 1, -1):
+                dp[s] = (dp[s] + dp[s - value]) % self.MOD
+
+        return dp[n]
+
+
+# ----------------------------------------------------------------------
+# Example usage
+if __name__ == "__main__":
+    sol = Solution()
+    print(sol.numberOfWays(10, 2))   # 1
+    print(sol.numberOfWays(4, 1))    # 2
+    print(sol.numberOfWays(160, 3))  # 1
+```
+
+The program follows exactly the algorithm proven correct above and
+conforms to the required `O(n^2)` time and `O(n)` memory suitable for
+the given constraints.

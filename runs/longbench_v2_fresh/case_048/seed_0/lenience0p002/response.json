@@ -1,0 +1,30 @@
+{
+  "id": "cmpl-98ab2815b106d8d9",
+  "object": "text_completion",
+  "created": 1785965806,
+  "model": "gpt-oss-20b",
+  "choices": [
+    {
+      "index": 0,
+      "text": "<|channel|>analysis<|message|>We need to determine from \"e.g. What percentage of code data was used during LLaMA pre-training\" usage? They provide some code dataset usage: In the data set, they list percentages:\n\n- CommonCrawl: 67%\n- C4: 15%...\n- Github: 4.5%\n- Wikipedia: 4.5%\n- ... Additional items. Others: Books 4.5%?\n\nBecause we need count code data amount in pre-training; it includes Github code recycling data (GitHub dataset). The repository definition: \"Github data: GitHub list of public scaffolding. Many code for GitHub. The data is code.\" The number of code data portion: The dataset list: GitHub: 4.5%? Actually what is: They list in Table:\n\n```\nGitHub 4.5%\n```\n\nHence code data comprised of code data DGP: GitHub: #4.5% sets maybe 44?? But the repository list includes code features? Let's carefully track reading.\n\nThe article says we need a mix of fishing. But the main code dataset is: GitHub 4.5% may contain 4.5% code data. Wait the question: At \"What percentage of code data was used during LLaMA pre-training?\" We need to choose from options: A. 2%, B. 2.5%, C. 4.5%, D. 5%. According to the set, GitHub is 4.5% of the dataset. They group all code as code? Could be also Fact. The question: \"code data was used during LLaMA pre-training.\" Usually it's \"GitHub data\" maybe from the dataset. So for code data: It's just 4.5%. So answer 4.5%. That is C. So: 4.5% not only because it's 4.5% of total, domain B%. Let's confirm: The dataset lists used GitHub 4.5% of data. We also mention that code data for code is file union. But the other dataset also includes Java Books etc. But code question: \"code data\" maybe refers to the number of code data, but they mention \"GitHub data is 4.5%\" as in repo. So answer: 4.5%. Because if all-code data echo had \"GitHub\" is the only code, but also maybe we can have other dataset includes Code. But no any. Then say \"C\" codes: D. Actually 4.5% is 4.5%. So it's best answer.\n\nThus final answer C.\n\nBut we check: The sample show the user that we have a dataset mixture which is 4.5% GitHub. But also 4.5% GitHub added. But repository \"code data\" maybe refers to \"GitHub\" plus \"Rustic\"? Wait but the simpler dataset's English content such as \"Code data\" might be only from the \"GitHub\" dataset or \"Code\" portion. According to there is no other code dataset besides code. So answer 4.5%. Yes.<|end|><|start|>assistant<|channel|>final<|message|>The code component of the LLaMA pre‑training corpus comes from the GitHub dataset of 4.5 – wag catalog of public repos.  \nThus **C. 4.5 %**.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null,
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "routed_experts": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.26.0-0ba276f0",
+  "usage": {
+    "prompt_tokens": 26607,
+    "total_tokens": 27309,
+    "completion_tokens": 702,
+    "prompt_tokens_details": null
+  },
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": null
+}

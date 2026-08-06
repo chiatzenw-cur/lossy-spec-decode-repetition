@@ -55,10 +55,13 @@ SPEC_CASC_OPT_PATCHED_FILES = {
 }
 
 # CACTUS is the third patch mutually exclusive with the two above, from the
-# same pristine file.
+# same pristine file. v2 (full-residual H_x fix); the v1 accept-only hash is
+# 02492f03bdf90c9442bb4bca81c61b82c06ad34b733a295f9305326941a93068 -- data
+# collected under that version is tagged cactus_accept_only, not cactus. See
+# patches/vllm-0.26.0-cactus.patch's header for what v2 fixes.
 CACTUS_PATCHED_FILES = {
     "vllm/v1/sample/rejection_sampler.py": (
-        "02492f03bdf90c9442bb4bca81c61b82c06ad34b733a295f9305326941a93068"
+        "4fa623a70332075cada34dbe585a05fc941db12fb3dd67edee3bd3923f779074"
     ),
 }
 

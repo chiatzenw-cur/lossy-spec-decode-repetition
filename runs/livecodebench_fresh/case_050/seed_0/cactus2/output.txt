@@ -1,0 +1,195 @@
+<|channel|>analysis<|message|>We need to produce solution logic to find maximum number of jumps reachable from 0 to n-1 without processing system. Classic DP problem with BFS. Let dp[i] be max number of jumps to reach i, or -inf if unreachable. Initialize dp[0]=0. For each i from 0..n-1, for j from i+1..n-1, if va. Need to check if target constraint allows difference. Since we cannot exceed n=1000, loops 0 to n* n? But we can implement dynamic programming O(n^2) and works. But we can optimize: we can use two-pointer with largest declines? Actually we might consider monotonic BFS across exceed. But n <= 1000, straightforward O(n^2). But need to consider maximum number of jumps; basically we want maximum path lengths in DAG form. So we can use dynamic programming and fail DP. Output dp[n-1] if >0 else -1.
+
+Edge: target may be negative. But constraints allow integer <=2000. So we have upper and lower bound? The inequality is -target <= nums[j] - nums[i] <= target. That means range +-target. If target like 500, sum is 1e6. So we can treat as diff condition.
+
+Now values large; difference may overflow 31 bit. So we use int64. But Python int fine.
+
+Implementation:
+
+int n=len(nums); negative infinity large INF. dp[0] = 0. For i from 0..n-1: for j from i+1..n-1: if abs (or maybe difference is same?), but inequality requires difference within [-target, double]. Note: -target <= nums[j] - nums[i] <= target, so difference and absolute; we can keep as diff <= target; diff >= -target. Equivalent to |negative|%. But just use abs diff. So for j if abs(nums[j] - nums[i]) <= target: dp[j] = max(dp[j], dp[i] + 1). But there is nuance: if X is negative but Y diff≥ -target. Equivalent to |x - y| <= target? Wait parity: Suppose we had negative target
+target < 0. example: diff^? We'll test: [-target <= diff >= target] => diff <= target | diff >= -target? Actually if target is negative, diff <= target and diff >= -target? Let's analyze: Suppose target = -300. Then we have inequality: -(-300) <= diff <= -300 => 300 <= diff <= -300 which is impossible. So if target negative, the inequality is impossible. But problem states no larger negative. target is 0 to 2 * 10^9, so fine. So we can use abs diff. So after loops, dp[n-1] is max number of jumps; if dp[n-1] is -inf, return -1? But dp[0] could be 0; if B unreachable, dp[1] is -inf. But they may want no jumps: 0; So return dp[n-1] if  != -1 else -1. But careful: if d[n-1]==0, we can return -1? Wait if first position is 0 and last to n-1 is zero same? For d reachable would be 0. The maximum number of jumps needed from 0 to n-1 is 0. So we want 0 if that is possible. But example 1 with arrays small. But they might not consider shortest distance. We output dp[n-1] (if exists and >0). But if there exists a jump of length 0 indicating no jumps. That is 0 as max. So it's okay.
+
+Hence algorithm: Floyd. Complexity O(n^2). 1000*1000=1e6 fine.
+
+Edge: The best approach maybe double comparison. Use -inf: -1 sentinel. Provide dp array of size n. Use dp[0]=0. For i from 0 to n-1: if dp[i]==-1: continue; for j in range(i+1,N). if abs(nums[j]-nums[i]) <= target: temp = dp[i]+1; if temp>dp[j] best = temp. This ensures dp[j] updated to max dp[j]. Then after loop, if dp[n-1] < 0: return -1 else dp[n-1].
+
+Thus produce solution.
+
+Additionally, we can also use BFS but complexity O(n^2). But states: four loops.
+
+Also we are using one DFS? Provided output.
+
+Let's produce explanation.
+
+Let's produce final code.
+
+Edge: Choose array indexes 1..n inclusive.
+
+Potential pitfalls: we may use long long; but Python int.
+
+Now produce answer.<|end|><|start|>assistant<|channel|>final<|message|>**Solution Explanation**
+
+For every index `i` we know whether an index `j` can be reached from it
+(`(i < j)` and `i → j` test conditions)
+
+```
+-target  ≤  nums[j] – nums[i]  ≤  target
+```
+
+Because a jump is always to a *higher* index (`j > i`), the graph is a
+**dG** (directed acyclic graph).  
+For a directed acyclic graph the longest directed path from node `0`
+to node `n‑1` can be computed with a dynamic programming algorithm
+in a single pass over the vertices.
+
+```
+dp[i]   – maximum number of steps needed to reach i
+dp[0] = 0                                 (no jumps are needed)
+dp[others] = i + width i + 1           (initially unreachable)
+```
+
+After all updates, the answer is `dp[n‑1]` – if it is still reachable, it
+is the number of jumps that has produced the largest possible change; otherwise
+the answer is `-1`.
+
+--------------------------------------------------------------------
+
+#### Algorithm
+```
+budget = n
+len = n
+for i = 0 … n-1
+        0.   if dp[i] < 0          → cannot reach i, skip it
+        1.  for j = i+1 … n-1
+                if abs(computed difference) ≤ target
+                        dp[j] = max(dp[j], dp[i] + 1)
+
+if dp[n-1] == -1          → not reachable → answer -1
+else: answer = dp[n-1]
+```
+
+--------------------------------------------------------------------
+
+#### Correctness Proof  
+
+We prove that the algorithm returns the maximum number of consecutive
+jumps that can reach the end of the `nums` array.
+
+---
+
+##### Lemma 1  
+At any time during the loop, for every pair of indices `i` and `j`
+that have already been processed, `dp[j]` contains the maximum number
+of jumps that could be achieved by any *direct* chain of jumps
+starting at `0` and ending at `j` ending at `j` that visits indices `≤ i` with `i < j`.
+
+**Proof.**
+
+- Initially (`i = 0`?) No indices have been processed before the first inner loop.
+  For `dp[0]` we set `dp[0] = 0`, therefore the lemma holds.
+
+- True for an iteration considered as in `i`  
+  For all `j < i` or `j` already processed, `dp[j]` has already been
+  considered the maximum possible, all edges are processed with indices **≤ i**.  
+  So when we process `j > i` the formula `dp[j] = max(dp[j], dp[i] + 1)`  
+  will be able to consider every resulting path that visits `i` as the
+  current *last* visited index.  
+  Thus every reachable path must contain a pair of indices that are
+  processed exactly before break.
+
+Thus by induction the lemma holds after the loop finishes. ∎
+
+
+
+##### Lemma 2  
+For any index `j < n-1`, `dp[j]` equals the maximum number of jumps
+starting at `0` and ending at `j`
+using only allowed jumps.
+
+**Proof.**
+
+From Lemma&nbsp;1,
+each level of the adjacency matrix is processed **exactly once**,
+and in with no remaining vertex.  
+Therefore the algorithm examines all possibilities of exactly
+`k-1` real jumps each time  
+has already been considered with optimum.  
+Consequently the maximum number of jumps is found. ∎
+
+
+
+##### Theorem  
+The algorithm returns the maximum number of jumps that can be made
+from index `0` to index `n-1` if such a path exists; otherwise
+it reports `-1`.
+
+**Proof.**
+
+We prove that the algorithm returns
+
+* `dp[n-1]` exactly when the end is reachable.
+
+From Lemma&nbsp;2, since `dp[n-1]` is the maximum number of jumps
+found so far, it will be the maximum overall number of jumps.
+Thus `dp[n-1]` is returned, where `dp[n-1]` is automatically `0`
+iff no such move (`n-1=0`) exists.
+
+In the case where `dp[n-1]` is still `-1`, the algorithm never pushes
+any of those `dp[i]` values. Hence, by the definition of `-1`,
+no segment of jumps can reach `n-1`. ∎
+
+
+
+--------------------------------------------------------------------
+
+#### Complexity Analysis
+
+*The loop runs at most `n = 1000` iterations*  
+`outer loop uses i` **and** `inner loop covers j ∈ range(i+1, n)`  
+so the number of iterations is `O(n²)` – at most `1 000 000`.
+
+*All operations are `O(1)` (array operations, lists, integer math).*
+
+Hence
+
+```
+Time   :  O( n² )  ≤ 1 000 000 operations (well inside limits)
+Memory :  O( n )   ≤ 1000 integers
+```
+
+--------------------------------------------------------------------
+
+#### Reference Implementation (Python 3)
+
+```python
+import sys
+from typing import List, Optional
+
+class Solution:
+    def maximumJumps(self, nums: List[int], target: int) -> int:
+        """
+        Compute the maximum number of jumps from index 0 to n-1 and return the
+        number of jumps. If not reachable, return -1.
+        """
+        n = len(nums)
+        NEG = -1          # non‑reachable state
+
+        # DP array – maximum number of jumps reachable to each index
+        dp = [NEG] * n
+        dp[0] = 0
+
+        for i in range(n - 1):          # i out of range simply skip
+            if dp[i] == NEG:
+                continue
+            # j must be forward because j > i
+            for j in range(i + 1, n):
+                if abs(nums[j] - nums[i]) <= target:
+                    # update dp[j] so far using the best higher bound
+                    if dp[j] < dp[i] + 1:
+                        dp[j] = dp[i] + 1
+
+        return dp[n-1] if dp[n-1] > 0 else -1
+```
+
+The program follows exactly the algorithm proven correct above
+and conforms to the required function signature.
