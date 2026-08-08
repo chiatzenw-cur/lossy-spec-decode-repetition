@@ -26,6 +26,11 @@ NUMERIC_METRICS = (
     "p", "q", "p_over_q", "u", "target_rank", "target_top1_prob", "target_top1_shortfall",
     "target_entropy", "draft_entropy", "kl_target_draft", "kl_draft_target", "tv_distance",
     "consecutive_accepted_length",
+    # The EMITTED token's own p/rank/shortfall -- only populated on rows
+    # collected after the tracer fix, and only non-null when accepted is
+    # False (draft != emitted). Null (not absent) on older data and on
+    # accepted_draft rows either way; see patches/lenience_trace.py.
+    "emitted_p", "emitted_target_rank", "emitted_top1_shortfall",
 )
 BOOLEAN_METRICS = ("strict_would_accept", "lossy_would_accept", "actually_accepted", "lossy_only_accepted")
 

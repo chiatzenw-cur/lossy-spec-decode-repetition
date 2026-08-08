@@ -211,6 +211,48 @@ class _Tracer:
                     else:
                         rejected = True
                         source = "recovered" if emitted == rec_l[i] else "other"
+
+                    # p/q/target_rank/target_top1_shortfall below ALWAYS describe
+                    # the DRAFT PROPOSAL (draft_token_id), not the emitted token
+                    # -- that's what the accept/reject test operates on, so it's
+                    # the correct thing for THOSE fields to mean. But when
+                    # accepted is False, draft_token_id != emitted_token_id: the
+                    # proposal was rejected and something else got emitted
+                    # (recovery, or "other"). A caller reading p/target_rank off
+                    # a non-accepted row as if it characterised the EMITTED
+                    # token is reading the rejected proposal's numbers by
+                    # mistake -- exactly the conflation that produced a wrong
+                    # "recovered tokens are deep in the target's tail" claim
+                    # here (the *proposals that got rejected* were deep in the
+                    # tail; the recovery kernel then explicitly excludes that
+                    # exact token from resampling, so the recovered token is a
+                    # different one entirely and needs its own p/rank). Compute
+                    # that separately, only when needed (accepted rows already
+                    # have draft==emitted, so it would be redundant there).
+                    emitted_p = emitted_rank = emitted_shortfall = None
+                    if not accepted:
+                        if source == "recovered":
+                            # The recovery kernel explicitly masks out
+                            # draft_token_id from its candidate pool (see
+                            # sample_recovered_tokens_kernel's NO_DRAFT_PROBS
+                            # branch: `mask=(... & (vocab_offset !=
+                            # draft_token_id))`), so this must never fire. A
+                            # violation would mean the trace and the kernel
+                            # have desynced, not that the theory is wrong.
+                            assert emitted != dt_l[i], (
+                                f"recovery emitted the just-rejected draft token "
+                                f"{dt_l[i]} at output_position={self._emitted}"
+                            )
+                        emitted_p_t = target_probs[i, emitted]
+                        emitted_p = round(float(emitted_p_t), 8)
+                        assert emitted_p > 0, (
+                            f"emitted token {emitted} has zero target probability "
+                            f"at output_position={self._emitted} -- should be "
+                            f"unreachable by any residual/recovery sampling"
+                        )
+                        emitted_rank = int((target_probs[i] > emitted_p_t).sum())
+                        emitted_shortfall = round(top1_l[i] - emitted_p, 6)
+
                     self._rows.append(
                         {
                             "round": self._round,
@@ -220,6 +262,8 @@ class _Tracer:
                             "output_position": self._emitted,
                             "draft_token_id": dt_l[i],
                             "emitted_token_id": emitted,
+                            # p/q/target_rank/target_top1_shortfall: the DRAFT
+                            # PROPOSAL's own metrics -- see the comment above.
                             "p": round(p_l[i], 8),
                             "q": round(q_l[i], 8),
                             "p_over_q": round(p_l[i] / q_l[i], 6) if q_l[i] > 0 else None,
@@ -240,16 +284,23 @@ class _Tracer:
                             "emission_source": source,
                             "target_rank": int(rank_l[i]),
                             "target_top1_prob": round(top1_l[i], 6),
-                            # top1_prob - p(x): how far the EMITTED token's own
-                            # probability falls short of the target's single best
-                            # guess. Exactly 0 when the emitted token IS top1
+                            # top1_prob - p: how far the DRAFT PROPOSAL's own
+                            # probability falls short of the target's single
+                            # best guess. Exactly 0 when the proposal IS top1
                             # (target_rank == 0). NOT p(1) - p(2) -- this repo
                             # never records the runner-up's probability, so a
                             # "how contested was 1st vs 2nd" reading is not
                             # something this field (or any other) can support.
-                            # Renamed from target_top1_margin, which invited
-                            # exactly that misreading.
                             "target_top1_shortfall": round(top1_l[i] - p_l[i], 6),
+                            # The EMITTED token's own metrics -- only meaningful
+                            # (and only computed) when accepted is False, since
+                            # accepted rows already have draft_token_id ==
+                            # emitted_token_id (use p/target_rank/
+                            # target_top1_shortfall above for those). Null on
+                            # accepted rows, not a duplicate of p/target_rank.
+                            "emitted_p": emitted_p,
+                            "emitted_target_rank": emitted_rank,
+                            "emitted_top1_shortfall": emitted_shortfall,
                             "target_entropy": round(ent_l[i], 5),
                             "draft_entropy": None if draft_ent is None else round(draft_ent[i], 5),
                             "kl_target_draft": None if kl_pq is None else round(kl_pq[i], 5),

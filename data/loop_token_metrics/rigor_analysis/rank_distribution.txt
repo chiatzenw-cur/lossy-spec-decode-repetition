@@ -1,0 +1,15 @@
+=== ALL in-loop tokens, by emission_source ===
+  ALL                          n= 77400  median=   0.0  P(rank=0)=0.961  P(rank<=1)=0.986  P(rank<=5)=0.995  P(rank>100)=0.002  P90=    0.0  P99=    2.0  mean=  13.66
+  emission_source=accepted_draft n= 76752  median=   0.0  P(rank=0)=0.969  P(rank<=1)=0.993  P(rank<=5)=1.000  P(rank>100)=0.000  P90=    0.0  P99=    1.0  mean=   0.04
+  emission_source=bonus        n=0
+  emission_source=recovered    n=   648  median=  10.0  P(rank=0)=0.000  P(rank<=1)=0.148  P(rank<=5)=0.404  P(rank>100)=0.205  P90= 8012.5  P99=12072.1  mean=1626.74
+
+=== stratified by lossy_only_accepted (accepted_draft tokens only) ===
+  accepted_draft, lossy_only_accepted=True n=  7849  median=   0.0  P(rank=0)=0.769  P(rank<=1)=0.942  P(rank<=5)=0.996  P(rank>100)=0.000  P90=    1.0  P99=    4.0  mean=   0.34
+  accepted_draft, lossy_only_accepted=False (strict-ok too) n= 68903  median=   0.0  P(rank=0)=0.991  P(rank<=1)=0.999  P(rank<=5)=1.000  P(rank>100)=0.000  P90=    0.0  P99=    0.0  mean=   0.01
+
+=== for comparison: baseline (non-loop) tokens ===
+  baseline (aime24+humaneval, non-loop) n=473872  median=   0.0  P(rank=0)=0.772  P(rank<=1)=0.872  P(rank<=5)=0.954  P(rank>100)=0.003  P90=    2.0  P99=   30.0  mean=  29.10
+  baseline emission_source=accepted_draft n=440693  median=   0.0  P(rank=0)=0.830  P(rank<=1)=0.929  P(rank<=5)=0.993  P(rank>100)=0.000  P90=    1.0  P99=    5.0  mean=   0.33
+  baseline emission_source=bonus n=0
+  baseline emission_source=recovered n= 33179  median=   7.0  P(rank=0)=0.000  P(rank<=1)=0.105  P(rank<=5)=0.429  P(rank>100)=0.047  P90=   43.0  P99= 1489.9  mean= 411.29

@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-08-06T14:34:39.103044+00:00",
+  "timestamp_utc": "2026-08-07T10:10:18.939735+00:00",
   "backend": "vllm",
   "tag": "lenience0p05Greedy9k",
   "mode": "lossy",
@@ -10,7 +10,7 @@
   "lenience_factor_in_force": {
     "path": "/tmp/lossy-spec-decode-lenience-1003",
     "value": 0.05,
-    "mtime_utc": "2026-08-06T14:33:34.970266+00:00"
+    "mtime_utc": "2026-08-07T10:09:12.770832+00:00"
   },
   "acceptance_rule": "accept iff p(x) / (0.05 * q(x)) >= u",
   "taxonomy": {
@@ -21,12 +21,12 @@
   },
   "lenience_factor_expected": 0.05,
   "lenience_factor_announced_by_server": {
-    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_lenience_radical_greedy/lenience0p05Greedy9k_case_147_seed0_20260806T143334Z.log",
+    "path": "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_recollect_fixed_tracer/lenience0p05Greedy9k_case_147_seed0_20260807T100912Z.log",
     "lines": [
-      "[LENIENCE PATCH v1] pid=1534735 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)",
-      "[LENIENCE PATCH] pid=1534735 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
-      "(EngineCore pid=1534954) [LENIENCE PATCH] pid=1534954 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
-      "(EngineCore pid=1534954) [LENIENCE PATCH v1] pid=1534954 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)"
+      "[LENIENCE PATCH v1] pid=1755078 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)",
+      "[LENIENCE PATCH] pid=1755078 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
+      "(EngineCore pid=1755290) [LENIENCE PATCH] pid=1755290 lenience_factor=0.05 log_factor=-2.995732273553991 (/tmp/lossy-spec-decode-lenience-1003)",
+      "(EngineCore pid=1755290) [LENIENCE PATCH v1] pid=1755290 lenience_factor=0.05 (/tmp/lossy-spec-decode-lenience-1003)"
     ],
     "factors": [
       0.05,
@@ -87,7 +87,7 @@
     },
     "cactus_patch_applied": false
   },
-  "git_commit": "64668e1cc0fbc1c9dc38e5eb3983d7f102c64fb5",
+  "git_commit": "26c2e0de4d9e4d2710d5a737bde0f23a7b92ae11",
   "git_dirty": true,
   "command": [
     "/home/chiatzen/lossy-spec-decode-repetition/scripts/run_experiment_vllm.py",
@@ -114,7 +114,7 @@
     "--server-url",
     "http://127.0.0.1:30000",
     "--server-log",
-    "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_lenience_radical_greedy/lenience0p05Greedy9k_case_147_seed0_20260806T143334Z.log",
+    "/home/chiatzen/lossy-spec-decode-repetition/logs/fresh_recollect_fixed_tracer/lenience0p05Greedy9k_case_147_seed0_20260807T100912Z.log",
     "--assert-fresh-server",
     "--lossy-method",
     "lenience",

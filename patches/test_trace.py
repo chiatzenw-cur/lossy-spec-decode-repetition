@@ -25,13 +25,14 @@ def main() -> int:
     for i, r in enumerate(ratios):
         target_probs[i] = (1.0 - 0.5 * r) / (V - 1); target_probs[i, DT] = 0.5 * r
     u = torch.tensor([0.5, 0.5, 0.5])           # fixed draw
+    RECOVERED = 5  # a real in-vocab index (V=8), distinct from DT=3
     # strict: accept iff ratio >= u -> [T, F, F]
     # lossy(0.2): accept iff ratio/0.2 >= u -> [T, T, F]  => pos1 is lossy-only
-    out = torch.tensor([[DT, DT, 99, -1]], dtype=torch.int32)  # first two accepted, third rejected->recovered
+    out = torch.tensor([[DT, DT, RECOVERED, -1]], dtype=torch.int32)  # first two accepted, third rejected->recovered
     tracer.record(
         draft_token_ids=torch.full((n,), DT, dtype=torch.int32),
         draft_probs=draft_probs, target_probs=target_probs, uniform_probs=u,
-        recovered_token_ids=torch.full((n,), 99, dtype=torch.int32),
+        recovered_token_ids=torch.full((n,), RECOVERED, dtype=torch.int32),
         bonus_token_ids=torch.tensor([[7]], dtype=torch.int32),
         output_token_ids=out,
         cu_num_draft_tokens=torch.tensor([n], dtype=torch.int32),
@@ -67,7 +68,26 @@ def main() -> int:
             print(f"  FAIL row {i} tv_distance out of range: {r['tv_distance']}"); ok = False
         if r["kl_target_draft"] < 0 or r["kl_draft_target"] < 0:
             print(f"  FAIL row {i} negative KL"); ok = False
+    # emitted_p/emitted_target_rank/emitted_top1_shortfall: null on accepted
+    # rows (draft==emitted there, redundant), populated on the recovered row
+    # with the RECOVERED token's own numbers -- not the rejected draft
+    # proposal's. Row 2's recovered token (index 5) beats the draft's own
+    # ratio=0.05 row, since target_probs there gives every non-DT index
+    # (1-0.5*0.05)/7 ~= 0.1393 vs the draft token's 0.025, so it must NOT
+    # equal row 2's own p (0.025) or match DT's rank (0).
+    for i in (0, 1):
+        for f in ("emitted_p", "emitted_target_rank", "emitted_top1_shortfall"):
+            if rows[i][f] is not None:
+                print(f"  FAIL row {i} {f} should be null on an accepted row, got {rows[i][f]!r}"); ok = False
+    r2 = rows[2]
+    if r2["emitted_p"] is None or abs(r2["emitted_p"] - r2["p"]) < 1e-9:
+        print(f"  FAIL row 2 emitted_p should differ from the rejected draft proposal's own p={r2['p']!r}, got {r2['emitted_p']!r}"); ok = False
+    if r2["emitted_target_rank"] is None or r2["emitted_target_rank"] == r2["target_rank"]:
+        print(f"  FAIL row 2 emitted_target_rank should differ from the draft proposal's own rank={r2['target_rank']!r}, got {r2['emitted_target_rank']!r}"); ok = False
     if ok:
+        print(f"  ok    emitted_p/rank on the recovered row describe the RECOVERED token "
+              f"(p={r2['emitted_p']:.4f} rank={r2['emitted_target_rank']}), not the rejected "
+              f"draft proposal (p={r2['p']:.4f} rank={r2['target_rank']})")
         print("  ok    strict/lossy/lossy-only/emission_source/output_position all correct")
         print(f"  ok    dist feats row0: H(q)={rows[0]['draft_entropy']:.3f} "
               f"H(p)={rows[0]['target_entropy']:.3f} "

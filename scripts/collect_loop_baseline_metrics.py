@@ -29,6 +29,7 @@ NUMERIC_METRICS = (
     "p", "q", "p_over_q", "u", "target_rank", "target_top1_prob", "target_top1_shortfall",
     "target_entropy", "draft_entropy", "kl_target_draft", "kl_draft_target", "tv_distance",
     "consecutive_accepted_length",
+    "emitted_p", "emitted_target_rank", "emitted_top1_shortfall",
 )
 BOOLEAN_METRICS = ("strict_would_accept", "lossy_would_accept", "actually_accepted", "lossy_only_accepted")
 

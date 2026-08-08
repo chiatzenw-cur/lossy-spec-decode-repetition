@@ -1,0 +1,424 @@
+<title>AIME24 completion length by arm</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6; /* strict */
+    --series-2: #eb6834; /* lenience */
+    --series-3: #1baf7a; /* cactus accept-only */
+    --series-4: #eda100; /* spec-casc-opt */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --grid:           #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --grid:           #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+  }
+  :root[data-theme="light"] .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --series-4: #eda100;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .viz-root {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+  header h1 {
+    font-size: 1.375rem;
+    font-weight: 650;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  header p {
+    margin: 0 0 20px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 62ch;
+    line-height: 1.5;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: center;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex: none;
+  }
+  .legend-cap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+  .legend-cap-line {
+    width: 18px;
+    height: 0;
+    border-top: 2px dashed var(--text-muted);
+    flex: none;
+  }
+
+  .chart-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 20px 8px;
+    overflow-x: auto;
+  }
+  .chart-inner { min-width: 720px; }
+
+  .axis-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .axis-labels {
+    grid-column: 2;
+    position: relative;
+    height: 16px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .axis-labels span { position: absolute; transform: translateX(-50%); }
+  .axis-labels span:first-child { transform: translateX(0); }
+  .axis-labels span:last-child { transform: translateX(-100%); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--grid);
+  }
+  .row:last-child { border-bottom: none; }
+  .row-label {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .bars {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px 0;
+  }
+  .cap-line {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    border-left: 1px dashed var(--baseline);
+    pointer-events: none;
+  }
+  .bar-track {
+    position: relative;
+    height: 10px;
+  }
+  .bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+  .bar:hover, .bar:focus-visible { filter: brightness(1.12); outline: none; }
+  .bar.capped::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: -3px;
+    bottom: -3px;
+    width: 2px;
+    background: var(--text-primary);
+    opacity: 0.55;
+  }
+
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    font-size: 0.76rem;
+    padding: 6px 9px;
+    border-radius: 6px;
+    line-height: 1.45;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.08s ease;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .tooltip.show { opacity: 1; }
+  .tooltip strong { font-variant-numeric: tabular-nums; }
+
+  details.table-view {
+    margin-top: 20px;
+  }
+  details.table-view summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    user-select: none;
+  }
+  .table-wrap { overflow-x: auto; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+  th, td {
+    text-align: right;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--grid);
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  td.capped { color: var(--series-2); font-weight: 600; }
+
+  footer {
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+</style>
+
+<div class="viz-root">
+  <header>
+    <h1>AIME24 completion length by arm</h1>
+    <p>Output token count per case (30 AIME24 problems, one fresh server per request) across four speculative-decoding arms. Dashed line marks the 32,768-token generation cap; bars reaching it are marked with a tick and are truncated, not naturally terminated.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-1)"></span>Strict</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-2)"></span>Lenience (λ=0.2)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-3)"></span>CACTUS accept-only (α=0.25)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-4)"></span>Spec-Cascade OPT (α=0.05)</div>
+    <div class="legend-cap"><span class="legend-cap-line"></span>32,768 cap</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-inner">
+      <div class="axis-row">
+        <div></div>
+        <div class="axis-labels" id="axisLabels"></div>
+      </div>
+      <div id="rows"></div>
+    </div>
+  </div>
+
+  <details class="table-view">
+    <summary>Show full data table</summary>
+    <div class="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Strict</th>
+            <th>Lenience 0.2</th>
+            <th>CACTUS accept-only 0.25</th>
+            <th>Spec-Cascade OPT 0.05</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </details>
+
+  <footer>gpt-oss-20b target + EAGLE3 draft, k=6, temperature=1.0, top_p=1.0. CACTUS arm labelled accept-only: recovery sampling used the raw p residual, not the full H_x distribution (see patches/vllm-0.26.0-cactus.patch for the v2 fix, applied to later collections).</footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = [{"case": "case_001", "strict": 1711, "lenience0p2": 1587, "cactus_accept_only0p25": 4384, "specCascOpt0p05": 8070}, {"case": "case_002", "strict": 32768, "lenience0p2": 32768, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_003", "strict": 28934, "lenience0p2": 32768, "cactus_accept_only0p25": 25485, "specCascOpt0p05": 32768}, {"case": "case_004", "strict": 10406, "lenience0p2": 32768, "cactus_accept_only0p25": 22876, "specCascOpt0p05": 32768}, {"case": "case_005", "strict": 5394, "lenience0p2": 10356, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_006", "strict": 10613, "lenience0p2": 8458, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_007", "strict": 6048, "lenience0p2": 7067, "cactus_accept_only0p25": 17493, "specCascOpt0p05": 32768}, {"case": "case_008", "strict": 1976, "lenience0p2": 7158, "cactus_accept_only0p25": 4200, "specCascOpt0p05": 32768}, {"case": "case_009", "strict": 2916, "lenience0p2": 2997, "cactus_accept_only0p25": 6047, "specCascOpt0p05": 12122}, {"case": "case_010", "strict": 1518, "lenience0p2": 1082, "cactus_accept_only0p25": 2297, "specCascOpt0p05": 2338}, {"case": "case_011", "strict": 4727, "lenience0p2": 9521, "cactus_accept_only0p25": 31217, "specCascOpt0p05": 32768}, {"case": "case_012", "strict": 2071, "lenience0p2": 3804, "cactus_accept_only0p25": 3221, "specCascOpt0p05": 5061}, {"case": "case_013", "strict": 1491, "lenience0p2": 2585, "cactus_accept_only0p25": 3103, "specCascOpt0p05": 8145}, {"case": "case_014", "strict": 32768, "lenience0p2": 19179, "cactus_accept_only0p25": 7583, "specCascOpt0p05": 15671}, {"case": "case_015", "strict": 4970, "lenience0p2": 6216, "cactus_accept_only0p25": 18508, "specCascOpt0p05": 32768}, {"case": "case_016", "strict": 4346, "lenience0p2": 9030, "cactus_accept_only0p25": 8174, "specCascOpt0p05": 5811}, {"case": "case_017", "strict": 21576, "lenience0p2": 29202, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_018", "strict": 5298, "lenience0p2": 18978, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_019", "strict": 11554, "lenience0p2": 32768, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_020", "strict": 3342, "lenience0p2": 4392, "cactus_accept_only0p25": 5525, "specCascOpt0p05": 8266}, {"case": "case_021", "strict": 9852, "lenience0p2": 17091, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 13223}, {"case": "case_022", "strict": 8465, "lenience0p2": 32768, "cactus_accept_only0p25": 8071, "specCascOpt0p05": 32768}, {"case": "case_023", "strict": 7786, "lenience0p2": 10242, "cactus_accept_only0p25": 9318, "specCascOpt0p05": 11901}, {"case": "case_024", "strict": 20202, "lenience0p2": 3495, "cactus_accept_only0p25": 12751, "specCascOpt0p05": 11531}, {"case": "case_025", "strict": 3043, "lenience0p2": 2375, "cactus_accept_only0p25": 3853, "specCascOpt0p05": 6378}, {"case": "case_026", "strict": 32768, "lenience0p2": 32768, "cactus_accept_only0p25": 32768, "specCascOpt0p05": 32768}, {"case": "case_027", "strict": 2191, "lenience0p2": 2910, "cactus_accept_only0p25": 3646, "specCascOpt0p05": 4429}, {"case": "case_028", "strict": 3680, "lenience0p2": 4900, "cactus_accept_only0p25": 17821, "specCascOpt0p05": 32768}, {"case": "case_029", "strict": 10687, "lenience0p2": 31342, "cactus_accept_only0p25": 23804, "specCascOpt0p05": 14826}, {"case": "case_030", "strict": 8202, "lenience0p2": 32768, "cactus_accept_only0p25": 27658, "specCascOpt0p05": 23016}];
+
+const ARMS = [
+  { key: "strict", label: "Strict", cssVar: "--series-1" },
+  { key: "lenience0p2", label: "Lenience (λ=0.2)", cssVar: "--series-2" },
+  { key: "cactus_accept_only0p25", label: "CACTUS accept-only (α=0.25)", cssVar: "--series-3" },
+  { key: "specCascOpt0p05", label: "Spec-Cascade OPT (α=0.05)", cssVar: "--series-4" },
+];
+const CAP = 32768;
+
+const root = document.querySelector(".viz-root");
+const rowsEl = document.getElementById("rows");
+const axisEl = document.getElementById("axisLabels");
+const tooltip = document.getElementById("tooltip");
+const tableBody = document.getElementById("tableBody");
+
+// Axis ticks
+[0, 8000, 16000, 24000, 32768].forEach((v, i, arr) => {
+  const span = document.createElement("span");
+  span.style.left = (v / CAP * 100) + "%";
+  span.textContent = v.toLocaleString();
+  axisEl.appendChild(span);
+});
+
+function styleColor(cssVar) {
+  return getComputedStyle(root).getPropertyValue(cssVar).trim();
+}
+
+DATA.forEach((row) => {
+  const rowEl = document.createElement("div");
+  rowEl.className = "row";
+
+  const label = document.createElement("div");
+  label.className = "row-label";
+  label.textContent = row.case.replace("case_", "");
+  rowEl.appendChild(label);
+
+  const bars = document.createElement("div");
+  bars.className = "bars";
+
+  const capLine = document.createElement("div");
+  capLine.className = "cap-line";
+  capLine.style.left = "100%";
+  bars.appendChild(capLine);
+
+  ARMS.forEach((arm) => {
+    const val = row[arm.key];
+    const track = document.createElement("div");
+    track.className = "bar-track";
+    const bar = document.createElement("div");
+    bar.className = "bar" + (val >= CAP ? " capped" : "");
+    bar.style.width = Math.max((val / CAP) * 100, 0.5) + "%";
+    bar.style.background = "var(" + arm.cssVar + ")";
+    bar.tabIndex = 0;
+    bar.setAttribute("role", "img");
+    bar.setAttribute(
+      "aria-label",
+      `${row.case}, ${arm.label}: ${val.toLocaleString()} tokens${val >= CAP ? " (capped)" : ""}`
+    );
+
+    function showTip(e) {
+      tooltip.innerHTML =
+        `<strong>${row.case}</strong> &middot; ${arm.label}<br>` +
+        `<strong>${val.toLocaleString()}</strong> tokens` +
+        (val >= CAP ? " &middot; capped" : "");
+      tooltip.classList.add("show");
+      positionTip(e);
+    }
+    function positionTip(e) {
+      const x = e.clientX ?? (bar.getBoundingClientRect().right);
+      const y = e.clientY ?? (bar.getBoundingClientRect().top);
+      tooltip.style.left = Math.min(x + 14, window.innerWidth - 220) + "px";
+      tooltip.style.top = (y - 34) + "px";
+    }
+    function hideTip() { tooltip.classList.remove("show"); }
+
+    bar.addEventListener("pointermove", (e) => { showTip(e); });
+    bar.addEventListener("pointerleave", hideTip);
+    bar.addEventListener("focus", (e) => {
+      const r = bar.getBoundingClientRect();
+      showTip({ clientX: r.right, clientY: r.top });
+    });
+    bar.addEventListener("blur", hideTip);
+
+    track.appendChild(bar);
+    bars.appendChild(track);
+  });
+
+  rowEl.appendChild(bars);
+  rowsEl.appendChild(rowEl);
+});
+
+// Table view
+DATA.forEach((row) => {
+  const tr = document.createElement("tr");
+  const cells = [row.case, ...ARMS.map((a) => row[a.key])];
+  cells.forEach((val, i) => {
+    const td = document.createElement("td");
+    if (i === 0) {
+      td.textContent = val;
+    } else {
+      td.textContent = val.toLocaleString();
+      if (val >= CAP) td.classList.add("capped");
+    }
+    tr.appendChild(td);
+  });
+  tableBody.appendChild(tr);
+});
+</script>
